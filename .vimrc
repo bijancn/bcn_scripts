@@ -170,9 +170,6 @@ set linebreak
 " Highlight current line 
 set cursorline
 
-" Get more tags files from ctags -R *
-set tags=./tags,./../tags,./*/tags
-
 " Enable omni completion. Complete things with CTRL-X O.
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
