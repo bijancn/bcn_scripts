@@ -9,7 +9,7 @@ if v:progname =~? "evim"
   finish
 endif
 
-" Use Vim settings, rather than Vi settings (much better!).
+" Use Vim settings, rather than Vi settings.
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
@@ -37,6 +37,7 @@ set incsearch       " do incremental searching
 " nmap, nnoremap, nunmap          Normal mode
 " imap, inoremap, iunmap          Insert and Replace mode
 " vmap, vnoremap, vunmap          Visual and Select mode
+" <CR> sends Enter
 
 " Open NERDTree with \n
 nmap <Leader>n :NERDTreeToggle<CR>
@@ -44,16 +45,18 @@ nmap <Leader>n :NERDTreeToggle<CR>
 " Open Taglist with \t
 nmap <Leader>t :TlistToggle<CR>
 
-" The Challenge
-no <up> <C-Y>   
-no <down> <C-E>
+" Show Yankring
+nnoremap <silent> <F8> :YRShow<CR>
+
+" Using left and right for adjusting comments
 no <left> <<
 no <right> >>
 
 " key-mappings for comment line in normal mode
-noremap  <C-C> :set nowrap!<CR>:call CommentLine()<CR>:set nowrap!<CR>
+noremap  <C-C> :call CommentLine()<CR>
+"noremap  <C-C> :set nowrap!<CR>:call CommentLine()<CR>:set nowrap!<CR>
 " key-mappings for range comment lines in visual <Shift-V> mode
-vnoremap <C-C> :set nowrap!<CR>:call RangeCommentLine()<CR>:set nowrap!<CR>
+vnoremap <C-C> :call RangeCommentLine()<CR>
 
 " key-mappings for un-comment line in normal mode
 noremap  <silent> <C-X> :call UnCommentLine()<CR>
@@ -64,22 +67,18 @@ vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
 map Q gq
 
 " Yank from the cursor to the end of the line
-nnoremap Y y$
+"no Y y$
 
-" Providing the shortcut \f to compile python,etc. which are configured
-" in ./vim/ftplugin/python.vim, etc. (makeprg)
-" <CR> sends Enter to excecute right away
+" Filetype specific make commands are e.g. in ~/.vim/ftplugin/python.vim
 nmap <Leader>f :w <CR> :make <CR>
 
 " Clearing highlighted search
 nmap <silent> <leader>/ :nohlsearch<CR>
 
-" Show Yankring
-nnoremap <silent> <F8> :YRShow<CR>
-
 nnoremap <Leader>o :set nospell!<CR>
 "nnoremap <Leader>o :setlocal spell spelllang=en_us<CR>
 
+" Toggle between highlighting line or column
 nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
 " Some remappings to avoid collision with byobu
@@ -127,8 +126,7 @@ inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
 " for full highlighting.
 au BufNewFile,BufRead *.less set filetype=css
 
-" Enable file type detection.  Use the default filetype settings, so that mail
-" gets 'tw' set to 72, 'cindent' is on in C files, etc.  Also load indent files,
+" Use the default filetype settings. Also load indent files,
 " to automatically do language-dependent indenting.
 filetype plugin on
 filetype indent on
@@ -136,20 +134,16 @@ filetype indent on
 " Switch syntax highlighting on
 syntax on
 
-" Spell checking
-"setlocal spell spelllang=en_us
-
 " Highlight consistent line at 81 char
 set colorcolumn=81
+
+" Using my color scheme
+colorscheme bcn_dark
 
 " Disable the annoying menu bar taking away precious pixels in gVim
 set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
 "set guioptions-=r  "remove right-hand scroll bar
-
-" Highlight only characters which exceed 80 per line
-"highlight OverLength ctermbg=lightgrey ctermfg=red guibg=#592929
-"match OverLength /\%81v.\+/
 
 " Standard searches are case insensitive
 set ignorecase
@@ -188,20 +182,16 @@ set hlsearch
 " Allows to use the overall clipboard
 set clipboard=unnamedplus
 
-" Size of indentation
-set shiftwidth=2
-" Always uses spaces instead of tab characters
-set expandtab
-" Size of insterted spaces if tab is pressed
-set tabstop=2
-" Note: Clean up existing files with :retab
+" Consistent tabbing. Note: Clean up existing files with :retab
+set shiftwidth=2        " Size of indentation
+set expandtab           " Always uses spaces instead of tab characters
+set tabstop=2           " Size of insterted spaces if tab is pressed
 
 " Printing options
 "set pdev=pdf
 set number
 set printoptions=paper:A4,syntax:y,wrap:y,number:y
 
-"map <leader>p :color print_bw <CR> :hardcopy >~/temp.pdf <CR> :color default<CR>
 map <leader>p :hardcopy <CR>
 
 " Enable concealing, i.e. greek letters are shown as unicode
@@ -213,49 +203,12 @@ set guicursor+=i:ver100-iCursor
 set guicursor+=n-v-c:blinkon0
 set guicursor+=i:blinkwait10
 
-" Terminal cursor
-" use an orange cursor in insert mode
+" Terminal cursor. Use an orange cursor in insert mode
 let &t_SI = "\<Esc>]12;orange\x7"
-" use a red cursor otherwise
 let &t_EI = "\<Esc>]12;darkblue\x7"
 silent !echo -ne "\033]12;darkblue\007"
-  
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ COLORS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-" Enable 256 colors
-set t_Co=256
 
-" Setting some colors for dark background. hi == highlight. To see the color
-" codes, open a new buffer and :so ~/.vim/color_demo.vim
-hi Normal	        ctermbg=none        ctermfg=254         cterm=None
-hi Cursor         ctermbg=black       ctermfg=17        cterm=None
-"hi iCursor        ctermbg=17          ctermfg=white        cterm=None
-hi SpecialKey	    ctermbg=None        ctermfg=70          cterm=None
-hi Directory	    ctermbg=254         ctermfg=57          cterm=None
-hi ErrorMsg       ctermfg=160         ctermbg=245         cterm=None
-hi PreProc	      ctermbg=None        ctermfg=5           cterm=None
-hi NonText	      ctermbg=None        ctermfg=105         cterm=Bold
-hi DiffText	      ctermbg=244         ctermfg=165         cterm=None
-hi Todo           ctermbg=None        ctermfg=162         cterm=Bold
-hi Identifier	    ctermbg=None        ctermfg=77          cterm=none
-hi Ignore         ctermbg=None        ctermfg=221         cterm=Bold
-hi Underline      ctermbg=None        ctermfg=147         cterm=Italic
-
-hi Conceal        ctermbg=None        ctermfg=magenta 
-hi Search         ctermbg=17          ctermfg=NONE 
-hi LineNr                             ctermfg=gray
-hi SpellBad       ctermbg=88
-hi Comment        ctermbg=none        ctermfg=lightblue   cterm=none
-hi Error	        ctermbg=none        ctermfg=None        cterm=Bold
-"hi Special	    ctermfg=172         ctermbg=None        cterm=Bold
-hi Constant	      ctermbg=None        ctermfg=1           cterm=None
-hi Statement	    ctermbg=None        ctermfg=208         cterm=none
-hi Type		        ctermbg=None        ctermfg=227         cterm=none
-hi Visual         ctermbg=238         ctermfg=250         cterm=None
-hi ColorColumn    ctermbg=gray 
-hi CursorColumn   ctermbg=17          ctermfg=white       cterm=NONE 
-hi CursorLine     ctermbg=233                             cterm=none
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ OCAML ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~ OCAML ~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Settings for ocaml-annot plugin
 
 function! OCamlType()
@@ -263,10 +216,10 @@ function! OCamlType()
   let line = line('.')
   let file = expand("%:p:r")
   echo system("annot -n -type ".line." ".col." ".file.".annot")
-endfunction    
+endfunction
 map <leader>. :call OCamlType()<cr>
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ VIM-LATEX ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~ VIM-LATEX ~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Settings for vim-latex. \ll starts pdflatex
 let g:Tex_DefaultTargetFormat='pdf'        
 let g:Tex_MultipleCompileFormats='dvi,pdf,aux' 
@@ -276,7 +229,7 @@ let g:Tex_IgnoreLevel=2
 let g:Tex_flavor='latex'
 let g:Tex_BibtexFlavor ='biber'
 
-" Disable folding
+" Disable folding for tex
 let g:Tex_FoldedSections=""
 let g:Tex_FoldedEnvironments=""
 let g:Tex_FoldedMisc=""
