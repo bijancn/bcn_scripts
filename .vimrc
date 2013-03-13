@@ -67,7 +67,7 @@ vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
 map Q gq
 
 " Yank from the cursor to the end of the line
-"no Y y$
+nmap Y y$
 
 " Filetype specific make commands are e.g. in ~/.vim/ftplugin/python.vim
 nmap <Leader>f :w <CR> :make <CR>
@@ -164,6 +164,9 @@ set linebreak
 " Highlight current line 
 set cursorline
 
+" Fold per default according to syntax
+set foldmethod=syntax
+
 " Enable omni completion. Complete things with CTRL-X O.
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
@@ -205,8 +208,8 @@ set guicursor+=i:blinkwait10
 
 " Terminal cursor. Use an orange cursor in insert mode
 let &t_SI = "\<Esc>]12;orange\x7"
-let &t_EI = "\<Esc>]12;darkblue\x7"
-silent !echo -ne "\033]12;darkblue\007"
+let &t_EI = "\<Esc>]12;blue\x7"
+"silent !echo -ne "\033]12;blue\007"
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ OCAML ~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Settings for ocaml-annot plugin
