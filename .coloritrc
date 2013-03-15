@@ -1,0 +1,37 @@
+dnl  ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN COLORITRC ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+dnl  bcn:              bijan@chokoufe.com
+dnl  Recent versions:  https://github.com/bijanc/bcn_scripts
+dnl  Last Change:      2013 Mar 15
+dnl
+dnl  Put me in:
+dnl              for Unix and OS/2:     ~/.coloritrc
+dnl  
+dnl  colorit configuration file. Maintained since 2012.
+dnl
+dnl  Usage: e.g. make 2>&1 | colorit
+dnl
+dnl  Define some useful color variables
+dnl
+define(`black', `0')
+define(`red', `1')
+define(`green', `2')
+define(`brown', `3')
+define(`blue', `4')
+define(`magenta', `5')
+define(`cyan', `6')
+define(`white', `7')
+dnl
+dnl  Mark macro arguments: regexp foreground-color [background-color]
+dnl
+define(`mark', ``mark "$1"'' `ifelse(`$#', `3', ``"\033[3$2;4$3m"'',
+``"\033[3$2m"'')' `"\033[m"')
+dnl
+divert
+mark(`warning', magenta)
+mark(`Warning', magenta)
+mark(`error', red)
+mark(`Error', red)
+mark(`gcc', green)
+mark(`gfortran', green)
+mark(`make', green)
+mark(`(^File | line | characters )', blue)

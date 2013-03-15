@@ -1,7 +1,13 @@
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ VIMRC OF BCN ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-"  Put me in:
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN VIMRC ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+" bcn:              bijan@chokoufe.com
+" Recent versions:  https://github.com/bijanc/bcn_scripts
+" Last Change:      2013 Mar 15
+"
+" Put me in:
 "             for Unix and OS/2:     ~/.vimrc
 "             for MS-DOS and Win32:  $VIM\_vimrc
+" 
+" vim configuration file. Maintained since 2011. 
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ BASIC BEHAVIOR ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 " When started as "evim", evim.vim will already have done these settings.

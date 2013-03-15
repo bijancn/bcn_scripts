@@ -1,8 +1,13 @@
-" Vim color file
-" bcn : bijan@chokoufe.com
-" Last Change:	2012 Mar 7
-
-" This color scheme gives you strong colors on black background
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN_DARK ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+" bcn:              bijan@chokoufe.com
+" Recent versions:  https://github.com/bijanc/bcn_scripts
+" Last Change:      2013 Mar 15
+"
+" Put me in:
+"             for Unix and OS/2:     ~/.vim/colors/bcn_dark.vim
+"
+" vim color file
+" This color scheme gives you decent colors on dark background
 
 " First remove all existing highlighting.
 set background=dark
@@ -17,8 +22,8 @@ let colors_name = "bcn_dark"
 " Enable 256 colors
 set t_Co=256
 
-" Setting some colors for dark background. hi == highlight. To see the color
-" codes, open a new buffer and :so ~/.vim/color_demo.vim
+" Setting some colors for dark background. hi == highlight. 
+" To see the color codes, use bcn_color_demo.vim
 hi Normal	        ctermbg=black        ctermfg=254         cterm=none
 hi Cursor         ctermbg=black       ctermfg=17        cterm=None
 "hi iCursor        ctermbg=17          ctermfg=white        cterm=None

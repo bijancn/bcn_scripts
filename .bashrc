@@ -1,11 +1,36 @@
-alias vim="vim --servername SERVER"
-alias java='java -cp ~/Ubuntu\ One/Codes/Java/mysql-connector-java-5.1.20-bin.jar:.'
-alias mountwin='sudo mount /dev/sda2 /media/win7/'
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN BASHRC ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+# bcn:              bijan@chokoufe.com
+# Recent versions:  https://github.com/bijanc/bcn_scripts
+# Last Change:      2013 Mar 15
+#
+# Put me in:
+#             for Unix and OS/2:     ~/.bashrc
+# 
+# bash configuration file. Maintained since 2012.
+
 alias wlanswitcher='sh ~/Dropbox/Programme/wlanscript.sh'
 
 alias gf='gfortran -fopenmp ' 
 alias m='cd .. ; make 2>&1 | colorit; cd bin'
 alias ud='./omega_QCD.opt -scatter "u d -> u d" '
+alias ll='ls -lh'
+alias la='ls -lah'
+alias so='source ~/.bashrc'
+alias gitt='git add -A; git commit -m ".."; git push'
+alias cm='cit make'
+alias bashrc='vim ~/.bashrc'
+alias vimrc='vim ~/.vimrc'
+
+function gitm () {
+  git add . 
+  git commit -m "$1"
+  git push
+}
+
+# See BCN COLORITRC
+function cit () {
+  $1 2>&1 | colorit
+}
 
 function rem_print_1s () {
   scp "$1" bchokoufe@132.187.196.121:~/temp.pdf
@@ -22,7 +47,13 @@ function print_file () {
   ps2pdf ~/output.ps ~/"$1".pdf
 }
 
-# Possibilities to colorize output: ~/bin/color (changeable script) or use
-# colorit configurable over ~/.coloritrc . Usage:
-# pdflatex file.tex | color red '^Package'
-# ocamlopt file.ml 2>&1 | colorit
+function backup_bcn () {
+  bcn=~/Dropbox/Programs/bcn_scripts
+  cp ~/.*rc $bcn
+  cp ~/.vim/bcn_* $bcn
+  cp ~/.vim/colors/bcn_* $bcn/colors
+}
+
+#alias vim="vim --servername SERVER"
+#alias java='java -cp ~/Ubuntu\ One/Codes/Java/mysql-connector-java-5.1.20-bin.jar:.'
+#alias mountwin='sudo mount /dev/sda2 /media/win7/'
