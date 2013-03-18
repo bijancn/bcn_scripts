@@ -1,7 +1,7 @@
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN VIMRC ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 " bcn:              bijan@chokoufe.com
 " Recent versions:  https://github.com/bijanc/bcn_scripts
-" Last Change:      2013 Mar 15
+" Last Change:      2013 Mar 18
 "
 " Put me in:
 "             for Unix and OS/2:     ~/.vimrc
@@ -23,7 +23,6 @@ set nocompatible
 filetype off                   " required for Vundle!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-" let Vundle manage Vundle
 Bundle 'gmarik/vundle'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jcf/vim-latex'
@@ -69,11 +68,11 @@ noremap  <silent> <C-X> :call UnCommentLine()<CR>
 " key-mappings for range un-comment lines in visual <Shift-V> mode
 vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
 
-" Don't use Ex mode, use Q for formatting
+" Don't use Ex-mode, use Q for formatting
 map Q gq
 
 " Yank from the cursor to the end of the line
-nmap Y y$
+map Y y$
 
 " Filetype specific make commands are e.g. in ~/.vim/ftplugin/python.vim
 nmap <Leader>f :w <CR> :make <CR>
@@ -101,7 +100,7 @@ imap EAL Balign<C-G>
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ SCROLLING ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 " Set the number of lines you want to stay off of bottom and top. This induces
 " vim to scroll automatically when the cursor comes close.
-set scrolloff=5
+set scrolloff=2
 
 function SmoothScroll(up)
     if a:up

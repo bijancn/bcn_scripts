@@ -1,7 +1,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN BASHRC ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 # bcn:              bijan@chokoufe.com
 # Recent versions:  https://github.com/bijanc/bcn_scripts
-# Last Change:      2013 Mar 15
+# Last Change:      2013 Mar 18
 #
 # Put me in:
 #             for Unix and OS/2:     ~/.bashrc
@@ -20,6 +20,8 @@ alias gitt='git add -A; git commit -m ".."; git push'
 alias cm='cit make'
 alias bashrc='vim ~/.bashrc'
 alias vimrc='vim ~/.vimrc'
+alias rgrep='grep -r'
+alias update='sudo apt-get update; sudo apt-get upgrade; sudo apt-get dist-upgrade'
 
 function gitm () {
   git add . 
