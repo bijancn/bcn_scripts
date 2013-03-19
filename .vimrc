@@ -53,10 +53,6 @@ nmap <Leader>t :TlistToggle<CR>
 " Show Yankring
 nnoremap <silent> <F8> :YRShow<CR>
 
-" Using left and right for adjusting comments
-no <left> <<
-no <right> >>
-
 " key-mappings for comment line in normal mode
 noremap  <C-C> :call CommentLine()<CR>
 "noremap  <C-C> :set nowrap!<CR>:call CommentLine()<CR>:set nowrap!<CR>
@@ -68,23 +64,33 @@ noremap  <silent> <C-X> :call UnCommentLine()<CR>
 " key-mappings for range un-comment lines in visual <Shift-V> mode
 vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
 
-" Don't use Ex-mode, use Q for formatting
-map Q gq
-
-" Yank from the cursor to the end of the line
-map Y y$
-
 " Filetype specific make commands are e.g. in ~/.vim/ftplugin/python.vim
 nmap <Leader>f :w <CR> :make <CR>
-
-" Clearing highlighted search
-nmap <silent> <leader>/ :nohlsearch<CR>
 
 nnoremap <Leader>o :set nospell!<CR>
 "nnoremap <Leader>o :setlocal spell spelllang=en_us<CR>
 
 " Toggle between highlighting line or column
 nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+
+" Change working directory to current file
+map <Leader>d :cd %:p:h<CR>:pwd<CR>
+
+" Clearing highlighted search
+nmap <silent> <leader>/ :nohlsearch<CR>
+
+" Using left and right for adjusting comments
+no <left> <<
+no <right> >>
+
+" Don't use Ex-mode, use Q for formatting
+map Q gq
+
+" Yank from the cursor to the end of the line
+map Y y$
+
+" Create new tab
+map tN :tabnew <CR>
 
 " Some remappings to avoid collision with byobu
 imap <C-G> <F5>
@@ -102,7 +108,8 @@ imap EAL Balign<C-G>
 " vim to scroll automatically when the cursor comes close.
 set scrolloff=2
 
-function SmoothScroll(up)
+" The bang tells vim that it can reload the function
+function! SmoothScroll(up)
     if a:up
         let scrollaction="\<C-Y>k"
     else

@@ -8,10 +8,8 @@
 # 
 # bash configuration file. Maintained since 2012.
 
-alias wlanswitcher='sh ~/Dropbox/Programme/wlanscript.sh'
-
 alias gf='gfortran -fopenmp ' 
-alias m='cd .. ; make 2>&1 | colorit; cd bin'
+alias m='cd .. ; cm; cd bin'
 alias ud='./omega_QCD.opt -scatter "u d -> u d" '
 alias ll='ls -lh'
 alias la='ls -lah'
@@ -52,10 +50,12 @@ function print_file () {
 function backup_bcn () {
   bcn=~/Dropbox/Programs/bcn_scripts
   cp ~/.*rc $bcn
-  cp ~/.vim/bcn_* $bcn
-  cp ~/.vim/colors/bcn_* $bcn/colors
+  cp ~/.vim/bcn_* $bcn/.vim/
+  cp ~/.vim/ftplugin/* $bcn/.vim/ftplugin/
+  cp ~/.vim/colors/bcn_* $bcn/.vim/colors/
 }
 
 #alias vim="vim --servername SERVER"
 #alias java='java -cp ~/Ubuntu\ One/Codes/Java/mysql-connector-java-5.1.20-bin.jar:.'
 #alias mountwin='sudo mount /dev/sda2 /media/win7/'
+#alias wlanswitcher='sh ~/Dropbox/Programs/wlanscript.sh'
