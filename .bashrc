@@ -53,6 +53,15 @@ function backup_bcn () {
   cp ~/.vim/bcn_* $bcn/.vim/
   cp ~/.vim/ftplugin/* $bcn/.vim/ftplugin/
   cp ~/.vim/colors/bcn_* $bcn/.vim/colors/
+  cp ~/Dropbox/Codes/LaTeX/localtex/bcn_* $bcn/latex/
+}
+
+function restore_bcn () {
+  bcn=.
+  cp $bcn/.*rc             ~/
+  cp $bcn/.vim/*           ~/.vim/
+  cp $bcn/.vim/ftplugin/*  ~/.vim/ftplugin/
+  cp $bcn/.vim/colors/*    ~/.vim/colors/
 }
 
 #alias vim="vim --servername SERVER"

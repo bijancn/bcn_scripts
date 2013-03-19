@@ -1,0 +1,59 @@
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN_KOMA ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% bcn:              bijan@chokoufe.com
+% Recent versions:  https://github.com/bijanc/bcn_scripts
+% Last Change:      2013 Mar 20
+%
+% Put me in:
+%   for Unix/Linux with Texlive vanilla setup:
+%     /usr/local/texlive/texmf-local/tex/latex/local
+%     then run 'texhash'
+%   for Windows with MikTex
+%     C:\Program Files\MiKTeX 2.9\tex\latex\bijan\
+%     then go to MikTex Options -> Refresh FNDB, Update Formats
+% 
+% Wrapper package for my commonly used packages in KOMA-Script files
+
+\NeedsTeXFormat{LaTeX2e} 
+\ProvidesPackage{bcn_koma} 
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+\RequirePackage{lastpage}            % allows to use the last page number
+\RequirePackage{subfig}							 % Subcaption for several pics
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{relsize}             % Allows to use relative sizes
+\RequirePackage[tbtags]{amsmath}     % tbtags sets the number of split 
+                                     % environments at the end 
+\RequirePackage{amssymb,amsthm,amsfonts}
+\RequirePackage{simplewick}          % Wick contractions
+\RequirePackage{slashed}             % The almighty slash-notation
+\RequirePackage{xcolor}              % Allows every colormixture
+\RequirePackage{bbm}                 % $\mathbbm{N}$ -> |N, etc.
+
+\RequirePackage{feynmp}              % Feynman diagrams. Compile with mp.
+\RequirePackage[pdftex]{graphicx}    % To include graphics. Option necessary
+                                     % for feynmp.
+\DeclareGraphicsRule{*}{mps}{*}{}
+
+\RequirePackage{hyperref}            % Customize with \hypersetup{}
+\RequirePackage{cleveref}            % Recognizes type of reference
+\RequirePackage{booktabs}            % Pretty tables. Use \toprule,
+                                     % \midrule and \bottomrule
+\RequirePackage{setspace}            % Provides: /onehalfspacing,..
+\RequirePackage{nicefrac}            % Nice small fractions
+\RequirePackage{tikz}                % Provides the means for \circled
+\RequirePackage{environ}             % Allows to use \NewEnviron
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~ COMMANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+\RequirePackage{bijan_commands}
+
+\NewEnviron{Balign}{
+  \begin{equation}
+  \begin{split}
+    \BODY
+  \end{split}
+  \end{equation}
+}
+
+\endinput

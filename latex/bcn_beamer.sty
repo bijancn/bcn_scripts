@@ -1,0 +1,57 @@
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN_BEAMER ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% bcn:              bijan@chokoufe.com
+% Recent versions:  https://github.com/bijanc/bcn_scripts
+% Last Change:      2013 Mar 20
+%
+% Put me in:
+%   for Unix/Linux with Texlive vanilla setup:
+%     /usr/local/texlive/texmf-local/tex/latex/local
+%     then run 'texhash'
+%   for Windows with MikTex
+%     C:\Program Files\MiKTeX 2.9\tex\latex\bijan\
+%     then go to MikTex Options -> Refresh FNDB, Update Formats
+% 
+% Wrapper package for my commonly used packages in BEAMER files
+
+\NeedsTeXFormat{LaTeX2e} 
+\ProvidesPackage{bcn_beamer} 
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+\RequirePackage{relsize}             % Allows to use relative sizes
+\RequirePackage{siunitx}             % Correct typesetting of units
+\RequirePackage{simplewick}          % Wick contractions
+\RequirePackage{slashed}             % The almighty slash-notation
+\RequirePackage{bbm}                 % $\mathbbm{N}$ -> |N, etc.
+\RequirePackage{booktabs}            % Pretty tables. Use \toprule,
+                                     % \midrule and \bottomrule
+\RequirePackage{environ}             % Allows to use \NewEnviron
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~ COMMANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+\RequirePackage{bijan_commands}
+
+\NewEnviron{Balign}{
+  \begin{align*}
+    \BODY
+  \end{align*}
+}
+
+% \animation has to be set in document, e.g. to \transdissolve or {}
+\NewEnviron{Bframe}[2][]{
+  \begin{frame}{#2}{#1} 
+    \animation
+    \BODY
+  \end{frame}
+}
+
+\newcommand{\bfr}[2][]{\begin{frame}{#2}{#1}\transdissolve}
+\newcommand{\beamersection}[1]{
+    \section{#1}
+    \begin{frame} \animation
+        \centering\huge \alert{#1}
+    \end{frame}
+}
+
+
+\endinput
