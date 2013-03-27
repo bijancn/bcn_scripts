@@ -14,20 +14,27 @@ alias ud='./omega_QCD.opt -scatter "u d -> u d" '
 alias ll='ls -lh'
 alias la='ls -lah'
 alias so='source ~/.bashrc'
-alias gitt='git add -A; git commit -m ".."; git push'
+alias gitt='gitm ".."'
 alias cm='cit make'
 alias bashrc='vim ~/.bashrc'
 alias vimrc='vim ~/.vimrc'
 alias rgrep='grep -r'
+alias rm='rm -v'
+alias mv='mv -v'
+alias cp='cp -v'
+alias ddiff='diff -x *.swp -q'
+alias t='/usr/bin/time'
 alias update='sudo apt-get update; sudo apt-get upgrade; sudo apt-get dist-upgrade'
+alias du_dirs='du {*,.git} -sh | sort -h'
+alias du_subdirs='du -h | sort -h'
 
 function gitm () {
-  git add . 
+  git add -A
   git commit -m "$1"
   git push
 }
 
-# See BCN COLORITRC
+# See BCN COLORITRC for customizing colors in output
 function cit () {
   $1 2>&1 | colorit
 }
@@ -42,7 +49,7 @@ function rem_show () {
   ssh -X bchokoufe@132.187.196.121 "evince ~/temp.pdf"
 }
 
-function print_file () {
+function print_vim () {
   vim -c 'hardcopy > ~/output.ps' -c quit "$1"
   ps2pdf ~/output.ps ~/"$1".pdf
 }

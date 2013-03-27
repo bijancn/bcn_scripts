@@ -1,7 +1,7 @@
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN VIMRC ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 " bcn:              bijan@chokoufe.com
 " Recent versions:  https://github.com/bijanc/bcn_scripts
-" Last Change:      2013 Mar 18
+" Last Change:      2013 Mar 27
 "
 " Put me in:
 "             for Unix and OS/2:     ~/.vimrc
@@ -19,13 +19,14 @@ endif
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
-" Vundle can be invoked by :BundleInstall
+" Vundle can be invoked by :BundleInstall. Updates with :BundleInstall!
 filetype off                   " required for Vundle!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jcf/vim-latex'
+Bundle 'Lokaltog/vim-easymotion'
 Bundle 'comments.vim'
 Bundle 'YankRing.vim'
 Bundle 'taglist.vim'
@@ -50,22 +51,37 @@ nmap <Leader>n :NERDTreeToggle<CR>
 " Open Taglist with \t
 nmap <Leader>t :TlistToggle<CR>
 
+" EasyMotion Plugin provides: 
+" \fz (next words starting with z)  \Fz (last words starting with z)
+" \n (jump to next searched words)  \N (jump back to searched words)
+" \j (next line numbers) \k (last line numbers)
+" Capital versions take WORD
+" \w (beginning of next words)
+" \e (end of next words)
+" \b (beginning of last words)
+" \ge (end of last words)
+let g:EasyMotion_leader_key = '<Leader>'
+let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+
 " Show Yankring
 nnoremap <silent> <F8> :YRShow<CR>
 
 " key-mappings for comment line in normal mode
-noremap  <C-C> :call CommentLine()<CR>
-"noremap  <C-C> :set nowrap!<CR>:call CommentLine()<CR>:set nowrap!<CR>
+nmap <C-C> :call CommentLine()<CR>
+"nmap  <C-C> :set nowrap!<CR>:call CommentLine()<CR>:set nowrap!<CR>
 " key-mappings for range comment lines in visual <Shift-V> mode
 vnoremap <C-C> :call RangeCommentLine()<CR>
 
 " key-mappings for un-comment line in normal mode
-noremap  <silent> <C-X> :call UnCommentLine()<CR>
+nmap <silent> <C-X> :call UnCommentLine()<CR>
 " key-mappings for range un-comment lines in visual <Shift-V> mode
 vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
 
 " Filetype specific make commands are e.g. in ~/.vim/ftplugin/python.vim
-nmap <Leader>f :w <CR> :make <CR>
+nmap <Leader>f :w <CR> :make <CR><CR>
+
+" Open corresponding html file
+nmap <Leader>v :!google-chrome %<.html<CR><CR>
 
 nnoremap <Leader>o :set nospell!<CR>
 "nnoremap <Leader>o :setlocal spell spelllang=en_us<CR>
@@ -90,7 +106,10 @@ map Q gq
 map Y y$
 
 " Create new tab
-map tN :tabnew <CR>
+map tn :tabnew <CR>
+
+" Tab opened buffers
+map ta :tab all <CR>
 
 " Some remappings to avoid collision with byobu
 imap <C-G> <F5>
@@ -106,32 +125,33 @@ imap EAL Balign<C-G>
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ SCROLLING ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 " Set the number of lines you want to stay off of bottom and top. This induces
 " vim to scroll automatically when the cursor comes close.
-set scrolloff=2
+set scrolloff=1
 
-" The bang tells vim that it can reload the function
-function! SmoothScroll(up)
-    if a:up
-        let scrollaction="\<C-Y>k"
-    else
-        let scrollaction="\<C-E>j"
-    endif
-    exec "normal " . scrollaction 
-    redraw
-    let counter=1
-    while counter<&scroll
-        let counter+=1
-        sleep 5m
-        redraw
-        exec "normal " . scrollaction
-    endwhile
-endfunction
+" Sadly this script isn't robust for scrolling in really large files
+"" The bang tells vim that it can reload the function
+"function! SmoothScroll(up)
+    "if a:up
+        "let scrollaction="\<C-Y>k"
+    "else
+        "let scrollaction="\<C-E>j"
+    "endif
+    "exec "normal " . scrollaction 
+    "redraw
+    "let counter=1
+    "while counter<&scroll
+        "let counter+=1
+        "sleep 1m
+        "redraw
+        "exec "normal " . scrollaction
+    "endwhile
+"endfunction
 
-nnoremap <C-U> :call SmoothScroll(1)<Enter>
-nnoremap <C-D> :call SmoothScroll(0)<Enter>
-nnoremap <C-B> :call SmoothScroll(1)<Enter> :call SmoothScroll(1)<Enter>
-nnoremap <C-F> :call SmoothScroll(0)<Enter> :call SmoothScroll(0)<Enter>
-inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
-inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
+"nnoremap <C-U> :call SmoothScroll(1)<Enter>
+"nnoremap <C-D> :call SmoothScroll(0)<Enter>
+"nnoremap <C-B> :call SmoothScroll(1)<Enter> :call SmoothScroll(1)<Enter>
+"nnoremap <C-F> :call SmoothScroll(0)<Enter> :call SmoothScroll(0)<Enter>
+"inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
+"inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ SETTINGS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 " This is the not recommended version for .less support. There are proper addons
@@ -178,6 +198,9 @@ set cursorline
 
 " Fold per default according to syntax
 set foldmethod=syntax
+
+" Search only in unfolded text
+set fdo-=search
 
 " Enable omni completion. Complete things with CTRL-X O.
 autocmd FileType python set omnifunc=pythoncomplete#Complete
@@ -233,6 +256,15 @@ function! OCamlType()
   echo system("annot -n -type ".line." ".col." ".file.".annot")
 endfunction
 map <leader>. :call OCamlType()<cr>
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~ FORTRAN ~~~~~~~~~~~~~~~~~~~~~~~~~~
+" We will always use Fortran free not fixed form
+let fortran_free_source=1
+let fortran_fold=1
+let fortran_fold_conditionals=1
+" Apparantely the next option is slow but makes the syntax coloring more
+" 'precise'
+"let fortran_more_precise=1
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ VIM-LATEX ~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Settings for vim-latex. \ll starts pdflatex
