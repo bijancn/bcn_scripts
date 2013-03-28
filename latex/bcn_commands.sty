@@ -1,7 +1,7 @@
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN_COMMANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 % bcn:              bijan@chokoufe.com
 % Recent versions:  https://github.com/bijanc/bcn_scripts
-% Last Change:      2013 Mar 20
+% Last Change:      2013 Mar 27
 %
 % Put me in:
 %   for Unix/Linux with Texlive vanilla setup:
@@ -101,14 +101,25 @@
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~ SHORTHAND NOTATIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
 \newcommand\Rcite[1]{Ref.~\cite{#1}}
-\newcommand\no {\notag \\ }
+\newcommand\etal{\textit{et al. }}
+
+% Spaces
+\newcommand\vs[1]{\vspace{#1 em}} 
+\newcommand\hs[1]{\hspace{#1 em}} 
+
+% Formatting
+\newcommand\mr[1]{\mathrm{#1}} 
 \newcommand{\ems}[1]{\ensuremath{#1}}
+
+% Math text
 \newcommand{\T}[1]{\text{#1}}
 \newcommand{\MT}[1]{\quad\T{#1}\quad}
 \newcommand\with {\MT{with}}
+\newcommand\no {\notag \\ }
 \newcommand\po{\;.}
 \newcommand\co{\;,}
 
+% Math
 \newcommand{\del}{\partial}
 \newcommand{\E}{\ems{\T e}}
 \newcommand{\I}{\ems{\T i}}
@@ -119,26 +130,7 @@
 \newcommand{\nfrac}[2]{\ems{\nicefrac{#1}{#2}}}
 \newcommand\Sp\scalprod
 
-\newcommand\lrA {\ems{\leftrightarrow}}
-\newcommand\LrA {\ems{\Leftrightarrow}}
-\newcommand\rA  {\ems{\rightarrow}}
-\newcommand\RA  {\ems{\Rightarrow}}
-\newcommand\lA  {\ems{\leftarrow }}
-\newcommand\LA  {\ems{\Leftarrow }}
-\newcommand\up  {\ems{\uparrow}}
-\newcommand\down{\ems{\downarrow}}
-\newcommand\Up  {\ems{\Uparrow}}
-\newcommand\Down{\ems{\Downarrow}}
-
-\newcommand\Al {\bigl}
-\newcommand\Ar {\bigr}
-\newcommand\Bl {\Bigl}
-\newcommand\Br {\Bigr}
-\newcommand\Cl {\biggl}
-\newcommand\Cr {\biggr}
-\newcommand\Dl {\Biggl}
-\newcommand\Dr {\Biggr}
-
+% Quantum Field Theory
 \newcommand\ham   {\ems{\mathcal H}}
 \newcommand\lag   {\ems{\mathcal L}}
 \newcommand\polM  {\ems{\mathcal{\tilde M}}}
@@ -146,6 +138,7 @@
 \newcommand\PS    {\ems{\mathcal P}}
 \newcommand\Sl[1] {\ems{\slashed{#1}}}
 
+% Standard model
 \newcommand\sw  {\ems{\T s_W}}
 \newcommand\cw  {\ems{\T c_W}}
 \newcommand\as  {\ems{\alpha_S}}
@@ -163,12 +156,31 @@
 \newcommand\Mt  {\ems{m_t}}
 \newcommand\Mh  {\ems{m_H}}
 
+% Arrows
+\newcommand\lrA {\ems{\leftrightarrow}}
+\newcommand\LrA {\ems{\Leftrightarrow}}
+\newcommand\rA  {\ems{\rightarrow}}
+\newcommand\RA  {\ems{\Rightarrow}}
+\newcommand\lA  {\ems{\leftarrow }}
+\newcommand\LA  {\ems{\Leftarrow }}
+\newcommand\up  {\ems{\uparrow}}
+\newcommand\down{\ems{\downarrow}}
+\newcommand\Up  {\ems{\Uparrow}}
+\newcommand\Down{\ems{\Downarrow}}
+
+% Parentheses
+\newcommand\Al {\bigl}
+\newcommand\Ar {\bigr}
+\newcommand\Bl {\Bigl}
+\newcommand\Br {\Bigr}
+\newcommand\Cl {\biggl}
+\newcommand\Cr {\biggr}
+\newcommand\Dl {\Biggl}
+\newcommand\Dr {\Biggr}
+
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~ ENVIRONMENTS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
-\newcommand{\mathnote}[1]{\ensuremath{\mbox{\smaller[1] $#1$}}}
-% Conflicts with beamer's command note !!!
-%\newenvironment{note}{\par\begingroup\vspace{.5em}\hrule\leftskip=1cm\sf}
-%{\par\vspace{.5em}\hrule\endgroup}
+\newcommand{\mathnote}[1]{\ems{\mbox{\smaller[1] $#1$}}}
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTOMATIC FEYNMP CALL ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 % This allows to generate feynman graphs automatically

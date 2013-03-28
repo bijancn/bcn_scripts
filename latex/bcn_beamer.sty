@@ -1,7 +1,7 @@
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN_BEAMER ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 % bcn:              bijan@chokoufe.com
 % Recent versions:  https://github.com/bijanc/bcn_scripts
-% Last Change:      2013 Mar 20
+% Last Change:      2013 Mar 27
 %
 % Put me in:
 %   for Unix/Linux with Texlive vanilla setup:
@@ -18,6 +18,7 @@
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
+\RequirePackage[utf8]{inputenc}
 \RequirePackage{relsize}             % Allows to use relative sizes
 \RequirePackage{siunitx}             % Correct typesetting of units
 \RequirePackage{simplewick}          % Wick contractions
@@ -26,10 +27,35 @@
 \RequirePackage{booktabs}            % Pretty tables. Use \toprule,
                                      % \midrule and \bottomrule
 \RequirePackage{environ}             % Allows to use \NewEnviron
+\RequirePackage[right]{eurosym}      % The infamous Euro symbol
+\RequirePackage{transparent}         % \transparent{0.5} -> 50 % transparency
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~ COMMANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~ COMMANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-\RequirePackage{bijan_commands}
+\RequirePackage{bcn_color}
+
+\setbeamercolor{title}{fg=\sndcol, bg=white}
+\setbeamercolor{frametitle}{fg=\fstcol, bg=\mygray}
+\setbeamercolor{block title}{fg=\fstcol, bg=\mygray}
+\setbeamercolor{item}{fg=\sndcol}
+\setbeamercolor{enumerate item}{fg=\sndcol}
+\setbeamercolor{alerted text}{fg=\sndcol}
+\setbeamercolor{section in toc}{fg=\sndcol}
+\setbeamercolor{caption name}{fg=\sndcol}
+\setbeamercolor{description item}{fg=black}
+\setbeamercolor{normal text}{fg=black}
+\setbeamercolor{example text}{fg=black}
+\setbeamercolor{bibliography entry author}{fg =\sndcol}
+\setbeamercolor{bibliography entry note}{fg =\sndcol}
+\setbeamercolor{bibliography entry location}{fg =\sndcol!60!white}
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~ COMMANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\RequirePackage{bcn_commands}
+
+\newcommand\scite[1]{\alert{\scriptsize #1}} 
+\newcommand\os\onslide
+\newcommand\al\alert
 
 \NewEnviron{Balign}{
   \begin{align*}
@@ -39,19 +65,17 @@
 
 % \animation has to be set in document, e.g. to \transdissolve or {}
 \NewEnviron{Bframe}[2][]{
-  \begin{frame}{#2}{#1} 
+  \begin{frame}{#2}{#1}
     \animation
     \BODY
   \end{frame}
 }
 
-\newcommand{\bfr}[2][]{\begin{frame}{#2}{#1}\transdissolve}
 \newcommand{\beamersection}[1]{
-    \section{#1}
-    \begin{frame} \animation
-        \centering\huge \alert{#1}
-    \end{frame}
+  \section{#1}
+  \begin{frame} \animation
+    \centering \huge \alert{#1}
+  \end{frame}
 }
-
 
 \endinput
