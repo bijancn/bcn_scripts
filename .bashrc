@@ -1,13 +1,22 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN BASHRC ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 # bcn:              bijan@chokoufe.com
 # Recent versions:  https://github.com/bijanc/bcn_scripts
-# Last Change:      2013 Mar 18
+# Last Change:      2013 Mar 31
 #
 # Put me in:
 #             for Unix and OS/2:     ~/.bashrc
 # 
 # bash configuration file. Maintained since 2012.
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~ JAVA CLASSPATH ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+java_path=/home/bijan/Dropbox/Codes/java
+am_tp=$java_path/Amazon-MWS/third-party
+am_bu=$java_path/Amazon-MWS/build/classes/com/amazonservices/mws
+am_pro=$am_bu/products
+export CLASSPATH=$CLASSPATH:$am_tp/*:$am_pro/*:$am_pro/samples/*
+export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~ SHORTHANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 alias gf='gfortran -fopenmp ' 
 alias m='cd .. ; cm; cd bin'
 alias ud='./omega_QCD.opt -scatter "u d -> u d" '
@@ -16,6 +25,7 @@ alias la='ls -lah'
 alias so='source ~/.bashrc'
 alias gitt='gitm ".."'
 alias cm='cit make'
+alias ca='cit ant'
 alias bashrc='vim ~/.bashrc'
 alias vimrc='vim ~/.vimrc'
 alias rgrep='grep -r'
@@ -28,6 +38,7 @@ alias update='sudo apt-get update; sudo apt-get upgrade; sudo apt-get dist-upgra
 alias du_dirs='du {*,.git} -sh | sort -h'
 alias du_subdirs='du -h | sort -h'
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 function gitm () {
   git add -A
   git commit -m "$1"
