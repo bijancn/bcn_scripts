@@ -78,7 +78,7 @@ nmap <silent> <C-X> :call UnCommentLine()<CR>
 vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
 
 " Filetype specific make commands are e.g. in ~/.vim/ftplugin/python.vim
-nmap <Leader>f :w <CR> :make <CR><CR>
+nmap <Leader>m :w <CR> :make <CR><CR>
 
 " Open corresponding html file
 nmap <Leader>v :!google-chrome %<.html<CR><CR>

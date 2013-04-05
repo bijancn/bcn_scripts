@@ -29,7 +29,7 @@ dnl
 divert
 mark(`warning', magenta)
 mark(`Warning', magenta)
-mark(`error', red)
+mark(` error', red)
 mark(`Error', red)
 mark(`gcc', green)
 mark(`jar', green)

@@ -49,7 +49,7 @@ hi Statement	    ctermbg=None        ctermfg=208         cterm=none
 hi Ignore         ctermbg=None        ctermfg=221         cterm=Bold
 hi Type		        ctermbg=None        ctermfg=227         cterm=none
 hi Visual         ctermbg=238         ctermfg=250         cterm=None
-hi ColorColumn    ctermbg=gray 
+hi ColorColumn    ctermbg=232 
 hi CursorColumn   ctermbg=17          ctermfg=white       cterm=NONE 
 hi CursorLine     ctermbg=233                             cterm=none
 hi Folded         ctermbg=238         ctermfg=DarkBlue 
