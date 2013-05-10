@@ -74,8 +74,10 @@ function backup_bcn () {
   cp ~/Dropbox/Codes/LaTeX/localtex/bcn_* $bcn/latex/
 }
 
-function restore_bcn () {
+function restore_this_bcn () {
   bcn=.
+  mkdir ~/.vim/ftplugin/
+  mkdir ~/.vim/colors/
   cp $bcn/.*rc             ~/
   cp $bcn/.vim/*           ~/.vim/
   cp $bcn/.vim/ftplugin/*  ~/.vim/ftplugin/
