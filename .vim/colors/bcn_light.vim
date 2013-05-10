@@ -1,66 +1,65 @@
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN_DARK ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN_LIGHT ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 " bcn:              bijan@chokoufe.com
 " Recent versions:  https://github.com/bijanc/bcn_scripts
 " Last Change:      2013 Mar 15
 "
 " Put me in:
-"             for Unix and OS/2:     ~/.vim/colors/bcn_dark.vim
+"             for Unix and OS/2:     ~/.vim/colors/bcn_light.vim
 "
 " vim color file
-" This color scheme gives you decent colors on dark background
+" This color scheme gives you strong colors on white background
+" Helps in bright environments, where you can't use bcn_dark
 
 " First remove all existing highlighting.
-set background=dark
+set background=light
 hi clear
 if exists("syntax_on")
   syntax reset
 endif
 
-let colors_name = "bcn_dark"
+let colors_name = "bcn_light"
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ COLORS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 " Enable 256 colors
 set t_Co=256
 
-" Setting some colors for dark background. hi == highlight. 
+" Setting some colors for light background. hi == highlight. 
 " To see the color codes, use bcn_color_demo.vim
-hi Normal	        ctermbg=black        ctermfg=254         cterm=none
-hi Cursor         ctermbg=black       ctermfg=17        cterm=None
+hi Normal	        ctermbg=white          ctermfg=16         cterm=none
+"hi Cursor         ctermbg=black       ctermfg=255        cterm=None
 "hi iCursor        ctermbg=17          ctermfg=white        cterm=None
-hi SpecialKey	    ctermbg=None        ctermfg=70          cterm=None
-hi Directory	    ctermfg=86          ctermbg=none        cterm=None
-hi ErrorMsg       ctermfg=160         ctermbg=245         cterm=None
-hi PreProc	      ctermbg=None        ctermfg=5           cterm=None
+hi Directory	    ctermbg=none        ctermfg=57          cterm=None
+hi ErrorMsg       ctermbg=none        ctermfg=160         cterm=None
 hi NonText	      ctermbg=None        ctermfg=105         cterm=Bold
-hi DiffText	      ctermbg=244         ctermfg=165         cterm=None
-hi Todo           ctermbg=None        ctermfg=162         cterm=Bold
-hi Identifier	    ctermbg=None        ctermfg=77          cterm=none
+hi DiffText	      ctermbg=none         ctermfg=170         cterm=None
 hi Underline      ctermbg=None        ctermfg=147         cterm=Italic
-
 hi Conceal        ctermbg=None        ctermfg=magenta 
-hi Search         ctermbg=17          ctermfg=NONE 
-hi LineNr                             ctermfg=gray
+hi Search         ctermbg=117         ctermfg=none 
+hi LineNr         ctermbg=none        ctermfg=245
 hi SpellBad       ctermbg=88
-hi Comment        ctermbg=black       ctermfg=lightblue   cterm=none
+hi Comment        ctermbg=none        ctermfg=33          cterm=none
 hi Error	        ctermbg=none        ctermfg=None        cterm=Bold
-hi Special	      ctermbg=None        ctermfg=green       cterm=none
-hi Constant	      ctermbg=None        ctermfg=1           cterm=None
-hi Statement	    ctermbg=None        ctermfg=208         cterm=none
-hi Ignore         ctermbg=None        ctermfg=221         cterm=Bold
-hi Type		        ctermbg=None        ctermfg=227         cterm=none
-hi Visual         ctermbg=238         ctermfg=250         cterm=None
-hi ColorColumn    ctermbg=gray 
-hi CursorColumn   ctermbg=17          ctermfg=white       cterm=NONE 
-hi CursorLine     ctermbg=233                             cterm=none
-hi Folded         ctermbg=238         ctermfg=DarkBlue 
-hi FoldColumn     ctermbg=238         ctermfg=DarkBlue 
+hi Special	      ctermbg=None        ctermfg=2           cterm=none
+hi Type		        ctermbg=None        ctermfg=20          cterm=none
+hi PreProc	      ctermbg=None        ctermfg=91          cterm=None
+hi SpecialKey	    ctermbg=None        ctermfg=22          cterm=None
+hi Identifier	    ctermbg=None        ctermfg=40          cterm=none
+hi Constant	      ctermbg=None        ctermfg=196         cterm=None
+hi Statement	    ctermbg=None        ctermfg=202         cterm=none
+hi Todo           ctermbg=None        ctermfg=162         cterm=Bold
+hi Ignore         ctermbg=None        ctermfg=220         cterm=Bold
+hi Visual         ctermbg=250         ctermfg=232         cterm=None
+hi ColorColumn    ctermbg=245 
+hi CursorColumn   ctermbg=12          ctermfg=16          cterm=NONE 
+hi CursorLine     ctermbg=253                             cterm=none
+hi Folded         ctermbg=249         ctermfg=17 
+hi FoldColumn     ctermbg=249         ctermfg=17 
 
-
+"hi StatusLine term=reverse,bold cterm=reverse,bold gui=reverse,bold
+"hi StatusLineNC term=reverse cterm=reverse gui=reverse
 
 "hi IncSearch term=reverse cterm=reverse gui=reverse
 "hi ModeMsg term=bold cterm=bold gui=bold
-"hi StatusLine term=reverse,bold cterm=reverse,bold gui=reverse,bold
-"hi StatusLineNC term=reverse cterm=reverse gui=reverse
 "hi VertSplit term=reverse cterm=reverse gui=reverse
 "hi VisualNOS term=underline,bold cterm=underline,bold gui=underline,bold
 "hi lCursor guibg=Cyan guifg=NONE

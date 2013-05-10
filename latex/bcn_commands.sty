@@ -23,6 +23,8 @@
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~ MATH ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
+\DeclareMathOperator{\var}  {Var}
+\DeclareMathOperator{\vol}  {Vol}
 \DeclareMathOperator{\asinh}{asinh}
 \DeclareMathOperator{\acosh}{acosh}
 \DeclareMathOperator{\atanh}{atanh}
@@ -47,6 +49,7 @@
 \newcommand\Log[1]  {\log{\left\{#1\right\}}}
 \newcommand\Exp[1]  {\exp{\left\{#1\right\}}}
 \newcommand\Tanh[1] {\tanh{\left\{#1\right\}}}
+\newcommand\Vol[1] {\vol{\left(#1\right)}}
 
 \newcommand{\deltadist}[1]{\delta\left(#1\right)}
 \newcommand{\heaviside}[1]{\Theta\left(#1\right)}
@@ -102,17 +105,26 @@
 
 \newcommand\Rcite[1]{Ref.~\cite{#1}}
 \newcommand\etal{\textit{et al. }}
+\newcommand\ie{i.e.\;}
+\newcommand\code[1]{\lstinline{#1}}
+\newcommand\cd\code
+\newcommand\pe{{+}\hs{-.15}{=}}
 
 % Spaces
 \newcommand\vs[1]{\vspace{#1 em}} 
 \newcommand\hs[1]{\hspace{#1 em}} 
 
 % Formatting
+\newcommand\fl{\flushleft}
+\newcommand\fr{\flushright}
+\newcommand\ct{\centering}
 \newcommand\mr[1]{\mathrm{#1}} 
-\newcommand{\ems}[1]{\ensuremath{#1}}
+\newcommand\mT\mathtt
+\newcommand\mC\mathcal
 
 % Math text
-\newcommand{\T}[1]{\text{#1}}
+\newcommand{\ems}[1]{\ensuremath{#1}}
+\newcommand{\T}[1]{\mr{#1}}
 \newcommand{\MT}[1]{\quad\T{#1}\quad}
 \newcommand\with {\MT{with}}
 \newcommand\no {\notag \\ }
