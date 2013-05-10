@@ -12,9 +12,9 @@ export CUBACORES=1
 export PATH=$PATH:$HOME/ocaml
 source /opt/intel/composer_xe_2013.3.163/bin/compilervars.sh intel64
 ip=bchokoufe@wtpp121.physik.uni-wuerzburg.de
-nick_ip=132.187.196.121
-public_ip=wtpp004.physik.uni-wuerzburg.de
-clustr_ip=wtpp020.physik.uni-wuerzburg.de
+nick_ip=bchokoufe@132.187.196.121
+public_ip=bchokoufe@wtpp004.physik.uni-wuerzburg.de
+clustr_ip=bchokoufe@wtpp020.physik.uni-wuerzburg.de
 home_ip=192.168.2.152
 ocaml_url=http://caml.inria.fr/pub/distrib/ocaml-4.00/ocaml-4.00.1.tar.gz
 omega_url=http://www.hepforge.org/archive/whizard/omega-2.1.1.tar.gz
@@ -39,6 +39,7 @@ alias gitt='gitm ".."'
 alias cm='cit make'
 alias mc='cit "make clean"'
 alias ca='cit ant'
+alias md='mkdir'
 alias bashrc='vim ~/.bashrc'
 alias vimrc='vim ~/.vimrc'
 alias rgrep='grep -r'
@@ -107,15 +108,20 @@ function backup_bcn () {
   cp ~/.vim/bcn_* $bcn/.vim/
   cp ~/.vim/ftplugin/* $bcn/.vim/ftplugin/
   cp ~/.vim/colors/bcn_* $bcn/.vim/colors/
+  cp ~/.ssh/config $bcn/.ssh/config
   cp ~/Dropbox/Codes/LaTeX/localtex/bcn_* $bcn/latex/
 }
 
 function restore_bcn () {
   bcn=.
+  md ~/.vim/ftplugin
+  md ~/.vim/colors
+  md ~/.ssh
   cp $bcn/.*rc             ~/
   cp $bcn/.vim/*           ~/.vim/
   cp $bcn/.vim/ftplugin/*  ~/.vim/ftplugin/
   cp $bcn/.vim/colors/*    ~/.vim/colors/
+  cp $bcn/.ssh/config      ~/.ssh/config
 }
 
 #alias vim="vim --servername SERVER"
