@@ -9,9 +9,10 @@
 # bash configuration file. Maintained since 2012.
 
 export CUBACORES=1
-export PATH=$PATH:$HOME/ocaml
+export PATH=$PATH:$HOME/ocaml/bin
 source /opt/intel/composer_xe_2013.3.163/bin/compilervars.sh intel64
 ip=bchokoufe@wtpp121.physik.uni-wuerzburg.de
+ohl_ip=bchokoufe@wtpp125.physik.uni-wuerzburg.de
 nick_ip=bchokoufe@132.187.196.121
 public_ip=bchokoufe@wtpp004.physik.uni-wuerzburg.de
 clustr_ip=bchokoufe@wtpp020.physik.uni-wuerzburg.de
@@ -30,31 +31,42 @@ export CLASSPATH=$CLASSPATH:$am_tp/*:$am_pro/*:$am_pro/samples/*
 export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ SHORTHANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-alias gf='gfortran -fopenmp ' 
+alias t='/usr/bin/time'
 alias m='cd .. ; cm; cd bin'
+alias gf='gfortran -fopenmp ' 
 alias ud='./omega_QCD.opt -scatter "u d -> u d" '
 alias ll='ls -lh'
 alias la='ls -lah'
 alias so='source ~/.bashrc'
-alias gitt='gitm ".."'
 alias cm='cit make'
 alias mc='cit "make clean"'
 alias ca='cit ant'
 alias md='mkdir'
-alias bashrc='vim ~/.bashrc'
-alias vimrc='vim ~/.vimrc'
-alias rgrep='grep -r'
 alias rm='rm -v'
 alias mv='mv -v'
 alias cp='cp -v'
+alias wc3='wine /media/bijan/1CD00B3ED00B1DA0/Documents\ and\ Settings/Bijan/Desktop/Warcraft\ III\ phil\ aktuell/Frozen\ Throne.exe'
+alias briss='java -jar ~/Dropbox/Programs/briss-0.9/briss-0.9.jar'
+alias gitt='gitm ".."'
+alias bashrc='vim ~/.bashrc'
+alias vimrc='vim ~/.vimrc'
+alias rgrep='grep -r'
 alias ddiff='diff -x *.swp -q'
-alias t='/usr/bin/time'
 alias update='sudo apt-get update; sudo apt-get upgrade; sudo apt-get dist-upgrade'
 alias du_dirs='du {*,.git} -sh | sort -h'
 alias du_subdirs='du -h | sort -h'
-alias wc3='wine /media/bijan/1CD00B3ED00B1DA0/Documents\ and\ Settings/Bijan/Desktop/Warcraft\ III\ phil\ aktuell/Frozen\ Throne.exe'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+function bisect () {
+  lines=$(wc -l "$1")
+  filelength=`expr length $1`
+  lines=${lines:0:-$filelength}
+  lines=$(expr $lines / 2)
+  echo "Bisecting $1 in two files with $lines lines each."
+  split -dl $lines "$1" "$1."
+}
+
 function wtz () {
   wget "$1" -o 'temp.tar.gz'
   tar -xvzf 'temp.tar.gz'
@@ -101,6 +113,14 @@ function ev () {
 function print_vim () {
   vim -c 'hardcopy > ~/output.ps' -c quit "$1"
   ps2pdf ~/output.ps ~/"$1".pdf
+}
+
+function ff () {
+  find -iname "$1"
+}
+
+function fa () {
+  find -iname "*$1*"
 }
 
 function backup_bcn () {
