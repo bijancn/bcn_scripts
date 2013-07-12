@@ -26,10 +26,10 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jcf/vim-latex'
-Bundle 'Lokaltog/vim-easymotion'
+"Bundle 'Lokaltog/vim-easymotion'
 Bundle 'comments.vim'
 Bundle 'YankRing.vim'
-Bundle 'taglist.vim'
+"Bundle 'taglist.vim'
 
 " This allows backspacing over everything in insert mode. Don't insert spaces.
 set backspace=indent,eol,start
@@ -78,7 +78,7 @@ nmap <silent> <C-X> :call UnCommentLine()<CR>
 vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
 
 " Filetype specific make commands are e.g. in ~/.vim/ftplugin/python.vim
-nmap <Leader>m :w <CR> :make <CR><CR>
+nmap <Leader>f :w <CR> :make <CR><CR>
 
 " Open corresponding html file
 nmap <Leader>v :!google-chrome %<.html<CR><CR>
@@ -286,6 +286,9 @@ let g:Tex_Env_slide = "\\begin{Bframe}{<++>}\<CR><++>\<CR>\\end{Bframe}"
 let g:Tex_Env_columns = 
  \"\\begin{columns}\<CR>\\column{.5\\textwidth}<++>\<CR>\\column{.5\\textwidth}\<CR>\\end{columns}"
 let g:Tex_Com_includegraphics = "\\includegraphics[width=<++>\\textwidth]{<+filename+>}"
+
+" Automatically calling mpost to compute Feynman diagrams
+let g:Tex_CompileRule_pdf='pdflatex -enable-write18 -halt-on-error'
 
 " Conceal: a accents, d delimiters, g Greek, m math and NOT s super/subscripts
 let g:tex_conceal="dgm"

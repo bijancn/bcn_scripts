@@ -14,6 +14,7 @@ source /opt/intel/composer_xe_2013.3.163/bin/compilervars.sh intel64
 ip=bchokoufe@wtpp121.physik.uni-wuerzburg.de
 ohl_ip=bchokoufe@wtpp125.physik.uni-wuerzburg.de
 nick_ip=bchokoufe@132.187.196.121
+ott_ip=bchokoufe@132.187.196.113
 public_ip=bchokoufe@wtpp004.physik.uni-wuerzburg.de
 clustr_ip=bchokoufe@wtpp020.physik.uni-wuerzburg.de
 home_ip=192.168.2.152
@@ -31,8 +32,11 @@ export CLASSPATH=$CLASSPATH:$am_tp/*:$am_pro/*:$am_pro/samples/*
 export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ SHORTHANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+alias rs='rem_show'
+alias go='gnome-open'
 alias t='/usr/bin/time'
 alias m='cd .. ; cm; cd bin'
+alias x='exit'
 alias gf='gfortran -fopenmp ' 
 alias ud='./omega_QCD.opt -scatter "u d -> u d" '
 alias ll='ls -lh'
@@ -55,6 +59,7 @@ alias ddiff='diff -x *.swp -q'
 alias update='sudo apt-get update; sudo apt-get upgrade; sudo apt-get dist-upgrade'
 alias du_dirs='du {*,.git} -sh | sort -h'
 alias du_subdirs='du -h | sort -h'
+#alias find_most_used='tr ' ' '\ ' | tr '[:upper:]' '[:lower:]' |  tr -d '[:punct:]' | grep -v '[^a-z]' | sort | uniq -c | sort -rn |head -n 20'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
@@ -126,10 +131,9 @@ function fa () {
 function backup_bcn () {
   bcn=~/Dropbox/Programs/bcn_scripts
   cp ~/.*rc $bcn
-  cp ~/.vim/bcn_* $bcn/.vim/
-  cp ~/.vim/ftplugin/* $bcn/.vim/ftplugin/
-  cp ~/.vim/colors/bcn_* $bcn/.vim/colors/
+  cp ~/.vim/* $bcn/.vim/ -r
   cp ~/.ssh/config $bcn/.ssh/config
+  cp ~/.matplotlib/matplotlibrc $bcn/.matplotlib/matplotlibrc
   cp ~/Dropbox/Codes/LaTeX/localtex/bcn_* $bcn/latex/
 }
 
@@ -138,13 +142,17 @@ function restore_bcn () {
   md ~/.vim/ftplugin
   md ~/.vim/colors
   md ~/.ssh
-  cp $bcn/.*rc             ~/
-  cp $bcn/.vim/*           ~/.vim/
-  cp $bcn/.vim/ftplugin/*  ~/.vim/ftplugin/
-  cp $bcn/.vim/colors/*    ~/.vim/colors/
-  cp $bcn/.ssh/config      ~/.ssh/config
+  md ~/.matplotlib
+  cp $bcn/.*rc                     ~/
+  cp $bcn/.vim/*                   ~/.vim/ -r
+  cp $bcn/.ssh/config              ~/.ssh/config
+  cp $bcn/.matplotlib/matplotlibrc ~/.matplotlib/matplotlibrc
 }
 
+function most_used_words () {
+  cat $1 | tr ' ' '\\ ' | tr '\[:upper:\]' '\[:lower:\]' |  tr -d
+  '\[:punct:\]' | grep -v '\[^a-z\]' |  sort | uniq -c | sort -rn | head -n 20
+}
 #alias vim="vim --servername SERVER"
 #alias java='java -cp ~/Ubuntu\ One/Codes/Java/mysql-connector-java-5.1.20-bin.jar:.'
 #alias mountwin='sudo mount /dev/sda2 /media/win7/'

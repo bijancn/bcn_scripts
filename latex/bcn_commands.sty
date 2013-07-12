@@ -29,6 +29,7 @@
 \DeclareMathOperator{\acosh}{acosh}
 \DeclareMathOperator{\atanh}{atanh}
 \DeclareMathOperator{\li}   {Li}
+\DeclareMathOperator{\diag}   {diag}
 \DeclareMathOperator{\tr}   {Tr}
 \DeclareMathOperator{\sech}{sech}
 \DeclareMathOperator{\sgn}{sgn}
@@ -38,16 +39,20 @@
 \newcommand\tder[2]     {\ems{\frac{\D #1}{\D #2}}}
 \newcommand\Int[2][]      {\ems{\int#1 #2\:}}
 
+\let\vect\vec
 \renewcommand{\vec}[1]{\ems{\boldsymbol{#1} }}
 \newcommand{\norm}[1] {\ems{\left\lVert #1 \right\rVert }}
 \newcommand{\abs}[1]  {\ems{\left\lvert #1 \right\rvert }}
 \newcommand{\mean}[1] {\ems{\left< #1 \right>}}
 \newcommand{\order}[1]{\ems{\mathcal{O}\left(#1\right)}}
+\newcommand{\transpose}{\T{T}}
 
 \newcommand\Sgn[1]  {\sgn{\left\{#1\right\}}}
 \newcommand\Tr[1]   {\tr{\left[#1\right]}}
 \newcommand\Log[1]  {\log{\left\{#1\right\}}}
 \newcommand\Exp[1]  {\exp{\left\{#1\right\}}}
+\newcommand\Cos[1]  {\cos{\left(#1\right)}}
+\newcommand\Sin[1]  {\sin{\left(#1\right)}}
 \newcommand\Tanh[1] {\tanh{\left\{#1\right\}}}
 \newcommand\Vol[1] {\vol{\left(#1\right)}}
 
@@ -106,9 +111,11 @@
 \newcommand\Rcite[1]{Ref.~\cite{#1}}
 \newcommand\etal{\textit{et al. }}
 \newcommand\ie{i.e.\;}
+\newcommand\eg{e.g.\;}
 \newcommand\code[1]{\lstinline{#1}}
 \newcommand\cd\code
 \newcommand\pe{{+}\hs{-.15}{=}}
+\newcommand\tp\transpose
 
 % Spaces
 \newcommand\vs[1]{\vspace{#1 em}} 
@@ -137,6 +144,7 @@
 \newcommand{\I}{\ems{\T i}}
 \newcommand{\D}{\ems{\T d}}
 \newcommand{\1}{\mathbbm 1}
+\newcommand{\R}{\mathbb R}
 \newcommand{\Hs}[1]{\heaviside{#1}}
 \newcommand{\dd}[1]{\deltadist{#1}}
 \newcommand{\nfrac}[2]{\ems{\nicefrac{#1}{#2}}}
