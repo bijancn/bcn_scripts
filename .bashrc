@@ -11,15 +11,17 @@
 export CUBACORES=1
 export PATH=$PATH:$HOME/ocaml/bin
 source /opt/intel/composer_xe_2013.3.163/bin/compilervars.sh intel64
-ip=bchokoufe@wtpp121.physik.uni-wuerzburg.de
-ohl_ip=bchokoufe@wtpp125.physik.uni-wuerzburg.de
-nick_ip=bchokoufe@132.187.196.121
-ott_ip=bchokoufe@132.187.196.113
-public_ip=bchokoufe@wtpp004.physik.uni-wuerzburg.de
-clustr_ip=bchokoufe@wtpp020.physik.uni-wuerzburg.de
+std_usr=bchokoufe
+ip=$std_usr@wtpp121.physik.uni-wuerzburg.de
+ohl=$std_usr@wtpp125.physik.uni-wuerzburg.de
+nick=$std_usr@132.187.196.121
+otter=$std_usr@132.187.196.113
+public=$std_usr@wtpp004.physik.uni-wuerzburg.de
+clustr=$std_usr@wtpp020.physik.uni-wuerzburg.de
+hepforge=$std_usr@login.hepforge.org
 home_ip=192.168.2.152
-ocaml_url=http://caml.inria.fr/pub/distrib/ocaml-4.00/ocaml-4.00.1.tar.gz
-omega_url=http://www.hepforge.org/archive/whizard/omega-2.1.1.tar.gz
+url_ocaml=http://caml.inria.fr/pub/distrib/ocaml-4.00/ocaml-4.00.1.tar.gz
+url_hep_omega=http://www.hepforge.org/archive/whizard/omega-2.1.1.tar.gz
 wingames='/media/bijan/1CD00B3ED00B1DA0/Documents\ and\ Settings/Bijan/Desktop'
 bcn=$HOME/Dropbox/Programs/bcn_scripts
 
@@ -34,13 +36,16 @@ export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ SHORTHANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 alias rs='rem_show'
 alias go='gnome-open'
+alias ac='autoreconf'
 alias t='/usr/bin/time'
-alias m='cd .. ; cm; cd bin'
+alias c='./configure'
+alias m='cm'
 alias x='exit'
 alias gf='gfortran -fopenmp ' 
 alias ud='./omega_QCD.opt -scatter "u d -> u d" '
 alias ll='ls -lh'
 alias la='ls -lah'
+alias le='less'
 alias so='source ~/.bashrc'
 alias cm='cit make'
 alias mc='cit "make clean"'
@@ -130,11 +135,12 @@ function fa () {
 
 function backup_bcn () {
   bcn=~/Dropbox/Programs/bcn_scripts
-  cp ~/.*rc $bcn
+  cp ~/.*rc $bcn/
   cp ~/.vim/* $bcn/.vim/ -r
+  cp ~/.config/terminator/* $bcn/.config/terminator/
+  cp ~/Dropbox/Codes/LaTeX/localtex/bcn_* $bcn/latex/
   cp ~/.ssh/config $bcn/.ssh/config
   cp ~/.matplotlib/matplotlibrc $bcn/.matplotlib/matplotlibrc
-  cp ~/Dropbox/Codes/LaTeX/localtex/bcn_* $bcn/latex/
 }
 
 function restore_bcn () {
@@ -143,8 +149,10 @@ function restore_bcn () {
   md ~/.vim/colors
   md ~/.ssh
   md ~/.matplotlib
+  md ~/.config/terminator
   cp $bcn/.*rc                     ~/
   cp $bcn/.vim/*                   ~/.vim/ -r
+  cp $bcn/.config/terminator/*     ~/.config/terminator/
   cp $bcn/.ssh/config              ~/.ssh/config
   cp $bcn/.matplotlib/matplotlibrc ~/.matplotlib/matplotlibrc
 }
@@ -152,6 +160,12 @@ function restore_bcn () {
 function most_used_words () {
   cat $1 | tr ' ' '\\ ' | tr '\[:upper:\]' '\[:lower:\]' |  tr -d
   '\[:punct:\]' | grep -v '\[^a-z\]' |  sort | uniq -c | sort -rn | head -n 20
+}
+
+function shrink_pdf () {
+fname=$(basename $1)
+fbname=${fname%.*}
+gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dPDFSETTINGS=/ebook -sOutputFile=$fbname-small.pdf $1
 }
 #alias vim="vim --servername SERVER"
 #alias java='java -cp ~/Ubuntu\ One/Codes/Java/mysql-connector-java-5.1.20-bin.jar:.'

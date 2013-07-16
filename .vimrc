@@ -24,11 +24,11 @@ filetype off                   " required for Vundle!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'gmarik/vundle'
-Bundle 'scrooloose/nerdtree'
-Bundle 'jcf/vim-latex'
-"Bundle 'Lokaltog/vim-easymotion'
 Bundle 'comments.vim'
+Bundle 'jcf/vim-latex'
 Bundle 'YankRing.vim'
+Bundle 'nw.vim'
+Bundle 'scrooloose/nerdtree'
 "Bundle 'taglist.vim'
 
 " This allows backspacing over everything in insert mode. Don't insert spaces.
