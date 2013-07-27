@@ -7,4 +7,5 @@ endif
 
 augroup filetypedetect
   au! BufRead,BufNewFile *.nw     setfiletype nw 
+  au! BufRead,BufNewFile *.md     setfiletype markdown 
 augroup END

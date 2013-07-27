@@ -1,16 +1,29 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN BASHRC ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 # bcn:              bijan@chokoufe.com
 # Recent versions:  https://github.com/bijanc/bcn_scripts
-# Last Change:      2013 May 10
+# Last Change:      2013 Jul 27
 #
 # Put me in:
-#             for Unix and OS/2:     ~/.bashrc
+#             for Linux:     ~/.bashrc
 # 
 # bash configuration file. Maintained since 2012.
 
+eval `dircolors $HOME/.dir_colorsrc`
+source /opt/intel/composer_xe_2013.3.163/bin/compilervars.sh intel64
 export CUBACORES=1
 export PATH=$PATH:$HOME/ocaml/bin
-source /opt/intel/composer_xe_2013.3.163/bin/compilervars.sh intel64
+wingames='/data/Games'
+bcn=$HOME/Dropbox/Programs/bcn_scripts
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~ JAVA CLASSPATH ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+java_path=$HOME/Dropbox/Codes/java
+am_tp=$java_path/Amazon-MWS/third-party
+am_bu=$java_path/Amazon-MWS/build/classes/com/amazonservices/mws
+am_pro=$am_bu/products
+export CLASSPATH=$CLASSPATH:$am_tp/*:$am_pro/*:$am_pro/samples/*
+export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~ IP's ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 std_usr=bchokoufe
 ip=$std_usr@wtpp121.physik.uni-wuerzburg.de
 ohl=$std_usr@wtpp125.physik.uni-wuerzburg.de
@@ -22,25 +35,16 @@ hepforge=$std_usr@login.hepforge.org
 home_ip=192.168.2.152
 url_ocaml=http://caml.inria.fr/pub/distrib/ocaml-4.00/ocaml-4.00.1.tar.gz
 url_hep_omega=http://www.hepforge.org/archive/whizard/omega-2.1.1.tar.gz
-wingames='/media/bijan/1CD00B3ED00B1DA0/Documents\ and\ Settings/Bijan/Desktop'
-bcn=$HOME/Dropbox/Programs/bcn_scripts
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~ JAVA CLASSPATH ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-java_path=$HOME/Dropbox/Codes/java
-am_tp=$java_path/Amazon-MWS/third-party
-am_bu=$java_path/Amazon-MWS/build/classes/com/amazonservices/mws
-am_pro=$am_bu/products
-export CLASSPATH=$CLASSPATH:$am_tp/*:$am_pro/*:$am_pro/samples/*
-export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ SHORTHANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-alias rs='rem_show'
-alias go='gnome-open'
-alias ac='autoreconf'
 alias t='/usr/bin/time'
 alias c='./configure'
 alias m='cm'
 alias x='exit'
+alias rs='rem_show'
+alias rg='ranger'
+alias go='gnome-open'
+alias ac='autoreconf'
 alias gf='gfortran -fopenmp ' 
 alias ud='./omega_QCD.opt -scatter "u d -> u d" '
 alias ll='ls -lh'
@@ -54,16 +58,19 @@ alias md='mkdir'
 alias rm='rm -v'
 alias mv='mv -v'
 alias cp='cp -v'
-alias wc3='wine /media/bijan/1CD00B3ED00B1DA0/Documents\ and\ Settings/Bijan/Desktop/Warcraft\ III\ phil\ aktuell/Frozen\ Throne.exe'
+alias wc3='wine '$wingames'/Warcraft\ III/Frozen\ Throne.exe'
+alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
+alias sc='cd '$wingames'/Stronghold\ Crusader/; wine Stronghold\ Crusader.exe'
+alias ut='wine '$wingames'/UnrealTournament/System/UnrealTournament.exe'
 alias briss='java -jar ~/Dropbox/Programs/briss-0.9/briss-0.9.jar'
 alias gitt='gitm ".."'
 alias bashrc='vim ~/.bashrc'
 alias vimrc='vim ~/.vimrc'
 alias rgrep='grep -r'
 alias ddiff='diff -x *.swp -q'
-alias update='sudo apt-get update; sudo apt-get upgrade; sudo apt-get dist-upgrade'
 alias du_dirs='du {*,.git} -sh | sort -h'
 alias du_subdirs='du -h | sort -h'
+alias update='sudo apt-get update; sudo apt-get upgrade; sudo apt-get dist-upgrade'
 #alias find_most_used='tr ' ' '\ ' | tr '[:upper:]' '[:lower:]' |  tr -d '[:punct:]' | grep -v '[^a-z]' | sort | uniq -c | sort -rn |head -n 20'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
@@ -113,7 +120,7 @@ function sshwue () {
 }
 
 function sshhome () {
-  ssh -X home_ip
+  ssh -X $home_ip
 }
 
 function ev () {
@@ -134,13 +141,16 @@ function fa () {
 }
 
 function backup_bcn () {
-  bcn=~/Dropbox/Programs/bcn_scripts
+  bcn=~/Dropbox/git_bcn_scripts
   cp ~/.*rc $bcn/
   cp ~/.vim/* $bcn/.vim/ -r
+  # Other things to backup in config?
   cp ~/.config/terminator/* $bcn/.config/terminator/
-  cp ~/Dropbox/Codes/LaTeX/localtex/bcn_* $bcn/latex/
+  cp ~/Dropbox/codes/LaTeX/localtex/bcn_* $bcn/latex/
   cp ~/.ssh/config $bcn/.ssh/config
+  cp ~/.ssh/id_rsa.pub $bcn/.ssh/id_rsa.pub
   cp ~/.matplotlib/matplotlibrc $bcn/.matplotlib/matplotlibrc
+  sudo cp /etc/fstab ~/Dropbox/scripts/
 }
 
 function restore_bcn () {
@@ -153,7 +163,7 @@ function restore_bcn () {
   cp $bcn/.*rc                     ~/
   cp $bcn/.vim/*                   ~/.vim/ -r
   cp $bcn/.config/terminator/*     ~/.config/terminator/
-  cp $bcn/.ssh/config              ~/.ssh/config
+  cp $bcn/.ssh/*                    ~/.ssh/
   cp $bcn/.matplotlib/matplotlibrc ~/.matplotlib/matplotlibrc
 }
 
