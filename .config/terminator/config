@@ -1,0 +1,32 @@
+[global_config]
+  handle_size = 2
+  dbus = True
+  focus = system
+  borderless = True
+  title_transmit_bg_color = "#000000"
+  tab_position = bottom
+  inactive_color_offset = 0.94
+  title_inactive_bg_color = "#666666"
+[keybindings]
+  switch_to_tab_6 = <Alt>6
+  switch_to_tab_7 = <Alt>7
+  switch_to_tab_4 = <Alt>4
+  switch_to_tab_5 = <Alt>5
+  switch_to_tab_2 = <Alt>2
+  switch_to_tab_3 = <Alt>3
+  switch_to_tab_1 = <Alt>1
+  switch_to_tab_8 = <Alt>8
+  switch_to_tab_9 = <Alt>9
+[profiles]
+  [[default]]
+    scrollbar_position = hidden
+    palette = "#262626:#ff2727:#5dbf00:#fff000:#3f94ff:#ec6bff:#00fcff:#d3d7cf:#555753:#ff7c7c:#7eff00:#fffc99:#9ecdff:#ffc4f9:#b2ffff:#ffffff"
+    background_darkness = 0.85
+    background_type = transparent
+    use_system_font = False
+    foreground_color = "#ffffff"
+    show_titlebar = False
+    font = Liberation Mono 11
+    background_color = "#171717"
+    cursor_blink = False
+    scrollback_infinite = True

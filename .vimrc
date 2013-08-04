@@ -19,7 +19,7 @@ endif
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
-" Vundle can be invoked by :BundleInstall. Updates with :BundleInstall!
+" Vundle can be invoked by :BundleInstall. Updates with :BundleUpdate!
 filetype off                   " required for Vundle!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -101,6 +101,10 @@ no <right> >>
 
 " Don't use Ex-mode, use Q for formatting
 map Q gq
+
+command W :execute 'silent w !sudo tee > /dev/null %'
+command Wq :execute ':W' | :q!
+command WQ :Wq
 
 " Yank from the cursor to the end of the line
 map Y y$

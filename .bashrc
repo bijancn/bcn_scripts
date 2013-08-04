@@ -9,11 +9,11 @@
 # bash configuration file. Maintained since 2012.
 
 eval `dircolors $HOME/.dir_colorsrc`
-source /opt/intel/composer_xe_2013.3.163/bin/compilervars.sh intel64
+#source /opt/intel/composer_xe_2013.3.163/bin/compilervars.sh intel64
 export CUBACORES=1
 export PATH=$PATH:$HOME/ocaml/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs/
 wingames='/data/Games'
-bcn=$HOME/Dropbox/Programs/bcn_scripts
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ JAVA CLASSPATH ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 java_path=$HOME/Dropbox/Codes/java
@@ -33,13 +33,12 @@ public=$std_usr@wtpp004.physik.uni-wuerzburg.de
 clustr=$std_usr@wtpp020.physik.uni-wuerzburg.de
 hepforge=$std_usr@login.hepforge.org
 home_ip=192.168.2.152
-url_ocaml=http://caml.inria.fr/pub/distrib/ocaml-4.00/ocaml-4.00.1.tar.gz
-url_hep_omega=http://www.hepforge.org/archive/whizard/omega-2.1.1.tar.gz
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ SHORTHANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 alias t='/usr/bin/time'
 alias c='./configure'
-alias m='cm'
+alias p='python'
+alias m='cit make'
 alias x='exit'
 alias rs='rem_show'
 alias rg='ranger'
@@ -51,13 +50,12 @@ alias ll='ls -lh'
 alias la='ls -lah'
 alias le='less'
 alias so='source ~/.bashrc'
-alias cm='cit make'
 alias mc='cit "make clean"'
 alias ca='cit ant'
 alias md='mkdir'
 alias rm='rm -v'
 alias mv='mv -v'
-alias cp='cp -v'
+#alias cp='cp -v'
 alias wc3='wine '$wingames'/Warcraft\ III/Frozen\ Throne.exe'
 alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 alias sc='cd '$wingames'/Stronghold\ Crusader/; wine Stronghold\ Crusader.exe'
@@ -155,6 +153,7 @@ function backup_bcn () {
 
 function restore_bcn () {
   bcn=.
+  md ~/.vim
   md ~/.vim/ftplugin
   md ~/.vim/colors
   md ~/.ssh
@@ -162,8 +161,8 @@ function restore_bcn () {
   md ~/.config/terminator
   cp $bcn/.*rc                     ~/
   cp $bcn/.vim/*                   ~/.vim/ -r
-  cp $bcn/.config/terminator/*     ~/.config/terminator/
-  cp $bcn/.ssh/*                    ~/.ssh/
+  cp $bcn/.config/terminator/*     ~/.config/terminator/ -r
+  cp $bcn/.ssh/*                   ~/.ssh/
   cp $bcn/.matplotlib/matplotlibrc ~/.matplotlib/matplotlibrc
 }
 

@@ -24,8 +24,10 @@ set t_Co=256
 
 " Setting some colors for dark background. hi == highlight. 
 " To see the color codes, use bcn_color_demo.vim
-hi Normal	        ctermbg=black        ctermfg=254         cterm=none
-hi Cursor         ctermbg=black       ctermfg=17        cterm=None
+"hi Normal	        ctermbg=black        ctermfg=254         cterm=none
+hi Normal	        ctermbg=none        ctermfg=254         cterm=none
+"hi Cursor         ctermbg=black       ctermfg=17        cterm=None
+hi Cursor         ctermbg=none       ctermfg=17        cterm=None
 "hi iCursor        ctermbg=17          ctermfg=white        cterm=None
 hi SpecialKey	    ctermbg=None        ctermfg=70          cterm=None
 hi Directory	    ctermfg=86          ctermbg=none        cterm=None
@@ -41,7 +43,7 @@ hi Conceal        ctermbg=None        ctermfg=magenta
 hi Search         ctermbg=17          ctermfg=NONE 
 hi LineNr                             ctermfg=gray
 hi SpellBad       ctermbg=88
-hi Comment        ctermbg=black       ctermfg=lightblue   cterm=none
+hi Comment        ctermbg=none       ctermfg=lightblue   cterm=none
 hi Error	        ctermbg=none        ctermfg=None        cterm=Bold
 hi Special	      ctermbg=None        ctermfg=green       cterm=none
 hi Constant	      ctermbg=None        ctermfg=1           cterm=None
