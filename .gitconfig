@@ -1,0 +1,17 @@
+[user]
+	email = bijan@chokoufe.com
+	name = Bijan Chokoufe Nejad
+[core]
+	editor = vim
+[merge]
+	tool = meld
+[push]
+	default = simple
+[alias]
+  ci = commit
+[alias]
+  pullhard = !git fetch --all && git reset --hard origin/master
+[alias]
+  new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+[alias]
+  graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"

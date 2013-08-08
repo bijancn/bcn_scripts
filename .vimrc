@@ -272,11 +272,11 @@ let fortran_fold_conditionals=1
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ VIM-LATEX ~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Settings for vim-latex. \ll starts pdflatex
-let g:Tex_DefaultTargetFormat='pdf'        
+let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_MultipleCompileFormats='dvi,pdf,aux' 
 " How many warnings are ignored.
 " 1. underfull 2. overfull 3. floating objects 4. requested packages
-let g:Tex_IgnoreLevel=2  
+let g:Tex_IgnoreLevel=2
 let g:Tex_flavor='latex'
 let g:Tex_BibtexFlavor ='biber'
 

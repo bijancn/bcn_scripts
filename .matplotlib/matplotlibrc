@@ -291,7 +291,9 @@ legend.handlelength  : 1.2     # the length of the legend lines in fraction of f
 #legend.handletextsep : 0.02   # deprecated; the space between the legend line and legend text
 legend.handletextpad : 0.7    # the space between the legend line and legend text in fraction of fontsize
 #legend.axespad       : 0.02   # deprecated; the border between the axes and legend edge
-legend.borderaxespad : 1.2   # the border between the axes and legend edge in fraction of fontsize
+legend.borderaxespad : 0.4   # the border between the axes and legend edge in fraction of fontsize
+#This might be a better default
+#legend.borderaxespad : 1.2   # the border between the axes and legend edge in fraction of fontsize
 #legend.columnspacing : 2.    # the border between the axes and legend edge in fraction of fontsize
 #legend.shadow        : False
 #legend.frameon       : False   # whether or not to draw a frame around legend

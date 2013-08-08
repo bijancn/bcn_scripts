@@ -25,10 +25,29 @@ export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ IP's ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 std_usr=bchokoufe
+wue=$std_usr@132.187.196
 ip=$std_usr@wtpp121.physik.uni-wuerzburg.de
 ohl=$std_usr@wtpp125.physik.uni-wuerzburg.de
-nick=$std_usr@132.187.196.121
-otter=$std_usr@132.187.196.113
+denner=$wue.133
+nick=$wue.121                  # int_quad_core, free
+otter=$wue.113                 # rechnet
+fabian=$wue.172                # rechnet
+pbaerwald=$wue.139             # rechnet
+fnstaub=$wue.112               # rechnet
+scharf=$wue.183                # rechnet
+scharf_workers2=$wue.184       # rechnet
+scharf_workers3=$wue.182       # rechnet
+scharf_workers4=$wue.113       # rechnet
+scharf_workers5=$wue.111       # rechnet
+scharf_workers6=$wue.110       # rechnet
+csturm=$wue.127                # rechnet
+ddas=$wue.120                  # rechnet
+amd_dual_core=$wue.141         # free
+int_quad_core1=$wue.138        # free
+int_quad_core2=$wue.143        # aschenkel, free
+int_quad_core3=$wue.134        # free
+int_quad_core3=$wue.125        # free
+int_i7=$wue.171                # mauricio, free
 public=$std_usr@wtpp004.physik.uni-wuerzburg.de
 clustr=$std_usr@wtpp020.physik.uni-wuerzburg.de
 hepforge=$std_usr@login.hepforge.org
@@ -36,8 +55,9 @@ home_ip=192.168.2.152
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ SHORTHANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 alias t='/usr/bin/time'
+alias mt='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: \t%M"'
 alias c='./configure'
-alias p='python'
+alias p='python' 
 alias m='cit make'
 alias x='exit'
 alias rs='rem_show'
@@ -55,12 +75,12 @@ alias ca='cit ant'
 alias md='mkdir'
 alias rm='rm -v'
 alias mv='mv -v'
-#alias cp='cp -v'
 alias wc3='wine '$wingames'/Warcraft\ III/Frozen\ Throne.exe'
 alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 alias sc='cd '$wingames'/Stronghold\ Crusader/; wine Stronghold\ Crusader.exe'
 alias ut='wine '$wingames'/UnrealTournament/System/UnrealTournament.exe'
 alias briss='java -jar ~/Dropbox/Programs/briss-0.9/briss-0.9.jar'
+alias primrun='vblank_mode=0 primusrun'
 alias gitt='gitm ".."'
 alias bashrc='vim ~/.bashrc'
 alias vimrc='vim ~/.vimrc'
@@ -69,9 +89,15 @@ alias ddiff='diff -x *.swp -q'
 alias du_dirs='du {*,.git} -sh | sort -h'
 alias du_subdirs='du -h | sort -h'
 alias update='sudo apt-get update; sudo apt-get upgrade; sudo apt-get dist-upgrade'
+alias all_cpu_info='lscpu; grep -i "model name" /proc/cpuinfo | uniq'
 #alias find_most_used='tr ' ' '\ ' | tr '[:upper:]' '[:lower:]' |  tr -d '[:punct:]' | grep -v '[^a-z]' | sort | uniq -c | sort -rn |head -n 20'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+function running_threads () {
+  ps -eLF | grep ^baduser | wc -l
+}
+
 
 function bisect () {
   lines=$(wc -l "$1")
@@ -113,14 +139,6 @@ function rem_show () {
   ssh -X $ip "evince ~/temp.pdf"
 }
 
-function sshwue () {
-  ssh -X $ip
-}
-
-function sshhome () {
-  ssh -X $home_ip
-}
-
 function ev () {
   evince "$1" > /dev/null &
 }
@@ -141,10 +159,11 @@ function fa () {
 function backup_bcn () {
   bcn=~/Dropbox/git_bcn_scripts
   cp ~/.*rc $bcn/
+  cp ~/.gitconfig $bcn/.gitconfig
   cp ~/.vim/* $bcn/.vim/ -r
   # Other things to backup in config?
   cp ~/.config/terminator/* $bcn/.config/terminator/
-  cp ~/Dropbox/codes/LaTeX/localtex/bcn_* $bcn/latex/
+  cp ~/texmf/tex/latex/bcn_* $bcn/latex/
   cp ~/.ssh/config $bcn/.ssh/config
   cp ~/.ssh/id_rsa.pub $bcn/.ssh/id_rsa.pub
   cp ~/.matplotlib/matplotlibrc $bcn/.matplotlib/matplotlibrc
@@ -158,11 +177,14 @@ function restore_bcn () {
   md ~/.vim/colors
   md ~/.ssh
   md ~/.matplotlib
+  md ~/.config
   md ~/.config/terminator
   cp $bcn/.*rc                     ~/
+  cp $bcn/.gitconfig               ~/.gitconfig
   cp $bcn/.vim/*                   ~/.vim/ -r
   cp $bcn/.config/terminator/*     ~/.config/terminator/ -r
-  cp $bcn/.ssh/*                   ~/.ssh/
+  cp $bcn/texmf/tex/latex/*        ~/texmf/tex/latex/ -r
+  cp $bcn/.ssh/*                   ~/.ssh/ -r
   cp $bcn/.matplotlib/matplotlibrc ~/.matplotlib/matplotlibrc
 }
 
