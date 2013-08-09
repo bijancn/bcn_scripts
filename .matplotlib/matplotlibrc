@@ -291,9 +291,7 @@ legend.handlelength  : 1.2     # the length of the legend lines in fraction of f
 #legend.handletextsep : 0.02   # deprecated; the space between the legend line and legend text
 legend.handletextpad : 0.7    # the space between the legend line and legend text in fraction of fontsize
 #legend.axespad       : 0.02   # deprecated; the border between the axes and legend edge
-legend.borderaxespad : 0.4   # the border between the axes and legend edge in fraction of fontsize
-#This might be a better default
-#legend.borderaxespad : 1.2   # the border between the axes and legend edge in fraction of fontsize
+legend.borderaxespad : 1.0   # the border between the axes and legend edge in fraction of fontsize
 #legend.columnspacing : 2.    # the border between the axes and legend edge in fraction of fontsize
 #legend.shadow        : False
 #legend.frameon       : False   # whether or not to draw a frame around legend
@@ -309,10 +307,10 @@ figure.figsize   : 9, 6    # figure size in inches
 
 # The figure subplot parameters.  All dimensions are a fraction of the
 # figure width or height
-#figure.subplot.left    : 0.125  # the left side of the subplots of the figure
-#figure.subplot.right   : 0.9    # the right side of the subplots of the figure
-#figure.subplot.bottom  : 0.1    # the bottom of the subplots of the figure
-#figure.subplot.top     : 0.9    # the top of the subplots of the figure
+figure.subplot.left    : 0.08  # the left side of the subplots of the figure
+figure.subplot.right   : 0.99    # the right side of the subplots of the figure
+figure.subplot.bottom  : 0.10    # the bottom of the subplots of the figure
+figure.subplot.top     : 0.98    # the top of the subplots of the figure
 #figure.subplot.wspace  : 0.2    # the amount of width reserved for blank space between subplots
 #figure.subplot.hspace  : 0.2    # the amount of height reserved for white space between subplots
 
@@ -335,6 +333,9 @@ figure.figsize   : 9, 6    # figure size in inches
                                   # when plotting very large data sets,
                                   # especially if they are very gappy.
                                   # It may cause minor artifacts, though.
+                                  # rderaxespad : 0.4   # the border between the
+                                  # axes and legend edge in fraction of fontsize
+                                  #
                                   # A value of 20000 is probably a good
                                   # starting point.
 ### SAVING FIGURES
