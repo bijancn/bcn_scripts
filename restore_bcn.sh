@@ -24,5 +24,5 @@ ln -sf $bcn/.dir_colorsrc               ~/.dir_colorsrc
 ln -sf $bcn/.gntrc                      ~/.gntrc
 ln -sf $bcn/.config/terminator/*        ~/.config/terminator/
 ln -sf $bcn/latex/*                     ~/texmf/tex/latex/
-ln -sf $bcn/.ssh/*                      ~/.ssh/
+ln -sf $bcn/.ssh/config                 ~/.ssh/config
 ln -sf $bcn/.matplotlib/matplotlibrc    ~/.matplotlib/matplotlibrc
