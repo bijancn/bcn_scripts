@@ -13,7 +13,11 @@ eval `dircolors $HOME/.dir_colorsrc`
 export CUBACORES=1
 export PATH=$PATH:$HOME/ocaml/bin
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs/:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib32
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs/
+export FC=$HOME/gcc4.6.1/bin/gfortran
+export GFC='yes'
 wingames='/data/Games'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ JAVA CLASSPATH ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
@@ -58,8 +62,8 @@ home_ip=192.168.2.152
 alias t='/usr/bin/time'
 alias mt='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: \t%M"'
 alias c='./configure'
-alias p='python' 
-alias m='cit make'
+alias p='python'
+alias m='make'
 alias x='exit'
 alias rs='rem_show'
 alias rg='ranger'
@@ -95,10 +99,13 @@ alias all_cpu_info='lscpu; grep -i "model name" /proc/cpuinfo | uniq'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
+function kill_tty () {
+  pid=$(ps -t $1 | grep 'bash' | head -c 6)
+  kill -9 $pid
+}
 function running_threads () {
   ps -eLF | grep ^baduser | wc -l
 }
-
 
 function bisect () {
   lines=$(wc -l "$1")
