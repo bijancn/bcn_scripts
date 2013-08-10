@@ -183,19 +183,19 @@ function fa () {
 }
 
 function backup_bcn () {
-  cp ~/.vimrc $bcn/.vimrc$app
-  cp ~/.gitconfig $bcn/gitconf/.gitconfig$app
-  cp ~/.bashrc $bcn/.bashrc
-  cp ~/.coloritrc $bcn/.coloritrc
-  cp ~/.dir_colorsrc $bcn/.dir_colorsrc
-  cp ~/.gntrc $bcn/.gntrc
-  rsync -a --exclude='*/.git*' ~/.vim/ $bcn/.vim/
+  #cp ~/.vimrc $bcn/.vimrc$app
+  #cp ~/.gitconfig $bcn/gitconf/.gitconfig$app
+  #cp ~/.bashrc $bcn/.bashrc
+  #cp ~/.coloritrc $bcn/.coloritrc
+  #cp ~/.dir_colorsrc $bcn/.dir_colorsrc
+  #cp ~/.gntrc $bcn/.gntrc
   # Other things to backup in config?
-  cp ~/.config/terminator/* $bcn/.config/terminator/
-  cp ~/texmf/tex/latex/bcn_* $bcn/latex/
-  cp ~/.ssh/config $bcn/.ssh/config
-  cp ~/.ssh/id_rsa.pub $bcn/.ssh/id_rsa.pub
-  cp ~/.matplotlib/matplotlibrc $bcn/.matplotlib/matplotlibrc
+  #cp ~/.config/terminator/* $bcn/.config/terminator/
+  #cp ~/texmf/tex/latex/bcn_* $bcn/latex/
+  #cp ~/.ssh/config $bcn/.ssh/config
+  #cp ~/.ssh/id_rsa.pub $bcn/.ssh/id_rsa.pub
+  #cp ~/.matplotlib/matplotlibrc $bcn/.matplotlib/matplotlibrc
+  rsync -a --exclude='*/.git*' ~/.vim/ $bcn/.vim/
   if $mighty
   then
     sudo cp /etc/fstab ~/Dropbox/scripts/
@@ -210,17 +210,16 @@ function restore_bcn () {
   md ~/.matplotlib -p
   md ~/.config/terminator -p
   md ~/texmf/tex/latex -p
-  cp $bcn/.vimrc$app                  ~/.vimrc
-  cp $bcn/gitconf/.gitconfig$app      ~/.gitconfig
-  cp $bcn/.bashrc                     ~/.bashrc
-  cp $bcn/.coloritrc                  ~/.coloritrc
-  cp $bcn/.dir_colorsrc               ~/.dir_colorsrc
-  cp $bcn/.gntrc                      ~/.gntrc
-  cp $bcn/.vim/*                      ~/.vim/ -r
-  cp $bcn/.config/terminator/*        ~/.config/terminator/ -r
-  cp $bcn/latex/*                     ~/texmf/tex/latex/
-  cp $bcn/.ssh/*                      ~/.ssh/ -r
-  cp $bcn/.matplotlib/matplotlibrc    ~/.matplotlib/matplotlibrc
+  ln -f $bcn/.vimrc                      ~/.vimrc
+  ln -f $bcn/gitconf/.gitconfig$app      ~/.gitconfig
+  ln -f $bcn/.bashrc                     ~/.bashrc
+  ln -f $bcn/.coloritrc                  ~/.coloritrc
+  ln -f $bcn/.dir_colorsrc               ~/.dir_colorsrc
+  ln -f $bcn/.gntrc                      ~/.gntrc
+  ln -f $bcn/.config/terminator/*        ~/.config/terminator/
+  ln -f $bcn/latex/*                     ~/texmf/tex/latex/
+  ln -f $bcn/.ssh/*                      ~/.ssh/
+  ln -f $bcn/.matplotlib/matplotlibrc    ~/.matplotlib/matplotlibrc
 }
 
 function most_used_words () {
