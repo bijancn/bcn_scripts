@@ -236,8 +236,10 @@ set printoptions=paper:A4,syntax:y,wrap:y,number:y
 
 map <leader>p :hardcopy <CR>
 
-" Enable concealing, i.e. greek letters are shown as unicode
-set cole=2
+if has("conceal")
+  " Enable concealing, i.e. greek letters are shown as unicode
+  set cole=2
+endif
 
 " GVIM cursor
 set guicursor=n-v-c:block-Cursor
