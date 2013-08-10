@@ -171,7 +171,7 @@ filetype indent on
 syntax on
 
 " Highlight consistent line at 81 char
-if exists('+colorcolumn')
+if exists('&colorcolumn')
   set colorcolumn=81
 else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>81v.\+', -1)
