@@ -14,11 +14,23 @@ export CUBACORES=1
 export PATH=$PATH:$HOME/ocaml/bin
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs/:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib32
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib32
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs/
 export FC=$HOME/gcc4.6.1/bin/gfortran
 export GFC='yes'
 wingames='/data/Games'
+
+if [ "$USER" = "bijancn" ]
+then
+  app=""
+  bcn=~/Dropbox/git_bcn_scripts
+  mighty=true
+else
+  app="_simple"
+  bcn=~/bcn_scripts
+  mighty=false
+fi
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ JAVA CLASSPATH ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 java_path=$HOME/Dropbox/Codes/java
@@ -165,35 +177,44 @@ function fa () {
 }
 
 function backup_bcn () {
-  bcn=~/Dropbox/git_bcn_scripts
-  cp ~/.*rc $bcn/
-  cp ~/.gitconfig $bcn/.gitconfig
-  cp ~/.vim/* $bcn/.vim/ -r
+  cp ~/.vimrc $bcn/.vimrc$app
+  cp ~/.gitconfig $bcn/gitconf/.gitconfig$app
+  cp ~/.bashrc $bcn/.bashrc
+  cp ~/.coloritrc $bcn/.coloritrc
+  cp ~/.dir_colorsrc $bcn/.dir_colorsrc
+  cp ~/.gntrc $bcn/.gntrc
+  rsync -a --exclude='*/.git*' ~/.vim/ $bcn/.vim/
   # Other things to backup in config?
   cp ~/.config/terminator/* $bcn/.config/terminator/
   cp ~/texmf/tex/latex/bcn_* $bcn/latex/
   cp ~/.ssh/config $bcn/.ssh/config
   cp ~/.ssh/id_rsa.pub $bcn/.ssh/id_rsa.pub
   cp ~/.matplotlib/matplotlibrc $bcn/.matplotlib/matplotlibrc
-  sudo cp /etc/fstab ~/Dropbox/scripts/
+  if $mighty
+  then
+    sudo cp /etc/fstab ~/Dropbox/scripts/
+  fi
 }
 
 function restore_bcn () {
   bcn=.
-  md ~/.vim
-  md ~/.vim/ftplugin
-  md ~/.vim/colors
-  md ~/.ssh
-  md ~/.matplotlib
-  md ~/.config
-  md ~/.config/terminator
-  cp $bcn/.*rc                     ~/
-  cp $bcn/.gitconfig               ~/.gitconfig
-  cp $bcn/.vim/*                   ~/.vim/ -r
-  cp $bcn/.config/terminator/*     ~/.config/terminator/ -r
-  cp $bcn/texmf/tex/latex/*        ~/texmf/tex/latex/ -r
-  cp $bcn/.ssh/*                   ~/.ssh/ -r
-  cp $bcn/.matplotlib/matplotlibrc ~/.matplotlib/matplotlibrc
+  md ~/.vim/ftplugin -p
+  md ~/.vim/colors -p
+  md ~/.ssh -p
+  md ~/.matplotlib -p
+  md ~/.config/terminator -p
+  md ~/texmf/tex/latex -p
+  cp $bcn/.vimrc$app                  ~/.vimrc
+  cp $bcn/gitconf/.gitconfig$app      ~/.gitconfig
+  cp $bcn/.bashrc                     ~/.bashrc
+  cp $bcn/.coloritrc                  ~/.coloritrc
+  cp $bcn/.dir_colorsrc               ~/.dir_colorsrc
+  cp $bcn/.gntrc                      ~/.gntrc
+  cp $bcn/.vim/*                      ~/.vim/ -r
+  cp $bcn/.config/terminator/*        ~/.config/terminator/ -r
+  cp $bcn/latex/*                     ~/texmf/tex/latex/
+  cp $bcn/.ssh/*                      ~/.ssh/ -r
+  cp $bcn/.matplotlib/matplotlibrc    ~/.matplotlib/matplotlibrc
 }
 
 function most_used_words () {
