@@ -171,7 +171,11 @@ filetype indent on
 syntax on
 
 " Highlight consistent line at 81 char
-set colorcolumn=81
+if exists('+colorcolumn')
+  set colorcolumn=81
+else
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>81v.\+', -1)
+endif
 
 " Using my color scheme
 colorscheme bcn_dark
@@ -236,10 +240,8 @@ set printoptions=paper:A4,syntax:y,wrap:y,number:y
 
 map <leader>p :hardcopy <CR>
 
-if has("conceal")
-  " Enable concealing, i.e. greek letters are shown as unicode
-  set cole=2
-endif
+" Enable concealing, i.e. greek letters are shown as unicode
+set cole=2
 
 " GVIM cursor
 set guicursor=n-v-c:block-Cursor
