@@ -1,0 +1,17 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=462
+
+"nw.vim" provides a simple syntax highlighting for NOWEB source files.
+
+NOWEB is a collection of tools for "Literate Programming". Unlike WEB or CWEB it is not bound to a specific programming language like PASCAL or C.
+
+For more informations about NOWEB, the sources or binary distributions
+have a look at
+
+http://www.eecs.harvard.edu/~nr/noweb
+
+For informations about "Literate Programming" in general
+
+http://www.literateprogramming.com
+
+could be a place to start.
+
