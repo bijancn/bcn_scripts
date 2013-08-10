@@ -20,15 +20,14 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1B
 export FC=$HOME/gcc4.6.1/bin/gfortran
 export GFC='yes'
 wingames='/data/Games'
+bcn=~/bcn_scripts
 
 if [ "$USER" = "bijancn" ]
 then
   app=""
-  bcn=~/Dropbox/git_bcn_scripts
   mighty=true
 else
   app="_simple"
-  bcn=~/bcn_scripts
   mighty=false
 fi
 
@@ -200,26 +199,6 @@ function backup_bcn () {
   then
     sudo cp /etc/fstab ~/Dropbox/scripts/
   fi
-}
-
-function restore_bcn () {
-  bcn=~/bcn_scripts
-  md ~/.vim/ftplugin -p
-  md ~/.vim/colors -p
-  md ~/.ssh -p
-  md ~/.matplotlib -p
-  md ~/.config/terminator -p
-  md ~/texmf/tex/latex -p
-  ln -sf $bcn/.vimrc                      ~/.vimrc
-  ln -sf $bcn/gitconf/.gitconfig$app      ~/.gitconfig
-  ln -sf $bcn/.bashrc                     ~/.bashrc
-  ln -sf $bcn/.coloritrc                  ~/.coloritrc
-  ln -sf $bcn/.dir_colorsrc               ~/.dir_colorsrc
-  ln -sf $bcn/.gntrc                      ~/.gntrc
-  ln -sf $bcn/.config/terminator/*        ~/.config/terminator/
-  ln -sf $bcn/latex/*                     ~/texmf/tex/latex/
-  ln -sf $bcn/.ssh/*                      ~/.ssh/
-  ln -sf $bcn/.matplotlib/matplotlibrc    ~/.matplotlib/matplotlibrc
 }
 
 function most_used_words () {
