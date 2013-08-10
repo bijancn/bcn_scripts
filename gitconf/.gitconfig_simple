@@ -1,0 +1,13 @@
+[user]
+	email = bijan@chokoufe.com
+	name = Bijan Chokoufe Nejad
+[core]
+	editor = vim
+[merge]
+	tool = vimdiff
+[alias]
+  ci = commit
+[alias]
+  pullhard = !git fetch --all && git reset --hard origin/master
+[alias]
+  new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
