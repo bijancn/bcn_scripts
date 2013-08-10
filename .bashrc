@@ -203,23 +203,23 @@ function backup_bcn () {
 }
 
 function restore_bcn () {
-  bcn=.
+  bcn=~/bcn_scripts
   md ~/.vim/ftplugin -p
   md ~/.vim/colors -p
   md ~/.ssh -p
   md ~/.matplotlib -p
   md ~/.config/terminator -p
   md ~/texmf/tex/latex -p
-  ln -f $bcn/.vimrc                      ~/.vimrc
-  ln -f $bcn/gitconf/.gitconfig$app      ~/.gitconfig
-  ln -f $bcn/.bashrc                     ~/.bashrc
-  ln -f $bcn/.coloritrc                  ~/.coloritrc
-  ln -f $bcn/.dir_colorsrc               ~/.dir_colorsrc
-  ln -f $bcn/.gntrc                      ~/.gntrc
-  ln -f $bcn/.config/terminator/*        ~/.config/terminator/
-  ln -f $bcn/latex/*                     ~/texmf/tex/latex/
-  ln -f $bcn/.ssh/*                      ~/.ssh/
-  ln -f $bcn/.matplotlib/matplotlibrc    ~/.matplotlib/matplotlibrc
+  ln -sf $bcn/.vimrc                      ~/.vimrc
+  ln -sf $bcn/gitconf/.gitconfig$app      ~/.gitconfig
+  ln -sf $bcn/.bashrc                     ~/.bashrc
+  ln -sf $bcn/.coloritrc                  ~/.coloritrc
+  ln -sf $bcn/.dir_colorsrc               ~/.dir_colorsrc
+  ln -sf $bcn/.gntrc                      ~/.gntrc
+  ln -sf $bcn/.config/terminator/*        ~/.config/terminator/
+  ln -sf $bcn/latex/*                     ~/texmf/tex/latex/
+  ln -sf $bcn/.ssh/*                      ~/.ssh/
+  ln -sf $bcn/.matplotlib/matplotlibrc    ~/.matplotlib/matplotlibrc
 }
 
 function most_used_words () {
