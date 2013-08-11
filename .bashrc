@@ -209,20 +209,25 @@ function most_used_words () {
 }
 
 function shrink_pdf () {
-fname=$(basename $1)
-fbname=${fname%.*}
-gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dPDFSETTINGS=/ebook -sOutputFile=$fbname-small.pdf $1
+  fname=$(basename $1)
+  fbname=${fname%.*}
+  gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dPDFSETTINGS=/ebook -sOutputFile=$fbname-small.pdf $1
 }
 
-c_black=`tput setaf 0`
-c_red=`tput setaf 1`
-c_green=`tput setaf 2`
-c_yellow=`tput setaf 3`
-c_blue=`tput setaf 4`
-c_pink=`tput setaf 5`
-c_cyan=`tput setaf 6`
-c_gray=`tput setaf 7`
-c_white=`tput setaf 9`
+setup_prompt(){
+  c_black=`tput setaf 0`
+  c_red=`tput setaf 1`
+  c_green=`tput setaf 2`
+  c_yellow=`tput setaf 3`
+  c_blue=`tput setaf 4`
+  c_pink=`tput setaf 5`
+  c_cyan=`tput setaf 6`
+  c_gray=`tput setaf 7`
+  c_white=`tput setaf 9`
+
+  PS1='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] [${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]] \[\033[01;34m\]\w\[\033[00m\] '
+  #PS1_old='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h \[\033[01;34m\] \w \[\033[00m\]: '
+}
  
 parse_git_branch () {
   if git rev-parse --git-dir >/dev/null 2>&1
@@ -250,6 +255,7 @@ branch_color () {
   echo -ne $color
 }
 
-PS1='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] [${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]] \[\033[01;34m\]\w\[\033[00m\] '
-
-PS1_old='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h \[\033[01;34m\] \w \[\033[00m\]: '
+case "$-" in
+  *i*) setup_prompt;;
+  *)	interactive=false ;;
+esac
