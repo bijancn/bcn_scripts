@@ -12,6 +12,7 @@ eval `dircolors $HOME/.dir_colorsrc`
 #source /opt/intel/composer_xe_2013.3.163/bin/compilervars.sh intel64
 export CUBACORES=1
 export PATH=$PATH:$HOME/ocaml/bin
+export PATH=$PATH:$HOME/usr/bin
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs/
