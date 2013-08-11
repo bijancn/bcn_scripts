@@ -19,6 +19,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs/
 export FC=$HOME/gcc4.6.1/bin/gfortran
 export GFC='yes'
+export term='xterm'
 wingames='/data/Games'
 bcn=~/bcn_scripts
 
