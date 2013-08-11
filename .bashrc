@@ -115,6 +115,7 @@ alias du_subdirs='du -h | sort -h'
 alias update='sudo apt-get update; sudo apt-get upgrade; sudo apt-get dist-upgrade'
 alias all_cpu_info='lscpu; grep -i "model name" /proc/cpuinfo | uniq'
 #alias find_most_used='tr ' ' '\ ' | tr '[:upper:]' '[:lower:]' |  tr -d '[:punct:]' | grep -v '[^a-z]' | sort | uniq -c | sort -rn |head -n 20'
+alias get_thesis='git clone $nick:~/bcn_git/thesis.git'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
