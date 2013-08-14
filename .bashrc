@@ -108,6 +108,13 @@ alias briss='java -jar ~/Dropbox/Programs/briss-0.9/briss-0.9.jar'
 alias primrun='vblank_mode=0 primusrun'
 alias brc='vim ~/.bashrc'
 alias vrc='vim ~/.vimrc'
+alias agi='sudo apt-get install'
+alias agr='sudo apt-get remove'
+alias agu='sudo apt-get update'
+alias agg='sudo apt-get upgrade'
+alias agd='sudo apt-get dist-upgrade'
+alias sd='sudo shutdown now -P'
+alias rb='sudo reboot'
 alias rgrep='grep -r'
 alias hgrep='history | grep '
 alias ddiff='diff -x *.swp -q'
@@ -117,6 +124,8 @@ alias update='sudo apt-get update; sudo apt-get upgrade; sudo apt-get dist-upgra
 alias all_cpu_info='lscpu; grep -i "model name" /proc/cpuinfo | uniq'
 #alias find_most_used='tr ' ' '\ ' | tr '[:upper:]' '[:lower:]' |  tr -d '[:punct:]' | grep -v '[^a-z]' | sort | uniq -c | sort -rn |head -n 20'
 alias get_thesis='git clone $nick:~/bcn_git/thesis.git'
+alias reset_file_perms='find . -type f -exec chmod 644 {} +'
+alias reset_dir_perms='find . -type d -exec chmod 755 {} +'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
@@ -124,6 +133,7 @@ function kill_tty () {
   pid=$(ps -t $1 | grep 'bash' | head -c 6)
   kill -9 $pid
 }
+
 function running_threads () {
   ps -eLF | grep ^baduser | wc -l
 }
@@ -186,18 +196,6 @@ function fa () {
 }
 
 function backup_bcn () {
-  #cp ~/.vimrc $bcn/.vimrc$app
-  #cp ~/.gitconfig $bcn/gitconf/.gitconfig$app
-  #cp ~/.bashrc $bcn/.bashrc
-  #cp ~/.coloritrc $bcn/.coloritrc
-  #cp ~/.dir_colorsrc $bcn/.dir_colorsrc
-  #cp ~/.gntrc $bcn/.gntrc
-  # Other things to backup in config?
-  #cp ~/.config/terminator/* $bcn/.config/terminator/
-  #cp ~/texmf/tex/latex/bcn_* $bcn/latex/
-  #cp ~/.ssh/config $bcn/.ssh/config
-  #cp ~/.ssh/id_rsa.pub $bcn/.ssh/id_rsa.pub
-  #cp ~/.matplotlib/matplotlibrc $bcn/.matplotlib/matplotlibrc
   rsync -a --exclude='*/.git*' ~/.vim/ $bcn/.vim/
   if $mighty
   then
@@ -227,7 +225,7 @@ setup_prompt(){
   c_gray=`tput setaf 7`
   c_white=`tput setaf 9`
 
-  PS1='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] [${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]] \[\033[01;34m\]\w\[\033[00m\] '
+  PS1='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] [${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]] \[\033[01;34m\]\w\[\033[00m\] '
   #PS1_old='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h \[\033[01;34m\] \w \[\033[00m\]: '
 }
  

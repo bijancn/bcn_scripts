@@ -80,6 +80,8 @@ vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
 " Filetype specific make commands are e.g. in ~/.vim/ftplugin/python.vim
 nmap <Leader>f :w <CR> :make <CR><CR>
 
+nmap <Leader>b :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
+
 " Open corresponding html file
 nmap <Leader>v :!google-chrome %<.html<CR><CR>
 
