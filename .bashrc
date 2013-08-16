@@ -14,6 +14,7 @@ export CUBACORES=1
 export PATH=$PATH:$HOME/ocaml/bin
 export PATH=$PATH:$HOME/usr/bin
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
+export PYTHONPATH=$PYTHONPATH:$HOME/Dropbox/gcal_print/Python-GoogleCalendarParser
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib32
