@@ -1,9 +1,8 @@
 # A basic .muttrc for use with Gmail
 # Heavily stolen from http://www.8t8.us/
 set alias_file       = ~/.mutt/alias         # alias file
-set local_file       = ~/.mutt/gmail         # alias file
 source $alias_file             # required for functionality
-source $local_file
+source ~/.mutt/gmail
 
 # Change the following line to a different editor you prefer.
 set editor = "vim"
