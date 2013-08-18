@@ -1,15 +1,9 @@
 # A basic .muttrc for use with Gmail
 # Heavily stolen from http://www.8t8.us/
 set alias_file       = ~/.mutt/alias         # alias file
+set local_file       = ~/.mutt/gmail         # alias file
 source $alias_file             # required for functionality
-
-# Gmail account details
-set imap_user = "bijan.chokoufe@gmail.com"
-set imap_pass = "H4rTr33-F0cK"
-set smtp_url = "smtp://bijan.chokoufe@gmail.com@smtp.gmail.com:587/"
-set smtp_pass = "H4rTr33-F0cK"
-set from = "bijan.chokoufenejad@physik.uni-wuerzburg.de"
-set realname = "Bijan Chokoufe Nejad"
+source $local_file
 
 # Change the following line to a different editor you prefer.
 set editor = "vim"
