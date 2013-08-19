@@ -8,8 +8,7 @@
 # 
 # bash configuration file. Maintained since 2012.
 
-if [ "$USER" = "bijancn" ]
-then
+if [ "$USER" = "bijancn" ]; then
   app=""
   mighty=true
 else
@@ -27,11 +26,13 @@ export PYTHONPATH=$PYTHONPATH:$HOME/Dropbox/gcal_print/Python-GoogleCalendarPars
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib32
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs/
+
 if $mighty; then
   export FC=gfortran
 else
   export FC=$HOME/gcc4.6.1/bin/gfortran
 fi
+
 export GFC='yes'
 export DEBUG="-O2 -Wall -fbounds-check -fbacktrace -finit-real=nan "
 DEBUG="$DEBUG -fcheck=all -fmax-errors=5 -ffpe-trap=invalid,zero,overflow"
