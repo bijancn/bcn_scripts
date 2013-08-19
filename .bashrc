@@ -8,6 +8,15 @@
 # 
 # bash configuration file. Maintained since 2012.
 
+if [ "$USER" = "bijancn" ]
+then
+  app=""
+  mighty=true
+else
+  app="_simple"
+  mighty=false
+fi
+
 eval `dircolors $HOME/.dir_colorsrc`
 #source /opt/intel/composer_xe_2013.3.163/bin/compilervars.sh intel64
 export CUBACORES=1
@@ -19,22 +28,14 @@ export PYTHONPATH=$PYTHONPATH:$HOME/Dropbox/gcal_print/Python-GoogleCalendarPars
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib32
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs/
-export FC=$HOME/gcc4.6.1/bin/gfortran
+if $mighty; then
+  export FC=gfortran
+else
+  export FC=$HOME/gcc4.6.1/bin/gfortran
+fi
 export GFC='yes'
-export term='xterm'
-export MAILCAPS='~/.mailcap'
-export MM_NOASK=true
 wingames='/data/Games'
 bcn=~/bcn_scripts
-
-if [ "$USER" = "bijancn" ]
-then
-  app=""
-  mighty=true
-else
-  app="_simple"
-  mighty=false
-fi
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ JAVA CLASSPATH ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 java_path=$HOME/Dropbox/Codes/java
@@ -75,25 +76,25 @@ hepforge=$std_usr@login.hepforge.org
 home_ip=192.168.2.152
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ SHORTHANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+if $mighty ; then
+  alias mc='cit "make clean"'
+  alias m='cit make'
+else
+  alias mc='make clean'
+  alias m='make'
+fi
 alias x='exit'
 alias p='python'
-alias m='make'
 alias t='/usr/bin/time'
 alias c='./configure'
 alias so='source ~/.bashrc'
 alias ll='ls -lh'
 alias la='ls -lah'
 alias le='less'
-if $mighty ; then
-  alias mc='cit "make clean"'
-else
-  alias mc='make clean'
-fi
 alias rm='rm -v'
 alias mv='mv -v'
 alias md='mkdir'
 alias rg='ranger'
-alias go='gnome-open'
 alias ca='cit ant'
 alias gp='git pull'
 alias gt='gitm ".."'
@@ -188,8 +189,13 @@ function rem_show () {
 }
 
 function ev () {
-  evince "$1" > /dev/null &
+  evince "$1" &> /dev/null &
 }
+
+function go () {
+  gnome-open "$1" &> /dev/null &
+}
+
 
 function print_vim () {
   vim -c 'hardcopy > ~/output.ps' -c quit "$1"
