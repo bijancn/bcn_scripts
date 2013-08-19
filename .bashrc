@@ -10,30 +10,22 @@
 
 eval `dircolors $HOME/.dir_colorsrc`
 #source /opt/intel/composer_xe_2013.3.163/bin/compilervars.sh intel64
-export CUBACORES=1
+
 export PATH=$PATH:$HOME/ocaml/bin
 export PATH=$PATH:$HOME/usr/bin
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
-<<<<<<< HEAD
-=======
 export PYTHONPATH=$PYTHONPATH:$HOME/Dropbox/gcal_print/Python-GoogleCalendarParser
-
->>>>>>> 4415840429ff44ae1d13fa39ea896fcafab99336
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib32
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs/
+
 export FC=$HOME/gcc4.6.1/bin/gfortran
 export GFC='yes'
-export term='xterm'
-<<<<<<< HEAD
 export DEBUG="-O2 -Wall -fbounds-check -fbacktrace -finit-real=nan "
 DEBUG="$DEBUG -fcheck=all -fmax-errors=5 -ffpe-trap=invalid,zero,overflow"
 alias debugconf='../ovm/configure FCFLAGS="$DEBUG"'
 export FCFLAGS="-O2"
-=======
-export MAILCAPS='~/.mailcap'
-export MM_NOASK=true
->>>>>>> 4415840429ff44ae1d13fa39ea896fcafab99336
+export CUBACORES=1
 wingames='/data/Games'
 bcn=~/bcn_scripts
 
