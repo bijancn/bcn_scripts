@@ -14,16 +14,26 @@ export CUBACORES=1
 export PATH=$PATH:$HOME/ocaml/bin
 export PATH=$PATH:$HOME/usr/bin
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
+<<<<<<< HEAD
+=======
+export PYTHONPATH=$PYTHONPATH:$HOME/Dropbox/gcal_print/Python-GoogleCalendarParser
+
+>>>>>>> 4415840429ff44ae1d13fa39ea896fcafab99336
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib32
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs/
 export FC=$HOME/gcc4.6.1/bin/gfortran
 export GFC='yes'
 export term='xterm'
+<<<<<<< HEAD
 export DEBUG="-O2 -Wall -fbounds-check -fbacktrace -finit-real=nan "
 DEBUG="$DEBUG -fcheck=all -fmax-errors=5 -ffpe-trap=invalid,zero,overflow"
 alias debugconf='../ovm/configure FCFLAGS="$DEBUG"'
 export FCFLAGS="-O2"
+=======
+export MAILCAPS='~/.mailcap'
+export MM_NOASK=true
+>>>>>>> 4415840429ff44ae1d13fa39ea896fcafab99336
 wingames='/data/Games'
 bcn=~/bcn_scripts
 
@@ -98,6 +108,7 @@ alias ca='cit ant'
 alias gp='git pull'
 alias gt='gitm ".."'
 alias gm='gitm'
+alias mu='mutt'
 alias mt='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: \t%M"'
 alias rs='rem_show'
 alias ac='autoreconf'
@@ -110,6 +121,7 @@ alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 alias briss='java -jar ~/Dropbox/Programs/briss-0.9/briss-0.9.jar'
 alias primrun='vblank_mode=0 primusrun'
 alias brc='vim ~/.bashrc'
+alias mrc='vim ~/.muttrc'
 alias vrc='vim ~/.vimrc'
 alias agi='sudo apt-get install'
 alias agr='sudo apt-get remove'
@@ -131,6 +143,10 @@ alias reset_file_perms='find . -type f -exec chmod 644 {} +'
 alias reset_dir_perms='find . -type d -exec chmod 755 {} +'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+function git_resurrect () {
+  git checkout $(git rev-list -n 1 HEAD -- "$1")^ -- "$1"
+}
 
 function kill_tty () {
   pid=$(ps -t $1 | grep 'bash' | head -c 6)
