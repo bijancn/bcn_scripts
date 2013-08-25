@@ -2,7 +2,7 @@
 %
 % bcn_beamer.sty - Wrapper package for my commonly used packages in BEAMER files
 %
-% Copyright (C)     2013-07-30    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
+% Copyright (C)     2013-08-25    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
 % Recent versions:  https://github.com/bijanc/bcn_scripts
 %
 % This source code is free software; you can redistribute it and/or
@@ -14,10 +14,12 @@
 % Put me in:
 %   for Unix/Linux with Texlive vanilla setup:
 %     /usr/local/texlive/texmf-local/tex/latex/local
-%     then run 'sudo texhash'
+%   or:
+%     ~/texmf/tex/latex/
+%   then run 'sudo texhash'
 %   for Windows with MikTex
 %     C:\Program Files\MiKTeX 2.9\tex\latex\bijan\
-%     then go to MikTex Options -> Refresh FNDB, Update Formats
+%   then go to MikTex Options -> Refresh FNDB, Update Formats
 % 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
@@ -39,10 +41,11 @@
 \RequirePackage{transparent}         % \transparent{0.5} -> 50 % transparency
 \RequirePackage{listings}            % For code listings
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~ COMMANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BEAMER COLORS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
 \RequirePackage{bcn_color}
 
+% \fstcol and \sndcol has to be set in document
 \setbeamercolor{title}{fg=\sndcol}
 \setbeamercolor{frametitle}{fg=\fstcol, bg=\mygray}
 \setbeamercolor{block title}{fg=\fstcol, bg=\mygray}
@@ -58,7 +61,7 @@
 \setbeamercolor{bibliography entry note}{fg =\sndcol}
 \setbeamercolor{bibliography entry location}{fg =\sndcol!60!white}
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~ COMMANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMMANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
 \RequirePackage{bcn_commands}
 

@@ -2,7 +2,7 @@
 %
 % bcn_commands.sty - Some commands and shorthands
 %
-% Copyright (C)     2013-07-30    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
+% Copyright (C)     2013-08-25    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
 % Recent versions:  https://github.com/bijanc/bcn_scripts
 %
 % This source code is free software; you can redistribute it and/or
@@ -14,10 +14,12 @@
 % Put me in:
 %   for Unix/Linux with Texlive vanilla setup:
 %     /usr/local/texlive/texmf-local/tex/latex/local
-%     then run 'sudo texhash'
+%   or:
+%     ~/texmf/tex/latex/
+%   then run 'sudo texhash'
 %   for Windows with MikTex
 %     C:\Program Files\MiKTeX 2.9\tex\latex\bijan\
-%     then go to MikTex Options -> Refresh FNDB, Update Formats
+%   then go to MikTex Options -> Refresh FNDB, Update Formats
 % 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
@@ -29,7 +31,7 @@
 \newcommand{\lectureof}[1]
   {\begin{center}\textbf{\color{red}Lecture on #1 starts here.}\end{center}}
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~ MATH ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MATH ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
 \DeclareMathOperator{\var}  {Var}
 \DeclareMathOperator{\vol}  {Vol}
@@ -67,7 +69,7 @@
 \newcommand{\deltadist}[1]{\delta\left(#1\right)}
 \newcommand{\heaviside}[1]{\Theta\left(#1\right)}
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~ QUANTUM MECHANICS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ QUANTUM MECHANICS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
 \newcommand{\ket}[1]{\ems{\left| #1 \right> }}
 \newcommand{\bra}[1]{\ems{\left< #1 \right| }}
@@ -81,7 +83,7 @@
 \newcommand{\anticomm}[2]{\ems{\left[ #1 , #2 \right]_+ }}
 \newcommand{\BF}{\genfrac{}{}{0pt}{}{B}{F} }                % Boson-Fermion
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~ DRAWINGS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DRAWINGS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
 \newcommand*\circled[1]{
   \tikz[baseline=(char.base)]{
@@ -92,7 +94,7 @@
 \newcommand{\scontract}[2]{\bcontraction{}{#1}{}{#2}#1#2}   % Simple contraction
 \newcommand{\phfrac}[2]{\genfrac{}{}{0pt}{}{#1}{#2} }     
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~ FERMION PROPAGATORS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FERMION PROPAGATORS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
 % You can use \Slash p- to put a minus in front of p. Last argument is the mass.
 % You have to supply the propagator with the sign \fermpropp{p}{q-}{m}.
@@ -114,7 +116,7 @@
   {\left(#1 \Flip #2 \right)^2-#3^2 } }
 }
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~ SHORTHAND NOTATIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SHORTHANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
 \newcommand\Rcite[1]{Ref.~\cite{#1}}
 \newcommand\etal{\textit{et al. }}
@@ -206,11 +208,11 @@
 \newcommand\Dl {\Biggl}
 \newcommand\Dr {\Biggr}
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~ ENVIRONMENTS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ENVIRONMENTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
 \newcommand{\mathnote}[1]{\ems{\mbox{\smaller[1] $#1$}}}
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTOMATIC FEYNMP CALL ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTO FEYNMP CALL ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 % This allows to generate feynman graphs automatically
 % Might need option for pdflatex
 

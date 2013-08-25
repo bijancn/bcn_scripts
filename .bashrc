@@ -114,7 +114,7 @@ alias sc='cd '$wingames'/Stronghold\ Crusader/; wine Stronghold\ Crusader.exe'
 alias ut='wine '$wingames'/UnrealTournament/System/UnrealTournament.exe'
 alias wc3='wine '$wingames'/Warcraft\ III/Frozen\ Throne.exe'
 alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
-alias briss='java -jar ~/Dropbox/Programs/briss-0.9/briss-0.9.jar'
+alias briss='java -jar ~/Dropbox/scripts/briss-0.9/briss-0.9.jar'
 alias primrun='vblank_mode=0 primusrun'
 alias brc='vim ~/.bashrc'
 alias mrc='vim ~/.muttrc'
@@ -140,6 +140,12 @@ alias reset_dir_perms='find . -type d -exec chmod 755 {} +'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
+function renamer () {
+for files in *.$1; do
+  mv "$files" "${files%.$1}.$2"
+done
+}
+
 function git_resurrect () {
   git checkout $(git rev-list -n 1 HEAD -- "$1")^ -- "$1"
 }
@@ -150,7 +156,7 @@ function kill_tty () {
 }
 
 function running_threads () {
-  ps -eLF | grep ^baduser | wc -l
+  ps -eLF | grep ^$USER | wc -l
 }
 
 function bisect () {
@@ -201,10 +207,10 @@ function go () {
   gnome-open "$1" &> /dev/null &
 }
 
-
 function print_vim () {
   vim -c 'hardcopy > ~/output.ps' -c quit "$1"
-  ps2pdf ~/output.ps ~/"$1".pdf
+  ps2pdf ~/output.ps ./"$1".pdf
+  rm ~/output.ps
 }
 
 function ff () {
@@ -216,7 +222,6 @@ function fa () {
 }
 
 function backup_bcn () {
-  rsync -a --exclude='*/.git*' ~/.vim/ $bcn/.vim/
   if $mighty
   then
     sudo cp /etc/fstab ~/Dropbox/scripts/
@@ -224,8 +229,7 @@ function backup_bcn () {
 }
 
 function most_used_words () {
-  cat $1 | tr ' ' '\\ ' | tr '\[:upper:\]' '\[:lower:\]' |  tr -d
-  '\[:punct:\]' | grep -v '\[^a-z\]' |  sort | uniq -c | sort -rn | head -n 20
+  echo 'solve this'
 }
 
 function shrink_pdf () {
@@ -233,6 +237,8 @@ function shrink_pdf () {
   fbname=${fname%.*}
   gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dPDFSETTINGS=/ebook -sOutputFile=$fbname-small.pdf $1
 }
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~ GIT PROMPT ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
 setup_prompt(){
   c_black=`tput setaf 0`
