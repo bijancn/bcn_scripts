@@ -1,2 +1,3 @@
 application/download evince
 application/pdf evince
+text/x-tex gvim

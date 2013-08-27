@@ -257,9 +257,9 @@ xtick.minor.width    : 1    # minor tick width in points
 #xtick.direction      : in     # direction: in, out, or inout
 
 ytick.major.size     : 10      # major tick size in points
-ytick.minor.size     : 5      # minor tick size in points
-ytick.major.width    : 1.4    # major tick width in points
-ytick.minor.width    : 1    # minor tick width in points
+ytick.minor.size     : 5       # minor tick size in points
+ytick.major.width    : 1.4     # major tick width in points
+ytick.minor.width    : 1       # minor tick width in points
 #ytick.major.pad      : 4      # distance to major tick label in points
 #ytick.minor.pad      : 4      # distance to the minor tick label in points
 #ytick.color          : k      # color of the tick labels

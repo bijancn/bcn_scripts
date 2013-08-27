@@ -1,0 +1,85 @@
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+%
+% bcn_letter_example.tex - An customizable example file for bcn_letter.lco
+%
+% Copyright (C)     2013-08-25    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
+% Recent versions:  https://github.com/bijanc/bcn_scripts
+%
+% This source code is free software; you can redistribute it and/or
+% modify it under the terms of the GNU General Public License Version 2: 
+% http://www.gnu.org/licenses/gpl-2.0-standalone.html
+%
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% 
+% Put me in:
+%   for Unix/Linux with Texlive vanilla setup:
+%     /usr/local/texlive/texmf-local/tex/latex/local
+%   or:
+%     ~/texmf/tex/latex/
+%   then run 'sudo texhash'
+%   for Windows with MikTex
+%     C:\Program Files\MiKTeX 2.9\tex\latex\bijan\
+%   then go to MikTex Options -> Refresh FNDB, Update Formats
+% 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+\documentclass[a4paper,version=last]{scrlttr2}
+
+\usepackage[ngerman]{babel}    
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}    
+\usepackage{eurosym}
+\usepackage{siunitx}
+
+\KOMAoptions{
+foldmarks=true,
+backaddress=true,
+enlargefirstpage=false,   
+fromalign=right,    
+fromrule=no,
+firsthead=no
+}
+
+\begin{document}
+\LoadLetterOption{bcn_letter}           
+
+% Put your personal data here.
+
+\setkomavar{fromname}{Max Mustermann}
+\setkomavar{fromaddress}{Musterstrasse 12\\ 12345 Musterstadt}
+\setkomavar{place}{Musterstadt}
+
+% You can comment this out, if not needed
+\setkomavar{fromphone}{+49\,123\,4567\,8910}
+\setkomavar*{fromphone}{Telefon}
+\setkomavar{fromemail}{max.muster\\@somemail.com}
+\setkomavar*{fromemail}{E-Mail}
+% You can comment this out, if not needed
+\setkomavar{frombank}{Konto-Nr.: 123\,456\,000\\some bank AG\\BLZ 789\,654\,32}
+
+%\setkomavar{title}{Mahnung}
+\setkomavar{subject}{Arztrechnung}
+\setkomavar{yourref}{01010412208}
+\setkomavar{yourmail}{27.02.2012}
+
+
+\begin{letter}{
+Sanity  \\ 
+Krankenversicherungs-AG \\
+12345 Berlin }
+
+\opening{Sehr geehrte Damen und Herren,}
+
+anbei sende ich Ihnen die Abrechnung der Arztpraxis Meier. Meine
+Krankenversicherungsnummer lautet \textbf{7895643218985}.
+
+\closing{Mit freundlichen Grüßen, \vspace{2em}}
+
+%\ps PS: Post-Skriptum.			
+
+\setkomavar*{enclseparator}{Anlage}					%Anlagen
+\encl{Abrechnung}						
+
+\end{letter}
+\end{document}

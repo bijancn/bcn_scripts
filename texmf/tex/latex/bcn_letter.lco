@@ -1,8 +1,8 @@
 ﻿% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 %
-% bcn_letter.lco -  A convenient letter class option for scrlttr2 letters v1.0
+% bcn_letter.lco - A convenient template for german scrlttr2 letters
 %
-% Copyright (C)     2013-07-30    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
+% Copyright (C)     2013-08-25    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
 % Recent versions:  https://github.com/bijanc/bcn_scripts
 %
 % This source code is free software; you can redistribute it and/or
@@ -14,20 +14,22 @@
 % Put me in:
 %   for Unix/Linux with Texlive vanilla setup:
 %     /usr/local/texlive/texmf-local/tex/latex/local
-%     then run 'sudo texhash'
+%   or:
+%     ~/texmf/tex/latex/
+%   then run 'sudo texhash'
 %   for Windows with MikTex
 %     C:\Program Files\MiKTeX 2.9\tex\latex\bijan\
-%     then go to MikTex Options -> Refresh FNDB, Update Formats
+%   then go to MikTex Options -> Refresh FNDB, Update Formats
 % 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
-\ProvidesFile{bcn_letter.lco}[2012/12/06 letter class option Bijan Chokoufe Nejad]
+\ProvidesFile{bcn_letter.lco}[2013/08/25 letter class option Bijan Chokoufe Nejad]
 %
 % Put your personal data here.
 %
 \setkomavar{fromname}{Max Mustermann}
-\setkomavar{fromaddress}{Musterstreet 12\\ 34567 Random city}
-\setkomavar{place}{Random City}
+\setkomavar{fromaddress}{Musterstrasse 12\\ 12345 Musterstadt}
+\setkomavar{place}{Musterstadt}
 %
 % You can change these for a unique look.
 %
