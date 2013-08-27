@@ -1,13 +1,23 @@
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN BASHRC ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-# bcn:              bijan@chokoufe.com
-# Recent versions:  https://github.com/bijanc/bcn_scripts
-# Last Change:      2013 Aug 09
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 #
-# Put me in:
-#             for Linux:     ~/.bashrc
+# bcn .bashrc - bash configuration file. Maintained since 2012.
+#
+# Copyright (C)     2013-08-25    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
+# Recent versions:  https://github.com/bijanc/bcn_scripts
+#
+# This source code is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License Version 2: 
+# http://www.gnu.org/licenses/gpl-2.0-standalone.html
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 # 
-# bash configuration file. Maintained since 2012.
+# Put me in:
+#   for Linux:     ~/.bashrc
+# Make sure to have ~/.
+# 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
+# Checking for own machine with superuser rights and updated programs
 if [ "$USER" = "bijancn" ]; then
   app=""
   mighty=true
@@ -16,9 +26,13 @@ else
   mighty=false
 fi
 
+# Customize colors for ls
 eval `dircolors $HOME/.dir_colorsrc`
-#source /opt/intel/composer_xe_2013.3.163/bin/compilervars.sh intel64
 
+# Sourcing ifort
+# source /opt/intel/composer_xe_2013.3.163/bin/compilervars.sh intel64
+
+# paths
 export PATH=$PATH:$HOME/ocaml/bin
 export PATH=$PATH:$HOME/usr/bin
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
@@ -26,6 +40,14 @@ export PYTHONPATH=$PYTHONPATH:$HOME/Dropbox/gcal_print/Python-GoogleCalendarPars
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib32
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs/
+
+# java
+java_path=$HOME/Dropbox/Codes/java
+am_tp=$java_path/Amazon-MWS/third-party
+am_bu=$java_path/Amazon-MWS/build/classes/com/amazonservices/mws
+am_pro=$am_bu/products
+export CLASSPATH=$CLASSPATH:$am_tp/*:$am_pro/*:$am_pro/samples/*
+export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 
 if $mighty; then
   export FC=gfortran
@@ -39,16 +61,9 @@ DEBUG="$DEBUG -fcheck=all -fmax-errors=5 -ffpe-trap=invalid,zero,overflow"
 alias debugconf='../ovm/configure FCFLAGS="$DEBUG"'
 export FCFLAGS="-O2"
 export CUBACORES=1
-wingames='/data/Games'
+wingames='/data/win_games'
+lingames='/data/lnx_games'
 bcn=~/bcn_scripts
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~ JAVA CLASSPATH ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-java_path=$HOME/Dropbox/Codes/java
-am_tp=$java_path/Amazon-MWS/third-party
-am_bu=$java_path/Amazon-MWS/build/classes/com/amazonservices/mws
-am_pro=$am_bu/products
-export CLASSPATH=$CLASSPATH:$am_tp/*:$am_pro/*:$am_pro/samples/*
-export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ IP's ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 std_usr=bchokoufe
@@ -110,7 +125,7 @@ alias rs='rem_show'
 alias ac='autoreconf'
 alias gf='gfortran -fopenmp ' 
 alias ud='./omega_QCD.opt -scatter "u d -> u d" '
-alias sc='cd '$wingames'/Stronghold\ Crusader/; wine Stronghold\ Crusader.exe'
+alias sc='cd '$lingames'/Stronghold; wine Stronghold\ Crusader.exe'
 alias ut='wine '$wingames'/UnrealTournament/System/UnrealTournament.exe'
 alias wc3='wine '$wingames'/Warcraft\ III/Frozen\ Throne.exe'
 alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
@@ -250,9 +265,7 @@ setup_prompt(){
   c_cyan=`tput setaf 6`
   c_gray=`tput setaf 7`
   c_white=`tput setaf 9`
-
   PS1='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] [${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]] \[\033[01;34m\]\w\[\033[00m\] '
-  #PS1_old='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h \[\033[01;34m\] \w \[\033[00m\]: '
 }
  
 parse_git_branch () {
@@ -281,6 +294,8 @@ branch_color () {
   echo -ne $color
 }
 
+# Only set prompt if interactive! Otherwise noninteractive commands like ssh
+# throw warnings
 case "$-" in
   *i*) setup_prompt;;
   *)	interactive=false ;;
