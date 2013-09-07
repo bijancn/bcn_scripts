@@ -144,6 +144,7 @@ alias rb='sudo reboot'
 alias rgrep='grep -r'
 alias hgrep='history | grep '
 alias ddiff='diff -x *.swp -q'
+alias cd..='cd ..'
 alias du_dirs='du {*,.git} -sh | sort -h'
 alias du_subdirs='du -h | sort -h'
 alias update='sudo apt-get update; sudo apt-get upgrade; sudo apt-get dist-upgrade'
@@ -265,7 +266,8 @@ setup_prompt(){
   c_cyan=`tput setaf 6`
   c_gray=`tput setaf 7`
   c_white=`tput setaf 9`
-  PS1='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] [${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]] \[\033[01;34m\]\w\[\033[00m\] '
+  PS1long='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] [${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]] \[\033[01;34m\]\w\[\033[00m\] '
+  PS1='\[$(branch_color)\]$(parse_git_branch)\[\033[00m\] ${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]\[\033[01;34m\]\w\[\033[00m\] '
 }
  
 parse_git_branch () {

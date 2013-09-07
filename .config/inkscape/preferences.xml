@@ -928,11 +928,11 @@
     <group
        width="464"
        height="420"
-       x="0"
-       y="150"
+       x="1"
+       y="4"
        fullscreen="0"
        id="geometry"
-       maximized="1" />
+       maximized="0" />
     <group
        id="XYfront" />
     <group

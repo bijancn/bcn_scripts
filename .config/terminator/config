@@ -1,20 +1,20 @@
 [global_config]
   handle_size = 2
-  dbus = True
-  focus = system
+  # There is an evil option bemong those commented options
+  # dbus = True
+  # focus = system
   borderless = True
-  title_transmit_bg_color = "#000000"
+  # title_transmit_bg_color = "#000000"
   tab_position = bottom
-  inactive_color_offset = 0.94
-  title_inactive_bg_color = "#666666"
+  # title_inactive_bg_color = "#666666"
 [keybindings]
-  switch_to_tab_6 = <Alt>6
-  switch_to_tab_7 = <Alt>7
-  switch_to_tab_4 = <Alt>4
-  switch_to_tab_5 = <Alt>5
+  switch_to_tab_1 = <Alt>1
   switch_to_tab_2 = <Alt>2
   switch_to_tab_3 = <Alt>3
-  switch_to_tab_1 = <Alt>1
+  switch_to_tab_4 = <Alt>4
+  switch_to_tab_5 = <Alt>5
+  switch_to_tab_6 = <Alt>6
+  switch_to_tab_7 = <Alt>7
   switch_to_tab_8 = <Alt>8
   switch_to_tab_9 = <Alt>9
 [profiles]
@@ -30,3 +30,22 @@
     background_color = "#171717"
     cursor_blink = False
     scrollback_infinite = True
+  [[light]]
+    scrollbar_position = hidden
+    palette = "#000000:#aa0000:#00aa00:#aa5500:#0000aa:#aa00aa:#00aaaa:#aaaaaa:#555555:#ff5555:#55ff55:#ffff55:#5555ff:#ff55ff:#55ffff:#ffffff"
+    use_system_font = False
+    foreground_color = "#000000"
+    show_titlebar = False
+    font = Liberation Mono 11
+    background_color = "#ffffff"
+    cursor_blink = False
+    scrollback_infinite = True
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]

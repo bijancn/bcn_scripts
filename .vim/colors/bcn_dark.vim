@@ -25,37 +25,38 @@ set t_Co=256
 " Setting some colors for dark background. hi == highlight. 
 " To see the color codes, use bcn_color_demo.vim
 "hi Normal	        ctermbg=black        ctermfg=254         cterm=none
-hi Normal	        ctermbg=none        ctermfg=254         cterm=none
-"hi Cursor         ctermbg=black       ctermfg=17        cterm=None
-hi Cursor         ctermbg=none       ctermfg=17        cterm=None
-"hi iCursor        ctermbg=17          ctermfg=white        cterm=None
-hi SpecialKey	    ctermbg=None        ctermfg=70          cterm=None
-hi Directory	    ctermfg=86          ctermbg=none        cterm=None
-hi ErrorMsg       ctermfg=160         ctermbg=245         cterm=None
-hi PreProc	      ctermbg=None        ctermfg=5           cterm=None
-hi NonText	      ctermbg=None        ctermfg=105         cterm=Bold
-hi DiffText	      ctermbg=244         ctermfg=165         cterm=None
-hi Todo           ctermbg=None        ctermfg=162         cterm=Bold
-hi Identifier	    ctermbg=None        ctermfg=77          cterm=none
-hi Underline      ctermbg=None        ctermfg=147         cterm=Italic
+hi Normal	      ctermbg=none  ctermfg=254        cterm=none guibg=gray9 guifg=snow
+hi Cursor       ctermbg=none  ctermfg=17         cterm=none guibg=blue guifg=white
+"hi Cursor       ctermbg=black  ctermfg=17       cterm=None
+hi iCursor      guibg=orange guifg=white
+"ctermbg=17    ctermfg=white     cterm=None
+hi SpecialKey	  ctermbg=None  ctermfg=70         cterm=none
+hi Directory	  ctermfg=86    ctermbg=none       cterm=none
+hi ErrorMsg     ctermfg=160   ctermbg=245        cterm=none
+hi PreProc	    ctermbg=None  ctermfg=5          cterm=none
+hi NonText	    ctermbg=None  ctermfg=105        cterm=Bold
+hi DiffText	    ctermbg=244   ctermfg=165        cterm=None
+hi Todo         ctermbg=None  ctermfg=162        cterm=Bold
+hi Identifier	  ctermbg=None  ctermfg=77         cterm=none
+hi Underline    ctermbg=None  ctermfg=147        cterm=Italic
 
-hi Conceal        ctermbg=None        ctermfg=magenta 
-hi Search         ctermbg=17          ctermfg=NONE 
-hi LineNr                             ctermfg=gray
-hi SpellBad       ctermbg=88
-hi Comment        ctermbg=none       ctermfg=lightblue   cterm=none
-hi Error	        ctermbg=none        ctermfg=None        cterm=Bold
-hi Special	      ctermbg=None        ctermfg=green       cterm=none
-hi Constant	      ctermbg=None        ctermfg=1           cterm=None
-hi Statement	    ctermbg=None        ctermfg=208         cterm=none
-hi Ignore         ctermbg=None        ctermfg=221         cterm=Bold
-hi Type		        ctermbg=None        ctermfg=227         cterm=none
-hi Visual         ctermbg=238         ctermfg=250         cterm=None
-hi ColorColumn    ctermbg=232 
-hi CursorColumn   ctermbg=17          ctermfg=white       cterm=NONE 
-hi CursorLine     ctermbg=233                             cterm=none
-hi Folded         ctermbg=238         ctermfg=DarkBlue 
-hi FoldColumn     ctermbg=238         ctermfg=DarkBlue 
+hi Conceal      ctermbg=None  ctermfg=magenta 
+hi Search       ctermbg=17    ctermfg=NONE 
+hi LineNr                     ctermfg=gray
+hi SpellBad     ctermbg=88
+hi Comment      ctermbg=none  ctermfg=lightblue  cterm=none
+hi Error	      ctermbg=none  ctermfg=None       cterm=Bold
+hi Special	    ctermbg=None  ctermfg=green      cterm=none
+hi Constant	    ctermbg=None  ctermfg=1          cterm=None
+hi Statement	  ctermbg=None  ctermfg=208        cterm=none
+hi Ignore       ctermbg=None  ctermfg=221        cterm=Bold
+hi Type		      ctermbg=None  ctermfg=227        cterm=none
+hi Visual       ctermbg=238   ctermfg=250        cterm=None guibg=gray15 guifg=gray60
+hi ColorColumn  ctermbg=232                                 guibg=black
+hi CursorColumn ctermbg=17    ctermfg=white      cterm=NONE guibg=blue guifg=white
+hi CursorLine   ctermbg=233                      cterm=none guibg=black
+hi Folded       ctermbg=238   ctermfg=DarkBlue 
+hi FoldColumn   ctermbg=238   ctermfg=DarkBlue 
 
 
 

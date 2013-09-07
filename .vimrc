@@ -1,13 +1,21 @@
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN VIMRC ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-" bcn:              bijan@chokoufe.com
-" Recent versions:  https://github.com/bijanc/bcn_scripts
-" Last Change:      2013 Mar 27
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 "
+" bcn .vimrc - vim configuration file. Maintained since 2011.
+"
+" Copyright (C)     2013-08-25    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
+" Recent versions:  https://github.com/bijanc/bcn_scripts
+"
+" This source code is free software; you can redistribute it and/or
+" modify it under the terms of the GNU General Public License Version 2: 
+" http://www.gnu.org/licenses/gpl-2.0-standalone.html
+"
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+" 
 " Put me in:
 "             for Unix and OS/2:     ~/.vimrc
 "             for MS-DOS and Win32:  $VIM\_vimrc
 " 
-" vim configuration file. Maintained since 2011. 
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ BASIC BEHAVIOR ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 " When started as "evim", evim.vim will already have done these settings.
@@ -28,6 +36,7 @@ Bundle 'comments.vim'
 Bundle 'jcf/vim-latex'
 Bundle 'YankRing.vim'
 Bundle 'nw.vim'
+Bundle 'tpope/vim-surround'
 Bundle 'scrooloose/nerdtree'
 "Bundle 'taglist.vim'
 
@@ -51,18 +60,6 @@ nmap <Leader>n :NERDTreeToggle<CR>
 " Open Taglist with \t
 nmap <Leader>t :TlistToggle<CR>
 
-" EasyMotion Plugin provides: 
-" \fz (next words starting with z)  \Fz (last words starting with z)
-" \n (jump to next searched words)  \N (jump back to searched words)
-" \j (next line numbers) \k (last line numbers)
-" Capital versions take WORD
-" \w (beginning of next words)
-" \e (end of next words)
-" \b (beginning of last words)
-" \ge (end of last words)
-let g:EasyMotion_leader_key = '<Leader>'
-let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-
 " Show Yankring
 nnoremap <silent> <F8> :YRShow<CR>
 
@@ -82,8 +79,17 @@ nmap <Leader>f :w <CR> :make <CR><CR>
 
 nmap <Leader>b :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
 
+" Put yanked noweb chunk line to the end
+nmap <Leader>v p$xkJ
+
+" Yank noweb in current line
+nmap <Leader>y 0v$hhy
+
+" Make new chunk
+nmap <Leader>h o<<>>=<CR>@<Esc>kla
+
 " Open corresponding html file
-nmap <Leader>v :!google-chrome %<.html<CR><CR>
+"nmap <Leader>v :!google-chrome %<.html<CR><CR>
 
 nnoremap <Leader>o :set nospell!<CR>
 "nnoremap <Leader>o :setlocal spell spelllang=en_us<CR>
@@ -93,6 +99,22 @@ nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
 " Change working directory to current file
 map <Leader>d :cd %:p:h<CR>:pwd<CR>
+
+" 
+let dark=1
+nnoremap <Leader>l :call Colortoggle(dark)<CR> 
+
+function! Colortoggle(dark)
+  if a:dark
+    :colorscheme bcn_light
+    " This doesn't work yet 
+    let dark=0
+  else
+    :colorscheme bcn_dark
+    " This doesn't work yet 
+    let dark=1
+  endif
+endfunction
 
 " Clearing highlighted search
 nmap <silent> <leader>/ :nohlsearch<CR>
@@ -126,7 +148,7 @@ nmap <C-H> <F7>
 " Vim-Latex Mappings
 imap ICG includegraphics<C-H>
 imap ECL columns<C-G>
-imap EAL Balign<C-G>
+imap EAL \begin{Balign}<CR><CR>\end{Balign}<Esc>ki<Space><Space>
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ SCROLLING ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 " Set the number of lines you want to stay off of bottom and top. This induces
@@ -134,30 +156,30 @@ imap EAL Balign<C-G>
 set scrolloff=1
 
 " Sadly this script isn't robust for scrolling in really large files
-"" The bang tells vim that it can reload the function
-"function! SmoothScroll(up)
-    "if a:up
-        "let scrollaction="\<C-Y>k"
-    "else
-        "let scrollaction="\<C-E>j"
-    "endif
-    "exec "normal " . scrollaction 
-    "redraw
-    "let counter=1
-    "while counter<&scroll
-        "let counter+=1
-        "sleep 1m
-        "redraw
-        "exec "normal " . scrollaction
-    "endwhile
-"endfunction
+" The bang tells vim that it can reload the function
+function! SmoothScroll(up)
+    if a:up
+        let scrollaction="\<C-Y>k"
+    else
+        let scrollaction="\<C-E>j"
+    endif
+    exec "normal " . scrollaction 
+    redraw
+    let counter=1
+    while counter<&scroll
+        let counter+=1
+        sleep 1m
+        redraw
+        exec "normal " . scrollaction
+    endwhile
+endfunction
 
-"nnoremap <C-U> :call SmoothScroll(1)<Enter>
-"nnoremap <C-D> :call SmoothScroll(0)<Enter>
-"nnoremap <C-B> :call SmoothScroll(1)<Enter> :call SmoothScroll(1)<Enter>
-"nnoremap <C-F> :call SmoothScroll(0)<Enter> :call SmoothScroll(0)<Enter>
-"inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
-"inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
+nnoremap <C-U> :call SmoothScroll(1)<Enter>
+nnoremap <C-D> :call SmoothScroll(0)<Enter>
+nnoremap <C-B> :call SmoothScroll(1)<Enter> :call SmoothScroll(1)<Enter>
+nnoremap <C-F> :call SmoothScroll(0)<Enter> :call SmoothScroll(0)<Enter>
+inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
+inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ SETTINGS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 " This is the not recommended version for .less support. There are proper addons
@@ -176,6 +198,7 @@ syntax on
 if exists('+colorcolumn')
   set colorcolumn=81
 else
+  " At least mark the awful content as Error
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>81v.\+', -1)
 endif
 
@@ -258,48 +281,35 @@ let &t_SI = "\<Esc>]12;orange\x7"
 let &t_EI = "\<Esc>]12;blue\x7"
 "silent !echo -ne "\033]12;blue\007"
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ OCAML ~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Settings for ocaml-annot plugin
-
-function! OCamlType()
-  let col  = col('.')
-  let line = line('.')
-  let file = expand("%:p:r")
-  echo system("annot -n -type ".line." ".col." ".file.".annot")
-endfunction
-map <leader>. :call OCamlType()<cr>
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ FORTRAN ~~~~~~~~~~~~~~~~~~~~~~~~~~
-" We will always use Fortran free not fixed form
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FORTRAN ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Form: We will always use Fortran free not fixed form
 let fortran_free_source=1
 let fortran_fold=1
 let fortran_fold_conditionals=1
-" Apparantely the next option is slow but makes the syntax coloring more
-" 'precise'
-"let fortran_more_precise=1
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ VIM-LATEX ~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Settings for vim-latex. \ll starts pdflatex
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ VIM-LATEX ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Settings: \ll starts pdflatex. \lv starts pdf viewer
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_MultipleCompileFormats='dvi,pdf,aux' 
-" How many warnings are ignored.
-" 1. underfull 2. overfull 3. floating objects 4. requested packages
-let g:Tex_IgnoreLevel=2
 let g:Tex_flavor='latex'
 let g:Tex_BibtexFlavor ='biber'
 
-" Disable folding for tex
+" Warnings: How many warnings are ignored:
+" 1. underfull 2. overfull 3. floating objects 4. requested packages
+let g:Tex_IgnoreLevel=2
+
+" Folding: Disabled
 let g:Tex_FoldedSections=""
 let g:Tex_FoldedEnvironments=""
 let g:Tex_FoldedMisc=""
 
-" Changing environments
+" Environments:
 let g:Tex_Env_slide = "\\begin{Bframe}{<++>}\<CR><++>\<CR>\\end{Bframe}"
 let g:Tex_Env_columns = 
  \"\\begin{columns}\<CR>\\column{.5\\textwidth}<++>\<CR>\\column{.5\\textwidth}\<CR>\\end{columns}"
 let g:Tex_Com_includegraphics = "\\includegraphics[width=<++>\\textwidth]{<+filename+>}"
 
-" Automatically calling mpost to compute Feynman diagrams
+" Feynmp: Automatically calling mpost to compute diagrams with bcn_koma
 let g:Tex_CompileRule_pdf='pdflatex -enable-write18 -halt-on-error'
 
 " Conceal: a accents, d delimiters, g Greek, m math and NOT s super/subscripts
