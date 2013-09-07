@@ -25,12 +25,6 @@
 
 \ProvidesFile{bcn_letter.lco}[2013/08/25 letter class option Bijan Chokoufe Nejad]
 %
-% Put your personal data here.
-%
-\setkomavar{fromname}{Max Mustermann}
-\setkomavar{fromaddress}{Musterstrasse 12\\ 12345 Musterstadt}
-\setkomavar{place}{Musterstadt}
-%
 % You can change these for a unique look.
 %
 %\setkomafont{toname}{\bfseries}
