@@ -12,6 +12,10 @@
 [alias]
   ci = commit
 [alias]
+  st = status
+[alias]
+  interactive = !git add -p
+[alias]
   pullhard = !git fetch --all && git reset --hard origin/master
 [alias]
   new = !sh -c 'git log $1@{1}..$1@{0} "$@"'

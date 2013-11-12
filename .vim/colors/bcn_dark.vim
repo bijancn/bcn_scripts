@@ -35,17 +35,20 @@ hi Directory	  ctermfg=86    ctermbg=none       cterm=none
 hi ErrorMsg     ctermfg=160   ctermbg=245        cterm=none
 hi PreProc	    ctermbg=None  ctermfg=5          cterm=none
 hi NonText	    ctermbg=None  ctermfg=105        cterm=Bold
-hi DiffText	    ctermbg=244   ctermfg=165        cterm=None
 hi Todo         ctermbg=None  ctermfg=162        cterm=Bold
 hi Identifier	  ctermbg=None  ctermfg=77         cterm=none
 hi Underline    ctermbg=None  ctermfg=147        cterm=Italic
+hi DiffAdd    term=bold ctermbg=black ctermfg=46 guibg=black
+hi DiffDelete term=bold ctermbg=black ctermfg=1  gui=bold guifg=red guibg=black
+hi DiffChange term=bold ctermbg=black ctermfg=15  guibg=black
+hi DiffText   term=bold ctermbg=black ctermfg=227  guibg=black
 
-hi Conceal      ctermbg=None  ctermfg=magenta 
+hi Conceal      ctermbg=None  ctermfg=magenta    guibg=gray9  guifg=Magenta
 hi Search       ctermbg=17    ctermfg=NONE 
 hi LineNr                     ctermfg=gray
 hi SpellBad     ctermbg=88
 hi Comment      ctermbg=none  ctermfg=lightblue  cterm=none
-hi Error	      ctermbg=none  ctermfg=None       cterm=Bold
+hi Error	      ctermbg=none  ctermfg=None       cterm=Bold guibg=gray9 guifg=white gui=bold
 hi Special	    ctermbg=None  ctermfg=green      cterm=none
 hi Constant	    ctermbg=None  ctermfg=1          cterm=None
 hi Statement	  ctermbg=None  ctermfg=208        cterm=none
@@ -57,8 +60,10 @@ hi CursorColumn ctermbg=17    ctermfg=white      cterm=NONE guibg=blue guifg=whi
 hi CursorLine   ctermbg=233                      cterm=none guibg=black
 hi Folded       ctermbg=238   ctermfg=DarkBlue 
 hi FoldColumn   ctermbg=238   ctermfg=DarkBlue 
-
-
+hi Pmenu        ctermbg=238   ctermfg=DarkBlue   gui=bold   guibg=brown gui=bold
+hi PmenuSel     ctermbg=232   ctermfg=DarkBlue   gui=bold   guibg=brown gui=bold
+hi PmenuSbar    ctermbg=232   ctermfg=DarkBlue   gui=bold   guibg=brown gui=bold
+hi PmenuThumb   ctermbg=232   ctermfg=DarkBlue   gui=bold   guibg=brown gui=bold
 
 "hi IncSearch term=reverse cterm=reverse gui=reverse
 "hi ModeMsg term=bold cterm=bold gui=bold
@@ -72,6 +77,3 @@ hi FoldColumn   ctermbg=238   ctermfg=DarkBlue
 "hi Title term=bold ctermfg=DarkMagenta gui=bold guifg=Magenta
 "hi WarningMsg term=standout ctermfg=DarkRed guifg=Red
 "hi WildMenu term=standout ctermbg=Yellow ctermfg=Black guibg=Yellow guifg=Black
-"hi DiffAdd term=bold ctermbg=LightBlue guibg=LightBlue
-"hi DiffChange term=bold ctermbg=LightMagenta guibg=LightMagenta
-"hi DiffDelete term=bold ctermfg=Blue ctermbg=LightCyan gui=bold guifg=Blue guibg=LightCyan

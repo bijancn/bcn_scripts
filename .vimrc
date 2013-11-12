@@ -32,13 +32,20 @@ filetype off                   " required for Vundle!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'gmarik/vundle'
-Bundle 'comments.vim'
-Bundle 'jcf/vim-latex'
-Bundle 'YankRing.vim'
-Bundle 'nw.vim'
 Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/nerdtree'
-"Bundle 'taglist.vim'
+Bundle 'tpope/vim-repeat'
+Bundle 'comments.vim'
+Bundle 'YankRing.vim'
+Bundle 'bling/vim-airline'
+"Bundle 'scrooloose/nerdtree'
+Bundle 'matchit.zip'
+Bundle 'ervandew/supertab'
+"Bundle 'nw.vim' "Bundle 'noweb.vim' These two suck quite hard compared to:
+Bundle 'noweb.vim--McDermott'
+"Bundle 'taglist.vim' "Don't really use it
+"Bundle 'jcf/vim-latex' " Too annoying and slow
+"Bundle 'Dynetrekk/snipmate.vim'
+Bundle 'bijancn/snipmate.vim'
 
 " This allows backspacing over everything in insert mode. Don't insert spaces.
 set backspace=indent,eol,start
@@ -55,10 +62,10 @@ set incsearch       " do incremental searching
 " <CR> sends Enter
 
 " Open NERDTree with \n
-nmap <Leader>n :NERDTreeToggle<CR>
+"nmap <Leader>n :NERDTreeToggle<CR>
 
 " Open Taglist with \t
-nmap <Leader>t :TlistToggle<CR>
+"nmap <Leader>t :TlistToggle<CR>
 
 " Show Yankring
 nnoremap <silent> <F8> :YRShow<CR>
@@ -69,24 +76,29 @@ nmap <C-C> :call CommentLine()<CR>
 " key-mappings for range comment lines in visual <Shift-V> mode
 vnoremap <C-C> :call RangeCommentLine()<CR>
 
+" Unfolding and folding with space
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+nnoremap <silent> <C-Space> @=(foldlevel('.')?'zA':"\<Space>")<CR>
+vnoremap <Space> zf
+
 " key-mappings for un-comment line in normal mode
 nmap <silent> <C-X> :call UnCommentLine()<CR>
 " key-mappings for range un-comment lines in visual <Shift-V> mode
 vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
 
 " Filetype specific make commands are e.g. in ~/.vim/ftplugin/python.vim
-nmap <Leader>f :w <CR> :make <CR><CR>
+"nmap <Leader>f :w <CR> :make <CR><CR>
 
 nmap <Leader>b :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
 
 " Put yanked noweb chunk line to the end
-nmap <Leader>v p$xkJ
+nmap <Leader>np p$xkJ
 
 " Yank noweb in current line
-nmap <Leader>y 0v$hhy
+nmap <Leader>ny 0v$hhy
 
 " Make new chunk
-nmap <Leader>h o<<>>=<CR>@<Esc>kla
+nmap <Leader>nc o%<CR><<<<>>=<CR>@<CR>%<Esc>2kla
 
 " Open corresponding html file
 "nmap <Leader>v :!google-chrome %<.html<CR><CR>
@@ -102,7 +114,7 @@ map <Leader>d :cd %:p:h<CR>:pwd<CR>
 
 " 
 let dark=1
-nnoremap <Leader>l :call Colortoggle(dark)<CR> 
+nnoremap <Leader>i :call Colortoggle(dark)<CR> 
 
 function! Colortoggle(dark)
   if a:dark
@@ -116,6 +128,10 @@ function! Colortoggle(dark)
   endif
 endfunction
 
+command W :execute 'silent w !sudo tee > /dev/null %'
+command Wq :execute ':W' | :q!
+command WQ :Wq
+
 " Clearing highlighted search
 nmap <silent> <leader>/ :nohlsearch<CR>
 
@@ -126,29 +142,49 @@ no <right> >>
 " Don't use Ex-mode, use Q for formatting
 map Q gq
 
-command W :execute 'silent w !sudo tee > /dev/null %'
-command Wq :execute ':W' | :q!
-command WQ :Wq
-
-" Yank from the cursor to the end of the line
-map Y y$
-
 " Create new tab
 map tn :tabnew <CR>
 
 " Tab opened buffers
 map ta :tab all <CR>
 
-" Some remappings to avoid collision with byobu
-imap <C-G> <F5>
-nmap <C-G> <F5>
-imap <C-H> <F7>
-nmap <C-H> <F7>
+" Open new tab with directory of current file
+map <Leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
-" Vim-Latex Mappings
-imap ICG includegraphics<C-H>
-imap ECL columns<C-G>
-imap EAL \begin{Balign}<CR><CR>\end{Balign}<Esc>ki<Space><Space>
+inoremap {      {}<Left>
+inoremap {<CR>  {<CR>}<Esc>O<Tab>
+inoremap {{     {
+inoremap {}     <Space>
+inoremap (      ()<Left>
+inoremap (<CR>  (<CR>)<Esc>O<Tab>
+inoremap ((     (
+inoremap ()     <Space>
+inoremap [      []<Left>
+inoremap [<CR>  [<CR>]<Esc>O<Tab>
+inoremap [[     [
+inoremap []     <Space>
+inoremap <      <><Left>
+inoremap <<CR>  <<CR>><Esc>O<Tab>
+inoremap <<     <
+inoremap <>     <Space>
+inoremap $      $$<Left>
+inoremap $<CR>  $<CR>$<Esc>O<Tab>
+inoremap $$     <Space>
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~ ABBREVIATIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+iabbrev lamda lambda
+iabbrev teh the
+iabbrev excecute execute
+iabbrev Rkd real((kind=default)
+iabbrev In integer
+iabbrev Lo logical
+iabbrev Di dimension(
+iabbrev Ii intent((in) ::
+iabbrev Io intent((out) ::
+iabbrev Icg \includegraphics[[width=\textwidth]{
+iabbrev Ecl \begin{{columns}<CR><CR>\end{{columns}<Esc>ki<Space><Space>
+iabbrev Eal \begin{{Balign}<CR><CR>\end{{Balign}<Esc>ki<Space><Space>
+iabbrev Nc <Esc>ddk<leader>nc
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ SCROLLING ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 " Set the number of lines you want to stay off of bottom and top. This induces
@@ -163,7 +199,7 @@ function! SmoothScroll(up)
     else
         let scrollaction="\<C-E>j"
     endif
-    exec "normal " . scrollaction 
+    exec "normal " . scrollaction
     redraw
     let counter=1
     while counter<&scroll
@@ -186,10 +222,15 @@ inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
 " for full highlighting.
 au BufNewFile,BufRead *.less set filetype=css
 
+" Performance option
+set lazyredraw
+
 " Use the default filetype settings. Also load indent files,
 " to automatically do language-dependent indenting.
 filetype plugin on
 filetype indent on
+
+set foldnestmax=3
 
 " Switch syntax highlighting on
 syntax on
@@ -265,10 +306,10 @@ set printoptions=paper:A4,syntax:y,wrap:y,number:y
 
 map <leader>p :hardcopy <CR>
 
-if has ("conceal")
-  " Enable concealing, i.e. greek letters are shown as unicode
-  set cole=2
-endif
+"if has ("conceal")
+  "" Enable concealing, i.e. greek letters are shown as unicode
+  "set cole=2
+"endif
 
 " GVIM cursor
 set guicursor=n-v-c:block-Cursor
@@ -287,6 +328,11 @@ let fortran_free_source=1
 let fortran_fold=1
 let fortran_fold_conditionals=1
 
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ NOWEB ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+let noweb_backend = "tex"
+let noweb_language = "fortran" 
+let noweb_fold_code = 1
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ VIM-LATEX ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Settings: \ll starts pdflatex. \lv starts pdf viewer
 let g:Tex_DefaultTargetFormat='pdf'
@@ -295,24 +341,69 @@ let g:Tex_flavor='latex'
 let g:Tex_BibtexFlavor ='biber'
 
 " Warnings: How many warnings are ignored:
-" 1. underfull 2. overfull 3. floating objects 4. requested packages
-let g:Tex_IgnoreLevel=2
+" 1. underfull + 2. overfull + 3. floating objects + 4. requested packages
+let g:Tex_IgnoreLevel=3
+let g:Tex_IgnoredWarnings=
+\"Underfull\n".
+\"Overfull\n".
+\"LaTeX Font Warning\n".
+\"specifier changed to\n".
+\"You have requested\n".
+\"Missing number, treated as zero.\n".
+\"There were undefined references\n"
+\"Citation %.%# undefined"
+
+let g:Tex_GotoError=0
 
 " Folding: Disabled
 let g:Tex_FoldedSections=""
-let g:Tex_FoldedEnvironments=""
-let g:Tex_FoldedMisc=""
+let g:Tex_FoldedEnvironments="Balign,Bframe"
+let g:Tex_FoldedMisc="preamble"
+
+let Imap_PlaceHolderStart='<'
+let Imap_PlaceHolderEnd='>'
+
+let g:Imap_UsePlaceHolders=0
+
+" Speed things up with python
+let g:Tex_UsePython=1
 
 " Environments:
-let g:Tex_Env_slide = "\\begin{Bframe}{<++>}\<CR><++>\<CR>\\end{Bframe}"
+let g:Tex_Env_slide = "\\begin{Bframe}\<CR>{<++>}\<CR><++>\<CR>\\end{Bframe}"
 let g:Tex_Env_columns = 
  \"\\begin{columns}\<CR>\\column{.5\\textwidth}<++>\<CR>\\column{.5\\textwidth}\<CR>\\end{columns}"
 let g:Tex_Com_includegraphics = "\\includegraphics[width=<++>\\textwidth]{<+filename+>}"
 
 " Feynmp: Automatically calling mpost to compute diagrams with bcn_koma
-let g:Tex_CompileRule_pdf='pdflatex -enable-write18 -halt-on-error'
+let g:Tex_CompileRule_pdf='pdflatex -file-line-error -enable-write18 -halt-on-error'
 
 " Conceal: a accents, d delimiters, g Greek, m math and NOT s super/subscripts
-let g:tex_conceal="dgm"
+"let g:tex_conceal="dgm"
 let g:tex_indent_brace=0
 let g:tex_indent_items=0
+
+" Disables the jumping into braces but also abbreviations.
+let g:Imap_FreezeImap=0
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AIR-LINE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+set encoding=utf-8
+" Good looking powerline
+let g:airline_powerline_fonts = 1
+" Ensure that airline shows up
+set laststatus=2
+" Super fancy tabline
+let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '>'
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+" Get rid of that random trailing indication  
+let g:airline_detect_whitespace=0
+
+set rtp+=/home/bijancn/.opam/system/share/ocamlmerlin/vim
+set rtp+=/home/bijancn/.opam/system/share/ocamlmerlin/vimbufsync
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SUPERTAB ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+let g:SuperTabDefaultCompletionType = "context"

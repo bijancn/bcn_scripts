@@ -926,10 +926,10 @@
      id="desktop"
      style="">
     <group
-       width="464"
-       height="420"
-       x="1"
-       y="4"
+       width="640"
+       height="480"
+       x="0"
+       y="0"
        fullscreen="0"
        id="geometry"
        maximized="0" />

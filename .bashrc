@@ -40,7 +40,8 @@ export PYTHONPATH=$PYTHONPATH:$HOME/Dropbox/gcal_print/Python-GoogleCalendarPars
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib32
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs/
-
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/bin
 # java
 java_path=$HOME/Dropbox/Codes/java
 am_tp=$java_path/Amazon-MWS/third-party
@@ -57,7 +58,7 @@ fi
 
 export GFC='yes'
 export DEBUG="-O2 -Wall -fbounds-check -fbacktrace -finit-real=nan "
-DEBUG="$DEBUG -fcheck=all -fmax-errors=5 -ffpe-trap=invalid,zero,overflow"
+DEBUG="$DEBUG -fcheck=all -fmax-errors=2 -ffpe-trap=invalid,zero,overflow"
 alias debugconf='../ovm/configure FCFLAGS="$DEBUG"'
 export FCFLAGS="-O2"
 export CUBACORES=1
@@ -68,7 +69,8 @@ bcn=~/bcn_scripts
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ IP's ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 std_usr=bchokoufe
 wue=$std_usr@132.187.196
-ip=$std_usr@wtpp121.physik.uni-wuerzburg.de
+#ip=$std_usr@wtpp121.physik.uni-wuerzburg.de
+ip=$wue.121
 ohl=$std_usr@wtpp125.physik.uni-wuerzburg.de
 denner=$wue.133
 nick=$wue.121                  # int_quad_core, free
@@ -143,6 +145,7 @@ alias sd='sudo shutdown now -P'
 alias rb='sudo reboot'
 alias rgrep='grep -r'
 alias hgrep='history | grep '
+alias todo='rgrep --binary-files=without-match -n todo: *'
 alias ddiff='diff -x *.swp -q'
 alias cd..='cd ..'
 alias du_dirs='du {*,.git} -sh | sort -h'
@@ -153,6 +156,7 @@ alias all_cpu_info='lscpu; grep -i "model name" /proc/cpuinfo | uniq'
 alias get_thesis='git clone $nick:~/bcn_git/thesis.git'
 alias reset_file_perms='find . -type f -exec chmod 644 {} +'
 alias reset_dir_perms='find . -type d -exec chmod 755 {} +'
+alias mount_wue='sshfs $int_quad_core1: /home/bijancn/Dropbox/uniwue/'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
@@ -193,7 +197,6 @@ function wtz () {
 function gitm () {
   git add -A
   git commit -m "$1"
-  git push
 }
 
 # See BCN COLORITRC for customizing colors in output
@@ -267,9 +270,13 @@ setup_prompt(){
   c_gray=`tput setaf 7`
   c_white=`tput setaf 9`
   PS1long='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] [${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]] \[\033[01;34m\]\w\[\033[00m\] '
-  PS1='\[$(branch_color)\]$(parse_git_branch)\[\033[00m\] ${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]\[\033[01;34m\]\w\[\033[00m\] '
+  #PS1='\[$(branch_color)\]$(parse_git_branch)\[\033[00m\] ${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]\[\033[01;34m\]\w\[\033[00m\] '
+  PS1='$( __git_ps1 "(%s)\[\e[00m\]"
+			) \[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;37m\]\h\[\e[01;37m\]:\[\e[01;34m\] \w\[\e[00;37m\] \[\e[00m\]'
+  #python ~/Dropbox/days_left.py
 }
  
+# DO NOT USE THIS! IT BREAKS YOUR PROMPT! Don't know why though
 parse_git_branch () {
   if git rev-parse --git-dir >/dev/null 2>&1
   then
@@ -280,6 +287,7 @@ parse_git_branch () {
   echo -e ${gitver::2}
 }
 
+# DO NOT USE THIS! IT BREAKS YOUR PROMPT! Don't know why though
 branch_color () {
   if git rev-parse --git-dir >/dev/null 2>&1
   then
@@ -291,7 +299,7 @@ branch_color () {
       color=${c_red}
     fi
   else
-    color="--"
+    color="(-)"
   fi
   echo -ne $color
 }

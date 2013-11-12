@@ -1,20 +1,15 @@
 [global_config]
-  handle_size = 2
-  # There is an evil option bemong those commented options
-  # dbus = True
-  # focus = system
   borderless = True
-  # title_transmit_bg_color = "#000000"
+  handle_size = 2
   tab_position = bottom
-  # title_inactive_bg_color = "#666666"
 [keybindings]
-  switch_to_tab_1 = <Alt>1
-  switch_to_tab_2 = <Alt>2
-  switch_to_tab_3 = <Alt>3
-  switch_to_tab_4 = <Alt>4
-  switch_to_tab_5 = <Alt>5
   switch_to_tab_6 = <Alt>6
   switch_to_tab_7 = <Alt>7
+  switch_to_tab_4 = <Alt>4
+  switch_to_tab_5 = <Alt>5
+  switch_to_tab_2 = <Alt>2
+  switch_to_tab_3 = <Alt>3
+  switch_to_tab_1 = <Alt>1
   switch_to_tab_8 = <Alt>8
   switch_to_tab_9 = <Alt>9
 [profiles]
