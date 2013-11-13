@@ -261,6 +261,10 @@ function gitf () {
   git add "$1"; git commit -m "$2"
 }
 
+function giti () {
+  git interactive
+}
+
 function gits () {
   git status
 }

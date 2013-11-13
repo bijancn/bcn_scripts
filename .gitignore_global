@@ -33,6 +33,21 @@ missing
 *.cmxs
 *.cmxa
 
+# TeX
+*.bcf
+*.blg
+*.bbl
+*.fdb_latexmk
+*.aux
+*.fls
+*.out
+*.pdf
+*.[123456789]
+*.t[123456789]
+*.toc
+*.run.xml
+*.tex.blg
+
 # Logs and data
 *.log
 *.sql
@@ -45,7 +60,6 @@ missing
 *.py[cod]
 *.so
 *.o
-*.out
 *.vertices
 .vimsession
 .svn
