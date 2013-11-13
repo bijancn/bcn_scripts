@@ -196,14 +196,18 @@ function wtz () {
 
 function gitm () {
   git status
-  echo "Are you sure you want to add EVERYTHING?"
+  echo "Are you really sure you want to commit everything?"
   echo "Does it fit the commit message '$1'?"
   select yn in "Yes" "No"; do
-      case $yn in
-          Yes ) git add -A; git commit -m "$1";;
-          No ) exit;;
-      esac
+    case $yn in
+      Yes ) git add -A; git commit -m "$1"; break;;
+      No ) break;;
+    esac
   done
+}
+
+function gitf () {
+  git add "$1"; git commit -m "$2"
 }
 
 # See BCN COLORITRC for customizing colors in output
