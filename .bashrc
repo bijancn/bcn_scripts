@@ -18,10 +18,8 @@
 
 # Checking for own machine with superuser rights and updated programs
 if [ "$USER" = "bijancn" ]; then
-  app=""
   mighty=true
 else
-  app="_simple"
   mighty=false
 fi
 
@@ -118,9 +116,6 @@ alias mv='mv -v'
 alias md='mkdir'
 alias rg='ranger'
 alias ca='cit ant'
-alias gp='git pull'
-alias gt='gitm ".."'
-alias gm='gitm'
 alias mu='mutt'
 alias mt='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: \t%M"'
 alias rs='rem_show'
@@ -166,10 +161,6 @@ for files in *.$1; do
 done
 }
 
-function git_resurrect () {
-  git checkout $(git rev-list -n 1 HEAD -- "$1")^ -- "$1"
-}
-
 function kill_tty () {
   pid=$(ps -t $1 | grep 'bash' | head -c 6)
   kill -9 $pid
@@ -192,22 +183,6 @@ function wtz () {
   wget "$1" -o 'temp.tar.gz'
   tar -xvzf 'temp.tar.gz'
   rm 'temp.tar.gz'
-}
-
-function gitm () {
-  git status
-  echo "Are you really sure you want to commit everything?"
-  echo "Does it fit the commit message '$1'?"
-  select yn in "Yes" "No"; do
-    case $yn in
-      Yes ) git add -A; git commit -m "$1"; break;;
-      No ) break;;
-    esac
-  done
-}
-
-function gitf () {
-  git add "$1"; git commit -m "$2"
 }
 
 # See BCN COLORITRC for customizing colors in output
@@ -266,6 +241,36 @@ function shrink_pdf () {
   fname=$(basename $1)
   fbname=${fname%.*}
   gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dPDFSETTINGS=/ebook -sOutputFile=$fbname-small.pdf $1
+}
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~ GIT ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+function gitm () {
+  git status
+  echo "Are you really sure you want to commit everything? Have u pulled before?"
+  echo "Does it fit the commit message '$1'?"
+  select yn in "Yes" "No"; do
+    case $yn in
+      Yes ) git add -A; git commit -m "$1"; break;;
+      No ) break;;
+    esac
+  done
+}
+
+function gitf () {
+  git add "$1"; git commit -m "$2"
+}
+
+function gits () {
+  git status
+}
+
+function gitl () {
+  git pull
+}
+
+function gitp () {
+  git push
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ GIT PROMPT ~~~~~~~~~~~~~~~~~~~~~~~~~~ 

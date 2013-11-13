@@ -3,10 +3,19 @@
 	name = Bijan Chokoufe Nejad
 [core]
 	editor = vim
+	excludesfile = /home/bijancn/.gitignore_global
 [merge]
 	tool = vimdiff
+[push]
+	default = simple
+[color]
+	ui = true
 [alias]
   ci = commit
+[alias]
+  st = status
+[alias]
+  interactive = !git add -p
 [alias]
   pullhard = !git fetch --all && git reset --hard origin/master
 [alias]
