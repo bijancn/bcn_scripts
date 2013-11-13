@@ -196,8 +196,14 @@ function wtz () {
 
 function gitm () {
   git status
-  git add -A
-  git commit -m "$1"
+  echo "Are you sure you want to add EVERYTHING?"
+  echo "Does it fit the commit message '$1'?"
+  select yn in "Yes" "No"; do
+      case $yn in
+          Yes ) git add -A; git commit -m "$1";;
+          No ) exit;;
+      esac
+  done
 }
 
 # See BCN COLORITRC for customizing colors in output
