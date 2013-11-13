@@ -2,7 +2,7 @@
 #
 # bcn .bashrc - bash configuration file. Maintained since 2012.
 #
-# Copyright (C)     2013-08-25    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
+# Copyright (C)     2013-11-13    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
 # Recent versions:  https://github.com/bijanc/bcn_scripts
 #
 # This source code is free software; you can redistribute it and/or
@@ -13,7 +13,6 @@
 # 
 # Put me in:
 #   for Linux:     ~/.bashrc
-# Make sure to have ~/.
 # 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
@@ -58,10 +57,11 @@ fi
 
 export GFC='yes'
 export DEBUG="-O2 -Wall -fbounds-check -fbacktrace -finit-real=nan "
-DEBUG="$DEBUG -fcheck=all -fmax-errors=2 -ffpe-trap=invalid,zero,overflow"
+export DEBUG="$DEBUG -fcheck=all -fmax-errors=2 -ffpe-trap=invalid,zero,overflow"
 alias debugconf='../ovm/configure FCFLAGS="$DEBUG"'
 export FCFLAGS="-O2"
 export CUBACORES=1
+git=git@github.com
 wingames='/data/win_games'
 lingames='/data/lnx_games'
 bcn=~/bcn_scripts
@@ -195,6 +195,7 @@ function wtz () {
 }
 
 function gitm () {
+  git status
   git add -A
   git commit -m "$1"
 }

@@ -189,7 +189,7 @@ iabbrev Nc <Esc>ddk<leader>nc
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ SCROLLING ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 " Set the number of lines you want to stay off of bottom and top. This induces
 " vim to scroll automatically when the cursor comes close.
-set scrolloff=1
+set scrolloff=2
 
 " Sadly this script isn't robust for scrolling in really large files
 " The bang tells vim that it can reload the function
@@ -267,9 +267,6 @@ set textwidth=80
 " Vim will not break words
 set linebreak
 
-" Highlight current line 
-set cursorline
-
 " Fold per default according to syntax
 set foldmethod=syntax
 
@@ -311,6 +308,9 @@ map <leader>p :hardcopy <CR>
   "set cole=2
 "endif
 
+" Highlight current line 
+set cursorline
+
 " GVIM cursor
 set guicursor=n-v-c:block-Cursor
 set guicursor+=i:ver100-iCursor
@@ -318,9 +318,8 @@ set guicursor+=n-v-c:blinkon0
 set guicursor+=i:blinkwait10
 
 " Terminal cursor. Use an orange cursor in insert mode
-let &t_SI = "\<Esc>]12;orange\x7"
-let &t_EI = "\<Esc>]12;blue\x7"
-"silent !echo -ne "\033]12;blue\007"
+let &t_SI = "\<Esc>]12;blue\x7"
+let &t_EI = "\<Esc>]12;orange\x7"
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FORTRAN ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Form: We will always use Fortran free not fixed form
