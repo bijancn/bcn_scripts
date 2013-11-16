@@ -18,10 +18,8 @@
 
 # Checking for own machine with superuser rights and updated programs
 if [ "$USER" = "bijancn" ]; then
-  app=""
   mighty=true
 else
-  app="_simple"
   mighty=false
 fi
 
@@ -58,7 +56,7 @@ fi
 export GFC='yes'
 export DEBUG="-O2 -Wall -fbounds-check -fbacktrace -finit-real=nan "
 export DEBUG="$DEBUG -fcheck=all -fmax-errors=2 -ffpe-trap=invalid,zero,overflow"
-alias debugconf='../ovm/configure FCFLAGS="$DEBUG"'
+alias debugconf='../ovm/configure FCFLAGS="$DEBUG -g"'
 export FCFLAGS="-O2"
 export CUBACORES=1
 git=git@github.com
@@ -69,8 +67,8 @@ bcn=~/bcn_scripts
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ IP's ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 std_usr=bchokoufe
 wue=$std_usr@132.187.196
-#ip=$std_usr@wtpp121.physik.uni-wuerzburg.de
-ip=$wue.121
+#ip=$wue.121
+ip=$wue.138
 ohl=$std_usr@wtpp125.physik.uni-wuerzburg.de
 denner=$wue.133
 nick=$wue.121                  # int_quad_core, free
@@ -118,9 +116,6 @@ alias mv='mv -v'
 alias md='mkdir'
 alias rg='ranger'
 alias ca='cit ant'
-alias gp='git pull'
-alias gt='gitm ".."'
-alias gm='gitm'
 alias mu='mutt'
 alias mt='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: \t%M"'
 alias rs='rem_show'
@@ -157,6 +152,7 @@ alias get_thesis='git clone $nick:~/bcn_git/thesis.git'
 alias reset_file_perms='find . -type f -exec chmod 644 {} +'
 alias reset_dir_perms='find . -type d -exec chmod 755 {} +'
 alias mount_wue='sshfs $int_quad_core1: /home/bijancn/Dropbox/uniwue/'
+alias mount_out='sshfs $int_quad_core1:output_ovm/ /home/bijancn/Dropbox/master_thesis/output_ovm/'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
@@ -164,10 +160,6 @@ function renamer () {
 for files in *.$1; do
   mv "$files" "${files%.$1}.$2"
 done
-}
-
-function git_resurrect () {
-  git checkout $(git rev-list -n 1 HEAD -- "$1")^ -- "$1"
 }
 
 function kill_tty () {
@@ -194,22 +186,6 @@ function wtz () {
   rm 'temp.tar.gz'
 }
 
-function gitm () {
-  git status
-  echo "Are you really sure you want to commit everything?"
-  echo "Does it fit the commit message '$1'?"
-  select yn in "Yes" "No"; do
-    case $yn in
-      Yes ) git add -A; git commit -m "$1"; break;;
-      No ) break;;
-    esac
-  done
-}
-
-function gitf () {
-  git add "$1"; git commit -m "$2"
-}
-
 # See BCN COLORITRC for customizing colors in output
 function cit () {
   $1 2>&1 | colorit
@@ -231,6 +207,10 @@ function rem_show () {
 
 function ev () {
   evince "$1" &> /dev/null &
+}
+
+function za () {
+  zathura "$1" &> /dev/null &
 }
 
 function go () {
@@ -266,6 +246,40 @@ function shrink_pdf () {
   fname=$(basename $1)
   fbname=${fname%.*}
   gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dPDFSETTINGS=/ebook -sOutputFile=$fbname-small.pdf $1
+}
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~ GIT ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+function gitm () {
+  git status
+  echo "Are you really sure you want to commit everything? Have u pulled before?"
+  echo "Does it fit the commit message '$1'?"
+  select yn in "Yes" "No"; do
+    case $yn in
+      Yes ) git add -A; git commit -m "$1"; break;;
+      No ) break;;
+    esac
+  done
+}
+
+function gitf () {
+  git add "$1"; git commit -m "$2"
+}
+
+function giti () {
+  git interactive
+}
+
+function gits () {
+  git status
+}
+
+function gitl () {
+  git pull
+}
+
+function gitp () {
+  git push
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ GIT PROMPT ~~~~~~~~~~~~~~~~~~~~~~~~~~ 

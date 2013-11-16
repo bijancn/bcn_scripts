@@ -20,7 +20,7 @@ do
   ln -sf $bcn/$d/*                      ~/$d/
 done
 
-files=".vimrc .bashrc .coloritrc .dir_colorsrc .gntrc .muttrc"
+files=".vimrc .bashrc .coloritrc .dir_colorsrc .muttrc .gitignore_global"
 for f in $files
 do
   ln -sf $bcn/$f                      ~/$f
