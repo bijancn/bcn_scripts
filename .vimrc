@@ -149,7 +149,7 @@ map tn :tabnew <CR>
 map ta :tab all <CR>
 
 " Open new tab with directory of current file
-map <Leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+map te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 inoremap {      {}<Left>
 inoremap {<CR>  {<CR>}<Esc>O<Tab>
@@ -163,27 +163,19 @@ inoremap [      []<Left>
 inoremap [<CR>  [<CR>]<Esc>O<Tab>
 inoremap [[     [
 inoremap []     <Space>
-inoremap <      <><Left>
-inoremap <<CR>  <<CR>><Esc>O<Tab>
-inoremap <<     <
-inoremap <>     <Space>
-inoremap $      $$<Left>
-inoremap $<CR>  $<CR>$<Esc>O<Tab>
-inoremap $$     <Space>
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ ABBREVIATIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 iabbrev lamda lambda
 iabbrev teh the
 iabbrev excecute execute
 iabbrev Rkd real((kind=default)
-iabbrev In integer
-iabbrev Lo logical
 iabbrev Di dimension(
 iabbrev Ii intent((in) ::
 iabbrev Io intent((out) ::
 iabbrev Icg \includegraphics[[width=\textwidth]{
 iabbrev Ecl \begin{{columns}<CR><CR>\end{{columns}<Esc>ki<Space><Space>
 iabbrev Eal \begin{{Balign}<CR><CR>\end{{Balign}<Esc>ki<Space><Space>
+iabbrev Efi \begin{{figure}<CR><CR>\end{{figure}<Esc>ki<Space><Space>\includegraphics[[width=\textwidth]{{}
 iabbrev Nc <Esc>ddk<leader>nc
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ SCROLLING ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
@@ -218,6 +210,11 @@ inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
 inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~ SETTINGS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+" Use the default filetype settings. Also load indent files,
+" to automatically do language-dependent indenting.
+filetype plugin on
+filetype indent on
+
 " This is the not recommended version for .less support. There are proper addons
 " for full highlighting.
 au BufNewFile,BufRead *.less set filetype=css
@@ -225,12 +222,16 @@ au BufNewFile,BufRead *.less set filetype=css
 " Performance option
 set lazyredraw
 
-" Use the default filetype settings. Also load indent files,
-" to automatically do language-dependent indenting.
-filetype plugin on
-filetype indent on
+" In most terminal emulators the mouse works just fine, thus enable it
+if has('mouse')
+  set mouse=a
+endif
 
-set foldnestmax=3
+" Set 'textwidth' to 80 characters. Vim will break after 80 chars.
+set textwidth=80
+
+" Vim will not break words
+set linebreak
 
 " Switch syntax highlighting on
 syntax on
@@ -256,19 +257,10 @@ set ignorecase
 " If there is an uppercase character in the search, it becomes case sensitive
 set smartcase
 
-" In most terminal emulators the mouse works just fine, thus enable it
-if has('mouse')
-  set mouse=a
-endif
-
-" Set 'textwidth' to 80 characters. Vim will break after 80 chars.
-set textwidth=80
-
-" Vim will not break words
-set linebreak
-
 " Fold per default according to syntax
 set foldmethod=syntax
+
+set foldnestmax=3
 
 " Search only in unfolded text
 set fdo-=search

@@ -56,7 +56,7 @@ fi
 export GFC='yes'
 export DEBUG="-O2 -Wall -fbounds-check -fbacktrace -finit-real=nan "
 export DEBUG="$DEBUG -fcheck=all -fmax-errors=2 -ffpe-trap=invalid,zero,overflow"
-alias debugconf='../ovm/configure FCFLAGS="$DEBUG"'
+alias debugconf='../ovm/configure FCFLAGS="$DEBUG -g"'
 export FCFLAGS="-O2"
 export CUBACORES=1
 git=git@github.com
@@ -67,8 +67,8 @@ bcn=~/bcn_scripts
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ IP's ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 std_usr=bchokoufe
 wue=$std_usr@132.187.196
-#ip=$std_usr@wtpp121.physik.uni-wuerzburg.de
-ip=$wue.121
+#ip=$wue.121
+ip=$wue.138
 ohl=$std_usr@wtpp125.physik.uni-wuerzburg.de
 denner=$wue.133
 nick=$wue.121                  # int_quad_core, free
@@ -152,6 +152,7 @@ alias get_thesis='git clone $nick:~/bcn_git/thesis.git'
 alias reset_file_perms='find . -type f -exec chmod 644 {} +'
 alias reset_dir_perms='find . -type d -exec chmod 755 {} +'
 alias mount_wue='sshfs $int_quad_core1: /home/bijancn/Dropbox/uniwue/'
+alias mount_out='sshfs $int_quad_core1:output_ovm/ /home/bijancn/Dropbox/master_thesis/output_ovm/'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
@@ -206,6 +207,10 @@ function rem_show () {
 
 function ev () {
   evince "$1" &> /dev/null &
+}
+
+function za () {
+  zathura "$1" &> /dev/null &
 }
 
 function go () {
