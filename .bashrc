@@ -282,8 +282,11 @@ setup_prompt(){
   c_white=`tput setaf 9`
   PS1long='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] [${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]] \[\033[01;34m\]\w\[\033[00m\] '
   #PS1='\[$(branch_color)\]$(parse_git_branch)\[\033[00m\] ${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]\[\033[01;34m\]\w\[\033[00m\] '
-  PS1='$( __git_ps1 "(%s)\[\e[00m\]"
+  if $mighty
+  then
+    PS1='$( __git_ps1 "(%s)\[\e[00m\]"
 			) \[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;37m\]\h\[\e[01;37m\]:\[\e[01;34m\] \w\[\e[00;37m\] \[\e[00m\]'
+  fi
   #python ~/Dropbox/days_left.py
 }
  
