@@ -25,13 +25,13 @@ set t_Co=256
 
 " Setting some colors for light background. hi == highlight. 
 " To see the color codes, use bcn_color_demo.vim
-hi Normal	        ctermbg=white          ctermfg=16         cterm=none
+hi Normal	        ctermbg=white          ctermfg=233         cterm=none
 "hi Cursor         ctermbg=black       ctermfg=255        cterm=None
 "hi iCursor        ctermbg=17          ctermfg=white        cterm=None
 hi Directory	    ctermbg=none        ctermfg=57          cterm=None
 hi ErrorMsg       ctermbg=none        ctermfg=160         cterm=None
 hi NonText	      ctermbg=None        ctermfg=105         cterm=Bold
-hi DiffText	      ctermbg=none         ctermfg=170         cterm=None
+hi DiffText	      ctermbg=none        ctermfg=170         cterm=None
 hi Underline      ctermbg=None        ctermfg=147         cterm=Italic
 hi Conceal        ctermbg=None        ctermfg=magenta 
 hi Search         ctermbg=117         ctermfg=none 
@@ -43,9 +43,9 @@ hi Special	      ctermbg=None        ctermfg=34           cterm=none
 hi Type		        ctermbg=None        ctermfg=20          cterm=none
 hi PreProc	      ctermbg=None        ctermfg=91          cterm=None
 hi SpecialKey	    ctermbg=None        ctermfg=22          cterm=None
-hi Identifier	    ctermbg=None        ctermfg=82          cterm=none
+hi Identifier	    ctermbg=None        ctermfg=161          cterm=none
 hi Constant	      ctermbg=None        ctermfg=196         cterm=None
-hi Statement	    ctermbg=None        ctermfg=202         cterm=none
+hi Statement	    ctermbg=None        ctermfg=214         cterm=none
 hi Todo           ctermbg=None        ctermfg=162         cterm=Bold
 hi Ignore         ctermbg=None        ctermfg=220         cterm=Bold
 hi Visual         ctermbg=250         ctermfg=232         cterm=None

@@ -245,7 +245,7 @@ else
 endif
 
 " Using my color scheme
-colorscheme bcn_dark
+colorscheme bcn_light
 
 " Disable the annoying menu bar taking away precious pixels in gVim
 set guioptions-=m  "remove menu bar
