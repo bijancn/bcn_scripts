@@ -6,10 +6,6 @@
 	excludesfile = /home/bijancn/.gitignore_global
 [merge]
 	tool = vimdiff
-[push]
-	default = simple
-[color]
-	ui = true
 [alias]
   ci = commit
 [alias]
