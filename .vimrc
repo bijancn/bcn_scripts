@@ -32,20 +32,20 @@ filetype off                   " required for Vundle!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'gmarik/vundle'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-repeat'
+"Bundle 'tpope/vim-surround'
+"Bundle 'tpope/vim-repeat'
 Bundle 'comments.vim'
-Bundle 'YankRing.vim'
 Bundle 'bling/vim-airline'
-"Bundle 'scrooloose/nerdtree'
-Bundle 'matchit.zip'
-Bundle 'ervandew/supertab'
+Bundle 'bijancn/snipmate.vim'
 "Bundle 'nw.vim' "Bundle 'noweb.vim' These two suck quite hard compared to:
 Bundle 'noweb.vim--McDermott'
+"Bundle 'scrooloose/nerdtree'
+"Bundle 'matchit.zip'
+"Bundle 'YankRing.vim'
+"Bundle 'ervandew/supertab'
 "Bundle 'taglist.vim' "Don't really use it
 "Bundle 'jcf/vim-latex' " Too annoying and slow
 "Bundle 'Dynetrekk/snipmate.vim'
-Bundle 'bijancn/snipmate.vim'
 
 " This allows backspacing over everything in insert mode. Don't insert spaces.
 set backspace=indent,eol,start
@@ -68,7 +68,7 @@ set incsearch       " do incremental searching
 "nmap <Leader>t :TlistToggle<CR>
 
 " Show Yankring
-nnoremap <silent> <F8> :YRShow<CR>
+"nnoremap <silent> <F8> :YRShow<CR>
 
 " key-mappings for comment line in normal mode
 nmap <C-C> :call CommentLine()<CR>
@@ -87,7 +87,7 @@ nmap <silent> <C-X> :call UnCommentLine()<CR>
 vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
 
 " Filetype specific make commands are e.g. in ~/.vim/ftplugin/python.vim
-"nmap <Leader>f :w <CR> :make <CR><CR>
+nmap <Leader>m :w<CR>:make<CR> <CR>
 
 nmap <Leader>b :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
 
@@ -102,9 +102,6 @@ nmap <Leader>nc o%<CR><<<<>>=<CR>@<CR>%<Esc>2kla
 
 " Open corresponding html file
 "nmap <Leader>v :!google-chrome %<.html<CR><CR>
-
-nnoremap <Leader>o :set nospell!<CR>
-"nnoremap <Leader>o :setlocal spell spelllang=en_us<CR>
 
 " Toggle between highlighting line or column
 nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
@@ -168,6 +165,9 @@ inoremap []     <Space>
 iabbrev lamda lambda
 iabbrev teh the
 iabbrev excecute execute
+iabbrev pertubation perturbation
+iabbrev acchieved achieved
+iabbrev acchieve achieve
 iabbrev Rkd real((kind=default)
 iabbrev Di dimension(
 iabbrev Ii intent((in) ::
@@ -313,6 +313,9 @@ set guicursor+=i:blinkwait10
 let &t_SI = "\<Esc>]12;blue\x7"
 let &t_EI = "\<Esc>]12;orange\x7"
 
+set rtp+=/home/bijancn/.opam/system/share/ocamlmerlin/vim
+set rtp+=/home/bijancn/.opam/system/share/ocamlmerlin/vimbufsync
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FORTRAN ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Form: We will always use Fortran free not fixed form
 let fortran_free_source=1
@@ -393,8 +396,35 @@ let g:airline_symbols.space = "\ua0"
 " Get rid of that random trailing indication  
 let g:airline_detect_whitespace=0
 
-set rtp+=/home/bijancn/.opam/system/share/ocamlmerlin/vim
-set rtp+=/home/bijancn/.opam/system/share/ocamlmerlin/vimbufsync
-
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SUPERTAB ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let g:SuperTabDefaultCompletionType = "context"
+"
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ erikw/toggle_spell ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Toggle spell with a language. 
+function! ToggleSpell(lang)
+	if !exists("b:old_spelllang")
+		let b:old_spelllang = &spelllang
+		let b:old_spellfile = &spellfile
+		let b:old_dictionary = &dictionary
+	endif
+ 
+	let l:newMode = ""
+	if !&l:spell || a:lang != &l:spelllang
+		setlocal spell
+		let l:newMode = "spell"
+		execute "setlocal spelllang=" . a:lang
+		execute "setlocal spellfile=" . "~/.vim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
+		execute "setlocal dictionary=" . "~/.vim/spell/" . a:lang . "." . &encoding . ".dic"
+		let l:newMode .= ", " . a:lang
+	else
+		setlocal nospell
+		let l:newMode = "nospell"
+		execute "setlocal spelllang=" . b:old_spelllang
+		execute "setlocal spellfile=" . b:old_spellfile
+		execute "setlocal dictionary=" . b:old_dictionary
+	endif
+	return l:newMode
+endfunction
+
+nmap <silent> <F7> :echo ToggleSpell("en")<CR>			  " Toggle English spell.
+nmap <silent> <F8> :echo ToggleSpell("de_de")<CR>     " Toggle German spell.

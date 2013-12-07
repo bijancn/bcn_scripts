@@ -133,8 +133,8 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="0"
-         height="0"
+         width="75.234909057617188"
+         height="55.957916259765625"
          rx="0"
          ry="0" />
       <eventcontext
@@ -332,7 +332,8 @@
        font_sample="AaBbCcIiPpQq12369$€¢?.;/()"
        show_sample_in_list="1"
        style="fill:black;fill-opacity:1;stroke:none;font-family:Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"
-       selcue="1" />
+       selcue="1"
+       align_mode="1" />
     <eventcontext
        id="nodes"
        selcue="1"
@@ -542,7 +543,16 @@
     <group
        id="toolbox" />
     <group
-       id="fillstroke" />
+       id="fillstroke"
+       panel_size="1"
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       x="0"
+       y="0"
+       w="335"
+       h="428"
+       state="2" />
     <group
        id="filtereffects" />
     <group
@@ -564,10 +574,27 @@
        ignorenumbers="1" />
     <group
        id="documentoptions"
-       state="1" />
+       state="1"
+       panel_size="1"
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       x="850"
+       y="0"
+       w="376"
+       h="543" />
     <group
        id="preferences"
-       state="1" />
+       state="1"
+       page="7"
+       panel_size="1"
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       x="825"
+       y="76"
+       w="661"
+       h="422" />
     <group
        id="gradienteditor" />
     <group
@@ -598,11 +625,11 @@
     <group
        id="open"
        enable_preview="1"
-       path="" />
+       path="/home/bijancn/Dropbox/documents/plaetzchen/" />
     <group
        id="import"
        enable_preview="1"
-       path="" />
+       path="/home/bijancn/Dropbox/images/christmas/" />
     <group
        id="debug"
        redirect="0" />
@@ -627,7 +654,16 @@
        id="treeeditor" />
     <group
        id="layers"
-       maxDepth="20" />
+       maxDepth="20"
+       panel_size="1"
+       panel_ratio="100"
+       panel_mode="1"
+       panel_wrap="0"
+       x="0"
+       y="0"
+       w="335"
+       h="189"
+       state="2" />
     <group
        id="extensioneditor" />
     <group
@@ -924,7 +960,7 @@
      id="extensions" />
   <group
      id="desktop"
-     style="">
+     style="fill:#d35f5f;opacity:0.9;-inkscape-font-specification:TeX Gyre Chorus Medium;font-family:TeX Gyre Chorus;font-weight:500;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:middle;text-align:center;writing-mode:lr;font-size:40px">
     <group
        width="640"
        height="480"
@@ -932,7 +968,7 @@
        y="0"
        fullscreen="0"
        id="geometry"
-       maximized="0" />
+       maximized="1" />
     <group
        id="XYfront" />
     <group

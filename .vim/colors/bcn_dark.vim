@@ -56,8 +56,8 @@ hi Visual       ctermbg=238   ctermfg=250    cterm=None guibg=gray15 guifg=gray6
 hi ColorColumn  ctermbg=232                                 guibg=black
 hi CursorColumn ctermbg=17    ctermfg=white      cterm=NONE guibg=blue guifg=white
 hi CursorLine   ctermbg=232                      cterm=none guibg=black
-hi Folded       ctermbg=238   ctermfg=DarkBlue 
-hi FoldColumn   ctermbg=238   ctermfg=DarkBlue 
+hi Folded       ctermbg=235   ctermfg=DarkBlue 
+hi FoldColumn   ctermbg=235   ctermfg=DarkBlue 
 hi Pmenu        ctermbg=238   ctermfg=DarkBlue   gui=bold   guibg=brown gui=bold
 hi PmenuSel     ctermbg=232   ctermfg=DarkBlue   gui=bold   guibg=brown gui=bold
 hi PmenuSbar    ctermbg=232   ctermfg=DarkBlue   gui=bold   guibg=brown gui=bold

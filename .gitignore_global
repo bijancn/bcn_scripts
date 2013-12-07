@@ -34,19 +34,20 @@ missing
 *.cmxa
 
 # TeX
+*.aux
+*.bbl
 *.bcf
 *.blg
-*.bbl
 *.fdb_latexmk
-*.aux
 *.fls
+*.lof
 *.out
 *.pdf
-*.[123456789]
-*.t[123456789]
-*.toc
 *.run.xml
 *.tex.blg
+*.toc
+*.t[123456789]
+*.[123456789]
 
 # Logs and data
 *.log

@@ -36,14 +36,14 @@ hi Underline      ctermbg=None        ctermfg=147         cterm=Italic
 hi Conceal        ctermbg=None        ctermfg=magenta 
 hi Search         ctermbg=117         ctermfg=none 
 hi LineNr         ctermbg=none        ctermfg=245
-hi SpellBad       ctermbg=88
+hi SpellBad       ctermbg=177
 hi Comment        ctermbg=none        ctermfg=33          cterm=none
 hi Error	        ctermbg=none        ctermfg=None        cterm=Bold
-hi Special	      ctermbg=None        ctermfg=2           cterm=none
+hi Special	      ctermbg=None        ctermfg=34           cterm=none
 hi Type		        ctermbg=None        ctermfg=20          cterm=none
 hi PreProc	      ctermbg=None        ctermfg=91          cterm=None
 hi SpecialKey	    ctermbg=None        ctermfg=22          cterm=None
-hi Identifier	    ctermbg=None        ctermfg=40          cterm=none
+hi Identifier	    ctermbg=None        ctermfg=82          cterm=none
 hi Constant	      ctermbg=None        ctermfg=196         cterm=None
 hi Statement	    ctermbg=None        ctermfg=202         cterm=none
 hi Todo           ctermbg=None        ctermfg=162         cterm=Bold

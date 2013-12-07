@@ -140,7 +140,7 @@ font.size           : 17.0
 #text.color          : black
 
 ### LaTeX customizations. See http://www.scipy.org/Wiki/Cookbook/Matplotlib/UsingTex
-#text.usetex         : False  # use latex for all text handling. The following fonts
+text.usetex         : True  # use latex for all text handling. The following fonts
                               # are supported through the usual rc parameter settings:
                               # new century schoolbook, bookman, times, palatino,
                               # zapf chancery, charter, serif, sans-serif, helvetica,
@@ -157,7 +157,7 @@ font.size           : 17.0
                             # preamble is a comma separated list of LaTeX statements
                             # that are included in the LaTeX document preamble.
                             # An example:
-                            # text.latex.preamble : \usepackage{bm},\usepackage{euler}
+text.latex.preamble : \usepackage{amsmath}\boldmath
                             # The following packages are always loaded with usetex, so
                             # beware of package collisions: color, geometry, graphicx,
                             # type1cm, textcomp. Adobe Postscript (PSSNFS) font packages
@@ -198,9 +198,9 @@ font.size           : 17.0
 #mathtext.it  : serif:italic
 #mathtext.bf  : serif:bold
 #mathtext.sf  : sans
-#mathtext.fontset : cm # Should be 'cm' (Computer Modern), 'stix',
+mathtext.fontset : cm # Should be 'cm' (Computer Modern), 'stix',
                        # 'stixsans' or 'custom'
-#mathtext.fallback_to_cm : True  # When True, use symbols from the Computer Modern
+mathtext.fallback_to_cm : True  # When True, use symbols from the Computer Modern
                                  # fonts when a symbol can not be found in one of
                                  # the custom math fonts.
 

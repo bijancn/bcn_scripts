@@ -53,6 +53,7 @@
 
 \let\vect\vec
 \renewcommand{\vec}[1]{\ems{\boldsymbol{#1} }}
+\newcommand{\nvec}[1]{\ems{\vec{\hat{#1}}}}
 \newcommand{\norm}[1] {\ems{\left\lVert #1 \right\rVert }}
 \newcommand{\abs}[1]  {\ems{\left\lvert #1 \right\rvert }}
 \newcommand{\mean}[1] {\ems{\left< #1 \right>}}
@@ -122,7 +123,7 @@
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SHORTHANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
 \newcommand\Rcite[1]{Ref.~\cite{#1}}
-\newcommand\etal{\textit{et al. }}
+\newcommand\etal{{et al. }}
 \newcommand\ie{i.e.\ }
 \newcommand\eg{e.g.\ }
 \newcommand\cf{c.f.\ }
@@ -193,12 +194,12 @@
 \newcommand\Mh  {\ems{m_H}}
 
 % Arrows
-\newcommand\lra {\ems{\leftrightarrow}}
-\newcommand\Lra {\ems{\Leftrightarrow}}
-\newcommand\rA  {\ems{\rightarrow}}
-%\newcommand\RA  {\ems{\Rightarrow}}
-\newcommand\lA  {\ems{\leftarrow }}
-%\newcommand\LA  {\ems{\Leftarrow }}
+\newcommand\lrarrow {\ems{\leftrightarrow}}
+\newcommand\LRarrow {\ems{\Leftrightarrow}}
+\newcommand\rarrow  {\ems{\rightarrow}}
+\newcommand\Rarrow  {\ems{\Rightarrow}}
+\newcommand\larrow  {\ems{\leftarrow }}
+\newcommand\Larrow  {\ems{\Leftarrow }}
 \newcommand\up  {\ems{\uparrow}}
 \newcommand\down{\ems{\downarrow}}
 \newcommand\Up  {\ems{\Uparrow}}

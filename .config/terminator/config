@@ -15,13 +15,13 @@
 [profiles]
   [[default]]
     scrollbar_position = hidden
-    palette = "#262626:#ff2727:#5dbf00:#fff000:#3f94ff:#ec6bff:#00fcff:#d3d7cf:#555753:#ff7c7c:#7eff00:#fffc99:#9ecdff:#ffc4f9:#b2ffff:#ffffff"
+    palette = "#444444:#ff2727:#5dbf00:#fff000:#3f94ff:#ec6bff:#00fcff:#d3d7cf:#868686:#ff7c7c:#7eff00:#fffc99:#9ecdff:#ffc4f9:#b2ffff:#ffffff"
     background_darkness = 0.85
     use_system_font = False
     foreground_color = "#ffffff"
     show_titlebar = False
     font = Liberation Mono 11
-    background_color = "#171717"
+    background_color = "#262626"
     cursor_blink = False
     scrollback_infinite = True
   [[light]]

@@ -54,7 +54,7 @@ else
 fi
 
 export GFC='yes'
-export DEBUG="-O2 -Wall -fbounds-check -fbacktrace -finit-real=nan "
+export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan "
 export DEBUG="$DEBUG -fcheck=all -fmax-errors=2 -ffpe-trap=invalid,zero,overflow"
 alias debugconf='../ovm/configure FCFLAGS="$DEBUG -g"'
 export FCFLAGS="-O2"
@@ -92,15 +92,18 @@ int_quad_core4=$wue.125        # free             2.33 GHz
 int_i7=$wue.171                # mauricio, free
 public=$std_usr@wtpp004.physik.uni-wuerzburg.de
 clustr=$std_usr@wtpp020.physik.uni-wuerzburg.de
+nclustr=$std_usr@wtpp024.physik.uni-wuerzburg.de
 hepforge=$std_usr@login.hepforge.org
 home_ip=192.168.2.152
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ SHORTHANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 if $mighty ; then
   alias mc='cit "make clean"'
+  alias mp='cit "make pdf"'
   alias m='cit make'
 else
   alias mc='make clean'
+  alias mp='make pdf'
   alias m='make'
 fi
 alias x='exit'
@@ -153,13 +156,16 @@ alias reset_file_perms='find . -type f -exec chmod 644 {} +'
 alias reset_dir_perms='find . -type d -exec chmod 755 {} +'
 alias mount_wue='sshfs $int_quad_core1: /home/bijancn/Dropbox/uniwue/'
 alias mount_out='sshfs $int_quad_core1:output_ovm/ /home/bijancn/Dropbox/master_thesis/output_ovm/'
+alias get_yt_mp3='youtube-dl --extract-audio --audio-format=mp3'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
-function renamer () {
-for files in *.$1; do
-  mv "$files" "${files%.$1}.$2"
-done
+function ft_renamer () {
+  for file in *.$1; do mv "$file" "${file%.$1}.$2"; done
+}
+
+function changer () {
+  for file in *$1*; do mv $file ${file/$1/$2}; done
 }
 
 function kill_tty () {
@@ -264,6 +270,10 @@ function gitm () {
 
 function gitf () {
   git add "$1"; git commit -m "$2"
+}
+
+function gitc () {
+  git commit -m "$1"
 }
 
 function giti () {
