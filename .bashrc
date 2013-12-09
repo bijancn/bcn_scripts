@@ -22,6 +22,7 @@ if [ "$USER" = "bijancn" ]; then
 else
   mighty=false
 fi
+export USER_ACR=bcn
 
 # Customize colors for ls
 eval `dircolors $HOME/.dir_colorsrc`

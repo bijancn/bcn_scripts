@@ -35,25 +35,25 @@ hi DiffText	      ctermbg=none        ctermfg=170         cterm=None
 hi Underline      ctermbg=None        ctermfg=147         cterm=Italic
 hi Conceal        ctermbg=None        ctermfg=magenta 
 hi Search         ctermbg=117         ctermfg=none 
-hi LineNr         ctermbg=none        ctermfg=245
+hi LineNr         ctermbg=none        ctermfg=247
 hi SpellBad       ctermbg=177
 hi Comment        ctermbg=none        ctermfg=33          cterm=none
 hi Error	        ctermbg=none        ctermfg=None        cterm=Bold
 hi Special	      ctermbg=None        ctermfg=34           cterm=none
 hi Type		        ctermbg=None        ctermfg=20          cterm=none
-hi PreProc	      ctermbg=None        ctermfg=91          cterm=None
+hi PreProc	      ctermbg=None        ctermfg=54          cterm=None
 hi SpecialKey	    ctermbg=None        ctermfg=22          cterm=None
-hi Identifier	    ctermbg=None        ctermfg=161          cterm=none
-hi Constant	      ctermbg=None        ctermfg=196         cterm=None
-hi Statement	    ctermbg=None        ctermfg=214         cterm=none
+hi Identifier	    ctermbg=None        ctermfg=162          cterm=none
+hi Constant	      ctermbg=None        ctermfg=1         cterm=None
+hi Statement	    ctermbg=None        ctermfg=208         cterm=none
 hi Todo           ctermbg=None        ctermfg=162         cterm=Bold
 hi Ignore         ctermbg=None        ctermfg=220         cterm=Bold
 hi Visual         ctermbg=250         ctermfg=232         cterm=None
-hi ColorColumn    ctermbg=245 
+hi ColorColumn    ctermbg=253 
 hi CursorColumn   ctermbg=12          ctermfg=16          cterm=NONE 
-hi CursorLine     ctermbg=253                             cterm=none
-hi Folded         ctermbg=249         ctermfg=17 
-hi FoldColumn     ctermbg=249         ctermfg=17 
+hi CursorLine     ctermbg=255                             cterm=none
+hi Folded         ctermbg=253         ctermfg=17 
+hi FoldColumn     ctermbg=253         ctermfg=17 
 
 "hi StatusLine term=reverse,bold cterm=reverse,bold gui=reverse,bold
 "hi StatusLineNC term=reverse cterm=reverse gui=reverse

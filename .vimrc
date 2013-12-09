@@ -32,20 +32,40 @@ filetype off                   " required for Vundle!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'gmarik/vundle'
-"Bundle 'tpope/vim-surround'
-"Bundle 'tpope/vim-repeat'
-Bundle 'comments.vim'
+
+" Pure epicness, the one and only
 Bundle 'bling/vim-airline'
-Bundle 'bijancn/snipmate.vim'
+
+" Does not change in noweb chunks, might be fixable
+Bundle 'comments.vim'
+
+"Bundle 'bijancn/snipmate.vim'
+Bundle 'SirVer/ultisnips'
+
+Bundle 'matchit.zip'
+
 "Bundle 'nw.vim' "Bundle 'noweb.vim' These two suck quite hard compared to:
 Bundle 'noweb.vim--McDermott'
-"Bundle 'scrooloose/nerdtree'
-"Bundle 'matchit.zip'
+" I should fork my extension though
+
+" Almost never need this
 "Bundle 'YankRing.vim'
+
+" Just isn't as smart as it pretends to be
 "Bundle 'ervandew/supertab'
-"Bundle 'taglist.vim' "Don't really use it
-"Bundle 'jcf/vim-latex' " Too annoying and slow
-"Bundle 'Dynetrekk/snipmate.vim'
+
+" Don't really use it
+"Bundle 'taglist.vim' 
+
+" Sadly it is bugged for me. Must collide with some setting I can't find
+"Bundle 'scrooloose/nerdtree'
+
+" Too annoying and slow
+"Bundle 'jcf/vim-latex' 
+
+" Just can't get used to it
+"Bundle 'tpope/vim-surround'
+"Bundle 'tpope/vim-repeat'
 
 " This allows backspacing over everything in insert mode. Don't insert spaces.
 set backspace=indent,eol,start
@@ -55,7 +75,9 @@ set history=500     " keep 500 lines of command line history
 set showcmd         " display incomplete commands
 set incsearch       " do incremental searching
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ KEYBOARD MAPPINGS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+"=============================================================================="
+"                              KEYBOARD MAPPINGS                               "
+"=============================================================================="
 " nmap, nnoremap, nunmap          Normal mode
 " imap, inoremap, iunmap          Insert and Replace mode
 " vmap, vnoremap, vunmap          Visual and Select mode
@@ -125,9 +147,12 @@ function! Colortoggle(dark)
   endif
 endfunction
 
-command W :execute 'silent w !sudo tee > /dev/null %'
-command Wq :execute ':W' | :q!
-command WQ :Wq
+if !exists('W_defined')
+  let W_defined = "True"
+  command W :execute 'silent w !sudo tee > /dev/null %'
+  command Wq :execute ':W' | :q!
+  command WQ :Wq
+endif
 
 " Clearing highlighted search
 nmap <silent> <leader>/ :nohlsearch<CR>
@@ -161,7 +186,9 @@ inoremap [<CR>  [<CR>]<Esc>O<Tab>
 inoremap [[     [
 inoremap []     <Space>
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ ABBREVIATIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+"=============================================================================="
+"                                ABBREVIATIONS                                 "
+"=============================================================================="
 iabbrev lamda lambda
 iabbrev teh the
 iabbrev excecute execute
@@ -178,7 +205,9 @@ iabbrev Eal \begin{{Balign}<CR><CR>\end{{Balign}<Esc>ki<Space><Space>
 iabbrev Efi \begin{{figure}<CR><CR>\end{{figure}<Esc>ki<Space><Space>\includegraphics[[width=\textwidth]{{}
 iabbrev Nc <Esc>ddk<leader>nc
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ SCROLLING ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+"=============================================================================="
+"                                  SCROLLING                                   "
+"=============================================================================="
 " Set the number of lines you want to stay off of bottom and top. This induces
 " vim to scroll automatically when the cursor comes close.
 set scrolloff=2
@@ -209,7 +238,9 @@ nnoremap <C-F> :call SmoothScroll(0)<Enter> :call SmoothScroll(0)<Enter>
 inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
 inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ SETTINGS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+"=============================================================================="
+"                                   SETTINGS                                   "
+"=============================================================================="
 " Use the default filetype settings. Also load indent files,
 " to automatically do language-dependent indenting.
 filetype plugin on
@@ -247,6 +278,8 @@ endif
 " Using my color scheme
 colorscheme bcn_light
 
+set ssop-=options    " do not store global and local values in a session
+
 " Disable the annoying menu bar taking away precious pixels in gVim
 set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
@@ -260,6 +293,7 @@ set smartcase
 " Fold per default according to syntax
 set foldmethod=syntax
 
+" Don't go apeshit with nesting
 set foldnestmax=3
 
 " Search only in unfolded text
@@ -316,16 +350,93 @@ let &t_EI = "\<Esc>]12;orange\x7"
 set rtp+=/home/bijancn/.opam/system/share/ocamlmerlin/vim
 set rtp+=/home/bijancn/.opam/system/share/ocamlmerlin/vimbufsync
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FORTRAN ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Form: We will always use Fortran free not fixed form
+
+" Show to which higroup a certain word belong to. Indispensable for creating
+" color schemes
+map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
+
+"=============================================================================="
+"                                   FORTRAN                                    "
+"=============================================================================="
+" We will always use Fortran free not fixed form
 let fortran_free_source=1
 let fortran_fold=1
 let fortran_fold_conditionals=1
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ NOWEB ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"=============================================================================="
+"                                    NOWEB                                     "
+"=============================================================================="
 let noweb_backend = "tex"
 let noweb_language = "fortran" 
 let noweb_fold_code = 1
+
+"=============================================================================="
+"                                   AIR-LINE                                   "
+"=============================================================================="
+set encoding=utf-8
+" Good looking powerline
+let g:airline_powerline_fonts = 1
+" Ensure that airline shows up
+set laststatus=2
+" Super fancy tabline
+let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '>'
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+" Get rid of that random trailing indication  
+let g:airline_detect_whitespace=0
+
+"=============================================================================="
+"                                   ULTISNIP                                   "
+"=============================================================================="
+let g:UltiSnipsExpandTrigger="<tab>"
+" Doesn't work?
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+"=============================================================================="
+"                              erikw/toggle_spell                              "
+"=============================================================================="
+" Toggle spell with a specific language and spellfile
+function! ToggleSpell(lang)
+	if !exists("b:old_spelllang")
+		let b:old_spelllang = &spelllang
+		let b:old_spellfile = &spellfile
+		let b:old_dictionary = &dictionary
+	endif
+ 
+	let l:newMode = ""
+	if !&l:spell || a:lang != &l:spelllang
+		setlocal spell
+		let l:newMode = "spell"
+		execute "setlocal spelllang=" . a:lang
+		execute "setlocal spellfile=" . "~/.vim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
+		execute "setlocal dictionary=" . "~/.vim/spell/" . a:lang . "." . &encoding . ".dic"
+		let l:newMode .= ", " . a:lang
+	else
+		setlocal nospell
+		let l:newMode = "nospell"
+		execute "setlocal spelllang=" . b:old_spelllang
+		execute "setlocal spellfile=" . b:old_spellfile
+		execute "setlocal dictionary=" . b:old_dictionary
+	endif
+	return l:newMode
+endfunction
+
+nmap <silent> <F7> :echo ToggleSpell("en")<CR>			  " Toggle English spell.
+nmap <silent> <F8> :echo ToggleSpell("de_de")<CR>     " Toggle German spell.
+
+"=============================================================================="
+"                                 DEPRECEATED                                  "
+"=============================================================================="
+
+"=============================================================================="
+"                                   SUPERTAB                                   "
+"=============================================================================="
+"let g:SuperTabDefaultCompletionType = "context"
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ VIM-LATEX ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Settings: \ll starts pdflatex. \lv starts pdf viewer
@@ -379,52 +490,3 @@ let g:tex_indent_items=0
 " Disables the jumping into braces but also abbreviations.
 let g:Imap_FreezeImap=0
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AIR-LINE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-set encoding=utf-8
-" Good looking powerline
-let g:airline_powerline_fonts = 1
-" Ensure that airline shows up
-set laststatus=2
-" Super fancy tabline
-let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#left_sep = ' '
-"let g:airline#extensions#tabline#left_alt_sep = '>'
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.space = "\ua0"
-" Get rid of that random trailing indication  
-let g:airline_detect_whitespace=0
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SUPERTAB ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-let g:SuperTabDefaultCompletionType = "context"
-"
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ erikw/toggle_spell ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Toggle spell with a language. 
-function! ToggleSpell(lang)
-	if !exists("b:old_spelllang")
-		let b:old_spelllang = &spelllang
-		let b:old_spellfile = &spellfile
-		let b:old_dictionary = &dictionary
-	endif
- 
-	let l:newMode = ""
-	if !&l:spell || a:lang != &l:spelllang
-		setlocal spell
-		let l:newMode = "spell"
-		execute "setlocal spelllang=" . a:lang
-		execute "setlocal spellfile=" . "~/.vim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
-		execute "setlocal dictionary=" . "~/.vim/spell/" . a:lang . "." . &encoding . ".dic"
-		let l:newMode .= ", " . a:lang
-	else
-		setlocal nospell
-		let l:newMode = "nospell"
-		execute "setlocal spelllang=" . b:old_spelllang
-		execute "setlocal spellfile=" . b:old_spellfile
-		execute "setlocal dictionary=" . b:old_dictionary
-	endif
-	return l:newMode
-endfunction
-
-nmap <silent> <F7> :echo ToggleSpell("en")<CR>			  " Toggle English spell.
-nmap <silent> <F8> :echo ToggleSpell("de_de")<CR>     " Toggle German spell.
