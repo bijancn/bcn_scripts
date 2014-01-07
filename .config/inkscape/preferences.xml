@@ -625,7 +625,7 @@
     <group
        id="open"
        enable_preview="1"
-       path="/home/bijancn/Dropbox/documents/plaetzchen/" />
+       path="/home/bijancn/decrypted/documents/plaetzchen/" />
     <group
        id="import"
        enable_preview="1"
@@ -957,10 +957,12 @@
        numthreads="1" />
   </group>
   <group
-     id="extensions" />
+     id="extensions"
+     org.ekips.filter.extractimage.filepath="plaetzchen"
+     org.inkscape.input.gdkpixbuf.jpg.link="link" />
   <group
      id="desktop"
-     style="fill:#d35f5f;opacity:0.9;-inkscape-font-specification:TeX Gyre Chorus Medium;font-family:TeX Gyre Chorus;font-weight:500;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:middle;text-align:center;writing-mode:lr;font-size:40px">
+     style="fill:#d35f5f;opacity:0.95;-inkscape-font-specification:TeX Gyre Chorus Medium;font-family:TeX Gyre Chorus;font-weight:500;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:middle;text-align:center;writing-mode:lr;font-size:40px">
     <group
        width="640"
        height="480"

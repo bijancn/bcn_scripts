@@ -28,6 +28,10 @@ define(`mark', ``mark "$1"'' `ifelse(`$#', `3', ``"\033[3$2;4$3m"'',
 dnl
 divert
 mark(`warning', magenta)
+mark(`overfull', magenta)
+mark(`Overfull', magenta)
+mark(`underfull', magenta)
+mark(`Underfull', magenta)
 mark(`Warning', magenta)
 mark(` error', red)
 mark(`Error', red)

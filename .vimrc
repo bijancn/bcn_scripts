@@ -17,7 +17,9 @@
 " 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ BASIC BEHAVIOR ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+"=============================================================================="
+"                                BASIC BEHAVIOR                                "
+"=============================================================================="
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
   finish
@@ -26,6 +28,19 @@ endif
 " Use Vim settings, rather than Vi settings.
 " This must be first, because it changes other options as a side effect.
 set nocompatible
+
+" This allows backspacing over everything in insert mode. Don't insert spaces.
+set backspace=indent,eol,start
+
+set nobackup        " do not keep a backup file
+set history=500     " keep 500 lines of command line history
+set showcmd         " display incomplete commands
+set incsearch       " do incremental searching
+set wildmode=longest,list,full
+set wildmenu
+"=============================================================================="
+"                                    VUNDLE                                    "
+"=============================================================================="
 
 " Vundle can be invoked by :BundleInstall. Updates with :BundleUpdate!
 filetype off                   " required for Vundle!
@@ -48,6 +63,9 @@ Bundle 'matchit.zip'
 Bundle 'noweb.vim--McDermott'
 " I should fork my extension though
 
+" Allows to focus completely
+Bundle 'junegunn/goyo.vim'
+
 " Almost never need this
 "Bundle 'YankRing.vim'
 
@@ -67,14 +85,6 @@ Bundle 'noweb.vim--McDermott'
 "Bundle 'tpope/vim-surround'
 "Bundle 'tpope/vim-repeat'
 
-" This allows backspacing over everything in insert mode. Don't insert spaces.
-set backspace=indent,eol,start
-
-set nobackup        " do not keep a backup file
-set history=500     " keep 500 lines of command line history
-set showcmd         " display incomplete commands
-set incsearch       " do incremental searching
-
 "=============================================================================="
 "                              KEYBOARD MAPPINGS                               "
 "=============================================================================="
@@ -83,18 +93,8 @@ set incsearch       " do incremental searching
 " vmap, vnoremap, vunmap          Visual and Select mode
 " <CR> sends Enter
 
-" Open NERDTree with \n
-"nmap <Leader>n :NERDTreeToggle<CR>
-
-" Open Taglist with \t
-"nmap <Leader>t :TlistToggle<CR>
-
-" Show Yankring
-"nnoremap <silent> <F8> :YRShow<CR>
-
 " key-mappings for comment line in normal mode
 nmap <C-C> :call CommentLine()<CR>
-"nmap  <C-C> :set nowrap!<CR>:call CommentLine()<CR>:set nowrap!<CR>
 " key-mappings for range comment lines in visual <Shift-V> mode
 vnoremap <C-C> :call RangeCommentLine()<CR>
 
@@ -108,11 +108,6 @@ nmap <silent> <C-X> :call UnCommentLine()<CR>
 " key-mappings for range un-comment lines in visual <Shift-V> mode
 vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
 
-" Filetype specific make commands are e.g. in ~/.vim/ftplugin/python.vim
-nmap <Leader>m :w<CR>:make<CR> <CR>
-
-nmap <Leader>b :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
-
 " Put yanked noweb chunk line to the end
 nmap <Leader>np p$xkJ
 
@@ -120,10 +115,7 @@ nmap <Leader>np p$xkJ
 nmap <Leader>ny 0v$hhy
 
 " Make new chunk
-nmap <Leader>nc o%<CR><<<<>>=<CR>@<CR>%<Esc>2kla
-
-" Open corresponding html file
-"nmap <Leader>v :!google-chrome %<.html<CR><CR>
+nmap <Leader>nc o%<CR><<>>=<CR>@<CR>%<Esc>2kla
 
 " Toggle between highlighting line or column
 nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
@@ -131,21 +123,10 @@ nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 " Change working directory to current file
 map <Leader>d :cd %:p:h<CR>:pwd<CR>
 
-" 
-let dark=1
-nnoremap <Leader>i :call Colortoggle(dark)<CR> 
+" Filetype specific make commands are e.g. in ~/.vim/ftplugin/python.vim
+nmap <Leader>m :w<CR>:make<CR> <CR>
 
-function! Colortoggle(dark)
-  if a:dark
-    :colorscheme bcn_light
-    " This doesn't work yet 
-    let dark=0
-  else
-    :colorscheme bcn_dark
-    " This doesn't work yet 
-    let dark=1
-  endif
-endfunction
+nmap <Leader>b :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
 
 if !exists('W_defined')
   let W_defined = "True"
@@ -173,24 +154,62 @@ map ta :tab all <CR>
 " Open new tab with directory of current file
 map te :tabedit <c-r>=expand("%:p:h")<cr>/
 
-inoremap {      {}<Left>
-inoremap {<CR>  {<CR>}<Esc>O<Tab>
-inoremap {{     {
-inoremap {}     <Space>
-inoremap (      ()<Left>
-inoremap (<CR>  (<CR>)<Esc>O<Tab>
-inoremap ((     (
-inoremap ()     <Space>
-inoremap [      []<Left>
-inoremap [<CR>  [<CR>]<Esc>O<Tab>
-inoremap [[     [
-inoremap []     <Space>
+"inoremap {      {}<Left>
+"inoremap {<CR>  {<CR>}<Esc>O<Tab>
+"inoremap {{     {
+"inoremap {}     <Space>
+"inoremap (      ()<Left>
+"inoremap (<CR>  (<CR>)<Esc>O<Tab>
+"inoremap ((     (
+"inoremap ()     <Space>
+"inoremap [      []<Left>
+"inoremap [<CR>  [<CR>]<Esc>O<Tab>
+"inoremap [[     [
+"inoremap []     <Space>
+
+map <leader>p :hardcopy <CR>
+
+" Show to which higroup a certain word belong to. Indispensable for creating
+" color schemes
+map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
+
+" Put in yanked and keep it yanked
+xnoremap P pgvy
+
+" Open NERDTree with \n
+"nmap <Leader>n :NERDTreeToggle<CR>
+
+" Open Taglist with \t
+"nmap <Leader>t :TlistToggle<CR>
+
+" Show Yankring
+"nnoremap <silent> <F8> :YRShow<CR>
+
+" Open corresponding html file
+"nmap <Leader>v :!google-chrome %<.html<CR><CR>
+
+"let dark=1
+"nnoremap <Leader>i :call Colortoggle(dark)<CR> 
+
+"function! Colortoggle(dark)
+  "if a:dark
+    ":colorscheme bcn_light
+    "" This doesn't work yet 
+    "let dark=0
+  "else
+    ":colorscheme bcn_dark
+    "" This doesn't work yet 
+    "let dark=1
+  "endif
+"endfunction
 
 "=============================================================================="
 "                                ABBREVIATIONS                                 "
 "=============================================================================="
+
 iabbrev lamda lambda
 iabbrev teh the
+iabbrev wether whether
 iabbrev excecute execute
 iabbrev pertubation perturbation
 iabbrev acchieved achieved
@@ -199,11 +218,11 @@ iabbrev Rkd real((kind=default)
 iabbrev Di dimension(
 iabbrev Ii intent((in) ::
 iabbrev Io intent((out) ::
-iabbrev Icg \includegraphics[[width=\textwidth]{
-iabbrev Ecl \begin{{columns}<CR><CR>\end{{columns}<Esc>ki<Space><Space>
-iabbrev Eal \begin{{Balign}<CR><CR>\end{{Balign}<Esc>ki<Space><Space>
-iabbrev Efi \begin{{figure}<CR><CR>\end{{figure}<Esc>ki<Space><Space>\includegraphics[[width=\textwidth]{{}
-iabbrev Nc <Esc>ddk<leader>nc
+" These should be snippets
+"iabbrev Icg \includegraphics[[width=\textwidth]{
+"iabbrev Ecl \begin{{columns}<CR><CR>\end{{columns}<Esc>ki<Space><Space>
+"iabbrev Efi \begin{{figure}<CR><CR>\end{{figure}<Esc>ki<Space><Space>\includegraphics[[width=\textwidth]{{}
+"iabbrev Nc <Esc>ddk<leader>nc
 
 "=============================================================================="
 "                                  SCROLLING                                   "
@@ -214,29 +233,29 @@ set scrolloff=2
 
 " Sadly this script isn't robust for scrolling in really large files
 " The bang tells vim that it can reload the function
-function! SmoothScroll(up)
-    if a:up
-        let scrollaction="\<C-Y>k"
-    else
-        let scrollaction="\<C-E>j"
-    endif
-    exec "normal " . scrollaction
-    redraw
-    let counter=1
-    while counter<&scroll
-        let counter+=1
-        sleep 1m
-        redraw
-        exec "normal " . scrollaction
-    endwhile
-endfunction
+"function! SmoothScroll(up)
+    "if a:up
+        "let scrollaction="\<C-Y>k"
+    "else
+        "let scrollaction="\<C-E>j"
+    "endif
+    "exec "normal " . scrollaction
+    "redraw
+    "let counter=1
+    "while counter<&scroll
+        "let counter+=1
+        "sleep 1m
+        "redraw
+        "exec "normal " . scrollaction
+    "endwhile
+"endfunction
 
-nnoremap <C-U> :call SmoothScroll(1)<Enter>
-nnoremap <C-D> :call SmoothScroll(0)<Enter>
-nnoremap <C-B> :call SmoothScroll(1)<Enter> :call SmoothScroll(1)<Enter>
-nnoremap <C-F> :call SmoothScroll(0)<Enter> :call SmoothScroll(0)<Enter>
-inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
-inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
+"nnoremap <C-U> :call SmoothScroll(1)<Enter>
+"nnoremap <C-D> :call SmoothScroll(0)<Enter>
+"nnoremap <C-B> :call SmoothScroll(1)<Enter> :call SmoothScroll(1)<Enter>
+"nnoremap <C-F> :call SmoothScroll(0)<Enter> :call SmoothScroll(0)<Enter>
+"inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
+"inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
 
 "=============================================================================="
 "                                   SETTINGS                                   "
@@ -245,6 +264,9 @@ inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
 " to automatically do language-dependent indenting.
 filetype plugin on
 filetype indent on
+
+" Switch syntax highlighting on
+syntax on
 
 " This is the not recommended version for .less support. There are proper addons
 " for full highlighting.
@@ -264,9 +286,6 @@ set textwidth=80
 " Vim will not break words
 set linebreak
 
-" Switch syntax highlighting on
-syntax on
-
 " Highlight consistent line at 81 char
 if exists('+colorcolumn')
   set colorcolumn=81
@@ -283,7 +302,6 @@ set ssop-=options    " do not store global and local values in a session
 " Disable the annoying menu bar taking away precious pixels in gVim
 set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
-"set guioptions-=r  "remove right-hand scroll bar
 
 " Standard searches are case insensitive
 set ignorecase
@@ -324,15 +342,7 @@ set tabstop=2           " Size of insterted spaces if tab is pressed
 
 " Printing options
 "set pdev=pdf
-set number
 set printoptions=paper:A4,syntax:y,wrap:y,number:y
-
-map <leader>p :hardcopy <CR>
-
-"if has ("conceal")
-  "" Enable concealing, i.e. greek letters are shown as unicode
-  "set cole=2
-"endif
 
 " Highlight current line 
 set cursorline
@@ -347,13 +357,13 @@ set guicursor+=i:blinkwait10
 let &t_SI = "\<Esc>]12;blue\x7"
 let &t_EI = "\<Esc>]12;orange\x7"
 
-set rtp+=/home/bijancn/.opam/system/share/ocamlmerlin/vim
-set rtp+=/home/bijancn/.opam/system/share/ocamlmerlin/vimbufsync
+" Defaulting to latex and not plain tex
+let g:Tex_flavor='latex'
 
-
-" Show to which higroup a certain word belong to. Indispensable for creating
-" color schemes
-map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
+"if has ("conceal")
+  "" Enable concealing, i.e. greek letters are shown as unicode
+  "set cole=2
+"endif
 
 "=============================================================================="
 "                                   FORTRAN                                    "
@@ -393,9 +403,19 @@ let g:airline_detect_whitespace=0
 "                                   ULTISNIP                                   "
 "=============================================================================="
 let g:UltiSnipsExpandTrigger="<tab>"
-" Doesn't work?
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<C-j>"
+"let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<C-J>"
+
+"=============================================================================="
+"                                     GOYO                                     "
+"=============================================================================="
+let g:goyo_width=80
+let g:goyo_margin_top=3
+let g:goyo_margin_bottom=3
+let g:goyo_linenr=0
+nmap <Leader>g :Goyo<CR>
 
 "=============================================================================="
 "                              erikw/toggle_spell                              "
@@ -439,54 +459,52 @@ nmap <silent> <F8> :echo ToggleSpell("de_de")<CR>     " Toggle German spell.
 "let g:SuperTabDefaultCompletionType = "context"
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ VIM-LATEX ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Settings: \ll starts pdflatex. \lv starts pdf viewer
-let g:Tex_DefaultTargetFormat='pdf'
-let g:Tex_MultipleCompileFormats='dvi,pdf,aux' 
-let g:Tex_flavor='latex'
-let g:Tex_BibtexFlavor ='biber'
+"" Settings: \ll starts pdflatex. \lv starts pdf viewer
+"let g:Tex_DefaultTargetFormat='pdf'
+"let g:Tex_MultipleCompileFormats='dvi,pdf,aux' 
+"let g:Tex_BibtexFlavor ='biber'
 
-" Warnings: How many warnings are ignored:
-" 1. underfull + 2. overfull + 3. floating objects + 4. requested packages
-let g:Tex_IgnoreLevel=3
-let g:Tex_IgnoredWarnings=
-\"Underfull\n".
-\"Overfull\n".
-\"LaTeX Font Warning\n".
-\"specifier changed to\n".
-\"You have requested\n".
-\"Missing number, treated as zero.\n".
-\"There were undefined references\n"
-\"Citation %.%# undefined"
+"" Warnings: How many warnings are ignored:
+"" 1. underfull + 2. overfull + 3. floating objects + 4. requested packages
+"let g:Tex_IgnoreLevel=3
+"let g:Tex_IgnoredWarnings=
+"\"Underfull\n".
+"\"Overfull\n".
+"\"LaTeX Font Warning\n".
+"\"specifier changed to\n".
+"\"You have requested\n".
+"\"Missing number, treated as zero.\n".
+"\"There were undefined references\n"
+"\"Citation %.%# undefined"
 
-let g:Tex_GotoError=0
+"let g:Tex_GotoError=0
 
-" Folding: Disabled
-let g:Tex_FoldedSections=""
-let g:Tex_FoldedEnvironments="Balign,Bframe"
-let g:Tex_FoldedMisc="preamble"
+"" Folding: Disabled
+"let g:Tex_FoldedSections=""
+"let g:Tex_FoldedEnvironments="Balign,Bframe"
+"let g:Tex_FoldedMisc="preamble"
 
-let Imap_PlaceHolderStart='<'
-let Imap_PlaceHolderEnd='>'
+"let Imap_PlaceHolderStart='<'
+"let Imap_PlaceHolderEnd='>'
 
-let g:Imap_UsePlaceHolders=0
+"let g:Imap_UsePlaceHolders=0
 
-" Speed things up with python
-let g:Tex_UsePython=1
+"" Speed things up with python
+"let g:Tex_UsePython=1
 
-" Environments:
-let g:Tex_Env_slide = "\\begin{Bframe}\<CR>{<++>}\<CR><++>\<CR>\\end{Bframe}"
-let g:Tex_Env_columns = 
- \"\\begin{columns}\<CR>\\column{.5\\textwidth}<++>\<CR>\\column{.5\\textwidth}\<CR>\\end{columns}"
-let g:Tex_Com_includegraphics = "\\includegraphics[width=<++>\\textwidth]{<+filename+>}"
+"" Environments:
+"let g:Tex_Env_slide = "\\begin{Bframe}\<CR>{<++>}\<CR><++>\<CR>\\end{Bframe}"
+"let g:Tex_Env_columns = 
+ "\"\\begin{columns}\<CR>\\column{.5\\textwidth}<++>\<CR>\\column{.5\\textwidth}\<CR>\\end{columns}"
+"let g:Tex_Com_includegraphics = "\\includegraphics[width=<++>\\textwidth]{<+filename+>}"
 
-" Feynmp: Automatically calling mpost to compute diagrams with bcn_koma
-let g:Tex_CompileRule_pdf='pdflatex -file-line-error -enable-write18 -halt-on-error'
+"" Feynmp: Automatically calling mpost to compute diagrams with bcn_koma
+"let g:Tex_CompileRule_pdf='pdflatex -file-line-error -enable-write18 -halt-on-error'
 
-" Conceal: a accents, d delimiters, g Greek, m math and NOT s super/subscripts
-"let g:tex_conceal="dgm"
-let g:tex_indent_brace=0
-let g:tex_indent_items=0
+"" Conceal: a accents, d delimiters, g Greek, m math and NOT s super/subscripts
+""let g:tex_conceal="dgm"
+"let g:tex_indent_brace=0
+"let g:tex_indent_items=0
 
-" Disables the jumping into braces but also abbreviations.
-let g:Imap_FreezeImap=0
-
+"" Disables the jumping into braces but also abbreviations.
+"let g:Imap_FreezeImap=0
