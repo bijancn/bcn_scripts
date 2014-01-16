@@ -1,0 +1,138 @@
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+%
+% bcn_beamer_example.tex - An customizable example file for bcn_letter.lco
+%
+% Copyright (C)     2014-01-16    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
+% Recent versions:  https://github.com/bijanc/bcn_scripts
+%
+% This source code is free software; you can redistribute it and/or
+% modify it under the terms of the GNU General Public License Version 2: 
+% http://www.gnu.org/licenses/gpl-2.0-standalone.html
+%
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+\documentclass[mathserif]{beamer}
+\usepackage{bcn_beamer}
+\usepackage[english]{babel}
+\usepackage[babel]{csquotes} %Sets the ``'', '', `` correctly with biber/biblatex
+\usepackage[style=alphabetic, %numeric-comp is simple numbers
+  ]{biblatex}
+\mode<presentation>
+
+%==============================================================================%
+%                                STYLE SETTINGS                                %
+%==============================================================================%
+\setbeamercovered{transparent}
+\usetheme{default}
+\newcommand\animation{}
+\newcommand\bad[1]{{\color{red}#1}}
+\newcommand\good[1]{{\color{\sndcol}#1}}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\newcommand\fstcol\myorange
+\newcommand\sndcol\mygreenblue
+
+% Enable this to set background_file as transparent background
+%\usebackgroundtemplate{\transparent{0.06} 
+%\includegraphics[height=\paperheight]{background_file}
+%}
+
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{frametitle}[default][right]
+\setbeamertemplate{enumerate item}{(\alph{enumi})}
+\setbeamertemplate{footline}{
+  \hs{.5}\vs{1} % Ensuring enough space for the foot line
+}
+
+%==============================================================================%
+%                             GENERAL INFORMATION                              %
+%==============================================================================%
+\title{Title of this talk}
+\author{Max Mustermann}
+\institute{University of Mustercity}
+\date{September 20, 2013}
+
+%==============================================================================%
+%                              SLIDES OF THE TALK                              %
+%==============================================================================%
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% A simple footer
+\setbeamertemplate{footline}{{}{ \hfill\insertframenumber
+  /\inserttotalframenumber\hskip 1em }
+}
+
+\begin{Bframe}{Outline}
+  \tableofcontents
+\end{Bframe}
+
+% A simple footer, now with navigation bar
+\setbeamertemplate{footline}{
+  \insertsectionnavigationhorizontal{\textwidth}{}{ \hfill\insertframenumber
+  /\inserttotalframenumber\hskip 1em }
+}
+
+%==============================================================================%%
+\beamersection{First Important Section}
+
+\begin{Bframe}
+  {Motivation}
+  \begin{itemize}
+    \item Give some motivation \vs 1
+    \item It generally helps \vs 1
+    \item But sometimes not
+  \end{itemize}
+\end{Bframe}
+
+\begin{Bframe}
+  {Big pictures}
+  % Includes some pictures
+  %\includegraphics[width=\textwidth]{pics/schematic.pdf}
+\end{Bframe}
+
+\begin{Bframe}
+  {Columns}
+  \begin{columns}
+    \column{.5\textwidth}
+      %\includegraphics[width=\textwidth]{pics/some_pic.pdf}
+    \column{.5\textwidth}
+      Columns allow to put more informations on a slide and structure the slide.
+      \vs 1
+
+      In a proper unit system, you have
+      \begin{Balign}
+        E = m 
+      \end{Balign}
+  \end{columns}
+\end{Bframe}
+
+%==============================================================================%%
+\beamersection{Second Important Section}
+
+\begin{Bframe}
+  [Subtitle]{Title}
+  The second part
+  \vs 1\pause
+
+  is a bit \bad{short}! But then coffee break is \good{earlier}!
+\end{Bframe}
+
+\begin{Bframe}
+  {Conclusions/Outlook}
+  \begin{itemize}
+    \item This should give you the basic tools for a decent tools. \vs 1
+    \item Remember: Less is more.
+  \end{itemize}
+\end{Bframe}
+
+% Enable Reference slide here
+%\begin{Bframe}
+  %{References}
+%\renewcommand*{\bibfont}{\footnotesize}
+  %\printbibliography
+%\end{Bframe}
+\end{document}
