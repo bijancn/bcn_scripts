@@ -253,9 +253,9 @@ function fa () {
 #                                     GIT                                      #
 #==============================================================================#
 
-function gitm () {
+function gitA () {
   git status
-  echo "Are you really sure you want to commit everything? Have u pulled before?"
+  echo "Are you really sure you want to commit EVERYTHING?? Have u pulled before?"
   echo "Does it fit the commit message '$1'?"
   select yn in "Yes" "No"; do
     case $yn in
