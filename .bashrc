@@ -35,12 +35,14 @@ eval `dircolors $HOME/.dir_colorsrc`
 #=========#
 export PATH=$PATH:$HOME/ocaml/bin
 export PATH=$PATH:$HOME/usr/bin
+export PATH=$PATH:/afs/desy.de/group/theorie/software/ELF64/bin/
 # libs
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib32
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/afs/desy.de/group/theorie/software/ELF64/lib
 # python
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
 export PYTHONPATH=$PYTHONPATH:$HOME/Dropbox/gcal_print/Python-GoogleCalendarParser
@@ -86,6 +88,7 @@ if $mighty ; then
   alias mc='cit "make clean"'
   alias mp='cit "make pdf"'
   alias mf='cit "make force_pdf"'
+  alias rm='trash-put -v'
 else
   alias m='make'
   alias mc='make clean'
@@ -101,7 +104,6 @@ alias so='source ~/.bashrc'
 alias ll='ls -lh'
 alias la='ls -lah'
 alias le='less'
-alias rm='trash-put -v'
 alias mv='mv -v'
 alias sd='sudo shutdown now -P'
 alias rb='sudo reboot'
@@ -310,12 +312,15 @@ setup_prompt(){
     PS1='$( __git_ps1 "(%s)\[\e[00m\]"
 			) \[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]'
   fi
+  if [ "$USER" = "bcho" ]; then
+    PS1='\[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]'
+  fi
 }
 
 # Only set prompt if interactive! Otherwise noninteractive commands like ssh
 # throw warnings
 case "$-" in
-  *i*) setup_prompt;;
+  *i*) setup_prompt;; 
   *)	interactive=false ;;
 esac
 
