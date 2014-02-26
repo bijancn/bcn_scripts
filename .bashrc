@@ -87,36 +87,7 @@ lingames='/data/lnx_games'
 #========#
 #  IP's  #
 #========#
-git=git@github.com
-std_usr=bchokoufe
-wue=$std_usr@132.187.196
-export ohl=$wue.125
-export denner=$wue.133
-export nick=$wue.121                  # int_quad_core, free
-export otter=$wue.113                 # rechnet
-export bbiedermann=$wue.172           # rechnet
-export pbaerwald=$wue.139             # rechnet
-export rfeger=$wue.112                # rechnet
-export scharf=$wue.183                # rechnet
-export scharf_workers2=$wue.184       # rechnet
-export scharf_workers3=$wue.182       # rechnet
-export scharf_workers4=$wue.113       # rechnet
-export scharf_workers5=$wue.111       # rechnet
-export scharf_workers6=$wue.110       # rechnet
-export csturm=$wue.127                # rechnet
-export ddas=$wue.120                  # rechnet
-export amd_dual_core=$wue.141         # free
-export int_quad_core1=$wue.138        # free             2.83 GHz
-export int_quad_core2=$wue.143        # aschenkel, free  2.83 GHz
-export int_quad_core3=$wue.134        # free             2.83 GHz
-export int_quad_core4=$wue.125        # free             2.33 GHz
-export int_i7=$wue.171                # mauricio, free
-export public=$std_usr@wtpp004.physik.uni-wuerzburg.de
-export clustr=$std_usr@wtpp020.physik.uni-wuerzburg.de
-export nclustr=$std_usr@wtpp024.physik.uni-wuerzburg.de
-export hepforge=$std_usr@login.hepforge.org
-export ip=$int_quad_core1
-export home_ip=192.168.2.152
+source $HOME/decrypted/IPs.sh
 
 #==============================================================================#
 #                                  SHORTHANDS                                  #
@@ -293,9 +264,9 @@ function fa () {
 #                                     GIT                                      #
 #==============================================================================#
 
-function gitm () {
+function gitA () {
   git status
-  echo "Are you really sure you want to commit everything? Have u pulled before?"
+  echo "Are you really sure you want to commit EVERYTHING?? Have u pulled before?"
   echo "Does it fit the commit message '$1'?"
   select yn in "Yes" "No"; do
     case $yn in
