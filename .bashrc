@@ -33,16 +33,17 @@ eval `dircolors $HOME/.dir_colorsrc`
 #=========#
 #  paths  #
 #=========#
+export honeypot=/afs/desy.de/group/theorie/software/ELF64
 export PATH=$PATH:$HOME/ocaml/bin
-export PATH=$PATH:$HOME/usr/bin
-export PATH=$PATH:/afs/desy.de/group/theorie/software/ELF64/bin/
+export PATH=$PATH:$HOME/bin
+export PATH=$honeypot/bin:$PATH
 # libs
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib32
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/bin
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/afs/desy.de/group/theorie/software/ELF64/lib
+export LD_LIBRARY_PATH=$honeypot/lib:$honeypot/lib64:$LD_LIBRARY_PATH
 # python
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
 export PYTHONPATH=$PYTHONPATH:$HOME/Dropbox/gcal_print/Python-GoogleCalendarParser
@@ -60,7 +61,15 @@ export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 if $mighty; then
   export FC=gfortran
 else
-  export FC=$HOME/gcc4.6.1/bin/gfortran
+  #export FC=$HOME/gcc4.6.1/bin/gfortran
+  #export FC=$honeypot/bin/gfortran
+  alias gfortran=$honeypot/bin/gfortran
+  alias gcc=$honeypot/bin/gcc
+  #export F77=$honeypot/bin/gfortran
+  #export CC=$honeypot/bin/gcc
+  #export CXX=$honeypot/bin/gcc
+  #export CPP=$honeypot/bin/gcc
+  #export CPPFLASGS=-E
 fi
 export GFC='yes'
 export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan "
