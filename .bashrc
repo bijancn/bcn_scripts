@@ -59,10 +59,10 @@ export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 #==================#
 if $mighty; then
   export FC=gfortran
-else
-  export FC=$HOME/gcc4.6.1/bin/gfortran
+#else
+  #export FC=$HOME/gcc4.6.1/bin/gfortran
 fi
-export GFC='yes'
+#export GFC='yes'
 export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan "
 export DEBUG="$DEBUG -fcheck=all -fmax-errors=2 -ffpe-trap=invalid,zero,overflow"
 alias debugconf='../ovm/configure FCFLAGS="$DEBUG -g"'
@@ -78,7 +78,9 @@ lingames='/data/lnx_games'
 #========#
 #  IP's  #
 #========#
-source $HOME/decrypted/IPs.sh
+if $mighty; then
+  source $HOME/decrypted/IPs.sh
+fi
 
 #==============================================================================#
 #                                  SHORTHANDS                                  #
@@ -99,6 +101,11 @@ alias x='exit'
 alias p='python'
 alias t='/usr/bin/time'
 alias c='./configure'
+alias ..='cd ..'
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
 alias ac='autoreconf'
 alias so='source ~/.bashrc'
 alias ll='ls -lh'
@@ -109,6 +116,7 @@ alias sd='sudo shutdown now -P'
 alias rb='sudo reboot'
 alias rs='rem_show'
 alias md='mkdir'
+alias mdc='mkdircd'
 alias mt='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: \t%M"'
 alias gf='gfortran -fopenmp ' 
 alias ca='cit ant'
@@ -151,6 +159,10 @@ alias wc3='wine '$wingames'/Warcraft\ III/Frozen\ Throne.exe'
 alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+function mkdircd () { 
+  mkdir -p "$@" && eval cd "\"\$$#\""; 
+}
 
 function ft_renamer () {
   for file in *.$1; do mv "$file" "${file%.$1}.$2"; done
