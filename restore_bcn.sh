@@ -14,6 +14,7 @@ DIRS=".matplotlib .ssh texmf/tex/latex "
 DIRS+=".vim .vim/syntax .vim/spell .vim/colors .vim/ftplugin "
 DIRS+=".config/keepassx .config/terminator .config/inkscape .config/evince "
 DIRS+=".config/dwb .config/dwb/adblock_lists .config/dwb/default "
+DIRS+=".config/dconf/user"
 for d in $DIRS
 do
   mkdir ~/$d -p
