@@ -16,6 +16,11 @@
 # 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
+set -o vi
+bind '"\e."':yank-last-arg
+export today=`date -I`
+export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude=*.swp --exclude=Makefile.in'
+
 # Checking for own machine with superuser rights and updated programs
 if [ "$USER" = "bijancn" ]; then
   mighty=true
@@ -34,15 +39,9 @@ eval `dircolors $HOME/.dir_colorsrc`
 #  paths  #
 #=========#
 export honeypot=/afs/desy.de/group/theorie/software/ELF64
-export PATH=$PATH:$HOME/ocaml/bin
 export PATH=$PATH:$HOME/bin
 export PATH=$honeypot/bin:$PATH
 # libs
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib32
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/bin
 export LD_LIBRARY_PATH=$honeypot/lib:$honeypot/lib64:$LD_LIBRARY_PATH
 # python
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
@@ -58,24 +57,10 @@ export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 #==================#
 #  compiler flags  #
 #==================#
-if $mighty; then
-  export FC=gfortran
-else
-  #export FC=$HOME/gcc4.6.1/bin/gfortran
-  #export FC=$honeypot/bin/gfortran
-  alias gfortran=$honeypot/bin/gfortran
-  alias gcc=$honeypot/bin/gcc
-  #export F77=$honeypot/bin/gfortran
-  #export CC=$honeypot/bin/gcc
-  #export CXX=$honeypot/bin/gcc
-  #export CPP=$honeypot/bin/gcc
-  #export CPPFLASGS=-E
-fi
-export GFC='yes'
 export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan "
-export DEBUG="$DEBUG -fcheck=all -fmax-errors=2 -ffpe-trap=invalid,zero,overflow"
+export DEBUG="$DEBUG -fcheck=all -fmax-errors=4 -ffpe-trap=invalid,zero,overflow"
 alias debugconf='../ovm/configure FCFLAGS="$DEBUG -g"'
-export FCFLAGS="-O2"
+export FCFLAGS="-fmax-errors=4 -O2"
 export CUBACORES=1
 
 #===========#
@@ -87,7 +72,9 @@ lingames='/data/lnx_games'
 #========#
 #  IP's  #
 #========#
-source $HOME/decrypted/IPs.sh
+if $mighty; then
+  source $HOME/decrypted/IPs.sh
+fi
 
 #==============================================================================#
 #                                  SHORTHANDS                                  #
@@ -108,6 +95,11 @@ alias x='exit'
 alias p='python'
 alias t='/usr/bin/time'
 alias c='./configure'
+alias ..='cd ..'
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
 alias ac='autoreconf'
 alias so='source ~/.bashrc'
 alias ll='ls -lh'
@@ -118,6 +110,7 @@ alias sd='sudo shutdown now -P'
 alias rb='sudo reboot'
 alias rs='rem_show'
 alias md='mkdir'
+alias mdc='mkdircd'
 alias mt='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: \t%M"'
 alias gf='gfortran -fopenmp ' 
 alias ca='cit ant'
@@ -131,6 +124,13 @@ alias agu='sudo apt-get update'
 alias agg='sudo apt-get upgrade'
 alias agd='sudo apt-get dist-upgrade'
 alias AGU='agu; agg; agd'
+alias svnu='svn update'
+alias wsrc='go ~/trunk-distribution-install/share/doc/whizard/whizard.pdf'
+alias vsrc='go ~/trunk-distribution-install/share/doc/vamp/vamp.pdf'
+alias osrc='go ~/trunk-distribution-install/share/doc/omega/omega.pdf'
+alias csrc='go ~/trunk-distribution-install/share/doc/circe2/circe2.pdf'
+alias wman='go ~/trunk-distribution-install/share/doc/whizard/manual.pdf'
+alias gman='go ~/trunk-distribution-install/share/doc/whizard/gamelan_manual.pdf'
 
 #==============================================================================#
 #                                    UTILS                                     #
@@ -160,6 +160,10 @@ alias wc3='wine '$wingames'/Warcraft\ III/Frozen\ Throne.exe'
 alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+function mkdircd () { 
+  mkdir -p "$@" && eval cd "\"\$$#\""; 
+}
 
 function ft_renamer () {
   for file in *.$1; do mv "$file" "${file%.$1}.$2"; done
