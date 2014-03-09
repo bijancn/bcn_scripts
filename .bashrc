@@ -20,6 +20,9 @@ set -o vi
 bind '"\e."':yank-last-arg
 export today=`date -I`
 export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude=*.swp --exclude=Makefile.in'
+# Enabling backtracing in OCaml
+export OCAMLRUNPARAM=b
+ulimit -c unlimited
 
 # Checking for own machine with superuser rights and updated programs
 if [ "$USER" = "bijancn" ]; then
