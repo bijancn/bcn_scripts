@@ -63,4 +63,6 @@ missing
 *.o
 *.vertices
 .vimsession
+.netrwhist
+.vim/bundle/vundle/.netrwhist
 .svn
