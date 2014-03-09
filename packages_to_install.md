@@ -1,62 +1,23 @@
-# Main packages
+curl https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.bash_git
+
+http://www.skype.com/en/download-skype/skype-for-linux/
+
+/etc/apt/sources.list
+
+# For ATI 
+firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati
+
+# optional
+apache2 dict php5 
+
+# main
 ### libavcodec-extra-53 is needed for youtube-dl mp3 conversion
-apache2
-autoconf
-autotools-dev
-biblatex
-chromium
-cmus
-curlftpfs
-dict
-diffpdf
-encfs
-feynmf
-finch
-fuse
-gfortran
-gimp
-git
-gparted
-guake
-htop
-inkscape
-ipython
-keepassx
-latexmk
-latex-mk
-libavcodec-extra-53
-meld
-mercurial
-nemo-dropbox
-node-less
-noweb
-openssh-server
-pandoc
-pdftk
-php5
-python-matplotlib
-python-numpy
-python-pip
-python-scipy
-python-unidecode
-skype
-subversion
-terminator
-texlive 
-texlive-fonts-extra
-texlive-lang-german 
-texlive-latex-extra 
-texlive-science
-unetbootin
-vim-gtk
-xournal
-youtube-dl
-wine
+autoconf autotools-dev biber biblatex chromium cmus curl curlftpfs diffpdf encfs feynmf flashplugin-nonfree fuse gfortran gfortran-doc gimp git gparted htop inkscape ipython keepassx latexmk latex-mk libavcodec-extra-53 meld mercurial nemo-dropbox node-less noweb openssh-server pandoc pdftk python-matplotlib python-numpy python-pip python-scipy python-unidecode skype subversion terminator texlive texlive-fonts-extra texlive-lang-german texlive-latex-extra texlive-metapost texlive-science vim-gtk xournal youtube-dl wine
 
 # Bumblebee Setup
-sudo add-apt-repository ppa:bumblebee/stable
-sudo apt-get update
-sudo apt-get install bumblebee virtualgl linux-headers-generic primus primus-libs-ia32
+add-apt-repository ppa:bumblebee/stable
+apt-get update
+apt-get install bumblebee virtualgl linux-headers-generic primus primus-libs-ia32
 
 # Printer Setup
 sudo apt-get install cups csh lib32stdc++6

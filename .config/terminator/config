@@ -3,19 +3,24 @@
   handle_size = 2
   tab_position = bottom
 [keybindings]
+  go_up = <Primary>k
+  switch_to_tab_4 = <Alt>4
   switch_to_tab_6 = <Alt>6
   switch_to_tab_7 = <Alt>7
-  switch_to_tab_4 = <Alt>4
+  go_down = <Primary>j
   switch_to_tab_5 = <Alt>5
   switch_to_tab_2 = <Alt>2
-  switch_to_tab_3 = <Alt>3
+  go_right = <Primary>l
   switch_to_tab_1 = <Alt>1
-  switch_to_tab_8 = <Alt>8
+  go_left = <Primary>h
   switch_to_tab_9 = <Alt>9
+  switch_to_tab_8 = <Alt>8
+  switch_to_tab_3 = <Alt>3
 [profiles]
   [[default]]
     scrollbar_position = hidden
     palette = "#000000:#aa0000:#00aa00:#aa5500:#0000aa:#aa00aa:#00aaaa:#aaaaaa:#555555:#ff5555:#55ff55:#ffff55:#5555ff:#ff55ff:#55ffff:#ffffff"
+    background_image = None
     use_system_font = False
     foreground_color = "#000000"
     show_titlebar = False
@@ -26,6 +31,7 @@
   [[light]]
     scrollbar_position = hidden
     palette = "#000000:#aa0000:#00aa00:#aa5500:#0000aa:#aa00aa:#00aaaa:#aaaaaa:#555555:#ff5555:#55ff55:#ffff55:#5555ff:#ff55ff:#55ffff:#ffffff"
+    background_image = None
     use_system_font = False
     foreground_color = "#000000"
     show_titlebar = False
@@ -36,6 +42,7 @@
   [[black]]
     scrollbar_position = hidden
     palette = "#444444:#ff1919:#5dbf00:#fff000:#3f94ff:#ec6bff:#00fcff:#d3d7cf:#868686:#ff7c7c:#7eff00:#fffc99:#9ecdff:#ffc4f9:#b2ffff:#ffffff"
+    background_image = None
     background_darkness = 0.85
     use_system_font = False
     foreground_color = "#ffffff"
