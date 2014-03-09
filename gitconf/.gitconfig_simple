@@ -16,3 +16,5 @@
   pullhard = !git fetch --all && git reset --hard origin/master
 [alias]
   new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+[color]
+	ui = true

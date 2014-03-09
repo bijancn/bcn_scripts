@@ -16,6 +16,11 @@
 # 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
+set -o vi
+bind '"\e."':yank-last-arg
+export today=`date -I`
+export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude=*.swp --exclude=Makefile.in'
+
 # Checking for own machine with superuser rights and updated programs
 if [ "$USER" = "bijancn" ]; then
   mighty=true
@@ -33,16 +38,11 @@ eval `dircolors $HOME/.dir_colorsrc`
 #=========#
 #  paths  #
 #=========#
-export PATH=$PATH:$HOME/ocaml/bin
-export PATH=$PATH:$HOME/usr/bin
-export PATH=$PATH:/afs/desy.de/group/theorie/software/ELF64/bin/
+export honeypot=/afs/desy.de/group/theorie/software/ELF64
+export PATH=$PATH:$HOME/bin
+export PATH=$honeypot/bin:$PATH
 # libs
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/OMega-2.1.1Build/src/.libs/
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/gcc4.6.1/lib64/:$HOME/gcc4.6.1/lib32
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/Dropbox/master_thesis/OMega-2.1.1Build/src/.libs/
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/bin
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/afs/desy.de/group/theorie/software/ELF64/lib
+export LD_LIBRARY_PATH=$honeypot/lib:$honeypot/lib64:$LD_LIBRARY_PATH
 # python
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
 export PYTHONPATH=$PYTHONPATH:$HOME/Dropbox/gcal_print/Python-GoogleCalendarParser
@@ -57,16 +57,10 @@ export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 #==================#
 #  compiler flags  #
 #==================#
-if $mighty; then
-  export FC=gfortran
-#else
-  #export FC=$HOME/gcc4.6.1/bin/gfortran
-fi
-#export GFC='yes'
 export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan "
-export DEBUG="$DEBUG -fcheck=all -fmax-errors=2 -ffpe-trap=invalid,zero,overflow"
+export DEBUG="$DEBUG -fcheck=all -fmax-errors=4 -ffpe-trap=invalid,zero,overflow"
 alias debugconf='../ovm/configure FCFLAGS="$DEBUG -g"'
-export FCFLAGS="-O2"
+export FCFLAGS="-fmax-errors=4 -O2"
 export CUBACORES=1
 
 #===========#
@@ -130,6 +124,13 @@ alias agu='sudo apt-get update'
 alias agg='sudo apt-get upgrade'
 alias agd='sudo apt-get dist-upgrade'
 alias AGU='agu; agg; agd'
+alias svnu='svn update'
+alias wsrc='go ~/trunk-distribution-install/share/doc/whizard/whizard.pdf'
+alias vsrc='go ~/trunk-distribution-install/share/doc/vamp/vamp.pdf'
+alias osrc='go ~/trunk-distribution-install/share/doc/omega/omega.pdf'
+alias csrc='go ~/trunk-distribution-install/share/doc/circe2/circe2.pdf'
+alias wman='go ~/trunk-distribution-install/share/doc/whizard/manual.pdf'
+alias gman='go ~/trunk-distribution-install/share/doc/whizard/gamelan_manual.pdf'
 
 #==============================================================================#
 #                                    UTILS                                     #
