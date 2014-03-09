@@ -20,12 +20,8 @@
   [[default]]
     scrollbar_position = hidden
     palette = "#000000:#aa0000:#00aa00:#aa5500:#0000aa:#aa00aa:#00aaaa:#aaaaaa:#555555:#ff5555:#55ff55:#ffff55:#5555ff:#ff55ff:#55ffff:#ffffff"
-<<<<<<< HEAD
-    background_image = None
-=======
     background_darkness = 0.9
     background_type = transparent
->>>>>>> e381199b7bfd5f3ea682bd2eb5524b6582fff742
     use_system_font = False
     foreground_color = "#000000"
     show_titlebar = False
