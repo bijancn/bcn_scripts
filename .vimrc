@@ -458,6 +458,19 @@ nmap <silent> <F7> :echo ToggleSpell("en")<CR>			  " Toggle English spell.
 nmap <silent> <F8> :echo ToggleSpell("de_de")<CR>     " Toggle German spell.
 
 "=============================================================================="
+"                                 ocaml annot                                  "
+"=============================================================================="
+function! OCamlType()
+  let col  = col('.')
+  let line = line('.')
+  let file = expand("%:r")
+  let folder = "~/decrypted/bcn_omega211-build/src/"
+  let cmd = "annot -n -type ".line." ".col." ".file.".annot"
+  echo system('cd '.folder.' && '.cmd)
+endfunction    
+map ,t :call OCamlType()<CR>
+
+"=============================================================================="
 "                                 DEPRECEATED                                  "
 "=============================================================================="
 
