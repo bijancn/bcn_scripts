@@ -16,6 +16,8 @@
 # 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
+export hepsoft=$HOME/decrypted/hep_software
+#source $hepsoft/rivet/rivet211/rivetenv.sh
 set -o vi
 bind '"\e."':yank-last-arg
 export today=`date -I`
@@ -46,6 +48,7 @@ export PATH=$PATH:$HOME/bin
 export PATH=$honeypot/bin:$PATH
 # libs
 export LD_LIBRARY_PATH=$honeypot/lib:$honeypot/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/trunk-build/src/whizard-core
 # python
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
 export PYTHONPATH=$PYTHONPATH:$HOME/Dropbox/gcal_print/Python-GoogleCalendarParser
@@ -60,10 +63,10 @@ export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 #==================#
 #  compiler flags  #
 #==================#
-export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan "
-export DEBUG="$DEBUG -fcheck=all -fmax-errors=4 -ffpe-trap=invalid,zero,overflow"
-alias debugconf='../ovm/configure FCFLAGS="$DEBUG -g"'
-export FCFLAGS="-fmax-errors=4 -O2"
+export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan -g "
+export DEBUG="$DEBUG -fcheck=all -fmax-errors=1 -ffpe-trap=invalid,zero,overflow"
+alias debugconf='../ovm/configure FCFLAGS="$DEBUG"'
+export FCFLAGS="-fmax-errors=1 -O2"
 export CUBACORES=1
 
 #===========#
@@ -128,6 +131,7 @@ alias agg='sudo apt-get upgrade'
 alias agd='sudo apt-get dist-upgrade'
 alias AGU='agu; agg; agd'
 alias svnu='svn update'
+alias twhizard='~/trunk-install/bin/whizard'
 alias wsrc='go ~/trunk-distribution-install/share/doc/whizard/whizard.pdf'
 alias vsrc='go ~/trunk-distribution-install/share/doc/vamp/vamp.pdf'
 alias osrc='go ~/trunk-distribution-install/share/doc/omega/omega.pdf'
@@ -326,7 +330,7 @@ setup_prompt(){
   if $mighty
   then
     PS1='$( __git_ps1 "(%s)\[\e[00m\]"
-			) \[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]'
+			) \[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]\n    '
   fi
   if [ "$USER" = "bcho" ]; then
     PS1='\[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]'
