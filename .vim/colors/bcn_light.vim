@@ -31,7 +31,6 @@ hi Normal	        ctermbg=white          ctermfg=233         cterm=none
 hi Directory	    ctermbg=none        ctermfg=57          cterm=None
 hi ErrorMsg       ctermbg=none        ctermfg=160         cterm=None
 hi NonText	      ctermbg=None        ctermfg=105         cterm=Bold
-hi DiffText	      ctermbg=none        ctermfg=170         cterm=None
 hi Underline      ctermbg=None        ctermfg=147         cterm=Italic
 hi Conceal        ctermbg=None        ctermfg=magenta 
 hi Search         ctermbg=117         ctermfg=none 
@@ -52,8 +51,8 @@ hi Visual         ctermbg=250         ctermfg=232         cterm=None
 hi ColorColumn    ctermbg=253 
 hi CursorColumn   ctermbg=12          ctermfg=16          cterm=NONE 
 hi CursorLine     ctermbg=255                             cterm=none
-hi Folded         ctermbg=253         ctermfg=17 
-hi FoldColumn     ctermbg=253         ctermfg=17 
+hi Folded         ctermbg=254         ctermfg=17 
+hi FoldColumn     ctermbg=254         ctermfg=17 
 
 "hi StatusLine term=reverse,bold cterm=reverse,bold gui=reverse,bold
 "hi StatusLineNC term=reverse cterm=reverse gui=reverse
