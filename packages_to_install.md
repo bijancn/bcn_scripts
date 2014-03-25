@@ -8,6 +8,10 @@ apache2 dict php5
 # git
 `curl https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.bash_git` 
 
+# vim
+`git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle`
+`vim`, `:BundleInstall`
+
 # skype
 http://www.skype.com/en/download-skype/skype-for-linux/
 
@@ -17,13 +21,13 @@ apt-get update
 apt-get install bumblebee virtualgl linux-headers-generic primus primus-libs-ia32
 
 # OCaml by hand
-`
+```
 tar -xzf *.tar.gz
 cd ocaml-4.XX
 ./configure 
 make world.opt
 sudo make install
-`
+````
 
 # Mendeley
 http://www.mendeley.com/repositories/ubuntu/stable/amd64/mendeleydesktop-latest
