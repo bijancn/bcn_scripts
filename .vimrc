@@ -81,6 +81,8 @@ Bundle 'AndrewRadev/linediff.vim'
 
 Bundle 'jonathanfilip/vim-lucius'
 
+Bundle 'vim-pandoc/vim-pandoc'
+
 "=============="
 "  deprecated  "
 "=============="
@@ -302,6 +304,9 @@ set smartcase
 " Fold per default according to syntax
 set foldmethod=syntax
 
+" Open all per default
+setlocal foldlevel=99
+
 " Don't go apeshit with nesting
 set foldnestmax=3
 
@@ -413,11 +418,12 @@ let g:airline_detect_whitespace=1
 "=============================================================================="
 "                                   ULTISNIP                                   "
 "=============================================================================="
-let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsExpandTrigger="<tab>"
 "let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<C-j>"
+"let g:UltiSnipsJumpForwardTrigger="<C-j>"
 "let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsJumpBackwardTrigger="<C-J>"
+"let g:UltiSnipsJumpBackwardTrigger="<C-J>"
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "ultisnips_my"]
 
 "=============================================================================="
 "                                     GOYO                                     "
