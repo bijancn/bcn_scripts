@@ -16,15 +16,21 @@
 # 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
-export hepsoft=$HOME/decrypted/hep_software
-#source $hepsoft/rivet/rivet211/rivetenv.sh
 set -o vi
 bind '"\e."':yank-last-arg
 export today=`date -I`
 export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude=*.swp --exclude=Makefile.in'
+
 # Enabling backtracing in OCaml
 export OCAMLRUNPARAM=b
 ulimit -c unlimited
+
+alias whiz_conf='$HOME/trunk/configure --disable-static --prefix=$HOME/trunk-install'
+alias conn_jenkins='ssh -L 8080:localhost:8080 jenkins@141.99.211.121'
+export hepsoft=$HOME/safe/hep_software
+#source $hepsoft/rivet/rivet211/rivetenv.sh
+
+alias donthangup='nohup ./run_all.sh 2>&1 &'
 
 # Checking for own machine with superuser rights and updated programs
 if [ "$USER" = "bijancn" ]; then
@@ -44,12 +50,14 @@ eval `dircolors $HOME/.dir_colorsrc`
 #  paths  #
 #=========#
 export honeypot=/afs/desy.de/group/theorie/software/ELF64
-export PATH=$PATH:$HOME/bin
+export PATH=$HOME/bin/lhapdf-5.9.1/bin:$HOME/bin:$PATH
 export PATH=$honeypot/bin:$PATH
 # libs
 export LD_LIBRARY_PATH=$honeypot/lib:$honeypot/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/trunk-build/src/whizard-core
 # python
+export PYTHONPATH=$HOME/bin/lhapdf-5.9.1:$PYTHONPATH
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
 export PYTHONPATH=$PYTHONPATH:$HOME/Dropbox/gcal_print/Python-GoogleCalendarParser
 # java
@@ -87,20 +95,26 @@ fi
 #==============================================================================#
 if $mighty ; then
   alias m='cit make'
+  alias mj='cit "make -j"'
+  alias mi='cit "make install"'
   alias mc='cit "make clean"'
   alias mp='cit "make pdf"'
   alias mf='cit "make force_pdf"'
   alias rm='trash-put -v'
 else
   alias m='make'
+  alias mi='make install'
+  alias mi='make install'
   alias mc='make clean'
   alias mp='make pdf'
   alias mf='make force_pdf'
 fi
+alias k='kill -9'
 alias x='exit'
 alias p='python'
 alias t='/usr/bin/time'
 alias c='./configure'
+alias cd-='cd -'
 alias ..='cd ..'
 alias ..2="cd ../.."
 alias ..3="cd ../../.."
