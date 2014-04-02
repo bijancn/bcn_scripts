@@ -17,6 +17,8 @@
 "
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+let python_highlight_all = 1
+
 "=============================================================================="
 "                                BASIC BEHAVIOR                                "
 "=============================================================================="
@@ -261,6 +263,31 @@ else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>81v.\+', -1)
 endif
 
+"map <Leader>j :call setline('.', join(sort(split(getline('.'), ' ')), " "))<CR>
+vnoremap <Leader>o d:execute 'normal a' . join(sort(split(getreg('"'))), ' ')<CR>
+
+"==========="
+"  OpenPDF  "
+"==========="
+function! OpenPDF()
+  let file_stripped = expand("%:r")
+  echo system('gnome-open '.file_stripped.'.pdf')
+endfunction
+map <Leader>v :call OpenPDF()<CR>
+
+"==============="
+"  ocaml annot  "
+"==============="
+function! OCamlType()
+  let col  = col('.')
+  let line = line('.')
+  let file = expand("%:r")
+  let folder = "~/decrypted/bcn_omega211-build/src/"
+  let cmd = "annot -n -type ".line." ".col." ".file.".annot"
+  echo system('cd '.folder.' && '.cmd)
+endfunction
+map <Leader>t :call OCamlType()<CR>
+
 "=============================================================================="
 "                                   SETTINGS                                   "
 "=============================================================================="
@@ -374,7 +401,7 @@ autocmd FileType c set omnifunc=ccomplete#Complete
 
 " noweb specifics
 autocmd Filetype noweb set foldnestmax=1
-autocmd Filetype noweb set foldmethod=indent
+"autocmd Filetype noweb set foldmethod=indent
 
 " Don't screw up folds when inserting text that might affect them, until
 " leaving insert mode. Foldmethod is local to the window. Protect against
@@ -465,16 +492,3 @@ endfunction
 
 nmap <silent> <F7> :echo ToggleSpell("en")<CR>			  " Toggle English spell.
 nmap <silent> <F8> :echo ToggleSpell("de_de")<CR>     " Toggle German spell.
-
-"=============================================================================="
-"                                 ocaml annot                                  "
-"=============================================================================="
-function! OCamlType()
-  let col  = col('.')
-  let line = line('.')
-  let file = expand("%:r")
-  let folder = "~/decrypted/bcn_omega211-build/src/"
-  let cmd = "annot -n -type ".line." ".col." ".file.".annot"
-  echo system('cd '.folder.' && '.cmd)
-endfunction
-map ,t :call OCamlType()<CR>
