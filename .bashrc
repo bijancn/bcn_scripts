@@ -1,4 +1,4 @@
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 # bcn .bashrc - bash configuration file. Maintained since 2012.
 #
@@ -6,15 +6,15 @@
 # Recent versions:  https://github.com/bijanc/bcn_scripts
 #
 # This source code is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License Version 2: 
+# modify it under the terms of the GNU General Public License Version 2:
 # http://www.gnu.org/licenses/gpl-2.0-standalone.html
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-# 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
 # Put me in:
 #   for Linux:     ~/.bashrc
-# 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 set -o vi
 bind '"\e."':yank-last-arg
@@ -132,7 +132,7 @@ alias rs='rem_show'
 alias md='mkdir'
 alias mdc='mkdircd'
 alias mt='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: \t%M"'
-alias gf='gfortran -fopenmp ' 
+alias gf='gfortran -fopenmp '
 alias ca='cit ant'
 alias ud='./omega_QCD.opt -scatter "u d -> u d" '
 alias brc='vim ~/.bashrc'
@@ -180,10 +180,10 @@ alias ut='wine '$wingames'/UnrealTournament/System/UnrealTournament.exe'
 alias wc3='wine '$wingames'/Warcraft\ III/Frozen\ Throne.exe'
 alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function mkdircd () { 
-  mkdir -p "$@" && eval cd "\"\$$#\""; 
+function mkdircd () {
+  mkdir -p "$@" && eval cd "\"\$$#\"";
 }
 
 function ft_renamer () {
@@ -281,8 +281,16 @@ function ff () {
   find -iname "$1"
 }
 
+function sff () {
+  sudo find -iname "$1"
+}
+
 function fa () {
   find -iname "*$1*"
+}
+
+function sfa () {
+ sudo find -iname "*$1*"
 }
 
 #==============================================================================#
@@ -355,14 +363,14 @@ setup_prompt(){
 # Only set prompt if interactive! Otherwise noninteractive commands like ssh
 # throw warnings
 case "$-" in
-  *i*) setup_prompt;; 
+  *i*) setup_prompt;;
   *)	interactive=false ;;
 esac
 
 #==============================================================================#
 #                                 DEPRECEATED                                  #
 #==============================================================================#
- 
+
 # DO NOT USE THIS! IT BREAKS YOUR PROMPT! Don't know why though
 parse_git_branch () {
   if git rev-parse --git-dir >/dev/null 2>&1
@@ -379,7 +387,7 @@ branch_color () {
   if git rev-parse --git-dir >/dev/null 2>&1
   then
     color=""
-    if git status | grep "nothing to commit" >/dev/null 2>&1 
+    if git status | grep "nothing to commit" >/dev/null 2>&1
     then
       color="${c_green}"
     else
