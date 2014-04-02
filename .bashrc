@@ -87,7 +87,9 @@ lingames='/data/lnx_games'
 #  IP's  #
 #========#
 if $mighty; then
-  source $HOME/decrypted/IPs.sh
+  if [ -f $HOME/safe/IPs.sh ]; then
+    source $HOME/decrypted/IPs.sh
+  fi
 fi
 
 #==============================================================================#
