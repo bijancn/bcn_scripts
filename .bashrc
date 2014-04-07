@@ -47,7 +47,8 @@ set -o noclobber
 set -o ignoreeof
 
 # Narrowing greps search realms
-export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude=*.swp --exclude=Makefile.in'
+export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo '
+export GREP_OPTIONS='--exclude=*.swp --exclude=Makefile.in'
 
 # Enable options:
 shopt -s cdspell
@@ -98,7 +99,7 @@ export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 #==================#
 export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan -g "
 export DEBUG="$DEBUG -fcheck=all -fmax-errors=1 -ffpe-trap=invalid,zero,overflow"
-alias debugconf='../configure FCFLAGS="$DEBUG"'
+alias debugconf='../ovm/configure FCFLAGS="$DEBUG"'
 export FCFLAGS="-fmax-errors=1 -O2"
 export CUBACORES=1
 
@@ -106,8 +107,8 @@ export CUBACORES=1
 #  IPs  #
 #=======#
 if $mighty; then
-  if [ -f $syncd/IPs.sh ]; then
-    source $syncd/IPs.sh
+  if [ -f $syncd/keys/IPs.sh ]; then
+    source $syncd/keys/IPs.sh
   fi
 fi
 
