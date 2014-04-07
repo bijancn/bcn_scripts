@@ -13,15 +13,15 @@
   switch_to_tab_9 = <Alt>9
 [profiles]
   [[default]]
-    scrollbar_position = hidden
     word_chars = "-A-Za-z0-9,./?%&#:_~"
     palette = "#000000:#aa0000:#00aa00:#aa5500:#0000aa:#aa00aa:#00aaaa:#aaaaaa:#555555:#ff5555:#55ff55:#ffff55:#5555ff:#ff55ff:#55ffff:#ffffff"
+    background_image = None
     background_darkness = 0.9
     background_type = transparent
     use_system_font = False
     foreground_color = "#000000"
     show_titlebar = False
-    font = Monospace 10
+    font = Monospace 11
     background_color = "#ffffff"
     cursor_blink = False
     scrollback_infinite = True

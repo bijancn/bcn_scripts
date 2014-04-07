@@ -19,7 +19,8 @@
 set -o vi
 bind '"\e."':yank-last-arg
 export today=`date -I`
-export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude=*.swp --exclude=Makefile.in'
+export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo '
+export GREP_OPTIONS='--exclude=*.swp --exclude=Makefile.in'
 
 # Enabling backtracing in OCaml
 export OCAMLRUNPARAM=b
