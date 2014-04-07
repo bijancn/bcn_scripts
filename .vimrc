@@ -245,7 +245,7 @@ set scrolloff=2
 "=============================================================================="
 
 " Show to which higroup a certain word belongs to. Indispensable for creating
-" color schemes
+" color schemes and syntax files
 map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
 
 if !exists('W_defined')
@@ -254,6 +254,8 @@ if !exists('W_defined')
   command Wq :execute ':W' | :q!
   command WQ :Wq
 endif
+
+map <Leader>so :%s/\(\w\|)\)\(=\|+\|-\|*\|/\|<\|>\)\(\w\|(\)/\1 \2 \3/gc<CR>
 
 " Highlight consistent line at 81 char
 if exists('+colorcolumn')

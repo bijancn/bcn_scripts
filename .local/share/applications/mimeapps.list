@@ -1,0 +1,35 @@
+[Default Applications]
+text/html=chromium-browser.desktop
+x-scheme-handler/http=chromium-browser.desktop
+x-scheme-handler/https=chromium-browser.desktop
+x-scheme-handler/about=chromium-browser.desktop
+x-scheme-handler/unknown=chromium-browser.desktop
+x-scheme-handler/mailto=thunderbird.desktop
+text/calendar=gedit.desktop
+audio/x-vorbis+ogg=totem.desktop
+video/x-ogm+ogg=totem.desktop
+image/jpeg=eog.desktop
+message/rfc822=thunderbird.desktop
+application/x-extension-eml=thunderbird.desktop
+x-scheme-handler/news=thunderbird.desktop
+x-scheme-handler/feed=thunderbird.desktop
+application/rss+xml=thunderbird.desktop
+application/x-extension-rss=thunderbird.desktop
+
+[Added Associations]
+application/vnd.tcpdump.pcap=gvim.desktop;
+audio/x-wav=banshee.desktop;
+text/x-tex=gvim.desktop;
+application/pdf=inkscape.desktop;
+application/octet-stream=gvim.desktop;
+message/rfc822=thunderbird.desktop;
+application/x-extension-eml=thunderbird.desktop;
+x-scheme-handler/news=thunderbird.desktop;
+x-scheme-handler/feed=thunderbird.desktop;
+application/rss+xml=thunderbird.desktop;
+application/x-extension-rss=thunderbird.desktop;
+text/x-matlab=gvim.desktop;
+audio/x-mod=gvim.desktop;
+inode/symlink=gvim.desktop;
+text/vnd.graphviz=gedit.desktop;
+application/x-ms-dos-executable=wine.desktop;

@@ -55,7 +55,7 @@ hi CursorColumn   ctermbg=12          ctermfg=16          cterm=NONE
 hi CursorLine     ctermbg=255                             cterm=none
 hi Folded         ctermbg=254         ctermfg=17
 hi FoldColumn     ctermbg=254         ctermfg=17
-hi pandocEmphasis ctermbg=None    cterm=Bold
+hi pandocEmphasis ctermfg=20         ctermbg=None    cterm=Bold
 
 "hi StatusLine term=reverse,bold cterm=reverse,bold gui=reverse,bold
 "hi StatusLineNC term=reverse cterm=reverse gui=reverse
