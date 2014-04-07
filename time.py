@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # Allows to time an executable reliably with several reruns
-# Copy me to /usr/bin/ptime
 import sys
 import os.path
 import timeit
