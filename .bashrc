@@ -125,6 +125,9 @@ alias conn_jenkins='ssh -L 8080:localhost:8080 jenkins@141.99.211.121'
 #source $hepsoft/rivet/rivet211/rivetenv.sh
 export USER_ACR=bcn
 
+# Set the title of terminal
+echo -en "\e]0;$USER_ACR - terminal\a"
+
 alias nhr='nohup ./run_all.sh 2>&1 &'
 
 #==============================================================================#
