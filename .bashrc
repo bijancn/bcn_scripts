@@ -148,7 +148,7 @@ echo -en "\e]0;$USER_ACR - terminal\a"
 #                                    COLORS                                    #
 #==============================================================================#
 #==========#
-#  NORMAL  #
+#  normal  #
 #==========#
 Black='\e[0;30m'        # Black
 Red='\e[0;31m'          # Red
@@ -160,7 +160,7 @@ Cyan='\e[0;36m'         # Cyan
 White='\e[0;37m'        # White
 
 #========#
-#  BOLD  #
+#  bold  #
 #========#
 BBlack='\e[1;30m'       # Black
 BRed='\e[1;31m'         # Red
@@ -172,7 +172,7 @@ BCyan='\e[1;36m'        # Cyan
 BWhite='\e[1;37m'       # White
 
 #==============#
-#  BACKGROUND  #
+#  background  #
 #==============#
 On_Black='\e[40m'       # Black
 On_Red='\e[41m'         # Red
@@ -189,7 +189,7 @@ NC="\e[m"               # Color Reset
 #                                  SHORTHANDS                                  #
 #==============================================================================#
 #============#
-#  SHORTEST  #
+#  shortest  #
 #============#
 alias k='kill -9'
 alias x='exit'
@@ -198,7 +198,7 @@ alias t='/usr/bin/time'
 alias c='./configure'
 
 #========#
-#  MAKE  #
+#  make  #
 #========#
 if $mighty ; then
   alias m='cit make'
@@ -217,15 +217,16 @@ else
 fi
 alias ac='autoreconf'
 
-#======#
-#  RC  #
-#======#
+#===========#
+#  configs  #
+#===========#
 alias so='source ~/.bashrc'
 alias brc='vim ~/.bashrc'
 alias vrc='vim ~/.vimrc'
+alias gitrc='vim ~/.gitconfig'
 
 #====================#
-#  CHANGE DIRECTORY  #
+#  change directory  #
 #====================#
 alias cd-='cd -'
 alias cd..='cd ..'
@@ -235,15 +236,15 @@ alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
 
-#========#
-#  LIST  #
-#========#
+#=========#
+#  lists  #
+#=========#
 alias ll='ls -lh'
 alias la='ls -lah'
 alias lk='ls -lSrh'         #  Sort by size, biggest last.
 
 #===========#
-#  APT-GET  #
+#  apt-get  #
 #===========#
 alias agi='sudo apt-get install'
 alias agr='sudo apt-get remove'
@@ -253,7 +254,7 @@ alias agd='sudo apt-get dist-upgrade'
 alias AGU='agu; agg; agd'
 
 #===========#
-#  WHIZARD  #
+#  whizard  #
 #===========#
 alias twhizard='~/trunk-install/bin/whizard'
 alias wsrc='go '$wdist/share/doc/whizard/whizard.pdf
@@ -264,7 +265,7 @@ alias wman='go '$wdist/share/doc/whizard/manual.pdf
 alias gman='go '$wdist/share/doc/whizard/gamelan_manual.pdf
 
 #=========#
-#  GAMES  #
+#  games  #
 #=========#
 alias sc='cd '$lingames'/Stronghold; wine Stronghold\ Crusader.exe'
 alias ut='wine '$wingames'/UnrealTournament/System/UnrealTournament.exe'
@@ -272,14 +273,14 @@ alias wc3='wine '$wingames'/Warcraft\ III/Frozen\ Throne.exe'
 alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 
 #=======#
-#  SVN  #
+#  svn  #
 #=======#
 alias svnu='svn update'
 alias svnd='svn diff'
 alias svnc='svn commit'
 
 #=========#
-#  OTHER  #
+#  other  #
 #=========#
 alias le='less'
 if $mighty ; then
@@ -299,7 +300,7 @@ alias rgrep='grep -r'
 alias hgrep='history | grep '
 alias du_dirs='du {*,.git} -sh | sort -h'
 alias du_subdirs='du -h | sort -h'
-alias briss='java -jar ~/Dropbox/scripts/briss-0.9/briss-0.9.jar'
+alias briss="java -jar $synced/briss-0.9/briss-0.9.jar"
 alias primrun='vblank_mode=0 primusrun'
 alias todo='rgrep --binary-files=without-match -n todo: *'
 alias yt_mp3='youtube-dl -t --extract-audio --audio-format=mp3'
@@ -439,7 +440,7 @@ function mm () {
 }
 
 #======================#
-#  SURPRESSING OUTPUT  #
+#  surpressing output  #
 #======================#
 function ev () {
   evince "$1" &> /dev/null &
@@ -454,7 +455,7 @@ function go () {
 }
 
 #===========#
-#  FINDING  #
+#  finding  #
 #===========#
 function ff () {
   find -iname "$1"
@@ -475,7 +476,19 @@ function sfa () {
 #==============================================================================#
 #                                     GIT                                      #
 #==============================================================================#
+# Push all tags and branches to the remote
+alias gitpa='git push --all origin'
 
+# Ignore changes to local file in status,
+# useful for machine-specifc configs (followed by file)
+alias gituiu='git update-index --assume-unchanged'
+
+# Remove the above flag again to be able to commit changes of that file
+alias gituinu='git update-index --no-assume-unchanged'
+
+#==================#
+#  initialization  #
+#==================#
 # Adding everything. Useful for initialisation but not much more.
 function gitA () {
   git status
@@ -489,13 +502,26 @@ function gitA () {
   done
 }
 
+# Create bare repo on the server (followed by reponame.git)
+alias gitin='git init --bare'
+
+# Push your complete local repo to the server
+# (followed by ssh://user@yourserver/~/reponame.git)
+alias gitpm='git push --mirror'
+
+#==========#
+#  basics  #
+#==========#
+# Add a single file or directory
+alias gita='git add'
+
 # Add and commit a single file or directory
 function gitf () {
   gita "$1"; git commit -m "$2"
 }
 
-# Add a single file or directory
-alias gita='git add'
+# Move a file with meta information
+alias gitmv='git mv'
 
 # Commit the staged changes to the HEAD
 alias gitc='git commit -m'
@@ -512,11 +538,14 @@ alias gitl='git pull'
 # Push to the remote
 alias gitp='git push'
 
-# Push all tags and branches to the remote
-alias gitpa='git push --all origin'
-
+#===============#
+#  differences  #
+#===============#
 # Show the diff between staged changes (index) against the current HEAD
 alias gitdc='git diff --cached'
+
+# Show all the changes since the last commit, staged or not
+alias gitdc='git diff HEAD'
 
 # Show the diff between unstaged changes (working dir) against the index
 # If followed by master..branch it shows complete diff between branches
@@ -525,24 +554,14 @@ alias gitd='git diff'
 # Show which files have changed between branches (followed by: master..branch)
 alias gitdb='git diff --stat --color'
 
-# Show all the changes since the last commit, staged or not
-alias gitdc='git diff HEAD'
-
-# Move a file with meta information
-alias gitmv='git mv'
-
+#============#
+#  branches  #
+#============#
 # Checkout another branch or file from it
 alias gite='git checkout'
 
 # Cherry pick a commit from another branch
 alias gitcp='git cherry-pick'
-
-# Create bare repo on the server (followed by reponame.git)
-alias gitin='git init --bare'
-
-# Push your complete local repo to the server
-# (followed by ssh://user@yourserver/~/reponame.git)
-alias gitpm='git push --mirror'
 
 # Rename your current branch (followed by newbranchname)
 alias gitbm='git branch -m'
