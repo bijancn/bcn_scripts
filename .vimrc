@@ -45,10 +45,10 @@ set wildmenu
 "                                    VUNDLE                                    "
 "=============================================================================="
 
-" Vundle can be invoked by :BundleInstall. Updates with :BundleUpdate!
+" Vundle can be invoked by :PluginInstall. Updates with :PluginUpdate!
 filetype off                   " required for Vundle!
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 Bundle 'gmarik/vundle'
 
 "=========="
@@ -78,7 +78,7 @@ Bundle 'scrooloose/nerdcommenter'
 " YCM needs VIM 7.3.584 :(
 "Bundle 'Valloric/YouCompleteMe'
 
-" Diffing parts
+" Diffing parts of a or two files
 Bundle 'AndrewRadev/linediff.vim'
 
 Bundle 'jonathanfilip/vim-lucius'
@@ -145,6 +145,9 @@ nmap <Leader>m :w<CR>:make<CR> <CR>
 
 " Update biber file
 nmap <Leader>b :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
+
+" Linediff two ranges
+vmap <Leader>ld :Linediff<CR>
 
 " Printing
 map <leader>p :hardcopy <CR>
@@ -430,15 +433,19 @@ let fortran_fold_conditionals=1
 set encoding=utf-8
 " Good looking powerline
 let g:airline_powerline_fonts = 1
+
 " Ensure that airline shows up
 set laststatus=2
+
 " Super fancy tabline
 let g:airline#extensions#tabline#enabled = 1
+
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 let g:airline_symbols.space = "\ua0"
-" Shows line of trailing whitespace
+
+" Shows trailing whitespace
 let g:airline_detect_whitespace=1
 
 "=============================================================================="
