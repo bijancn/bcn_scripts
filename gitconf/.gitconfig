@@ -5,7 +5,10 @@
 	editor = vim
 	excludesfile = /home/bijancn/.gitignore_global
 [merge]
-	tool = meld
+	tool = mymeld
+  conflictstyle = diff3
+[mergetool "mymeld"]
+  cmd = meld $LOCAL $BASE $REMOTE $MERGED
 [push]
 	default = simple
 [color]

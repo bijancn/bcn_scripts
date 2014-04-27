@@ -141,6 +141,9 @@ alias whiz_conf='$HOME/trunk/configure --disable-static --prefix=$HOME/trunk-ins
 alias conn_jenkins='ssh -L 8080:localhost:8080 jenkins@141.99.211.121'
 #source $hepsoft/rivet/rivet211/rivetenv.sh
 
+# Set the title of terminal
+echo -en "\e]0;$USER_ACR - terminal\a"
+
 #==============================================================================#
 #                                    COLORS                                    #
 #==============================================================================#
