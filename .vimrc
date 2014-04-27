@@ -116,6 +116,7 @@ Bundle 'vim-pandoc/vim-pandoc'
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 nnoremap <silent> <C-Space> @=(foldlevel('.')?'zA':"\<Space>")<CR>
 vnoremap <Space> zf
+nnoremap <Leader> f :set foldmethod=none
 
 " Toggle between highlighting line or column
 nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
@@ -158,9 +159,6 @@ map <silent> <F11>
 " Don't use Ex-mode, use Q for formatting
 map Q gq
 
-" Trying to use jj to escape from insert mode
-imap jj <esc>
-
 "=============="
 "  deprecated  "
 "=============="
@@ -198,14 +196,9 @@ iabbrev pertubation perturbation
 iabbrev acchieved achieved
 iabbrev acchieve achieve
 " These should be snippets
-"iabbrev Rkd real((kind=default)
-"iabbrev Di dimension(
-"iabbrev Ii intent((in) ::
-"iabbrev Io intent((out) ::
 "iabbrev Icg \includegraphics[[width=\textwidth]{
 "iabbrev Ecl \begin{{columns}<CR><CR>\end{{columns}<Esc>ki<Space><Space>
 "iabbrev Efi \begin{{figure}<CR><CR>\end{{figure}<Esc>ki<Space><Space>\includegraphics[[width=\textwidth]{{}
-"iabbrev Nc <Esc>ddk<leader>nc
 
 "=============================================================================="
 "                                  SCROLLING                                   "
@@ -255,17 +248,15 @@ if !exists('W_defined')
   command WQ :Wq
 endif
 
-map <Leader>so :%s/\(\w\|)\)\(=\|+\|-\|*\|/\|<\|>\)\(\w\|(\)/\1 \2 \3/gc<CR>
+" Put spaces around operators
+"map <Leader>so :%s/\(\w\|)\)\(=\|+\|-\|*\|/\|<\|>\)\(\w\|(\)/\1 \2 \3/<CR>
+map <Leader>so :%s/\(\w\)\(=\|+\|-\|*\|/\|<\|>\)\(\w\)/\1 \2 \3/c<CR>
 
-" Highlight consistent line at 81 char
-if exists('+colorcolumn')
-  set colorcolumn=81
-else
-  " At least mark the awful content as Error
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>81v.\+', -1)
-endif
+" Remove all trailing spaces in document
+map <Leader>st :%s/\s\+$/<CR>
 
 "map <Leader>j :call setline('.', join(sort(split(getline('.'), ' ')), " "))<CR>
+" Sort words in visual
 vnoremap <Leader>o d:execute 'normal a' . join(sort(split(getreg('"'))), ' ')<CR>
 
 "==========="
@@ -298,6 +289,8 @@ map <Leader>t :call OCamlType()<CR>
 filetype plugin on
 filetype indent on
 
+set autoindent
+
 " Switch syntax highlighting on
 syntax on
 
@@ -312,8 +305,19 @@ endif
 " Set 'textwidth' to 80 characters. Vim will break after 80 chars.
 set textwidth=80
 
-" Vim will not break words
+" Highlight consistent line
+if exists('+colorcolumn')
+  set colorcolumn=81
+else
+  " At least mark the awful content as Error
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>81v.\+', -1)
+endif
+
+" Vim will not break words. See :help breakat
 set linebreak
+
+" Vim will prefix soft-wrapped lines with these characters
+set showbreak=-->\  " N.B. This would be trailing space
 
 " Using my color scheme
 colorscheme bcn_light
@@ -402,8 +406,8 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 
 " noweb specifics
-autocmd Filetype noweb set foldnestmax=1
-"autocmd Filetype noweb set foldmethod=indent
+"autocmd Filetype noweb set foldnestmax=1
+autocmd Filetype noweb set nofoldenable
 
 " Don't screw up folds when inserting text that might affect them, until
 " leaving insert mode. Foldmethod is local to the window. Protect against
