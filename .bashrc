@@ -310,6 +310,7 @@ alias ddiff='diff -x *.swp -q' #?
 alias mount_wue='sshfs $int_quad_core1: /home/bijancn/Dropbox/uniwue/'
 alias mount_out='sshfs $int_quad_core1:output_ovm/ /home/bijancn/Dropbox/master_thesis/output_ovm/'
 alias get_thesis='git clone $nick:~/bcn_git/thesis.git'
+alias get_vundle='git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim'
 alias reset_file_perms='find . -type f -exec chmod 644 {} +'
 alias reset_dir_perms='find . -type d -exec chmod 755 {} +'
 
