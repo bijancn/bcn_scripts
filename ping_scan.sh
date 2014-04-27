@@ -1,5 +1,5 @@
 #!/bin/bash
-range=132.187.196
+range=192.168.1
 
 is_alive_ping()
 {

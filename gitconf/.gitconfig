@@ -23,8 +23,8 @@
 [alias]
   graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
 [alias]
-  lol = log --graph --decorate --pretty=oneline --abbrev-commit
-  lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  plog = log --graph --decorate --pretty=oneline --abbrev-commit
+  ploga = log --graph --decorate --pretty=oneline --abbrev-commit --all
 [color]
   branch = auto
   diff = auto
