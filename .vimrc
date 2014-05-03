@@ -2,34 +2,90 @@
 "
 " bcn .vimrc - vim configuration file. Maintained since 2011.
 "
-" Copyright (C)     2013-08-25    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
-" Recent versions:  https://github.com/bijanc/bcn_scripts
+" Copyright (C)     2014-04-27    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
+" Recent versions:  https://github.com/bijancn/bcn_scripts
 "
 " This source code is free software; you can redistribute it and/or
 " modify it under the terms of the GNU General Public License Version 2:
 " http://www.gnu.org/licenses/gpl-2.0-standalone.html
 "
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"
-" Put me in:
-"             for Unix and OS/2:     ~/.vimrc
-"             for MS-DOS and Win32:  $VIM\_vimrc
-"
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-let python_highlight_all = 1
 
 "=============================================================================="
-"                                BASIC BEHAVIOR                                "
+"                                    VUNDLE                                    "
 "=============================================================================="
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
-
 " Use Vim settings, rather than Vi settings.
 " This must be first, because it changes other options as a side effect.
 set nocompatible
+
+" Vundle can be invoked by :PluginInstall. Updates with :PluginUpdate!
+filetype off                   " required for Vundle!
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/vundle'
+
+"=========="
+"  stable  "
+"=========="
+" Pure epicness, the one and only
+Plugin 'bling/vim-airline'
+
+" The ultimate snippet solution
+Plugin 'SirVer/ultisnips'
+
+" Allows to focus completely
+Plugin 'junegunn/goyo.vim'
+
+"==========="
+"  testing  "
+"==========="
+" Does not change in noweb chunks, might be fixable
+"Plugin 'comments.vim'
+
+" Giving it a try
+Plugin 'scrooloose/nerdcommenter'
+
+"This should be standard vim now?!
+"Plugin 'matchit.zip'
+
+" YCM needs VIM 7.3.584 :(
+"Plugin 'Valloric/YouCompleteMe'
+
+" Diffing parts of a or two files
+Plugin 'AndrewRadev/linediff.vim'
+
+" A decent color scheme from which I want to borrow some concepts
+Plugin 'jonathanfilip/vim-lucius'
+
+Plugin 'vim-pandoc/vim-pandoc'
+
+"=============="
+"  deprecated  "
+"=============="
+" Almost never need this
+"Plugin 'YankRing.vim'
+
+" Just isn't as smart as it pretends to be
+"Plugin 'ervandew/supertab'
+
+" Don't really use it
+"Plugin 'taglist.vim'
+
+" Sadly it is bugged for me. Must collide with some setting I can't find
+"Plugin 'scrooloose/nerdtree'
+
+" Just can't get used to it
+"Plugin 'tpope/vim-surround'
+"Plugin 'tpope/vim-repeat'
+
+call vundle#end()
+
+"=============================================================================="
+"                                   SETTINGS                                   "
+"=============================================================================="
+" Use the default filetype settings. Also load indent files,
+" to automatically do language-dependent indenting.
+filetype plugin indent on
 
 " This allows backspacing over everything in insert mode. Don't insert spaces.
 set backspace=indent,eol,start
@@ -41,68 +97,107 @@ set incsearch       " do incremental searching
 set wildmode=longest,list
 set wildmenu
 
-"=============================================================================="
-"                                    VUNDLE                                    "
-"=============================================================================="
+set autoindent
 
-" Vundle can be invoked by :PluginInstall. Updates with :PluginUpdate!
-filetype off                   " required for Vundle!
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Bundle 'gmarik/vundle'
+" Switch syntax highlighting on
+syntax on
 
-"=========="
-"  stable  "
-"=========="
-" Pure epicness, the one and only
-Bundle 'bling/vim-airline'
+" Performance option
+set lazyredraw
 
-" The ultimate snippet solution
-Bundle 'SirVer/ultisnips'
+" In most terminal emulators the mouse works just fine, thus enable it
+if has('mouse')
+  set mouse=a
+endif
 
-" Allows to focus completely
-Bundle 'junegunn/goyo.vim'
+" Set 'textwidth' to 80 characters. Vim will break after 80 chars.
+set textwidth=80
 
-"==========="
-"  testing  "
-"==========="
-" Does not change in noweb chunks, might be fixable
-"Bundle 'comments.vim'
+" Highlight consistent line
+if exists('+colorcolumn')
+  set colorcolumn=81
+else
+  " At least mark the awful content as Error
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>81v.\+', -1)
+endif
 
-" Giving it a try
-Bundle 'scrooloose/nerdcommenter'
+" Vim will not break words. See :help breakat
+set linebreak
 
-"This should be standard vim now?!
-"Bundle 'matchit.zip'
+" Vim will prefix soft-wrapped lines with these characters
+set showbreak=-->\  " N.B. This would be trailing space
 
-" YCM needs VIM 7.3.584 :(
-"Bundle 'Valloric/YouCompleteMe'
+" Using my color scheme
+colorscheme bcn_light
 
-" Diffing parts of a or two files
-Bundle 'AndrewRadev/linediff.vim'
+" Do not store global and local values in a session
+set ssop-=options
 
-Bundle 'jonathanfilip/vim-lucius'
+" Disable the annoying menu bar taking away precious pixels in gVim
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
 
-Bundle 'vim-pandoc/vim-pandoc'
+" Standard searches are case insensitive
+set ignorecase
+" If there is an uppercase character in the search, it becomes case sensitive
+set smartcase
 
-"=============="
-"  deprecated  "
-"=============="
-" Almost never need this
-"Bundle 'YankRing.vim'
+" Fold per default according to syntax
+set foldmethod=syntax
 
-" Just isn't as smart as it pretends to be
-"Bundle 'ervandew/supertab'
+" Open all per default
+setlocal foldlevel=99
 
-" Don't really use it
-"Bundle 'taglist.vim'
+" Don't go apeshit with nesting
+set foldnestmax=3
 
-" Sadly it is bugged for me. Must collide with some setting I can't find
-"Bundle 'scrooloose/nerdtree'
+" Search only in unfolded text. Does this work?
+set fdo-=search
+"
+" Activate linenumbers on the left side
+set number
 
-" Just can't get used to it
-"Bundle 'tpope/vim-surround'
-"Bundle 'tpope/vim-repeat'
+" Switch on highlighting the last used search pattern
+set hlsearch
+
+" Allows to use the overall clipboard
+set clipboard=unnamedplus
+
+" Consistent tabbing. Note: Clean up existing files with :retab
+set shiftwidth=2        " Size of indentation
+set expandtab           " Always uses spaces instead of tab characters
+set tabstop=2           " Size of insterted spaces if tab is pressed
+
+" Printing options
+set printoptions=paper:A4,syntax:y,wrap:y,number:y
+
+" Highlight current line
+set cursorline
+
+" GVIM cursor
+set guicursor=n-v-c:block-Cursor
+set guicursor+=i:ver100-iCursor
+set guicursor+=n-v-c:blinkon0
+set guicursor+=i:blinkwait10
+
+" Terminal cursor. Use different colors for insert and normal mode.
+let &t_SI = "\<Esc>]12;blue\x7"
+let &t_EI = "\<Esc>]12;orange\x7"
+
+" Defaulting to latex and not plain tex
+let g:Tex_flavor='latex'
+
+let python_highlight_all = 1
+
+"if has ("conceal")
+  "" Enable concealing, i.e. greek letters are shown as unicode
+  "set cole=2
+"endif
+
+" Disable things for better performance on huge noweb files.. doesnt help.. ?
+syntax sync minlines=256
+autocmd BufEnter * :syntax sync fromstart
+set ttyfast
 
 "=============================================================================="
 "                              KEYBOARD MAPPINGS                               "
@@ -285,114 +380,6 @@ endfunction
 map <Leader>t :call OCamlType()<CR>
 
 "=============================================================================="
-"                                   SETTINGS                                   "
-"=============================================================================="
-" Use the default filetype settings. Also load indent files,
-" to automatically do language-dependent indenting.
-filetype plugin on
-filetype indent on
-
-set autoindent
-
-" Switch syntax highlighting on
-syntax on
-
-" Performance option
-set lazyredraw
-
-" In most terminal emulators the mouse works just fine, thus enable it
-if has('mouse')
-  set mouse=a
-endif
-
-" Set 'textwidth' to 80 characters. Vim will break after 80 chars.
-set textwidth=80
-
-" Highlight consistent line
-if exists('+colorcolumn')
-  set colorcolumn=81
-else
-  " At least mark the awful content as Error
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>81v.\+', -1)
-endif
-
-" Vim will not break words. See :help breakat
-set linebreak
-
-" Vim will prefix soft-wrapped lines with these characters
-set showbreak=-->\  " N.B. This would be trailing space
-
-" Using my color scheme
-colorscheme bcn_light
-
-" Do not store global and local values in a session
-set ssop-=options
-
-" Disable the annoying menu bar taking away precious pixels in gVim
-set guioptions-=m  "remove menu bar
-set guioptions-=T  "remove toolbar
-
-" Standard searches are case insensitive
-set ignorecase
-" If there is an uppercase character in the search, it becomes case sensitive
-set smartcase
-
-" Fold per default according to syntax
-set foldmethod=syntax
-
-" Open all per default
-setlocal foldlevel=99
-
-" Don't go apeshit with nesting
-set foldnestmax=3
-
-" Search only in unfolded text. Does this work?
-set fdo-=search
-"
-" Activate linenumbers on the left side
-set number
-
-" Switch on highlighting the last used search pattern
-set hlsearch
-
-" Allows to use the overall clipboard
-set clipboard=unnamedplus
-
-" Consistent tabbing. Note: Clean up existing files with :retab
-set shiftwidth=2        " Size of indentation
-set expandtab           " Always uses spaces instead of tab characters
-set tabstop=2           " Size of insterted spaces if tab is pressed
-
-" Printing options
-set printoptions=paper:A4,syntax:y,wrap:y,number:y
-
-" Highlight current line
-set cursorline
-
-" GVIM cursor
-set guicursor=n-v-c:block-Cursor
-set guicursor+=i:ver100-iCursor
-set guicursor+=n-v-c:blinkon0
-set guicursor+=i:blinkwait10
-
-" Terminal cursor. Use different colors for insert and normal mode.
-let &t_SI = "\<Esc>]12;blue\x7"
-let &t_EI = "\<Esc>]12;orange\x7"
-
-" Defaulting to latex and not plain tex
-let g:Tex_flavor='latex'
-
-"if has ("conceal")
-  "" Enable concealing, i.e. greek letters are shown as unicode
-  "set cole=2
-"endif
-
-" Disable things for better performance on huge noweb files.. doesnt help.. ?
-syntax sync minlines=256
-autocmd BufEnter * :syntax sync fromstart
-set ttyfast
-
-"=============================================================================="
 "                                   AUTOCMD                                    "
 "=============================================================================="
 " This is the not recommended version for .less support. There are proper addons
@@ -408,9 +395,9 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 
-" noweb specifics
-"autocmd Filetype noweb set foldnestmax=1
-autocmd Filetype noweb set nofoldenable
+" Saving views for noweb viles
+autocmd BufWinLeave *.nw mkview
+autocmd BufWinEnter *.nw silent loadview
 
 " Don't screw up folds when inserting text that might affect them, until
 " leaving insert mode. Foldmethod is local to the window. Protect against
