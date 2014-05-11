@@ -51,7 +51,7 @@ syn match fortranDoStatement contained  "^\(.*: do\| *end do.*\| *exit.*\)$" con
 syn keyword fortranStatement contained do else then call
 syn keyword fortranStatement contained subroutine function interface module result pure elemental abstract
 syn keyword fortranStatement contained return exit cycle if stop private extends import associate end print read open close inquire rewind use deallocate allocate nullify select case while
-syn keyword fortranBuiltin contained present associated len max min minloc minval int char trim sin cos tan sinh cosh tanh tan2 sqrt huge epsilon abs size
+syn keyword fortranBuiltin contained present associated allocated len max min minloc minval int char trim sin cos tan sinh cosh tanh tan2 sqrt huge epsilon abs size
 syn match fortranOperator	contained "\(\(>\|<\)[ =]\|=\|=>\|+\|-\|*\|/\)"
 setlocal iskeyword+=.
 syn keyword fortranBoolean contained .false. .true.

@@ -68,17 +68,33 @@ endsnippet
 # Do loop
 snippet do "do"
 do ${1:loopvar} = ${2:lower}, ${3:higher}
-	 ${4}
+   ${4}
 end do
 endsnippet
 
 # While loop
 snippet while "do while"
 do while (${1:condition})
-	 ${2}
+   ${2}
 end do
 endsnippet
 
+# Iterate through a list
+snippet list++ "list iterator"
+associate (list => ${1:list_name})
+   do while (associated (curr))
+      $2
+      curr => curr%next
+   end do
+end associate
+endsnippet
+
+# Associate short name with variable or value
+snippet ass "associate"
+associate ($1)
+   $2
+end associate
+endsnippet
 
 # Until loop
 
@@ -86,7 +102,7 @@ endsnippet
 snippet ompdo "ompdo"
 !$omp parallel do private(${5:privatevars}) shared(${6:sharedvars})
 do ${1:loopvar} = ${2:lower}, ${3:higher}
-	 ${4}
+   ${4}
 end do
 !$omp end parallel do
 endsnippet
@@ -171,16 +187,16 @@ endsnippet
 # If construct
 snippet if "if"
 if (${1:condition}) then
-	 ${2}
+   ${2}
 end if
 endsnippet
 
 # If-else construct
 snippet ifelse "ifelse"
 if (${1:condition}) then
-	 ${2}
+   ${2}
 else
-	 ${3}
+   ${3}
 end if
 endsnippet
 
