@@ -86,7 +86,7 @@ export LD_LIBRARY_PATH=$honeypot/lib:$honeypot/lib64:$LD_LIBRARY_PATH
 # python
 #export PYTHONPATH=$HOME/bin/lhapdf-5.9.1:$PYTHONPATH
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
-export PYTHONPATH=$PYTHONPATH:$HOME/Dropbox/gcal_print/Python-GoogleCalendarParser
+export PYTHONPATH=$PYTHONPATH:$HOME/Python-GoogleCalendarParser
 
 # java
 java_path=$syncd/Codes/java
@@ -377,6 +377,14 @@ function rem_show () {
   ssh -X $ip "evince ~/temp.pdf"
 }
 
+function use_as_ref () {
+  cp err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
+}
+
+function show_diff () {
+  meld err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
+}
+
 function vim_print () {
   vim -c 'hardcopy > ~/output.ps' -c quit "$1"
   ps2pdf ~/output.ps ./"$1".pdf
@@ -384,11 +392,16 @@ function vim_print () {
 }
 
 function backup_settings () {
-  if $mighty
-  then
-    cp /etc/fstab ~/decrypted/scripts/backup/
-    cp ~/.local/share/keyrings ~/decrypted/scripts/backup/ -r
-  fi
+  sudo cp /etc/fstab ~/decrypted/scripts/backup/
+  sudo cp ~/.local/share/keyrings ~/decrypted/scripts/backup/ -r
+}
+
+function backup_root () {
+  sudo rsync -avz /!(data|home|proc|sys|win_fs) /data/root_backup/
+}
+
+function backup_home () {
+  sudo rsync -avz $HOME /data/home_backup/
 }
 
 function kill_tty () {
