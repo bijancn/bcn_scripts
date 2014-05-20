@@ -33,7 +33,7 @@ syn match nowebChunkName contained      "\( \|^\)<<.*>>"
 syn match nowebVerbatim                 "\[\[.\{-}\]\]"
 syn region latexMath                    start='\$' end='\$'
 syn match latexComment                  " *%.*$"
-syn match latexStatement                "\\\([a-z]\|[A-Z]\)*"
+syn match latexStatement                "\\\([a-z]\|[A-Z]\|\$\|\\\)*"
 
 " This is only highlighted because it comes after latexStatement
 syn match latexSection                  "\\chapter"
