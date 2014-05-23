@@ -1,23 +1,9 @@
-" Vim filetype plugin
-" Language:		Markdown
-" Maintainer:		Tim Pope <vimNOSPAM@tpope.org>
-" Last Change:		2011 Dec 14
+" Spaces must be escaped
+" % expands to the name of the file
+" %< expands to the name of the file without the extension
 
-if exists("b:did_ftplugin")
-  finish
+" Checks if makefile exist. If not we run pandoc and produce pdf.
+
+if !filereadable(expand("%:p:h")."/Makefile")
+  setlocal makeprg=pandoc\ -o\ %<.pdf\ -V\ geometry\:margin=3cm\ %
 endif
-
-runtime! ftplugin/html.vim ftplugin/html_*.vim ftplugin/html/*.vim
-unlet! b:did_ftplugin
-
-setlocal comments=fb:*,fb:-,fb:+,n:> commentstring=>\ %s
-setlocal formatoptions+=tcqln
-setlocal formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\|^[-*+]\\s\\+
-
-if exists('b:undo_ftplugin')
-  let b:undo_ftplugin .= "|setl cms< com< fo< flp<"
-else
-  let b:undo_ftplugin = "setl cms< com< fo< flp<"
-endif
-
-" vim:set sw=2:

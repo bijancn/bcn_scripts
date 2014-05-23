@@ -1,5 +1,4 @@
 # Build and Release Folders
-bin/
 build/
 dist/
 __pycache__/
@@ -21,7 +20,15 @@ aclocal.m4
 autom4te.cache/
 configure
 Makefile.in
-missing
+#missing
+
+# Whizard / autotools might be necessary for libtool
+#config.guess
+#config.sub
+#config.scripts
+#depcomp
+#install-sh
+#libtool-config
 
 # Ocaml
 *.annot
@@ -42,18 +49,16 @@ missing
 *.fls
 *.lof
 *.out
-*.pdf
 *.run.xml
 *.tex.blg
 *.toc
-*.t[123456789]
-*.[123456789]
+#*.t[123456789]
+#*.[123456789]
 
 # Logs and data
 *.log
 *.sql
 *.sqlite
-*.dat
 
 # Other files and folders
 *.mod

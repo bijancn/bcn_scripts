@@ -2,32 +2,90 @@
 "
 " bcn .vimrc - vim configuration file. Maintained since 2011.
 "
-" Copyright (C)     2013-08-25    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
-" Recent versions:  https://github.com/bijanc/bcn_scripts
+" Copyright (C)     2014-04-27    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
+" Recent versions:  https://github.com/bijancn/bcn_scripts
 "
 " This source code is free software; you can redistribute it and/or
 " modify it under the terms of the GNU General Public License Version 2:
 " http://www.gnu.org/licenses/gpl-2.0-standalone.html
 "
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"
-" Put me in:
-"             for Unix and OS/2:     ~/.vimrc
-"             for MS-DOS and Win32:  $VIM\_vimrc
-"
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 "=============================================================================="
-"                                BASIC BEHAVIOR                                "
+"                                    VUNDLE                                    "
 "=============================================================================="
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
-
 " Use Vim settings, rather than Vi settings.
 " This must be first, because it changes other options as a side effect.
 set nocompatible
+
+" Vundle can be invoked by :PluginInstall. Updates with :PluginUpdate!
+filetype off                   " required for Vundle!
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/vundle'
+
+"=========="
+"  stable  "
+"=========="
+" Pure epicness, the one and only
+Plugin 'bling/vim-airline'
+
+" The ultimate snippet solution
+Plugin 'SirVer/ultisnips'
+
+" Allows to focus completely
+Plugin 'junegunn/goyo.vim'
+
+"==========="
+"  testing  "
+"==========="
+" Does not change in noweb chunks, might be fixable
+"Plugin 'comments.vim'
+
+" Giving it a try
+Plugin 'scrooloose/nerdcommenter'
+
+"This should be standard vim now?!
+"Plugin 'matchit.zip'
+
+" YCM needs VIM 7.3.584 :(
+"Plugin 'Valloric/YouCompleteMe'
+
+" Diffing parts of a or two files
+Plugin 'AndrewRadev/linediff.vim'
+
+" A decent color scheme from which I want to borrow some concepts
+Plugin 'jonathanfilip/vim-lucius'
+
+Plugin 'vim-pandoc/vim-pandoc'
+
+"=============="
+"  deprecated  "
+"=============="
+" Almost never need this
+"Plugin 'YankRing.vim'
+
+" Just isn't as smart as it pretends to be
+"Plugin 'ervandew/supertab'
+
+" Don't really use it
+"Plugin 'taglist.vim'
+
+" Sadly it is bugged for me. Must collide with some setting I can't find
+"Plugin 'scrooloose/nerdtree'
+
+" Just can't get used to it
+"Plugin 'tpope/vim-surround'
+"Plugin 'tpope/vim-repeat'
+
+call vundle#end()
+
+"=============================================================================="
+"                                   SETTINGS                                   "
+"=============================================================================="
+" Use the default filetype settings. Also load indent files,
+" to automatically do language-dependent indenting.
+filetype plugin indent on
 
 " This allows backspacing over everything in insert mode. Don't insert spaces.
 set backspace=indent,eol,start
@@ -39,235 +97,7 @@ set incsearch       " do incremental searching
 set wildmode=longest,list
 set wildmenu
 
-"=============================================================================="
-"                                    VUNDLE                                    "
-"=============================================================================="
-
-" Vundle can be invoked by :BundleInstall. Updates with :BundleUpdate!
-filetype off                   " required for Vundle!
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-Bundle 'gmarik/vundle'
-
-"=========="
-"  stable  "
-"=========="
-" Pure epicness, the one and only
-Bundle 'bling/vim-airline'
-
-" The ultimate snippet solution
-Bundle 'SirVer/ultisnips'
-
-" Allows to focus completely
-Bundle 'junegunn/goyo.vim'
-
-"==========="
-"  testing  "
-"==========="
-" Does not change in noweb chunks, might be fixable
-"Bundle 'comments.vim'
-
-" Giving it a try
-Bundle 'scrooloose/nerdcommenter'
-
-"This should be standard vim now?!
-"Bundle 'matchit.zip'
-
-" YCM needs VIM 7.3.584 :(
-"Bundle 'Valloric/YouCompleteMe'
-
-" Diffing parts
-Bundle 'AndrewRadev/linediff.vim'
-
-Bundle 'jonathanfilip/vim-lucius'
-
-Bundle 'vim-pandoc/vim-pandoc'
-
-"=============="
-"  deprecated  "
-"=============="
-" Almost never need this
-"Bundle 'YankRing.vim'
-
-" Just isn't as smart as it pretends to be
-"Bundle 'ervandew/supertab'
-
-" Don't really use it
-"Bundle 'taglist.vim'
-
-" Sadly it is bugged for me. Must collide with some setting I can't find
-"Bundle 'scrooloose/nerdtree'
-
-" Just can't get used to it
-"Bundle 'tpope/vim-surround'
-"Bundle 'tpope/vim-repeat'
-
-"=============================================================================="
-"                              KEYBOARD MAPPINGS                               "
-"=============================================================================="
-" nmap, nnoremap, nunmap          Normal mode
-" imap, inoremap, iunmap          Insert and Replace mode
-" vmap, vnoremap, vunmap          Visual and Select mode
-" <CR> sends Enter
-
-" Unfolding and folding with space
-nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-nnoremap <silent> <C-Space> @=(foldlevel('.')?'zA':"\<Space>")<CR>
-vnoremap <Space> zf
-
-" Toggle between highlighting line or column
-nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
-
-" Clearing highlighted search
-nmap <silent> <leader>/ :nohlsearch<CR>
-
-" Using left and right for adjusting comments
-no <left> <<
-no <right> >>
-
-" Create new tab
-map tn :tabnew <CR>
-
-" Tab opened buffers
-map ta :tab all <CR>
-
-" Open new tab with directory of current file
-map te :tabedit <c-r>=expand("%:p:h")<cr>/
-
-" Change working directory to current file
-map <Leader>d :cd %:p:h<CR>:pwd<CR>
-
-" Filetype specific make commands are in ~/.vim/ftplugin/<lang>.vim
-nmap <Leader>m :w<CR>:make<CR> <CR>
-
-" Update biber file
-nmap <Leader>b :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
-
-" Printing
-map <leader>p :hardcopy <CR>
-
-" Put in yanked and keep it yanked
-xnoremap P pgvy
-
-" Allow full screen in GVIM
-map <silent> <F11>
-\    :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
-
-" Don't use Ex-mode, use Q for formatting
-map Q gq
-
-" Trying to use jj to escape from insert mode
-imap jj <esc>
-
-"=============="
-"  deprecated  "
-"=============="
-" key-mappings for comment line in normal mode
-"nmap <C-C> :call CommentLine()<CR>
-" key-mappings for range comment lines in visual <Shift-V> mode
-"vnoremap <C-C> :call RangeCommentLine()<CR>
-
-" key-mappings for un-comment line in normal mode
-"nmap <silent> <C-X> :call UnCommentLine()<CR>
-" key-mappings for range un-comment lines in visual <Shift-V> mode
-"vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
-
-" Open NERDTree with \n
-"nmap <Leader>n :NERDTreeToggle<CR>
-
-" Open Taglist with \t
-"nmap <Leader>t :TlistToggle<CR>
-
-" Show Yankring
-"nnoremap <silent> <F8> :YRShow<CR>
-
-" Open corresponding html file
-"nmap <Leader>v :!google-chrome %<.html<CR><CR>
-
-"=============================================================================="
-"                                ABBREVIATIONS                                 "
-"=============================================================================="
-
-iabbrev lamda lambda
-iabbrev teh the
-iabbrev wether whether
-iabbrev excecute execute
-iabbrev pertubation perturbation
-iabbrev acchieved achieved
-iabbrev acchieve achieve
-" These should be snippets
-"iabbrev Rkd real((kind=default)
-"iabbrev Di dimension(
-"iabbrev Ii intent((in) ::
-"iabbrev Io intent((out) ::
-"iabbrev Icg \includegraphics[[width=\textwidth]{
-"iabbrev Ecl \begin{{columns}<CR><CR>\end{{columns}<Esc>ki<Space><Space>
-"iabbrev Efi \begin{{figure}<CR><CR>\end{{figure}<Esc>ki<Space><Space>\includegraphics[[width=\textwidth]{{}
-"iabbrev Nc <Esc>ddk<leader>nc
-
-"=============================================================================="
-"                                  SCROLLING                                   "
-"=============================================================================="
-" Set the number of lines you want to stay off of bottom and top. This induces
-" vim to scroll automatically when the cursor comes close.
-set scrolloff=2
-
-" Sadly this script isn't robust for scrolling in really large files
-" The bang tells vim that it can reload the function
-"function! SmoothScroll(up)
-    "if a:up
-        "let scrollaction="\<C-Y>k"
-    "else
-        "let scrollaction="\<C-E>j"
-    "endif
-    "exec "normal " . scrollaction
-    "redraw
-    "let counter=1
-    "while counter<&scroll
-        "let counter+=1
-        "sleep 1m
-        "redraw
-        "exec "normal " . scrollaction
-    "endwhile
-"endfunction
-
-"nnoremap <C-U> :call SmoothScroll(1)<Enter>
-"nnoremap <C-D> :call SmoothScroll(0)<Enter>
-"nnoremap <C-B> :call SmoothScroll(1)<Enter> :call SmoothScroll(1)<Enter>
-"nnoremap <C-F> :call SmoothScroll(0)<Enter> :call SmoothScroll(0)<Enter>
-"inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
-"inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
-
-"=============================================================================="
-"                               Functionalities                                "
-"=============================================================================="
-
-" Show to which higroup a certain word belongs to. Indispensable for creating
-" color schemes
-map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
-
-if !exists('W_defined')
-  let W_defined = "True"
-  command W :execute 'silent w !sudo tee > /dev/null %'
-  command Wq :execute ':W' | :q!
-  command WQ :Wq
-endif
-
-" Highlight consistent line at 81 char
-if exists('+colorcolumn')
-  set colorcolumn=81
-else
-  " At least mark the awful content as Error
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>81v.\+', -1)
-endif
-
-"=============================================================================="
-"                                   SETTINGS                                   "
-"=============================================================================="
-" Use the default filetype settings. Also load indent files,
-" to automatically do language-dependent indenting.
-filetype plugin on
-filetype indent on
+set autoindent
 
 " Switch syntax highlighting on
 syntax on
@@ -283,8 +113,19 @@ endif
 " Set 'textwidth' to 80 characters. Vim will break after 80 chars.
 set textwidth=80
 
-" Vim will not break words
+" Highlight consistent line
+if exists('+colorcolumn')
+  set colorcolumn=81
+else
+  " At least mark the awful content as Error
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>81v.\+', -1)
+endif
+
+" Vim will not break words. See :help breakat
 set linebreak
+
+" Vim will prefix soft-wrapped lines with these characters
+set showbreak=-->\  " N.B. This would be trailing space
 
 " Using my color scheme
 colorscheme bcn_light
@@ -346,6 +187,8 @@ let &t_EI = "\<Esc>]12;orange\x7"
 " Defaulting to latex and not plain tex
 let g:Tex_flavor='latex'
 
+let python_highlight_all = 1
+
 "if has ("conceal")
   "" Enable concealing, i.e. greek letters are shown as unicode
   "set cole=2
@@ -355,6 +198,186 @@ let g:Tex_flavor='latex'
 syntax sync minlines=256
 autocmd BufEnter * :syntax sync fromstart
 set ttyfast
+
+"=============================================================================="
+"                              KEYBOARD MAPPINGS                               "
+"=============================================================================="
+" nmap, nnoremap, nunmap          Normal mode
+" imap, inoremap, iunmap          Insert and Replace mode
+" vmap, vnoremap, vunmap          Visual and Select mode
+" <CR> sends Enter
+
+" Unfolding and folding with space
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+nnoremap <silent> <C-Space> @=(foldlevel('.')?'zA':"\<Space>")<CR>
+vnoremap <Space> zf
+nnoremap <Leader> f :set foldmethod=none
+
+" Toggle between highlighting line or column
+nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+
+" Clearing highlighted search
+nmap <silent> <leader>/ :nohlsearch<CR>
+
+" Using left and right for adjusting comments
+no <left> <<
+no <right> >>
+
+" Create new tab
+map tn :tabnew <CR>
+
+" Tab opened buffers
+map ta :tab all <CR>
+
+" Open new tab with directory of current file
+map te :tabedit <c-r>=expand("%:p:h")<cr>/
+
+" Change working directory to current file
+map <Leader>d :cd %:p:h<CR>:pwd<CR>
+
+" Filetype specific make commands are in ~/.vim/ftplugin/<lang>.vim
+nmap <Leader>m :w<CR>:make<CR> <CR>
+
+" Update biber file
+nmap <Leader>b :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
+
+" Linediff two ranges
+vmap <Leader>ld :Linediff<CR>
+
+" Printing
+map <leader>p :hardcopy <CR>
+
+" Put in yanked and keep it yanked
+xnoremap P pgvy
+
+" Allow full screen in GVIM
+map <silent> <F11>
+\    :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
+
+" Don't use Ex-mode, use Q for formatting
+map Q gq
+
+"=============="
+"  deprecated  "
+"=============="
+" key-mappings for comment line in normal mode
+"nmap <C-C> :call CommentLine()<CR>
+" key-mappings for range comment lines in visual <Shift-V> mode
+"vnoremap <C-C> :call RangeCommentLine()<CR>
+
+" key-mappings for un-comment line in normal mode
+"nmap <silent> <C-X> :call UnCommentLine()<CR>
+" key-mappings for range un-comment lines in visual <Shift-V> mode
+"vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
+
+" Open NERDTree with \n
+"nmap <Leader>n :NERDTreeToggle<CR>
+
+" Open Taglist with \t
+"nmap <Leader>t :TlistToggle<CR>
+
+" Show Yankring
+"nnoremap <silent> <F8> :YRShow<CR>
+
+" Open corresponding html file
+"nmap <Leader>v :!google-chrome %<.html<CR><CR>
+
+"=============================================================================="
+"                                ABBREVIATIONS                                 "
+"=============================================================================="
+
+iabbrev lamda lambda
+iabbrev teh the
+iabbrev wether whether
+iabbrev excecute execute
+iabbrev pertubation perturbation
+iabbrev acchieved achieved
+iabbrev acchieve achieve
+" These should be snippets
+"iabbrev Icg \includegraphics[[width=\textwidth]{
+"iabbrev Ecl \begin{{columns}<CR><CR>\end{{columns}<Esc>ki<Space><Space>
+"iabbrev Efi \begin{{figure}<CR><CR>\end{{figure}<Esc>ki<Space><Space>\includegraphics[[width=\textwidth]{{}
+
+"=============================================================================="
+"                                  SCROLLING                                   "
+"=============================================================================="
+" Set the number of lines you want to stay off of bottom and top. This induces
+" vim to scroll automatically when the cursor comes close.
+set scrolloff=2
+
+" Sadly this script isn't robust for scrolling in really large files
+" The bang tells vim that it can reload the function
+"function! SmoothScroll(up)
+    "if a:up
+        "let scrollaction="\<C-Y>k"
+    "else
+        "let scrollaction="\<C-E>j"
+    "endif
+    "exec "normal " . scrollaction
+    "redraw
+    "let counter=1
+    "while counter<&scroll
+        "let counter+=1
+        "sleep 1m
+        "redraw
+        "exec "normal " . scrollaction
+    "endwhile
+"endfunction
+
+"nnoremap <C-U> :call SmoothScroll(1)<Enter>
+"nnoremap <C-D> :call SmoothScroll(0)<Enter>
+"nnoremap <C-B> :call SmoothScroll(1)<Enter> :call SmoothScroll(1)<Enter>
+"nnoremap <C-F> :call SmoothScroll(0)<Enter> :call SmoothScroll(0)<Enter>
+"inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
+"inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
+
+"=============================================================================="
+"                               Functionalities                                "
+"=============================================================================="
+
+" Show to which higroup a certain word belongs to. Indispensable for creating
+" color schemes and syntax files
+map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
+
+if !exists('W_defined')
+  let W_defined = "True"
+  command W :execute 'silent w !sudo tee > /dev/null %'
+  command Wq :execute ':W' | :q!
+  command WQ :Wq
+endif
+
+" Put spaces around operators
+"map <Leader>so :%s/\(\w\|)\)\(=\|+\|-\|*\|/\|<\|>\)\(\w\|(\)/\1 \2 \3/<CR>
+map <Leader>so :%s/\(\w\)\(=\|+\|-\|*\|/\|<\|>\)\(\w\)/\1 \2 \3/c<CR>
+
+" Remove all trailing spaces in document
+map <Leader>st :%s/\s\+$/<CR>
+
+"map <Leader>j :call setline('.', join(sort(split(getline('.'), ' ')), " "))<CR>
+" Sort words in visual
+vnoremap <Leader>o d:execute 'normal a' . join(sort(split(getreg('"'))), ' ')<CR>
+
+"==========="
+"  OpenPDF  "
+"==========="
+function! OpenPDF()
+  let file_stripped = expand("%:r")
+  echo system('gnome-open '.file_stripped.'.pdf')
+endfunction
+map <Leader>v :call OpenPDF()<CR>
+
+"==============="
+"  ocaml annot  "
+"==============="
+function! OCamlType()
+  let col  = col('.')
+  let line = line('.')
+  let file = expand("%:r")
+  let folder = "~/decrypted/bcn_omega211-build/src/"
+  let cmd = "annot -n -type ".line." ".col." ".file.".annot"
+  echo system('cd '.folder.' && '.cmd)
+endfunction
+map <Leader>t :call OCamlType()<CR>
 
 "=============================================================================="
 "                                   AUTOCMD                                    "
@@ -372,9 +395,9 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 
-" noweb specifics
-autocmd Filetype noweb set foldnestmax=1
-autocmd Filetype noweb set foldmethod=indent
+" Saving views for noweb viles
+autocmd BufWinLeave *.nw mkview
+autocmd BufWinEnter *.nw silent loadview
 
 " Don't screw up folds when inserting text that might affect them, until
 " leaving insert mode. Foldmethod is local to the window. Protect against
@@ -392,27 +415,24 @@ let fortran_fold=1
 let fortran_fold_conditionals=1
 
 "=============================================================================="
-"                                    NOWEB                                     "
-"=============================================================================="
-let noweb_backend = "tex"
-let noweb_language = "fortran"
-let noweb_fold_code = 1
-
-"=============================================================================="
 "                                   AIR-LINE                                   "
 "=============================================================================="
 set encoding=utf-8
 " Good looking powerline
 let g:airline_powerline_fonts = 1
+
 " Ensure that airline shows up
 set laststatus=2
+
 " Super fancy tabline
 let g:airline#extensions#tabline#enabled = 1
+
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 let g:airline_symbols.space = "\ua0"
-" Shows line of trailing whitespace
+
+" Shows trailing whitespace
 let g:airline_detect_whitespace=1
 
 "=============================================================================="
@@ -465,16 +485,3 @@ endfunction
 
 nmap <silent> <F7> :echo ToggleSpell("en")<CR>			  " Toggle English spell.
 nmap <silent> <F8> :echo ToggleSpell("de_de")<CR>     " Toggle German spell.
-
-"=============================================================================="
-"                                 ocaml annot                                  "
-"=============================================================================="
-function! OCamlType()
-  let col  = col('.')
-  let line = line('.')
-  let file = expand("%:r")
-  let folder = "~/decrypted/bcn_omega211-build/src/"
-  let cmd = "annot -n -type ".line." ".col." ".file.".annot"
-  echo system('cd '.folder.' && '.cmd)
-endfunction
-map ,t :call OCamlType()<CR>

@@ -1,0 +1,213 @@
+#==============================================================================#
+#                                   FORTRAN                                    #
+#==============================================================================#
+
+# Debugging
+snippet dbg "dbg"
+print *, 'Still working'
+endsnippet
+
+# Variable Debugging
+snippet vdbg "vdbg"
+print *, '${1:var} =    ', $1	!!! Debugging
+endsnippet
+
+snippet re "real"
+real(default)$2 :: ${3:name}
+endsnippet
+
+snippet in "integer"
+integer$2 :: ${3:name}
+endsnippet
+
+snippet di "dimension"
+dimension(${1::})
+endsnippet
+
+snippet op "optional"
+optional
+endsnippet
+
+snippet ii "intent"
+intent(${1:in})
+endsnippet
+
+snippet ty "type"
+type(${1:sometype}_t)$2 :: $1
+endsnippet
+
+snippet cl "class"
+class(${1:someclass}_t)$2 :: $1
+endsnippet
+
+# Fortran program snippet
+snippet program "program"
+program ${1:name}
+	implicit none
+	${2}
+contains
+	${3:!TODO}
+end program $1
+endsnippet
+
+# Use statement
+snippet use "use"
+use ${1:module}, only: ${2:symbols}
+endsnippet
+
+# Module snippet
+snippet module "module"
+module ${1:name}
+  implicit none
+  ${2:declarations}
+contains
+  ${3:!TODO}
+end module $1
+endsnippet
+
+# Do loop
+snippet do "do"
+do ${1:loopvar} = ${2:lower}, ${3:higher}
+   ${4}
+end do
+endsnippet
+
+# While loop
+snippet while "do while"
+do while (${1:condition})
+   ${2}
+end do
+endsnippet
+
+# Iterate through a list
+snippet list++ "list iterator"
+associate (list => ${1:list_name})
+   do while (associated (curr))
+      $2
+      curr => curr%next
+   end do
+end associate
+endsnippet
+
+# Associate short name with variable or value
+snippet ass "associate"
+associate ($1)
+   $2
+end associate
+endsnippet
+
+# Until loop
+
+# OMP parallel do loop
+snippet ompdo "ompdo"
+!$omp parallel do private(${5:privatevars}) shared(${6:sharedvars})
+do ${1:loopvar} = ${2:lower}, ${3:higher}
+   ${4}
+end do
+!$omp end parallel do
+endsnippet
+
+# Write statement
+snippet write "write"
+write (${1:*}, ${2:*}) ${3:variable}
+endsnippet
+
+# Read statement
+snippet read "read"
+read (${1:*}, ${2:*}) ${3:target}
+endsnippet
+
+# Where statement
+snippet where "where"
+where (${1:var} ${2:<=condition}) $2 = ${3:expression}
+endsnippet
+
+#
+# Where / elsewhere construct
+snippet elsewhere "elsewhere"
+where (${1:var} ${2:<=condition})
+	$1 = ${3:expression}
+elsewhere
+	$1 = ${4:expression}
+end where
+endsnippet
+
+#
+# Forall statement
+snippet forall "forall"
+forall (${1:i} = ${2:condition}) ${2:var}($1) = ${3:expression}
+endsnippet
+
+#
+# General variables
+snippet var "var"
+${1:type}(${2:kind})${3:, properties} :: ${4:varname}
+endsnippet
+
+# Function arguments, with intent statement
+snippet fvar "fvar"
+${1:type}(${2:kind}), intent(${3:inout})${4:, properties} :: ${5:varname}
+endsnippet
+
+# Derived datatypes
+snippet type "type"
+type ${1:name}
+	${2:members}
+end type $1
+endsnippet
+
+# Subroutines
+snippet sub "sub"
+subroutine ${1:name}(${2:parameters})
+	${3}
+end subroutine $1
+endsnippet
+
+# Functions
+snippet func "func"
+function ${1:name}(${2:parameters})
+	${3}
+end function $1
+endsnippet
+
+# Pure functions
+snippet pfunc "pfunc"
+pure function ${1:name}(${2:parameters})
+	${3}
+end function $1
+endsnippet
+
+# Elemental functions
+snippet efunc "efunc"
+elemental function ${1:name}(${2:parameters})
+	${3}
+end function $1
+endsnippet
+
+# If construct
+snippet if "if"
+if (${1:condition}) then
+   ${2}
+end if
+endsnippet
+
+# If-else construct
+snippet ifelse "ifelse"
+if (${1:condition}) then
+   ${2}
+else
+   ${3}
+end if
+endsnippet
+
+# Select-case construct
+snippet select "select"
+select case (${1:var})
+case (${2})
+   ${3}
+case (${4})
+   ${5}
+case default
+   ${6}
+end select
+endsnippet
