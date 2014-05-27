@@ -49,6 +49,5 @@ done
 
 ln -sf $bcn/gitconf/.gitconfig$app      ~/.gitconfig
 if $mighty; then
-  sudo easy_install trash-cli
-  #sudo ln -sf $bcn/metacity-theme-1.xml /usr/share/themes/Mint-X/metacity-1/metacity-theme-1.xml
+  sudo ln -sf $bcn/metacity-theme-1.xml /usr/share/themes/Mint-X/metacity-1/metacity-theme-1.xml
 fi
