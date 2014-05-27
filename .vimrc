@@ -2,7 +2,7 @@
 "
 " bcn .vimrc - vim configuration file. Maintained since 2011.
 "
-" Copyright (C)     2014-04-27    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
+" Copyright (C)     2014-05-27    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
 " Recent versions:  https://github.com/bijancn/bcn_scripts
 "
 " This source code is free software; you can redistribute it and/or
@@ -27,7 +27,7 @@ Plugin 'gmarik/vundle'
 "=========="
 "  stable  "
 "=========="
-" Pure epicness, the one and only
+" Pure epicness, the one and only statusbar
 Plugin 'bling/vim-airline'
 
 " The ultimate snippet solution
@@ -36,38 +36,36 @@ Plugin 'SirVer/ultisnips'
 " Allows to focus completely
 Plugin 'junegunn/goyo.vim'
 
+" Nice fuzzy autocompletion with supertab support
+Plugin 'Valloric/YouCompleteMe'
+
+" Diffing parts of one or two files
+Plugin 'AndrewRadev/linediff.vim'
+
 "==========="
 "  testing  "
 "==========="
 " Does not change in noweb chunks, might be fixable
 "Plugin 'comments.vim'
 
-" Giving it a try
+" Reasonably good. Not perfect. Also doesn't change in noweb.
 Plugin 'scrooloose/nerdcommenter'
 
-"This should be standard vim now?!
-"Plugin 'matchit.zip'
-
-" YCM needs VIM 7.3.584 :(
-"Plugin 'Valloric/YouCompleteMe'
-
-" Diffing parts of a or two files
-Plugin 'AndrewRadev/linediff.vim'
+" Allows to use % on keywords like if
+Plugin 'matchit.zip'
 
 " A decent color scheme from which I want to borrow some concepts
 Plugin 'jonathanfilip/vim-lucius'
 
+" Good support for Markdown
 Plugin 'vim-pandoc/vim-pandoc'
+
+" Syntax file for form
+Plugin 'tueda/form.vim'
 
 "=============="
 "  deprecated  "
 "=============="
-" Almost never need this
-"Plugin 'YankRing.vim'
-
-" Just isn't as smart as it pretends to be
-"Plugin 'ervandew/supertab'
-
 " Don't really use it
 "Plugin 'taglist.vim'
 
@@ -87,92 +85,62 @@ call vundle#end()
 " to automatically do language-dependent indenting.
 filetype plugin indent on
 
-" This allows backspacing over everything in insert mode. Don't insert spaces.
-set backspace=indent,eol,start
-
-set nobackup        " do not keep a backup file
-set history=500     " keep 500 lines of command line history
-set showcmd         " display incomplete commands
-set incsearch       " do incremental searching
-set wildmode=longest,list
-set wildmenu
-
+" Reuse the indentation of the previous line if no filetype indent is available
 set autoindent
-
-" Switch syntax highlighting on
-syntax on
-
-" Performance option
-set lazyredraw
-
-" In most terminal emulators the mouse works just fine, thus enable it
-if has('mouse')
-  set mouse=a
-endif
-
-" Set 'textwidth' to 80 characters. Vim will break after 80 chars.
-set textwidth=80
-
-" Highlight consistent line
-if exists('+colorcolumn')
-  set colorcolumn=81
-else
-  " At least mark the awful content as Error
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>81v.\+', -1)
-endif
-
-" Vim will not break words. See :help breakat
-set linebreak
-
-" Vim will prefix soft-wrapped lines with these characters
-set showbreak=-->\  " N.B. This would be trailing space
-
-" Using my color scheme
-colorscheme bcn_light
-
-" Do not store global and local values in a session
-set ssop-=options
-
-" Disable the annoying menu bar taking away precious pixels in gVim
-set guioptions-=m  "remove menu bar
-set guioptions-=T  "remove toolbar
-
-" Standard searches are case insensitive
-set ignorecase
-" If there is an uppercase character in the search, it becomes case sensitive
-set smartcase
-
-" Fold per default according to syntax
-set foldmethod=syntax
-
-" Open all per default
-setlocal foldlevel=99
-
-" Don't go apeshit with nesting
-set foldnestmax=3
-
-" Search only in unfolded text. Does this work?
-set fdo-=search
-"
-" Activate linenumbers on the left side
-set number
-
-" Switch on highlighting the last used search pattern
-set hlsearch
-
-" Allows to use the overall clipboard
-set clipboard=unnamedplus
 
 " Consistent tabbing. Note: Clean up existing files with :retab
 set shiftwidth=2        " Size of indentation
 set expandtab           " Always uses spaces instead of tab characters
 set tabstop=2           " Size of insterted spaces if tab is pressed
 
-" Printing options
-set printoptions=paper:A4,syntax:y,wrap:y,number:y
+set textwidth=80        " Vim will break after 80 characters
+set linebreak           " Vim will not break words. See :help breakat
+set showbreak=-->\      " Prefix soft-wrapped lines with these characters
 
-" Highlight current line
-set cursorline
+" Highlight consistent line
+if exists('+colorcolumn')
+  set colorcolumn=81
+else
+  " Mark as Error if no consistent line is available
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>81v.\+', -1)
+endif
+
+" This allows backspacing over everything in insert mode. Don't insert spaces.
+set backspace=indent,eol,start
+
+set incsearch           " do incremental searching
+set ignorecase          " Standard searches are case insensitive
+set smartcase           " Case sensitive only when uppercase characters appear
+set hlsearch            " Switch on highlighting the last used search pattern
+
+set fdo-=search         " Search only in unfolded text. Does this work?
+set foldmethod=syntax   " Fold per default according to syntax
+setlocal foldlevel=99   " Open all folds per default
+set foldnestmax=3       " Create 3 levels of folds overall
+
+" The mode of wildmenu is set by wildmode. Gives way better tab completion of
+" file names. Only completes as far as possible and gives list of possibilities
+" with second TAB
+set wildmode=longest,list
+set wildmenu
+
+set nobackup            " do not keep a backup file
+set history=500         " keep 500 lines of command line history
+set ssop-=options       " Do not store global and local values in a session
+set showcmd             " display incomplete commands
+
+syntax on               " Switch syntax highlighting on
+colorscheme bcn_light
+
+if has('mouse')         " Activate mouse
+  set mouse=a
+endif
+
+set guioptions-=m       " remove menu bar in gVim
+set guioptions-=T       " remove toolbar in gVim
+set number              " Activate line numbers on the left side
+
+set cursorline          " Highlight current line
 
 " GVIM cursor
 set guicursor=n-v-c:block-Cursor
@@ -184,20 +152,25 @@ set guicursor+=i:blinkwait10
 let &t_SI = "\<Esc>]12;blue\x7"
 let &t_EI = "\<Esc>]12;orange\x7"
 
-" Defaulting to latex and not plain tex
-let g:Tex_flavor='latex'
+set lazyredraw          " Performance option
+
+set clipboard=unnamedplus " Allows to use the overall clipboard
+
+set printoptions=paper:A4,syntax:y,wrap:y,number:y " Printing options
 
 let python_highlight_all = 1
+
+let g:Tex_flavor='latex'  " Defaulting to latex and not plain tex
+
+" Apparantly those are performance settings. I see no difference, though.
+syntax sync minlines=256
+autocmd BufEnter * :syntax sync fromstart
+set ttyfast
 
 "if has ("conceal")
   "" Enable concealing, i.e. greek letters are shown as unicode
   "set cole=2
 "endif
-
-" Disable things for better performance on huge noweb files.. doesnt help.. ?
-syntax sync minlines=256
-autocmd BufEnter * :syntax sync fromstart
-set ttyfast
 
 "=============================================================================="
 "                              KEYBOARD MAPPINGS                               "
@@ -210,11 +183,11 @@ set ttyfast
 " Unfolding and folding with space
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 nnoremap <silent> <C-Space> @=(foldlevel('.')?'zA':"\<Space>")<CR>
-vnoremap <Space> zf
-nnoremap <Leader> f :set foldmethod=none
+vnoremap <Space>zf
+nnoremap <Leader>f :set foldmethod=none
 
 " Toggle between highlighting line or column
-nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+nnoremap <Leader>o :set cursorline! cursorcolumn!<CR>
 
 " Clearing highlighted search
 nmap <silent> <leader>/ :nohlsearch<CR>
@@ -276,9 +249,6 @@ map Q gq
 " Open Taglist with \t
 "nmap <Leader>t :TlistToggle<CR>
 
-" Show Yankring
-"nnoremap <silent> <F8> :YRShow<CR>
-
 " Open corresponding html file
 "nmap <Leader>v :!google-chrome %<.html<CR><CR>
 
@@ -339,6 +309,7 @@ set scrolloff=2
 " color schemes and syntax files
 map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
 
+" Save with su rights without having started with them
 if !exists('W_defined')
   let W_defined = "True"
   command W :execute 'silent w !sudo tee > /dev/null %'
@@ -357,9 +328,7 @@ map <Leader>st :%s/\s\+$/<CR>
 " Sort words in visual
 vnoremap <Leader>o d:execute 'normal a' . join(sort(split(getreg('"'))), ' ')<CR>
 
-"==========="
-"  OpenPDF  "
-"==========="
+" Show the corresponding PDF file
 function! OpenPDF()
   let file_stripped = expand("%:r")
   echo system('gnome-open '.file_stripped.'.pdf')
@@ -438,7 +407,7 @@ let g:airline_detect_whitespace=1
 "=============================================================================="
 "                                   ULTISNIP                                   "
 "=============================================================================="
-"let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<tab>"
 "let g:UltiSnipsJumpForwardTrigger="<tab>"
 "let g:UltiSnipsJumpForwardTrigger="<C-j>"
 "let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
