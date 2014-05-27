@@ -183,7 +183,7 @@ set ttyfast
 " Unfolding and folding with space
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 nnoremap <silent> <C-Space> @=(foldlevel('.')?'zA':"\<Space>")<CR>
-vnoremap <Space>zf
+vnoremap <Space> zf
 nnoremap <Leader>f :set foldmethod=none
 
 " Toggle between highlighting line or column
