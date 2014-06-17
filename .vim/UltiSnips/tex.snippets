@@ -21,6 +21,23 @@ snippet "b(egin)?" "begin{} / end{}" br
 \end{$1}
 endsnippet
 
+#========#
+#  MATH  #
+#========#
+snippet align "Align environment" b
+\begin{align}
+	${1:${VISUAL}}
+\end{align}
+$0
+endsnippet
+
+snippet equation "Equation environment" b
+\begin{equation}
+	${1:${VISUAL}}
+\end{equation}
+$0
+endsnippet
+
 ####################
 # TABULARS, ARRAYS #
 ####################
@@ -75,49 +92,43 @@ ${0}
 endsnippet
 
 snippet sec "Section" b
+%
 \section{${1:section name}}
-\label{sec:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+\label{s:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+%
 ${0}
-% section $2 (end)
 endsnippet
 
-
-snippet sub "Subsection" b
+snippet ssec "Subsection" b
+%
 \subsection{${1:subsection name}}
-\label{sub:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
-
+\label{ss:$2${3:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+%
 ${0}
-
-% subsection $2 (end)
 endsnippet
 
-snippet ssub "Subsubsection" b
+snippet sssec "Subsubsection" b
+%
 \subsubsection{${1:subsubsection name}}
-\label{ssub:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
-
+\label{sss:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+%
 ${0}
-
-% subsubsection $2 (end)
-
 endsnippet
 
 snippet par "Paragraph" b
+%
 \paragraph{${1:paragraph name}}
-\label{par:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
-
+\label{p:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+%
 ${0}
-
-% paragraph $2 (end)
 endsnippet
 
-
 snippet subp "Subparagraph" b
+%
 \subparagraph{${1:subparagraph name}}
-\label{par:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
-
+\label{sp:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+%
 ${0}
-
-% subparagraph $2 (end)
 endsnippet
 
 ###############
@@ -128,8 +139,7 @@ snippet pac "Package" b
 \usepackage[${1:options}]{${2:package}}$0
 endsnippet
 
-
-snippet lp "Long parenthesis" 
+snippet lp "Long parenthesis"
 \left(${1:${VISUAL:contents}}\right)$0
 endsnippet
 # vim:ft=snippets:

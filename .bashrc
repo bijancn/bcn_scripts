@@ -24,10 +24,10 @@ else
   mighty=false
 fi
 
-if [ -x /usr/games/fortune ]; then
-  /usr/games/fortune -s -n 100
-  echo ''
-fi
+#if [ -x /usr/games/fortune ]; then
+  #/usr/games/fortune -s -n 100
+  #echo ''
+#fi
 
 #============#
 #  settings  #
@@ -61,30 +61,50 @@ set -o notify
 set -o noclobber
 set -o ignoreeof
 
+# printing at DESY
+export CUPS_SERVER=cups-hep.desy.de
+alias prnt='lp -d t00ps1 -o sides=two-sided-long-edge'
+function prnt_rng() {
+  lp -d t00ps1 -o sides=two-sided-long-edge -o page-ranges=$1-$2
+}
+alias prnt_1s='lp -d t00ps1 -o sides=one-sided'
+
 #===========#
 #  folders  #
 #===========#
 wingames=/data/win_games
 lingames=/data/lnx_games
 syncd=$HOME/safe
-hepsoft=$syncd/hep_software
 wdist=$HOME/trunk-distribution-install
-honeypot=/afs/desy.de/group/theorie/software/ELF64
+desy_soft=/afs/desy.de/group/theorie/software/ELF64
+hep_soft=$HOME/install
 
 #=========#
 #  paths  #
 #=========#
-#export PATH=$HOME/bin/lhapdf-5.9.1/bin:$HOME/bin:$PATH
-export PATH=$honeypot/bin:$PATH
+# bin
+export PATH=$desy_soft/bin:$PATH
+export PATH=$hep_soft/bin:$PATH
+export PATH=$HOME/MG5_aMC_v2_1_1:$PATH
 
-# libs
-export LD_LIBRARY_PATH=$honeypot/lib:$honeypot/lib64:$LD_LIBRARY_PATH
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/trunk-install/lib
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/include/python2.7/
+# lib
+export LD_LIBRARY_PATH=$desy_soft/lib:$desy_soft/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$hep_soft/lib:$hep_soft/lib64:$LD_LIBRARY_PATH
+# trying to fix static compilation
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
+#export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
+#export FC=gfortran  # Fortran compiler
+#export F77=gfortran # Fortran 77 compiler
+#export CC=gcc   # C compiler
+#export CXX=g++  # C++ compiler
+#alias g++=gcc
+# I have just ln /usr/bin/gcc /usr/bin/g++ -s
+
+# hep
+export HEPMC_DIR=$hep_soft
+export LHAPDF_DIR=$hep_soft
 
 # python
-#export PYTHONPATH=$HOME/bin/lhapdf-5.9.1:$PYTHONPATH
 export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
 export PYTHONPATH=$PYTHONPATH:$HOME/Python-GoogleCalendarParser
 
@@ -97,14 +117,16 @@ export CLASSPATH=$CLASSPATH:$am_tp/*:$am_pro/*:$am_pro/samples/*
 export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 
 # ifort
-# source /opt/intel/composer_xe_2013.3.163/bin/compilervars.sh intel64
+source /opt/intel/bin/compilervars.sh intel64
 
 #==================#
 #  compiler flags  #
 #==================#
-export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan -g "
+export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan -g"
 export DEBUG="$DEBUG -fcheck=all -fmax-errors=1 -ffpe-trap=invalid,zero,overflow"
 export FCFLAGS="-fmax-errors=1 -O2"
+# Simply append this this to your configure command with a space in front
+export DEBUG_FCFLAGS="FCFLAGS=\"$DEBUG\""
 
 #=======#
 #  IPs  #
@@ -139,7 +161,7 @@ export CUBACORES=1
 
 alias whiz_conf='$HOME/trunk/configure --disable-static --prefix=$HOME/trunk-install'
 alias conn_jenkins='ssh -L 8080:localhost:8080 jenkins@141.99.211.121'
-#source $hepsoft/rivet/rivet211/rivetenv.sh
+#source $hep_soft/rivet/rivet211/rivetenv.sh
 
 # Set the title of terminal
 echo -en "\e]0;$USER_ACR - terminal\a"
@@ -285,6 +307,7 @@ alias svnc='svn commit'
 alias le='less'
 if $mighty ; then
   alias rm='trash-put -v'
+  alias rmm='/bin/rm'
 fi
 alias mv='mv -v'
 alias md='mkdir'
@@ -295,6 +318,7 @@ alias rb='sudo reboot'
 alias rs='rem_show'
 alias gf='gfortran -fopenmp '
 alias ca='cit ant'
+alias re='export DISPLAY=:0; cinnamon &'
 alias nhr='nohup ./run_all.sh 2>&1 &'
 alias rgrep='grep -r'
 alias hgrep='history | grep '
@@ -313,6 +337,14 @@ alias get_thesis='git clone $nick:~/bcn_git/thesis.git'
 alias get_vundle='git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim'
 alias reset_file_perms='find . -type f -exec chmod 644 {} +'
 alias reset_dir_perms='find . -type d -exec chmod 755 {} +'
+
+#==============================================================================#
+#                                    CMAKE                                     #
+#==============================================================================#
+function cmake_recreate() {
+  rm *
+  cmake -D CMAKE_Fortran_COMPILER="$1" -D CMAKE_Fortran_FLAGS="$2" ../..
+}
 
 #==============================================================================#
 #                                  FUNCTIONS                                   #
@@ -421,7 +453,7 @@ function ft_renamer () {
   for file in *.$1; do mv "$file" "${file%.$1}.$2"; done
 }
 
-function changer () {
+function replace_by () {
   for file in *$1*; do mv $file ${file/$1/$2}; done
 }
 
@@ -559,7 +591,7 @@ alias gitp='git push'
 alias gitdc='git diff --cached'
 
 # Show all the changes since the last commit, staged or not
-alias gitdc='git diff HEAD'
+alias gitdh='git diff HEAD'
 
 # Show the diff between unstaged changes (working dir) against the index
 # If followed by master..branch it shows complete diff between branches
@@ -911,3 +943,6 @@ _killall() {
 }
 
 complete -F _killall killall killps
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+source ~/.rvm/scripts/rvm

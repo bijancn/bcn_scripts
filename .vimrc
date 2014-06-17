@@ -55,7 +55,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'matchit.zip'
 
 " A decent color scheme from which I want to borrow some concepts
-Plugin 'jonathanfilip/vim-lucius'
+"Plugin 'jonathanfilip/vim-lucius'
 
 " Good support for Markdown
 Plugin 'vim-pandoc/vim-pandoc'
@@ -407,11 +407,11 @@ let g:airline_detect_whitespace=1
 "=============================================================================="
 "                                   ULTISNIP                                   "
 "=============================================================================="
-let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<C-j>"
-"let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-"let g:UltiSnipsJumpBackwardTrigger="<C-J>"
+" Ensure compatibility with YouCompleteMe
+let g:UltiSnipsExpandTrigger="<c-j>"
+"let g:UltiSnipsListSnippets="<C-S-tab>"
+"let g:UltiSnipsJumpForwardTrigger="<C-tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<C-S-tab>"
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "ultisnips_my"]
 
 "=============================================================================="
