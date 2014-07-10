@@ -37,7 +37,7 @@
 \RequirePackage{booktabs}            % Pretty tables. Use \toprule,
                                      % \midrule and \bottomrule
 \RequirePackage{environ}             % Allows to use \NewEnviron
-\RequirePackage[right]{eurosym}      % The infamous Euro symbol
+%\RequirePackage[right]{eurosym}      % The infamous Euro symbol, is in marvosymb as well
 \RequirePackage{transparent}         % \transparent{0.5} -> 50 % transparency
 \RequirePackage{listings}            % For code listings
 
@@ -86,7 +86,9 @@
 \newcommand{\beamersection}[1]{
   \section{#1}
   \begin{frame} \animation
-    \centering \huge \textcolor{\sndcol}{#1}
+    \begin{center}
+      \huge \textcolor{\sndcol}{#1}
+    \end{center}
   \end{frame}
 }
 

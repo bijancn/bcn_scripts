@@ -1,22 +1,17 @@
 [user]
-	email = bijan@chokoufe.com
-	name = Bijan Chokoufe Nejad
+  email = bijan@chokoufe.com
+  name = Bijan Chokoufe Nejad
 [core]
-	editor = vim
-	excludesfile = /home/bijancn/.gitignore_global
+  editor = vim
+  excludesfile = /home/bijancn/.gitignore_global
 [merge]
-	tool = mymeld
+  tool = mymeld
   conflictstyle = diff3
+# TODO: (bcn 2014-07-10) NOT WORKING ANYMORE !!!
 [mergetool "mymeld"]
   cmd = meld $LOCAL $BASE $REMOTE $MERGED
 [push]
-	default = simple
-[color]
-	ui = true
-[alias]
-  ci = commit
-[alias]
-  st = status
+  default = simple
 [alias]
   interactive = !git add -p
 [alias]
@@ -24,12 +19,14 @@
 [alias]
   new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
 [alias]
-  graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
+  makedot = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
 [alias]
-  plog = log --graph --decorate --pretty=oneline --abbrev-commit
-  ploga = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  mylog = !echo && git log --graph --format=format:'%C(black)%h%C(reset) - %C(red)(%ar)%C(reset) %C(blue)%cn%C(reset)%n        %C(green)%s%C(reset)' --abbrev-commit --date=relative | head -n 20 && echo
+[alias]
+  morelog = log --graph --decorate --pretty=medium --abbrev-commit --date=relative --all
 [color]
   branch = auto
   diff = auto
   interactive = auto
   status = auto
+  ui = true

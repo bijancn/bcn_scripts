@@ -21,13 +21,35 @@ snippet "b(egin)?" "begin{} / end{}" br
 \end{$1}
 endsnippet
 
+snippet frame "begin frame end" b
+\begin{Bframe}
+	{${1:title}}
+	$0
+\end{Bframe}
+endsnippet
+
+snippet col "begin columns end" b
+\begin{columns}
+	\column{.5\textwidth} $1
+	\column{.5\textwidth} $0
+\end{columns}
+endsnippet
+
+snippet al "tex command"
+\al{${1:${VISUAL}}}$0
+endsnippet
+
+snippet graphic "include graphics"
+\includegraphics[width=\textwidth]{${1:\picdir}/${2:pic_name}.pdf}
+endsnippet
+
 #========#
 #  MATH  #
 #========#
 snippet align "Align environment" b
-\begin{align}
+\begin{Balign}
 	${1:${VISUAL}}
-\end{align}
+\end{Balign}
 $0
 endsnippet
 

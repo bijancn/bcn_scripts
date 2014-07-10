@@ -64,8 +64,9 @@ set -o ignoreeof
 # printing at DESY
 export CUPS_SERVER=cups-hep.desy.de
 alias prnt='lp -d t00ps1 -o sides=two-sided-long-edge'
+alias prnt_2p='lp -d t00ps1 -o sides=two-sided-long-edge -o number-up=2'
 function prnt_rng() {
-  lp -d t00ps1 -o sides=two-sided-long-edge -o page-ranges=$1-$2
+  lp -d t00ps1 -o sides=two-sided-long-edge -o page-ranges=$1-$2 $3
 }
 alias prnt_1s='lp -d t00ps1 -o sides=one-sided'
 
@@ -324,7 +325,7 @@ alias rgrep='grep -r'
 alias hgrep='history | grep '
 alias du_dirs='du {*,.git} -sh | sort -h'
 alias du_subdirs='du -h | sort -h'
-alias briss="java -jar $synced/briss-0.9/briss-0.9.jar"
+alias briss="java -jar $syncd/scripts/briss-0.9/briss-0.9.jar"
 alias primrun='vblank_mode=0 primusrun'
 alias todo='rgrep --binary-files=without-match -n todo: *'
 alias yt_mp3='youtube-dl -t --extract-audio --audio-format=mp3'
@@ -334,7 +335,6 @@ alias ddiff='diff -x *.swp -q' #?
 alias mount_wue='sshfs $int_quad_core1: /home/bijancn/Dropbox/uniwue/'
 alias mount_out='sshfs $int_quad_core1:output_ovm/ /home/bijancn/Dropbox/master_thesis/output_ovm/'
 alias get_thesis='git clone $nick:~/bcn_git/thesis.git'
-alias get_vundle='git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim'
 alias reset_file_perms='find . -type f -exec chmod 644 {} +'
 alias reset_dir_perms='find . -type d -exec chmod 755 {} +'
 
@@ -522,9 +522,6 @@ function sfa () {
 #==============================================================================#
 #                                     GIT                                      #
 #==============================================================================#
-# Push all tags and branches to the remote
-alias gitpa='git push --all origin'
-
 # Ignore changes to local file in status,
 # useful for machine-specifc configs (followed by file)
 alias gituiu='git update-index --assume-unchanged'
@@ -572,7 +569,7 @@ alias gitmv='git mv'
 # Commit the staged changes to the HEAD
 alias gitc='git commit -m'
 
-# Interactively add chunks and see what u have done
+# Interactively add chunks and see what u have done (CUSTOM ALIAS)
 alias giti='git interactive'
 
 # See the current status
@@ -581,21 +578,30 @@ alias gits='git status'
 # Pull from the remote
 alias gitl='git pull'
 
+# Pull from the remote and overwrite all local changes (CUSTOM ALIAS)
+alias gitlh='git pullhard'
+
 # Push to the remote
 alias gitp='git push'
+
+# Push all tags and branches to the remote
+alias gitpa='git push --all origin'
+
+# See the latest commits? (CUSTOM ALIAS)
+alias gitn='git new'
 
 #===============#
 #  differences  #
 #===============#
+# Show the diff between unstaged changes (working dir) against the index
+# If followed by master..branch it shows complete diff between branches
+alias gitd='git diff'
+
 # Show the diff between staged changes (index) against the current HEAD
 alias gitdc='git diff --cached'
 
 # Show all the changes since the last commit, staged or not
 alias gitdh='git diff HEAD'
-
-# Show the diff between unstaged changes (working dir) against the index
-# If followed by master..branch it shows complete diff between branches
-alias gitd='git diff'
 
 # Show which files have changed between branches (followed by: master..branch)
 alias gitdb='git diff --stat --color'
@@ -603,17 +609,34 @@ alias gitdb='git diff --stat --color'
 #============#
 #  branches  #
 #============#
-# Checkout another branch or file from it
+# Checkout another branch or file from it 'gite BRANCH -- FILE'
 alias gite='git checkout'
 
 # Cherry pick a commit from another branch
 alias gitcp='git cherry-pick'
+
+# Create a new branch (followed by branchname)
+alias gitb='git branch'
 
 # Rename your current branch (followed by newbranchname)
 alias gitbm='git branch -m'
 
 # Switch to master and get updates from svn
 alias gsu='gite master ; svnu ; gits'
+
+#=================#
+#  VISUALIZATION  #
+#=================#
+# Creates a dot file. TODO: Add the pipe through dot and show the pdf
+alias gitm='git makedot'
+alias gitlg='git mylog'
+alias gitlg2='git morelog'
+alias gitlg3='git shortlog'
+
+#==============================================================================#
+#                                     SVN                                      #
+#==============================================================================#
+alias svns='svn status'
 
 #==============================================================================#
 #                                    PROMPT                                    #
