@@ -79,6 +79,7 @@ syncd=$HOME/safe
 wdist=$HOME/trunk-distribution-install
 desy_soft=/afs/desy.de/group/theorie/software/ELF64
 hep_soft=$HOME/install
+whiz_soft=$HOME/trunk/install/default/
 
 #=========#
 #  paths  #
@@ -86,11 +87,13 @@ hep_soft=$HOME/install
 # bin
 export PATH=$desy_soft/bin:$PATH
 export PATH=$hep_soft/bin:$PATH
+export PATH=$whiz_soft/bin:$PATH
 export PATH=$HOME/MG5_aMC_v2_1_1:$PATH
 
 # lib
 export LD_LIBRARY_PATH=$desy_soft/lib:$desy_soft/lib64:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=$hep_soft/lib:$hep_soft/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$whiz_soft/lib:$whiz_soft/lib64:$LD_LIBRARY_PATH
 # trying to fix static compilation
 #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
 #export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu

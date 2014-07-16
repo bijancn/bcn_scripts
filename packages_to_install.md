@@ -5,7 +5,7 @@
 
 ~866 MB disc space
 ```
-autoconf automake autotools-dev biber build-essential chromium-browser cmake curl curlftpfs dict diffpdf g++ gfortran gfortran-doc gimp git gparted htop inkscape ipython keepassx libav-tools libavcodec-extra libtool meld mercurial nemo-dropbox node-less noweb ocaml openssh-server pandoc pdftk python-dev python-matplotlib python-numpy python-pip python-scipy python-unidecode subversion terminator trash-cli vim-gtk youtube-dl wine
+autoconf automake autotools-dev biber build-essential chromium-browser cmake curl curlftpfs dict diffpdf g++ gfortran gfortran-doc gimp git gparted htop inkscape ipython keepassx libav-tools libavcodec-extra libtool meld mercurial nemo-dropbox node-less noweb ocaml ocamlweb openssh-server pandoc pdftk python-dev python-matplotlib python-numpy python-pip python-scipy python-unidecode subversion terminator trash-cli vim-gtk youtube-dl wine
 ```
 
 725 MB disc space
