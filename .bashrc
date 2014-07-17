@@ -117,8 +117,14 @@ am_pro=$am_bu/products
 export CLASSPATH=$CLASSPATH:$am_tp/*:$am_pro/*:$am_pro/samples/*
 export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 
+intel_dir=/opt/intel
 # ifort
-source /opt/intel/bin/compilervars.sh intel64
+if [ -f $intel_dir/bin/compilervars.sh ]; then
+  source $intel_dir/bin/compilervars.sh intel64
+fi
+if [ -f $intel_dir/2013/bin/compilervars.sh ]; then
+  source $intel_dir/2013/bin/compilervars.sh intel64
+fi
 
 #==================#
 #  compiler flags  #
