@@ -428,6 +428,10 @@ function show_path () {
   tr ':' '\n' <<< "$PATH"
 }
 
+function show_failed_tests () {
+  find -name 'test-suite.log' | xargs grep -v 'XFAIL' | grep -v ' 0' | grep 'FAIL'
+}
+
 function vim_print () {
   vim -c 'hardcopy > ~/output.ps' -c quit "$1"
   ps2pdf ~/output.ps ./"$1".pdf
@@ -484,7 +488,7 @@ function cit () {
 # Get current host related info.
 function show_host() {
   echo -e "\nYou are logged on ${BRed}$HOST"
-  echo -e "\n${BRed}Additionnal information:$NC " ; uname -a
+  echo -e "\n${BRed}Additional information:$NC " ; uname -a
   echo -e "\n${BRed}Users logged on:$NC " ; w -hs |
            cut -d " " -f1 | sort | uniq
   echo -e "\n${BRed}Current date :$NC " ; date
