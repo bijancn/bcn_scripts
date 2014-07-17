@@ -109,7 +109,7 @@ export HEPMC_DIR=$hep_soft
 export LHAPDF_DIR=$hep_soft
 
 # python
-export PYTHONPATH=$PYTHONPATH:$HOME/codes/python
+export PYTHONPATH=$PYTHONPATH:$syncd/codes/python
 export PYTHONPATH=$PYTHONPATH:$HOME/Python-GoogleCalendarParser
 
 # java
@@ -446,6 +446,10 @@ function kill_tty () {
 
 function nr__of_own_threads () {
   ps -eLF | grep ^$USER | wc -l
+}
+
+function how_often_used_here () {
+  rgrep $1 * | wc -l
 }
 
 function mkdircd () {
