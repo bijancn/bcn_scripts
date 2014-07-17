@@ -1,5 +1,6 @@
 # Build and Release Folders
 build/
+install/
 dist/
 __pycache__/
 

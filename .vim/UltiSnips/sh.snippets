@@ -1,11 +1,16 @@
 snippet case "case" b
-case ${1:var} in 
+case ${1:var} in
 	${2:case1})
 		${3:do_something}
 		;;
 
 	${4:case2})
 		${5:something_else}
-		
+
 esac
 endsnippet
+
+snippet if "if" b
+if [ ${1:case} ]; then
+  ${2:do_something}
+fi

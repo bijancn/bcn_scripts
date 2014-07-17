@@ -46,6 +46,10 @@ https://spideroak.com/opendownload/
 http://www.skype.com/en/download-skype/skype-for-linux/
 The one in the repositories is even more broken
 
+## ssh
+If you can't connect to this machine `sudo ufw allow 22` to open ssh port. Maybe
+you need to install `ssh`.
+
 ## Bumblebee Setup
 ```
 add-apt-repository ppa:bumblebee/stable
