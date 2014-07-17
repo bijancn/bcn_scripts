@@ -19,6 +19,9 @@
 set nocompatible
 
 " Vundle can be invoked by :PluginInstall. Updates with :PluginUpdate!
+" Quickstart:
+" git clone https://github.com/gmarik/Vundle.vim.git  ~/.vim/bundle/Vundle.vim
+
 filetype off                   " required for Vundle!
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()

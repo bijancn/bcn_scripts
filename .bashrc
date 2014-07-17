@@ -141,10 +141,8 @@ export DEBUG_FCFLAGS="FCFLAGS=\"$DEBUG\""
 #=======#
 #  IPs  #
 #=======#
-if $mighty; then
-  if [ -f $syncd/keys/IPs.sh ]; then
-    source $syncd/keys/IPs.sh
-  fi
+if [ -f $syncd/keys/IPs.sh ]; then
+  source $syncd/keys/IPs.sh
 fi
 
 function my_ip() # Get IP adress on ethernet.
@@ -424,6 +422,10 @@ function use_as_ref () {
 
 function show_diff () {
   meld err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
+}
+
+function show_path () {
+  tr ':' '\n' <<< "$PATH"
 }
 
 function vim_print () {
