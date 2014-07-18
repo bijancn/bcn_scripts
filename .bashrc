@@ -234,14 +234,16 @@ if $mighty ; then
   alias m='cit make'
   alias mj='cit "make -j"'
   alias mi='cit "make install"'
-  alias mc='cit "make clean"'
+  alias mc='cit "make check"'
+  alias mcl='cit "make clean"'
   alias mp='cit "make pdf"'
   alias mf='cit "make force_pdf"'
 else
   alias m='make'
   alias mj='make -j'
   alias mi='make install'
-  alias mc='make clean'
+  alias mc='make check'
+  alias mcl='make clean'
   alias mp='make pdf'
   alias mf='make force_pdf'
 fi
