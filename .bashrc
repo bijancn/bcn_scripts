@@ -111,6 +111,7 @@ export LHAPDF_DIR=$hep_soft
 # python
 export PYTHONPATH=$PYTHONPATH:$syncd/codes/python
 export PYTHONPATH=$PYTHONPATH:$HOME/Python-GoogleCalendarParser
+export PYTHONPATH=$PYTHONPATH:$HOME/eZchat
 
 # java
 java_path=$syncd/Codes/java
@@ -174,6 +175,10 @@ alias conn_jenkins='ssh -L 8080:localhost:8080 jenkins@141.99.211.121'
 # Set the title of terminal
 echo -en "\e]0;$USER_ACR - terminal\a"
 
+nosetests_cover_cmd="nosetests --with-coverage --cover-erase --cover-tests --cover-package=\$(ls *.py | sed -r 's/[.]py$//' | fgrep -v '.' | paste -s -d ',') "
+alias nosetests_cover=$nosetests_cover_cmd
+alias nosetests_cover_sort="$nosetests_cover_cmd 2>&1 | fgrep '%' | sort -nr -k 4"
+
 #==============================================================================#
 #                                    COLORS                                    #
 #==============================================================================#
@@ -231,6 +236,9 @@ alias c='./configure'
 #  make  #
 #========#
 if $mighty ; then
+  alias n='cit nosetests'
+  alias nv='cit "nosetests -v"'
+  alias ns='cit "nosetests -s"'
   alias m='cit make'
   alias mj='cit "make -j"'
   alias mi='cit "make install"'
@@ -239,6 +247,9 @@ if $mighty ; then
   alias mp='cit "make pdf"'
   alias mf='cit "make force_pdf"'
 else
+  alias n='nosetests'
+  alias n='nosetests -v'
+  alias n='nosetests -s'
   alias m='make'
   alias mj='make -j'
   alias mi='make install'
