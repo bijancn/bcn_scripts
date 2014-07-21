@@ -73,13 +73,12 @@ alias prnt_1s='lp -d t00ps1 -o sides=one-sided'
 #===========#
 #  folders  #
 #===========#
-wingames=/data/win_games
-lingames=/data/lnx_games
-syncd=$HOME/safe
-wdist=$HOME/trunk-distribution-install
-desy_soft=/afs/desy.de/group/theorie/software/ELF64
-hep_soft=$HOME/install
-whiz_soft=$HOME/trunk/install/default/
+export wingames=/data/win_games
+export lingames=/data/lnx_games
+export syncd=$HOME/safe
+export desy_soft=/afs/desy.de/group/theorie/software/ELF64
+export hep_soft=$HOME/install
+export whiz_soft=$HOME/trunk/install/
 
 #=========#
 #  paths  #
@@ -87,13 +86,13 @@ whiz_soft=$HOME/trunk/install/default/
 # bin
 export PATH=$desy_soft/bin:$PATH
 export PATH=$hep_soft/bin:$PATH
-export PATH=$whiz_soft/bin:$PATH
+export PATH=$whiz_soft/def/bin:$PATH
 export PATH=$HOME/MG5_aMC_v2_1_1:$PATH
 
 # lib
 export LD_LIBRARY_PATH=$desy_soft/lib:$desy_soft/lib64:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=$hep_soft/lib:$hep_soft/lib64:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=$whiz_soft/lib:$whiz_soft/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$whiz_soft/def/lib:$whiz_soft/def/lib64:$LD_LIBRARY_PATH
 # trying to fix static compilation
 #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
 #export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
@@ -300,12 +299,12 @@ alias AGU='agu; agg; agd'
 #  whizard  #
 #===========#
 alias twhizard='~/trunk-install/bin/whizard'
-alias wsrc='go '$wdist/share/doc/whizard/whizard.pdf
-alias vsrc='go '$wdist/share/doc/vamp/vamp.pdf
-alias osrc='go '$wdist/share/doc/omega/omega.pdf
-alias csrc='go '$wdist/share/doc/circe2/circe2.pdf
-alias wman='go '$wdist/share/doc/whizard/manual.pdf
-alias gman='go '$wdist/share/doc/whizard/gamelan_manual.pdf
+alias wsrc='go '$whiz_soft/doc/share/doc/whizard/whizard.pdf
+alias vsrc='go '$whiz_soft/doc/share/doc/vamp/vamp.pdf
+alias osrc='go '$whiz_soft/doc/share/doc/omega/omega.pdf
+alias csrc='go '$whiz_soft/doc/share/doc/circe2/circe2.pdf
+alias wman='go '$whiz_soft/doc/share/doc/whizard/manual.pdf
+alias gman='go '$whiz_soft/doc/share/doc/whizard/gamelan_manual.pdf
 
 #=========#
 #  games  #

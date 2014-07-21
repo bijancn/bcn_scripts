@@ -13,6 +13,7 @@ fi
 bcn=~/bcn_scripts
 safe=~/safe/keys
 l="texmf/tex/latex"
+s=".sylpheed-2.0"
 
 files=".@(vim|bash|colorit|dir_colors)rc .gitignore_global "
 files+=".config/evince/@(accels|print-settings) "
@@ -21,6 +22,8 @@ files+=".config/matplotlib/matplotlibrc "
 files+=".config/terminator/config "
 files+=".local/share/applications/mimeapps.list "
 files+=".ssh/config .ssh/known_hosts "
+# Pattern matching only works when the files are locally present
+files+="$s/accountrc $s/colorlabelrc $s/menurc $s/sylpheedrc "
 files+=".vim/@(bcn_color_demo|filetype).vim "
 files+=".vim/colors/@(bcn_dark|bcn_light|print_bw).vim "
 files+=".vim/after/ftplugin/@(c|markdown|noweb|ocaml|python|tex).vim "
