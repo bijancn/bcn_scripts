@@ -15,3 +15,5 @@ let b:mw=b:mw . '\<\(for\|while\)\>:\<do\>:\<done\>,'
 let b:mw=b:mw . '\<\(object\|sig\|struct\|begin\)\>:\<end\>,'
 let b:mw=b:mw . '\<\(match\|try\)\>:\<with\>'
 let b:match_words=b:mw
+
+let g:merlin_ignore_warnings = 'true'

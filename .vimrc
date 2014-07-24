@@ -54,6 +54,9 @@ Plugin 'AndrewRadev/linediff.vim'
 " Reasonably good. Not perfect. Also doesn't change in noweb.
 Plugin 'scrooloose/nerdcommenter'
 
+" Show errors and warnings of compilers
+Plugin 'scrooloose/syntastic'
+
 " Allows to use % on keywords like if
 Plugin 'matchit.zip'
 
@@ -341,6 +344,7 @@ map <Leader>v :call OpenPDF()<CR>
 "==============="
 "  ocaml annot  "
 "==============="
+" Merlin does a better job
 function! OCamlType()
   let col  = col('.')
   let line = line('.')
@@ -349,7 +353,8 @@ function! OCamlType()
   let cmd = "annot -n -type ".line." ".col." ".file.".annot"
   echo system('cd '.folder.' && '.cmd)
 endfunction
-map <Leader>t :call OCamlType()<CR>
+map <Leader>t :TypeOf<CR>
+map <Leader>l :Locate<CR>
 
 "=============================================================================="
 "                                   AUTOCMD                                    "
@@ -377,7 +382,30 @@ autocmd BufWinEnter *.nw silent loadview
 " http://vim.wikia.com/wiki/Keep_folds_closed_while_inserting_text
 autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
 autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
-"
+
+"=============================================================================="
+"                                  OCP-INDENT                                  "
+"=============================================================================="
+let g:ocp_indent_vimfile = system("opam config var share")
+let g:ocp_indent_vimfile = substitute(g:ocp_indent_vimfile, '[\r\n]*$', '', '')
+let g:ocp_indent_vimfile = g:ocp_indent_vimfile . "/vim/syntax/ocp-indent.vim"
+
+autocmd FileType ocaml exec ":source " . g:ocp_indent_vimfile
+
+"=============================================================================="
+"                                    MERLIN                                    "
+"=============================================================================="
+let s:ocamlmerlin=substitute(system('opam config var share'),'\n$','','''') .  "/ocamlmerlin"
+execute "set rtp+=".s:ocamlmerlin."/vim"
+execute "set rtp+=".s:ocamlmerlin."/vimbufsync"
+
+" Syntastic integration
+let g:syntastic_ocaml_checkers = ['merlin']
+" Jump to the first error
+let g:syntastic_auto_jump = 2
+" Open and close the error window automatically
+let g:syntastic_auto_loc_list = 1
+
 "=============================================================================="
 "                                   FORTRAN                                    "
 "=============================================================================="

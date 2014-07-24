@@ -72,3 +72,4 @@ Makefile.in
 .netrwhist
 .vim/bundle/vundle/.netrwhist
 .svn
+.merlin

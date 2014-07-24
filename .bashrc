@@ -19,10 +19,11 @@
 
 # Checking for own machine with superuser rights and updated programs
 if [ "$USER" = "bijancn" ]; then
-  mighty=true
+  mighty='true'
 else
-  mighty=false
+  mighty='false'
 fi
+export mighty
 
 #if [ -x /usr/games/fortune ]; then
   #/usr/games/fortune -s -n 100
@@ -164,11 +165,13 @@ export USER_ACR=bcn
 # Enabling backtracing in OCaml
 export OCAMLRUNPARAM=b
 
+# Somehow this is needed for OPAM and all by OPAM installed packages
+eval `opam config env`
+
 # Number of cores for the CUBA library
 export CUBACORES=1
 
 alias whiz_conf='$HOME/trunk/configure --disable-static --prefix=$HOME/trunk-install'
-alias conn_jenkins='ssh -L 8080:localhost:8080 jenkins@141.99.211.121'
 #source $hep_soft/rivet/rivet211/rivetenv.sh
 
 # Set the title of terminal
@@ -234,7 +237,7 @@ alias c='./configure'
 #========#
 #  make  #
 #========#
-if $mighty ; then
+if [ $mighty = 'true' ]; then
   alias n='cit nosetests'
   alias nv='cit "nosetests -v"'
   alias ns='cit "nosetests -s"'
@@ -325,7 +328,7 @@ alias svnc='svn commit'
 #  other  #
 #=========#
 alias le='less'
-if $mighty ; then
+if [ $mighty = 'true' ]; then
   alias rm='trash-put -v'
   alias rmm='/bin/rm'
 fi
@@ -455,9 +458,9 @@ function backup_settings () {
   sudo cp ~/.local/share/keyrings ~/decrypted/scripts/backup/ -r
 }
 
-function backup_root () {
-  sudo rsync -avz /!(data|home|proc|sys|win_fs) /data/root_backup/
-}
+#function backup_root () {
+  ##sudo rsync -avz /!(data|home|proc|sys|win_fs) /data/root_backup/
+#}
 
 function backup_home () {
   sudo rsync -avz $HOME /data/home_backup/
@@ -708,7 +711,7 @@ export GIT_PS1_SHOWDIRTYSTATE=yes
 setup_prompt(){
   #PS1long='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] [${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]] \[\033[01;34m\]\w\[\033[00m\] '
   #PS1='\[$(branch_color)\]$(parse_git_branch)\[\033[00m\] ${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]\[\033[01;34m\]\w\[\033[00m\] '
-  if $mighty ; then
+  if [ -f ~/.bash_git ] ; then
     source ~/.bash_git
     PS1='\[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]\n $ '
     export PS1="\$(be_get_branch "$2")${PS1}";
