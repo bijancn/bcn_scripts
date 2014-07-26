@@ -166,7 +166,9 @@ export USER_ACR=bcn
 export OCAMLRUNPARAM=b
 
 # Somehow this is needed for OPAM and all by OPAM installed packages
-eval `opam config env`
+if hash opam 2>/dev/null; then
+  eval `opam config env`
+fi
 
 # Number of cores for the CUBA library
 export CUBACORES=1
