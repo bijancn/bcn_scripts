@@ -3,7 +3,7 @@
   name = Bijan Chokoufe Nejad
 [core]
   editor = vim
-  excludesfile = /home/bijancn/.gitignore_global
+  excludesfile = ~/.gitignore_global
 [merge]
   tool = mymeld
 	conflictstyle = diff3

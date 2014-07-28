@@ -17,6 +17,9 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# Allow to use backspace when connected via ssh to certain systems
+stty erase ^?
+
 # Checking for own machine with superuser rights and updated programs
 if [ "$USER" = "bijancn" ]; then
   mighty='true'
@@ -94,15 +97,6 @@ export PATH=$HOME/MG5_aMC_v2_1_1:$PATH
 export LD_LIBRARY_PATH=$desy_soft/lib:$desy_soft/lib64:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=$hep_soft/lib:$hep_soft/lib64:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=$whiz_soft/def/lib:$whiz_soft/def/lib64:$LD_LIBRARY_PATH
-# trying to fix static compilation
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
-#export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
-#export FC=gfortran  # Fortran compiler
-#export F77=gfortran # Fortran 77 compiler
-#export CC=gcc   # C compiler
-#export CXX=g++  # C++ compiler
-#alias g++=gcc
-# I have just ln /usr/bin/gcc /usr/bin/g++ -s
 
 # hep
 export HEPMC_DIR=$hep_soft
@@ -112,6 +106,10 @@ export LHAPDF_DIR=$hep_soft
 export PYTHONPATH=$PYTHONPATH:$syncd/codes/python
 export PYTHONPATH=$PYTHONPATH:$HOME/Python-GoogleCalendarParser
 export PYTHONPATH=$PYTHONPATH:$HOME/eZchat
+export PYTHONUSERBASE=$HOME/install
+
+# perl
+export PERL5LIB=$hep_soft/lib/perl5/
 
 # java
 java_path=$syncd/Codes/java
@@ -138,6 +136,7 @@ export DEBUG="$DEBUG -fcheck=all -fmax-errors=1 -ffpe-trap=invalid,zero,overflow
 export FCFLAGS="-fmax-errors=1 -O2"
 # Simply append this this to your configure command with a space in front
 export DEBUG_FCFLAGS="FCFLAGS=\"$DEBUG\""
+export CFLAGS="-fPIC"
 
 #=======#
 #  IPs  #
@@ -252,8 +251,8 @@ if [ $mighty = 'true' ]; then
   alias mf='cit "make force_pdf"'
 else
   alias n='nosetests'
-  alias n='nosetests -v'
-  alias n='nosetests -s'
+  alias nv='nosetests -v'
+  alias ns='nosetests -s'
   alias m='make'
   alias mj='make -j'
   alias mi='make install'
@@ -602,6 +601,9 @@ function gitf () {
 # Move a file with meta information
 alias gitmv='git mv'
 
+# Move a file with meta information
+alias gitrm='git rm'
+
 # Commit the staged changes to the HEAD
 alias gitc='git commit -m'
 
@@ -665,9 +667,9 @@ alias gsu='gite master ; svnu ; gits'
 #=================#
 # Creates a dot file. TODO: Add the pipe through dot and show the pdf
 alias gitm='git makedot'
-alias gitlg='git mylog'
-alias gitlg2='git morelog'
-alias gitlg3='git shortlog'
+alias gitml='git mylog'
+alias gitml2='git morelog'
+alias gitml3='git shortlog'
 
 #==============================================================================#
 #                                     SVN                                      #
