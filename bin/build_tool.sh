@@ -39,7 +39,7 @@ cd build
 for b in $builds; do
   mkdir $b
   cd $b
-  if [ $conf > 0 ]; then
+  if (($conf > 0)); then
     case $b in
       ifort)
         $whiz/omega/configure --prefix=$whiz/install/$b OCAMLFLAGS='-w +a-4' FC=ifort FCFLAGS=-O2 > /dev/null

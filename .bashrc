@@ -28,11 +28,6 @@ else
 fi
 export mighty
 
-#if [ -x /usr/games/fortune ]; then
-  #/usr/games/fortune -s -n 100
-  #echo ''
-#fi
-
 #============#
 #  settings  #
 #============#
@@ -43,14 +38,14 @@ eval `dircolors $HOME/.dir_colorsrc`
 set -o vi
 bind '"\e."':yank-last-arg
 
-# Avoid overflows
+# Avoid overflows. Might be dangerous
 ulimit -c unlimited
 
 # Narrowing greps search realms
 a='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo '
 export GREP_OPTIONS=$a'--exclude=*.swp --exclude=Makefile.in'
 
-# Enable options:
+# Enable some bash options
 shopt -s cdspell
 shopt -s cdable_vars
 shopt -s checkhash
@@ -60,19 +55,15 @@ shopt -s no_empty_cmd_completion
 shopt -s cmdhist
 shopt -s histappend histreedit histverify
 shopt -s extglob       # Necessary for programmable completion.
-
 set -o notify
 set -o noclobber
 set -o ignoreeof
 
-# printing at DESY
-export CUPS_SERVER=cups-hep.desy.de
-alias prnt='lp -d t00ps1 -o sides=two-sided-long-edge'
-alias prnt_2p='lp -d t00ps1 -o sides=two-sided-long-edge -o number-up=2'
-function prnt_rng() {
-  lp -d t00ps1 -o sides=two-sided-long-edge -o page-ranges=$1-$2 $3
-}
-alias prnt_1s='lp -d t00ps1 -o sides=one-sided'
+# Number of cores for the CUBA library
+export CUBACORES=1
+
+# Enabling backtracing in OCaml
+export OCAMLRUNPARAM=b
 
 #===========#
 #  folders  #
@@ -81,7 +72,7 @@ export wingames=/data/win_games
 export lingames=/data/lnx_games
 export syncd=$HOME/safe
 export desy_soft=/afs/desy.de/group/theorie/software/ELF64
-export hep_soft=$HOME/install
+export install=$HOME/install
 export whiz_soft=$HOME/trunk/install/
 
 #=========#
@@ -89,18 +80,18 @@ export whiz_soft=$HOME/trunk/install/
 #=========#
 # bin
 export PATH=$desy_soft/bin:$PATH
-export PATH=$hep_soft/bin:$PATH
+export PATH=$install/bin:$PATH
 export PATH=$whiz_soft/def/bin:$PATH
 export PATH=$HOME/MG5_aMC_v2_1_1:$PATH
 
 # lib
 export LD_LIBRARY_PATH=$desy_soft/lib:$desy_soft/lib64:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=$hep_soft/lib:$hep_soft/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$install/lib:$install/lib64:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=$whiz_soft/def/lib:$whiz_soft/def/lib64:$LD_LIBRARY_PATH
 
 # hep
-export HEPMC_DIR=$hep_soft
-export LHAPDF_DIR=$hep_soft
+export HEPMC_DIR=$install
+export LHAPDF_DIR=$install
 
 # python
 export PYTHONPATH=$PYTHONPATH:$syncd/codes/python
@@ -109,12 +100,17 @@ export PYTHONPATH=$PYTHONPATH:$HOME/eZchat
 export PYTHONUSERBASE=$HOME/install
 
 # perl
-export PERL5LIB=$hep_soft/lib/perl5/
+export PERL5LIB=$install/lib/perl5/
 
-tmp=/scratch/bcho/SpiderOak/tmp/
 # spideroak
-if [ -d $tmp ]; then
-  export SPIDEROAKDATADIR=$tmp
+spider_dir=/scratch/bcho/SpiderOak/tmp/
+if [ -d $spider_dir ]; then
+  export SPIDEROAKDATADIR=$spider_dir
+fi
+
+# opam
+if hash opam 2>/dev/null; then
+  eval `opam config env`
 fi
 
 # java
@@ -125,14 +121,17 @@ am_pro=$am_bu/products
 export CLASSPATH=$CLASSPATH:$am_tp/*:$am_pro/*:$am_pro/samples/*
 export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 
-intel_dir=/opt/intel
 # ifort
+intel_dir=/opt/intel
 if [ -f $intel_dir/bin/compilervars.sh ]; then
   source $intel_dir/bin/compilervars.sh intel64
 fi
 if [ -f $intel_dir/2013/bin/compilervars.sh ]; then
   source $intel_dir/2013/bin/compilervars.sh intel64
 fi
+
+# rivet
+#source $install/rivet/rivet211/rivetenv.sh
 
 #==================#
 #  compiler flags  #
@@ -143,6 +142,17 @@ export FCFLAGS="-fmax-errors=1 -O2"
 # Simply append this this to your configure command with a space in front
 export DEBUG_FCFLAGS="FCFLAGS=\"$DEBUG\""
 export CFLAGS="-fPIC"
+
+#====================#
+#  printing at DESY  #
+#====================#
+export CUPS_SERVER=cups-hep.desy.de
+alias prnt='lp -d t00ps1 -o sides=two-sided-long-edge'
+alias prnt_2p='lp -d t00ps1 -o sides=two-sided-long-edge -o number-up=2'
+function prnt_rng() {
+  lp -d t00ps1 -o sides=two-sided-long-edge -o page-ranges=$1-$2 $3
+}
+alias prnt_1s='lp -d t00ps1 -o sides=one-sided'
 
 #=======#
 #  IPs  #
@@ -158,6 +168,21 @@ function my_ip() # Get IP adress on ethernet.
     echo ${MY_IP:-"Not connected"}
 }
 
+#=============#
+#  nosetests  #
+#=============#
+nosetests_cover_cmd="nosetests --with-coverage --cover-erase --cover-tests --cover-package=\$(ls *.py | sed -r 's/[.]py$//' | fgrep -v '.' | paste -s -d ',') "
+alias nosetests_cover=$nosetests_cover_cmd
+alias nosetests_cover_sort="$nosetests_cover_cmd 2>&1 | fgrep '%' | sort -nr -k 4"
+
+#=========#
+#  cmake  #
+#=========#
+function cmake_recreate() {
+  rm *
+  cmake -D CMAKE_Fortran_COMPILER="$1" -D CMAKE_Fortran_FLAGS="$2" ../..
+}
+
 #==========#
 #  custom  #
 #==========#
@@ -167,26 +192,8 @@ export today=`date -I`
 # Acronym usable for UltiSnips and other
 export USER_ACR=bcn
 
-# Enabling backtracing in OCaml
-export OCAMLRUNPARAM=b
-
-# Somehow this is needed for OPAM and all by OPAM installed packages
-if hash opam 2>/dev/null; then
-  eval `opam config env`
-fi
-
-# Number of cores for the CUBA library
-export CUBACORES=1
-
-alias whiz_conf='$HOME/trunk/configure --disable-static --prefix=$HOME/trunk-install'
-#source $hep_soft/rivet/rivet211/rivetenv.sh
-
 # Set the title of terminal
 echo -en "\e]0;$USER_ACR - terminal\a"
-
-nosetests_cover_cmd="nosetests --with-coverage --cover-erase --cover-tests --cover-package=\$(ls *.py | sed -r 's/[.]py$//' | fgrep -v '.' | paste -s -d ',') "
-alias nosetests_cover=$nosetests_cover_cmd
-alias nosetests_cover_sort="$nosetests_cover_cmd 2>&1 | fgrep '%' | sort -nr -k 4"
 
 #==============================================================================#
 #                                    COLORS                                    #
@@ -311,7 +318,7 @@ alias AGU='agu; agg; agd'
 #===========#
 #  whizard  #
 #===========#
-alias twhizard='~/trunk-install/bin/whizard'
+alias twhizard='~/trunk/install/bin/whizard'
 alias wsrc='go '$whiz_soft/doc/share/doc/whizard/whizard.pdf
 alias vsrc='go '$whiz_soft/doc/share/doc/vamp/vamp.pdf
 alias osrc='go '$whiz_soft/doc/share/doc/omega/omega.pdf
@@ -371,14 +378,6 @@ alias reset_file_perms='find . -type f -exec chmod 644 {} +'
 alias reset_dir_perms='find . -type d -exec chmod 755 {} +'
 
 #==============================================================================#
-#                                    CMAKE                                     #
-#==============================================================================#
-function cmake_recreate() {
-  rm *
-  cmake -D CMAKE_Fortran_COMPILER="$1" -D CMAKE_Fortran_FLAGS="$2" ../..
-}
-
-#==============================================================================#
 #                                  FUNCTIONS                                   #
 #==============================================================================#
 # Swap 2 files, if they exist
@@ -392,7 +391,6 @@ function swap() {
     mv $TMPFILE "$2"
 }
 
-# General extract function
 function extract() {
   if [ -f $1 ] ; then
     case $1 in
@@ -445,18 +443,6 @@ function use_as_ref () {
   cp err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
 }
 
-function show_diff () {
-  meld err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
-}
-
-function show_path () {
-  tr ':' '\n' <<< "$PATH"
-}
-
-function show_failed_tests () {
-  find -name 'test-suite.log' | xargs grep -v 'XFAIL' | grep -v ' 0' | grep 'FAIL'
-}
-
 function vim_print () {
   vim -c 'hardcopy > ~/output.ps' -c quit "$1"
   ps2pdf ~/output.ps ./"$1".pdf
@@ -481,14 +467,6 @@ function kill_tty () {
   kill -9 $pid
 }
 
-function nr__of_own_threads () {
-  ps -eLF | grep ^$USER | wc -l
-}
-
-function how_often_used_here () {
-  rgrep $1 * | wc -l
-}
-
 function mkdircd () {
   mkdir -p "$@" && eval cd "\"\$$#\"";
 }
@@ -510,6 +488,33 @@ function cit () {
   $1 2>&1 | colorit
 }
 
+function mm () {
+  meld $1/$3 $2/$3
+}
+
+#============================#
+#  Show certain information  #
+#============================#
+function show_diff () {
+  meld err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
+}
+
+function show_path () {
+  tr ':' '\n' <<< "$PATH"
+}
+
+function show_failed_tests () {
+  find -name 'test-suite.log' | xargs grep -v 'XFAIL' | grep -v ' 0' | grep 'FAIL'
+}
+
+function show_nr_of_own_threads () {
+  ps -eLF | grep ^$USER | wc -l
+}
+
+function show_how_often_used_here () {
+  rgrep $1 * | wc -l
+}
+
 # Get current host related info.
 function show_host() {
   echo -e "\nYou are logged on ${BRed}$HOST"
@@ -525,10 +530,6 @@ function show_host() {
   echo
 }
 
-function mm () {
-  meld $1/$3 $2/$3
-}
-
 #======================#
 #  surpressing output  #
 #======================#
@@ -536,12 +537,12 @@ function ev () {
   evince "$1" &> /dev/null &
 }
 
-function za () {
-  zathura "$1" &> /dev/null &
-}
-
 function go () {
   gnome-open "$1" &> /dev/null &
+}
+
+function start () {
+  $1 &> /dev/null &
 }
 
 #===========#
@@ -697,7 +698,7 @@ alias svns='svn status'
 #==============================================================================#
 ## Print nickname for git/hg/bzr/svn version control in CWD
 ## Optional $1 of format string for printf, default "(%s) "
-function be_get_branch {
+function get_branch {
   local dir="$PWD"
   local vcs
   local nick
@@ -728,18 +729,14 @@ function be_get_branch {
 ## Add branch to PS1 (based on $PS1 or $1), formatted as $2
 export GIT_PS1_SHOWDIRTYSTATE=yes
 
-setup_prompt(){
-  #PS1long='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] [${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]] \[\033[01;34m\]\w\[\033[00m\] '
-  #PS1='\[$(branch_color)\]$(parse_git_branch)\[\033[00m\] ${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]\[\033[01;34m\]\w\[\033[00m\] '
-  if [ -f ~/.git-prompt.sh ] ; then
-    source ~/.git-prompt.sh
-    PS1='\[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]\n $ '
-    export PS1="\$(be_get_branch "$2")${PS1}";
-  else
-    PS1='\[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]\n $ '
-  fi
-}
-setup_prompt
+# Set up prompt
+if [ -f ~/.git-prompt.sh ] ; then
+  source ~/.git-prompt.sh
+  PS1='\[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]\n $ '
+  export PS1="\$(get_branch "$2")${PS1}";
+else
+  PS1='\[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]\n $ '
+fi
 
 #==============================================================================#
 #                              Colored Man Pages                               #
