@@ -111,6 +111,12 @@ export PYTHONUSERBASE=$HOME/install
 # perl
 export PERL5LIB=$hep_soft/lib/perl5/
 
+tmp=/scratch/bcho/SpiderOak/tmp/
+# spideroak
+if [ -d $tmp ]; then
+  export SPIDEROAKDATADIR=$tmp
+fi
+
 # java
 java_path=$syncd/Codes/java
 am_tp=$java_path/Amazon-MWS/third-party
@@ -241,6 +247,7 @@ alias c='./configure'
 if [ $mighty = 'true' ]; then
   alias n='cit nosetests'
   alias nv='cit "nosetests -v"'
+  alias nt='cit "nosetests --with-timer"'
   alias ns='cit "nosetests -s"'
   alias m='cit make'
   alias mj='cit "make -j"'
@@ -252,6 +259,7 @@ if [ $mighty = 'true' ]; then
 else
   alias n='nosetests'
   alias nv='nosetests -v'
+  alias nt='nosetests --with-timer'
   alias ns='nosetests -s'
   alias m='make'
   alias mj='make -j'
@@ -285,9 +293,10 @@ alias ..5="cd ../../../../.."
 #=========#
 #  lists  #
 #=========#
-alias ll='ls -lh'
-alias la='ls -lah'
-alias lk='ls -lSrh'         #  Sort by size, biggest last.
+alias ls='ls --color'
+alias ll='ls --color -lh'
+alias la='ls --color -lah'
+alias lk='ls --color -lSrh'         #  Sort by size, biggest last.
 
 #===========#
 #  apt-get  #
@@ -346,7 +355,7 @@ alias re='export DISPLAY=:0; cinnamon &'
 alias nhr='nohup ./run_all.sh 2>&1 &'
 alias rgrep='grep -r'
 alias hgrep='history | grep '
-alias du_dirs='du {*,.git} -sh | sort -h'
+alias du_dirs='du * -sh | sort -h'
 alias du_subdirs='du -h | sort -h'
 alias briss="java -jar $syncd/scripts/briss-0.9/briss-0.9.jar"
 alias primrun='vblank_mode=0 primusrun'
@@ -671,6 +680,13 @@ alias gitml='git mylog'
 alias gitml2='git morelog'
 alias gitml3='git shortlog'
 
+#===================#
+#  bash completion  #
+#===================#
+if [ -f ~/.git-completion.sh ]; then
+  source ~/.git-completion.sh
+fi
+
 #==============================================================================#
 #                                     SVN                                      #
 #==============================================================================#
@@ -715,8 +731,8 @@ export GIT_PS1_SHOWDIRTYSTATE=yes
 setup_prompt(){
   #PS1long='[\[$(branch_color)\]$(parse_git_branch)\[${c_white}\]] [${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]] \[\033[01;34m\]\w\[\033[00m\] '
   #PS1='\[$(branch_color)\]$(parse_git_branch)\[\033[00m\] ${debian_chroot:+($debian_chroot)}\[\033[01m\]\u\[\033[01;32m\]@\h\[\033[00m\]\[\033[01;34m\]\w\[\033[00m\] '
-  if [ -f ~/.bash_git ] ; then
-    source ~/.bash_git
+  if [ -f ~/.git-prompt.sh ] ; then
+    source ~/.git-prompt.sh
     PS1='\[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]\n $ '
     export PS1="\$(be_get_branch "$2")${PS1}";
   else
@@ -726,41 +742,18 @@ setup_prompt(){
 setup_prompt
 
 #==============================================================================#
-#                                OLD GIT PROMPT                                #
+#                              Colored Man Pages                               #
 #==============================================================================#
-parse_git_branch () {
-  if git rev-parse --git-dir >/dev/null 2>&1
-  then
-    gitver=$(git branch 2>/dev/null| sed -n '/^\*/s/^\* //p')
-  else
-    return 0
-  fi
-  echo -e ${gitver::2}
-}
-
-branch_color () {
-  c_black=`tput setaf 0`
-  c_red=`tput setaf 1`
-  c_green=`tput setaf 2`
-  c_yellow=`tput setaf 3`
-  c_blue=`tput setaf 4`
-  c_pink=`tput setaf 5`
-  c_cyan=`tput setaf 6`
-  c_gray=`tput setaf 7`
-  c_white=`tput setaf 9`
-  if git rev-parse --git-dir >/dev/null 2>&1
-  then
-    color=""
-    if git status | grep "nothing to commit" > /dev/null 2>&1
-    then
-      color="${c_green}"
-    else
-      color=${c_red}
-    fi
-  else
-    color="(-)"
-  fi
-  echo -ne $color
+man() {
+	env \
+		LESS_TERMCAP_mb=$(printf "$BGreen") \
+		LESS_TERMCAP_md=$(printf "$BRed") \
+		LESS_TERMCAP_me=$(printf "$Black") \
+		LESS_TERMCAP_se=$(printf "$Blue") \
+		LESS_TERMCAP_so=$(printf "$Black") \
+		LESS_TERMCAP_ue=$(printf "$Black") \
+		LESS_TERMCAP_us=$(printf "$BBlue") \
+			man "$@"
 }
 
 #==============================================================================#
