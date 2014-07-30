@@ -363,7 +363,6 @@ alias briss="java -jar $syncd/scripts/briss-0.9/briss-0.9.jar"
 alias primrun='vblank_mode=0 primusrun'
 alias todo='rgrep --binary-files=without-match -n todo: *'
 alias yt_mp3='youtube-dl -t --extract-audio --audio-format=mp3'
-alias all_cpu_info='lscpu; grep -i "model name" /proc/cpuinfo | uniq'
 # dubious
 alias ddiff='diff -x *.swp -q' #?
 alias mount_wue='sshfs $int_quad_core1: /home/bijancn/Dropbox/uniwue/'
@@ -511,20 +510,25 @@ function show_how_often_used_here () {
 }
 
 # Get current host related info.
-function show_host() {
+function show_host_information () {
   echo -e "\nYou are logged on ${BRed}$HOST"
   echo -e "\n${BRed}Additional information:$NC " ; uname -a
   echo -e "\n${BRed}Users logged on:$NC " ; w -hs |
            cut -d " " -f1 | sort | uniq
   echo -e "\n${BRed}Current date :$NC " ; date
   echo -e "\n${BRed}Machine stats :$NC " ; uptime
-  echo -e "\n${BRed}Memory stats :$NC " ; free
+  echo -e "\n${BRed}Memory stats (in MB):$NC " ; free -m
   echo -e "\n${BRed}Diskspace :$NC " ; df -h / $HOME
   echo -e "\n${BRed}Local IP Address :$NC" ; my_ip
-  echo -e "\n${BRed}Open connections :$NC "; netstat -pan --inet;
+  #echo -e "\n${BRed}Open connections :$NC "; netstat -pan --inet;
   echo
 }
 
+alias show_cpu_info='lscpu; grep -i "model name" /proc/cpuinfo | uniq'
+
+function show_disk_speed () {
+  dd if=/dev/zero of=$1/output conv=fdatasync bs=100k count=1k; rm -f $1/output
+}
 #======================#
 #  surpressing output  #
 #======================#
