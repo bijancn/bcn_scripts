@@ -21,6 +21,7 @@ files+=".config/keepassx/config.ini "
 files+=".config/matplotlib/matplotlibrc "
 files+=".config/terminator/config "
 files+=".local/share/applications/mimeapps.list "
+files+=".profile "
 files+=".ssh/config .ssh/known_hosts "
 # Pattern matching only works when the files are locally present
 files+="$s/accountrc $s/colorlabelrc $s/menurc $s/sylpheedrc "
@@ -32,21 +33,25 @@ files+=".vim/syntax/@(fortran|markdown|noweb|sindarin).vim "
 files+=".vim/UltiSnips/@(all|fortran|noweb|pandoc|sh|tex).snippets "
 files+="bin/@(build_tool|connect_free_server|gen_dirs_from_sins|handbreak_kill).sh "
 files+="bin/@(ping_scan.sh|ppdflatex|server_status.sh|show_my_jobs.sh) "
-files+="bin/@(svn-diff.sh|time.py) "
+files+="bin/@(svn-diff.sh|time.py|vim-gnome) "
 files+="$l/bcn_beamer@(.sty|_example.pdf|_example.tex) "
 files+="$l/bcn_@(color|commands|koma).sty "
 files+="$l/bcn_letter@(.lco|_example.pdf|_example.tex) "
 
 for f in $files; do
   mkdir ~/$(dirname $f) -p
-  echo $f
-  # Try to use public file. If not there use private.
-  if [ -f $bcn/$f ] ; then
-    ln -sf $bcn/$f                      ~/$f
-  elif [ -f $safe/$f ] ; then
-    ln -sf $safe/$f                     ~/$f
+  if [ -f ~/$f ]; then
+    echo "--- $f already exists, doing nothing"
   else
-    echo 'FILE NOT FOUND'
+    echo "+++ Linking $f"
+    # Try to use public file. If not there use private.
+    if [ -f $bcn/$f ] ; then
+      ln -sf $bcn/$f                      ~/$f
+    elif [ -f $safe/$f ] ; then
+      ln -sf $safe/$f                     ~/$f
+    else
+      echo 'FILE NOT FOUND'
+    fi
   fi
 done
 

@@ -59,6 +59,11 @@ hi pandocEmphasis ctermfg=20          ctermbg=None    cterm=Bold
 hi PmenuSel       ctermfg=black       ctermbg=255
 hi Pmenu          ctermfg=black       ctermbg=250
 
+hi DiffAdd    cterm=bold ctermfg=black ctermbg=229 gui=none guifg=bg guibg=Red
+hi DiffDelete cterm=bold ctermfg=black ctermbg=229 gui=none guifg=bg guibg=Red
+hi DiffChange cterm=bold ctermfg=black ctermbg=229 gui=none guifg=bg guibg=Red
+hi DiffText   cterm=bold ctermfg=160 ctermbg=None gui=none guifg=bg guibg=Red
+
 "hi StatusLine term=reverse,bold cterm=reverse,bold gui=reverse,bold
 "hi StatusLineNC term=reverse cterm=reverse gui=reverse
 
@@ -72,6 +77,3 @@ hi Pmenu          ctermfg=black       ctermbg=250
 "hi Title term=bold ctermfg=DarkMagenta gui=bold guifg=Magenta
 "hi WarningMsg term=standout ctermfg=DarkRed guifg=Red
 "hi WildMenu term=standout ctermbg=Yellow ctermfg=Black guibg=Yellow guifg=Black
-"hi DiffAdd term=bold ctermbg=LightBlue guibg=LightBlue
-"hi DiffChange term=bold ctermbg=LightMagenta guibg=LightMagenta
-"hi DiffDelete term=bold ctermfg=Blue ctermbg=LightCyan gui=bold guifg=Blue guibg=LightCyan

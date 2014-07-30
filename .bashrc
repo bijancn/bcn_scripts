@@ -34,6 +34,8 @@ export mighty
 # Customize colors for ls
 eval `dircolors $HOME/.dir_colorsrc`
 
+export difftool='vim -d'
+
 # VI mode for bash
 set -o vi
 bind '"\e."':yank-last-arg
@@ -334,13 +336,6 @@ alias ut='wine '$wingames'/UnrealTournament/System/UnrealTournament.exe'
 alias wc3='wine '$wingames'/Warcraft\ III/Frozen\ Throne.exe'
 alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 
-#=======#
-#  svn  #
-#=======#
-alias svnu='svn update'
-alias svnd='svn diff'
-alias svnc='svn commit'
-
 #=========#
 #  other  #
 #=========#
@@ -489,14 +484,14 @@ function cit () {
 }
 
 function mm () {
-  meld $1/$3 $2/$3
+  $difftool $1/$3 $2/$3
 }
 
 #============================#
 #  Show certain information  #
 #============================#
 function show_diff () {
-  meld err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
+  $difftool err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
 }
 
 function show_path () {
@@ -688,10 +683,21 @@ if [ -f ~/.git-completion.sh ]; then
   source ~/.git-completion.sh
 fi
 
+#==========#
+#  github  #
+#==========#
+function github {
+  git clone git@github.com:$1/$2.git
+}
+
 #==============================================================================#
 #                                     SVN                                      #
 #==============================================================================#
+alias svn=~/bin/svn-color.py
+alias svnu='svn update'
 alias svns='svn status'
+alias svnd='svn diff'
+alias svnc='svn commit'
 
 #==============================================================================#
 #                                    PROMPT                                    #

@@ -10,7 +10,7 @@ for i in {22..01} ; do
   else
     toskip=$1
   fi
-  if [ ${load} = 0 ]; then
+  if [ ${load} == 0 ]; then
     if [ "$j" = "${toskip}" ]; then
       ssh theoc$i
       break
