@@ -40,6 +40,8 @@ Plugin 'SirVer/ultisnips'
 Plugin 'junegunn/goyo.vim'
 
 " Nice fuzzy autocompletion with supertab support
+" Ubuntu libs: build-essential cmake python-dev
+" cd ~/.vim/bundle/YouCompleteMe && ./install.sh
 Plugin 'Valloric/YouCompleteMe'
 
 " Diffing parts of one or two files

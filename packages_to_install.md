@@ -1,55 +1,62 @@
-# main packages
-`libavcodec-extra`, `libav-tools` is needed for `youtube-dl` mp3 conversion
+main packages
+================================================================================
+
+work basic
+--------------------------------------------------------------------------------
 `dict` is needed for `colorit`
-`build-essential`, `python-dev` is for `VIM YCM`.
-
-~866 MB disc space
+`build-essential`, `python-dev` is for `VIM YCM`
+480 MB disc space
 ```
-autoconf automake autotools-dev biber build-essential chromium-browser cmake curl curlftpfs dict diffpdf g++ gfortran gfortran-doc gimp git gparted htop inkscape ipython keepassx libav-tools libavcodec-extra libtool meld mercurial nemo-dropbox node-less noweb libfindlib-ocaml-dev ocaml ocamlweb openssh-server pandoc pdftk python-dev python-matplotlib python-numpy python-pip python-scipy python-unidecode subversion terminator trash-cli vim-gtk youtube-dl wine
-```
-
-725 MB disc space
-```
-texlive texlive-fonts-extra texlive-humanities texlive-lang-german texlive-latex-extra texlive-metapost texlive-publishers texlive-science feynmf latexmk latex-mk latex-xcolor
+autoconf automake autotools-dev build-essential cmake curl dict diffpdf g++ gfortran git htop inkscape ipython keepassx libtool meld mercurial noweb libfindlib-ocaml-dev ocaml pandoc pdftk python-dev python-matplotlib python-numpy python-pip python-scipy python-unidecode subversion terminator vim-gtk
 ```
 
-# optional packages
-apache2 php5 krb5-user
-
-# manual installations
-## git
+latex
+--------------------------------------------------------------------------------
+1920 MB disc space
 ```
-curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > ~/.git-prompt.sh
-curl http://git.kernel.org/cgit/git/git.git/plain/contrib/completion/git-completion.bash > ~/.git-completion.sh
+biber ocamlweb texlive texlive-fonts-extra texlive-humanities texlive-lang-german texlive-latex-extra texlive-metapost texlive-publishers texlive-science feynmf latexmk latex-mk latex-xcolor
 ```
 
-## vim
+nice to have
+--------------------------------------------------------------------------------
+`libavcodec-extra`, `libav-tools` is needed for `youtube-dl` mp3 conversion
 ```
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+apache2 chromium-browser curlftpfs gimp gparted krb5-user libav-tools libavcodec-extra nemo-dropbox node-less openssh-server php5 trash-cli youtube-dl wine
 ```
-Then `vim` and `:BundleInstall`
 
-## default terminal
+manual installations
+================================================================================
+
+default terminal
+--------------------------------------------------------------------------------
 ```
 gsettings set org.cinnamon.desktop.default-applications.terminal exec /usr/bin/terminator
 ```
 
-## swapiness settings
-sysctl.conf
+swapiness settings
+--------------------------------------------------------------------------------
+`sysctl.conf`
 
-## mendeley
+mendeley
+--------------------------------------------------------------------------------
 http://www.mendeley.com/download-mendeley-desktop/ubuntu/instructions/
 
-## SpiderOak
+SpiderOak
+--------------------------------------------------------------------------------
 https://spideroak.com/opendownload/
 
-## skype
+skype
+--------------------------------------------------------------------------------
 http://www.skype.com/en/download-skype/skype-for-linux/
 The one in the repositories is even more broken
 
-## ssh
-If you can't connect to this machine `sudo ufw allow 22` to open ssh port. Maybe
-you need to install `ssh`.
+git
+--------------------------------------------------------------------------------
+See `setup_git.sh`
+
+vim
+--------------------------------------------------------------------------------
+See `.vimrc`
 
 ## Bumblebee Setup
 ```
@@ -67,22 +74,28 @@ make world.opt
 sudo make install
 ````
 
-# For Debian
-## encfs
+Debian specfics
+================================================================================
+encfs
+--------------------------------------------------------------------------------
 To use encfs for decryption `sudo gpasswd -a bijancn fuse`
 
-## cinnamon
+cinnamon
+--------------------------------------------------------------------------------
 ` /etc/apt/sources.list >>
 deb http://packages.linuxmint.com/ debian main import backport upstream romeo `
 
-## skype (4.2)
+skype (4.2)
+--------------------------------------------------------------------------------
 Enable multi arch: `dpkg --add-architecture i386`, `apt-get update`
 Install the deb package: `dpkg -i skype-install.deb`, `apt-get -f install`
 
-## For ATI
+ati
+--------------------------------------------------------------------------------
 Packages: `firmware-linux-nonfree libgl1-mesa-dri xserver-xorg-video-ati`
 
-# DHCP Printer Setup
+DHCP Printer Setup
+================================================================================
 ```
 sudo apt-get install cups csh lib32stdc++6
 sudo mkdir /var/spool/lpd
@@ -94,11 +107,17 @@ go http://localhost:631
 socket://192.168.2.111
 ```
 
-# settings
+Reminders
+================================================================================
 - Edit `/etc/default/grub`. Here you can set the default OS via `GRUB_DEFAULT`
-  and the time until boot via `GRUB_TIMEOUT`. Then run `sudo grub-mkconfig; sudo
-  update-grub`
+  and the time until boot via `GRUB_TIMEOUT`.
+  Then run `sudo grub-mkconfig; sudo update-grub`
 
 - Change Fonts -> Window title font size
 
 - Activate compose key for umlaute
+
+ssh
+--------------------------------------------------------------------------------
+If you can't connect to this machine `sudo ufw allow 22` to open ssh port. Maybe
+you need to install `ssh`.
