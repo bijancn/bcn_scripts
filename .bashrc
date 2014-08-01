@@ -67,6 +67,12 @@ export CUBACORES=1
 # Enabling backtracing in OCaml
 export OCAMLRUNPARAM=b
 
+if [ -f $HOME/install/bin/vim ]; then
+  export VIMRUNTIME=$HOME/install/share/vim/vim74/
+  export EDITOR=$HOME/install/bin/vim
+  export VISUAL=$HOME/install/bin/vim
+fi
+
 #===========#
 #  folders  #
 #===========#
@@ -138,7 +144,9 @@ fi
 #==================#
 #  compiler flags  #
 #==================#
-export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan -g"
+export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -g"
+# Is bugged in gfortran 4.7.1
+#export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan -g"
 export DEBUG="$DEBUG -fcheck=all -fmax-errors=1 -ffpe-trap=invalid,zero,overflow"
 export FCFLAGS="-fmax-errors=1 -O2"
 # Simply append this this to your configure command with a space in front

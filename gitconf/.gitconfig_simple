@@ -21,3 +21,6 @@
   interactive = auto
   status = auto
   ui = true
+[dude]
+	icon = /afs/desy.de/user/b/bcho/.git-dude/github32.png
+	notify-command = notify-send -i \"$ICON_PATH\" \"$TITLE\" \"$DESCRIPTION\" -t 0

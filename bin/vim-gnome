@@ -1,0 +1,3 @@
+#!/bin/sh
+ARGS="$@"
+gnome-terminal -e "$HOME/install/bin/vim $ARGS"

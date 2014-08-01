@@ -21,11 +21,6 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-if [ -f $HOME/install/bin/vim ]; then
-  VIMRUNTIME=$HOME/install/bin
-  EDITOR=$HOME/install/bin/vim
-fi
-
 CDPATH=.:$HOME:
 PRINTER=t00ps1
 LPDEST=$PRINTER

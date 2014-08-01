@@ -1,4 +1,9 @@
-whiz="$HOME/trunk"
+if [ -d $HOME/trunk ]; then
+  whiz="$HOME/trunk"
+else
+  whiz=`pwd`
+fi
+echo "Base dir is $whiz"
 
 if [ $# -lt 3 ]; then
   echo 'Usage: build_tool.sh build n k'
@@ -52,11 +57,11 @@ for b in $builds; do
 
       debug)
         $whiz/configure --prefix=$whiz/install/$b FC=gfortran \
-          FCFLAGS="$DEBUG" --disable-static > /dev/null
+          FCFLAGS="$DEBUG" > /dev/null
         ;;
 
       def)
-        $whiz/configure --prefix=$whiz/install/$b --disable-static > /dev/null
+        $whiz/configure --prefix=$whiz/install/$b > /dev/null
 
     esac
   fi
