@@ -24,7 +24,9 @@ github gsec glowing-mustache
 github oblique63 Python-GoogleCalendarParser
 github olivierverdier pydflatex
 github sickill git-dude
+github sickill bitpocket
 
 bitbucket bijancn vm_paper
 
 ln -s $HOME/pydflatex/bin/pydflatex $HOME/install/bin/pydflatex
+ln -s $HOME/bitpocket/bin/bitpocket $HOME/install/bin/bitpocket
