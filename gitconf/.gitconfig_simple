@@ -1,12 +1,14 @@
 [user]
-	email = bijan@chokoufe.com
-	name = Bijan Chokoufe Nejad
+  email = bijan@chokoufe.com
+  name = Bijan Chokoufe Nejad
 [core]
-	editor = vim
-	excludesfile = ~/.gitignore_global
+  editor = vim
+  excludesfile = ~/.gitignore_global
 [merge]
-	tool = vimdiff
-	conflictstyle = diff3
+  tool = vimdiff
+  conflictstyle = diff3
+[mergetool "mymeld"]
+  cmd = meld --output "$MERGED" "$LOCAL" "$BASE" "$REMOTE"
 [alias]
   interactive = !git add -p
   pullhard = !git fetch --all && git reset --hard origin/master
@@ -22,5 +24,7 @@
   status = auto
   ui = true
 [dude]
-	icon = /afs/desy.de/user/b/bcho/.git-dude/github32.png
-	notify-command = notify-send -i \"$ICON_PATH\" \"$TITLE\" \"$DESCRIPTION\" -t 0
+  icon = /afs/desy.de/user/b/bcho/.git-dude/github32.png
+  notify-command = notify-send -i \"$ICON_PATH\" \"$TITLE\" \"$DESCRIPTION\" -t 0
+[push]
+  default = current

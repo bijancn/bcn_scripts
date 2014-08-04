@@ -7,7 +7,7 @@ work basic
 `build-essential`, `python-dev` is for `VIM YCM`
 480 MB disc space
 ```
-autoconf automake autotools-dev build-essential cmake curl dict diffpdf g++ gfortran git htop inkscape ipython keepassx libtool meld mercurial noweb libfindlib-ocaml-dev ocaml pandoc pdftk python-dev python-matplotlib python-numpy python-pip python-scipy python-unidecode subversion terminator vim-gtk
+autoconf automake autotools-dev build-essential cmake curl dict diffpdf g++ gfortran git graphviz htop inkscape ipython keepassx libtool meld mercurial noweb libfindlib-ocaml-dev ocaml pandoc pdftk python-dev python-matplotlib python-numpy python-pip python-scipy python-unidecode subversion terminator vim-gtk
 ```
 
 latex
@@ -48,7 +48,8 @@ https://spideroak.com/opendownload/
 skype
 --------------------------------------------------------------------------------
 http://www.skype.com/en/download-skype/skype-for-linux/
-The one in the repositories is even more broken
+The one in the repositories used to be more broken
+In Ubuntu 14.04 you get skype 4.3 now which looks better
 
 git
 --------------------------------------------------------------------------------

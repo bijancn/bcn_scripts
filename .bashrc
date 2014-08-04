@@ -20,14 +20,6 @@
 # Allow to use backspace when connected via ssh to certain systems
 stty erase ^?
 
-# Checking for own machine with superuser rights and updated programs
-if [ "$USER" = "bijancn" ]; then
-  mighty='true'
-else
-  mighty='false'
-fi
-export mighty
-
 #============#
 #  settings  #
 #============#
@@ -71,6 +63,10 @@ if [ -f $HOME/install/bin/vim ]; then
   export VIMRUNTIME=$HOME/install/share/vim/vim74/
   export EDITOR=$HOME/install/bin/vim
   export VISUAL=$HOME/install/bin/vim
+else
+  export VIMRUNTIME=/usr/share/vim/vim74/
+  export EDITOR=/usr/bin/vim
+  export VISUAL=/usr/bin/vim
 fi
 
 #===========#
@@ -88,6 +84,7 @@ export whiz_soft=$HOME/trunk/install/
 #=========#
 # bin
 export PATH=$desy_soft/bin:$PATH
+export PATH=$HOME/bcn_scripts/bin:$PATH
 export PATH=$install/bin:$PATH
 export PATH=$whiz_soft/def/bin:$PATH
 export PATH=$HOME/MG5_aMC_v2_1_1:$PATH
@@ -105,6 +102,8 @@ export LHAPDF_DIR=$install
 export PYTHONPATH=$PYTHONPATH:$syncd/codes/python
 export PYTHONPATH=$PYTHONPATH:$HOME/Python-GoogleCalendarParser
 export PYTHONPATH=$PYTHONPATH:$HOME/eZchat
+export PYTHONPATH=$PYTHONPATH:$HOME/termstyle
+export PYTHONPATH=$PYTHONPATH:$HOME/pydflatex
 export PYTHONUSERBASE=$HOME/install
 
 # perl
@@ -119,6 +118,11 @@ fi
 # opam
 if hash opam 2>/dev/null; then
   eval `opam config env`
+fi
+
+# pydflatex
+if hash pydflatex 2>/dev/null; then
+  export pdftool=pydflatex
 fi
 
 # java
@@ -261,11 +265,12 @@ alias c='./configure'
 #========#
 #  make  #
 #========#
-if [ $mighty = 'true' ]; then
+if hash cit 2>/dev/null; then
   alias n='cit nosetests'
   alias nv='cit "nosetests -v"'
   alias nt='cit "nosetests --with-timer"'
   alias ns='cit "nosetests -s"'
+  alias no='nosetests_cover'
   alias m='cit make'
   alias mj='cit "make -j"'
   alias mi='cit "make install"'
@@ -348,9 +353,11 @@ alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 #  other  #
 #=========#
 alias le='less'
-if [ $mighty = 'true' ]; then
+if hash trash-put 2>/dev/null; then
   alias rm='trash-put -v'
   alias rmm='/bin/rm'
+else
+  alias rm='rm -vI'
 fi
 alias mv='mv -v'
 alias md='mkdir'
@@ -443,6 +450,10 @@ function rem_show () {
 
 function use_as_ref () {
   cp err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
+}
+
+function make_dot () {
+  dot -Tpdf -o ${1%.dot}.pdf $1
 }
 
 function vim_print () {
@@ -870,69 +881,6 @@ _longopts() {
 }
 complete  -o default -F _longopts configure bash
 complete  -o default -F _longopts wget id info a2ps ls recode
-
-_tar() {
-    local cur ext regex tar untar
-
-    COMPREPLY=()
-    cur=${COMP_WORDS[COMP_CWORD]}
-
-    # If we want an option, return the possible long options.
-    case "$cur" in
-        -*)     COMPREPLY=( $(_get_longopts $1 $cur ) ); return 0;;
-    esac
-
-    if [ $COMP_CWORD -eq 1 ]; then
-        COMPREPLY=( $( compgen -W 'c t x u r d A' -- $cur ) )
-        return 0
-    fi
-
-    case "${COMP_WORDS[1]}" in
-        ?(-)c*f)
-            COMPREPLY=( $( compgen -f $cur ) )
-            return 0
-            ;;
-        +([^Izjy])f)
-            ext='tar'
-            regex=$ext
-            ;;
-        *z*f)
-            ext='tar.gz'
-            regex='t\(ar\.\)\(gz\|Z\)'
-            ;;
-        *[Ijy]*f)
-            ext='t?(ar.)bz?(2)'
-            regex='t\(ar\.\)bz2\?'
-            ;;
-        *)
-            COMPREPLY=( $( compgen -f $cur ) )
-            return 0
-            ;;
-    esac
-
-    if [[ "$COMP_LINE" == tar*.$ext' '* ]]; then
-        # Complete on files in tar file.
-        #
-        # Get name of tar file from command line.
-        tar=$( echo "$COMP_LINE" | \
-                        sed -e 's|^.* \([^ ]*'$regex'\) .*$|\1|' )
-        # Devise how to untar and list it.
-        untar=t${COMP_WORDS[1]//[^Izjyf]/}
-
-        COMPREPLY=( $( compgen -W "$( echo $( tar $untar $tar \
-                                2>/dev/null ) )" -- "$cur" ) )
-        return 0
-
-    else
-        # File completion on relevant files.
-        COMPREPLY=( $( compgen -G $cur\*.$ext ) )
-
-    fi
-
-    return 0
-}
-
-complete -F _tar -o default tar
 
 _make() {
     local mdef makef makef_dir="." makef_inc gcmd cur prev i;
