@@ -8,10 +8,11 @@ echo "Base dir is $whiz"
 if [ $# -lt 3 ]; then
   echo 'Usage: build_tool.sh build n k'
   echo 'build = a -> all builds = def doc debug ifort'
-  echo 'build = def -> default compiler and flags, no static '
-  echo 'build = debug -> gfortran with DEBUG flags, no static '
-  echo 'build = doc -> default compiler and flags, no static, with pdfs '
+  echo 'build = def -> default compiler and flags'
+  echo 'build = debug -> gfortran with DEBUG flags'
+  echo 'build = doc -> default compiler, producing documentation '
   echo 'build = ifort -> ifort -O2, only omega build '
+  echo 'build = openmp -> gfortran with OpenMP support'
   echo 'n = 0 -> only make'
   echo 'n = 1 -> configure and make'
   echo 'n = 2 -> autoreconf, configure and make'
@@ -20,7 +21,7 @@ if [ $# -lt 3 ]; then
   exit
 fi
 if [ $1 == 'a'  ]; then
-  builds='def doc debug ifort'
+  builds='def doc debug ifort openmp'
 else
   builds=$1
 fi
@@ -62,6 +63,11 @@ for b in $builds; do
 
       def)
         $whiz/configure --prefix=$whiz/install/$b > /dev/null
+        ;;
+
+      openmp)
+        $whiz/configure --prefix=$whiz/install/$b FC=gfortran \
+          FCFLAGS='-O2 -fopenmp' > /dev/null
 
     esac
   fi
