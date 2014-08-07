@@ -549,6 +549,10 @@ alias show_cpu_info='lscpu; grep -i "model name" /proc/cpuinfo | uniq'
 function show_disk_speed () {
   dd if=/dev/zero of=$1/output conv=fdatasync bs=100k count=1k; rm -f $1/output
 }
+
+function show_big_files () {
+  find . -type f -size +20000k -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
+}
 #======================#
 #  surpressing output  #
 #======================#
