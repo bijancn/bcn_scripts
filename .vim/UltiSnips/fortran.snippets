@@ -30,13 +30,12 @@ endsnippet
 
 snippet if_present "class snippet of optional stuff"
 if (present (${1:var})) then
-   allocate (${2:class}%$1 (size ($1)))
-   $2%$1 = $1
+   allocate (${2:class}%$1 (size ($1)), source=$1)
 end if
 $0
 endsnippet
 
-snippet if_alloc "deallocate only if allocated"
+snippet if_dealloc "deallocate only if allocated"
 if (allocated (${1:var})) then
 	 deallocate ($1)
 end if

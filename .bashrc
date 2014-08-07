@@ -116,12 +116,12 @@ if [ -d $spider_dir ]; then
 fi
 
 # opam
-if hash opam 2>/dev/null; then
+if opam 2>/dev/null; then
   eval `opam config env`
 fi
 
 # pydflatex
-if hash pydflatex 2>/dev/null; then
+if pydflatex 2>/dev/null; then
   export pdftool=pydflatex
 fi
 
@@ -138,8 +138,9 @@ intel_dir=/opt/intel
 if [ -f $intel_dir/bin/compilervars.sh ]; then
   source $intel_dir/bin/compilervars.sh intel64
 fi
-if [ -f $intel_dir/2013/bin/compilervars.sh ]; then
-  source $intel_dir/2013/bin/compilervars.sh intel64
+if [ -f $intel_dir/2015/bin/compilervars.sh ]; then
+  source $intel_dir/2015/bin/compilervars.sh intel64
+  source $intel_dir/2015/vtune_amplifier_xe/amplxe-vars.sh
 fi
 
 # rivet
@@ -265,7 +266,7 @@ alias c='./configure'
 #========#
 #  make  #
 #========#
-if hash cit 2>/dev/null; then
+if cit 2>/dev/null; then
   alias n='cit nosetests'
   alias nv='cit "nosetests -v"'
   alias nt='cit "nosetests --with-timer"'
@@ -283,6 +284,7 @@ else
   alias nv='nosetests -v'
   alias nt='nosetests --with-timer'
   alias ns='nosetests -s'
+  alias no='nosetests_cover'
   alias m='make'
   alias mj='make -j'
   alias mi='make install'
@@ -353,7 +355,7 @@ alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 #  other  #
 #=========#
 alias le='less'
-if hash trash-put 2>/dev/null; then
+if trash-put 2>/dev/null; then
   alias rm='trash-put -v'
   alias rmm='/bin/rm'
 else
@@ -366,7 +368,6 @@ alias mt='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: 
 alias sd='sudo shutdown now -P'
 alias rb='sudo reboot'
 alias rs='rem_show'
-alias gf='gfortran -fopenmp '
 alias ca='cit ant'
 alias re='export DISPLAY=:0; cinnamon &'
 alias nhr='nohup ./run_all.sh 2>&1 &'

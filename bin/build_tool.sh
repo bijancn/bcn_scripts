@@ -67,7 +67,7 @@ for b in $builds; do
 
       openmp)
         $whiz/configure --prefix=$whiz/install/$b FC=gfortran \
-          FCFLAGS='-O2 -fopenmp' > /dev/null
+          --enable-fc-openmp > /dev/null
 
     esac
   fi
