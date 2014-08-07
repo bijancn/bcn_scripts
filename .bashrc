@@ -717,7 +717,9 @@ function github {
 #==============================================================================#
 #                                     SVN                                      #
 #==============================================================================#
-alias svn=~/bin/svn-color.py
+if [ svn-color 2> /dev/null ]; then
+  alias svn=svn-color
+fi
 alias svnu='svn update'
 alias svns='svn status'
 alias svnd='svn diff'

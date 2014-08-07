@@ -21,8 +21,10 @@ github bijancn bcn_scripts
 github gfxmonk termstyle # is needed by pydflatex
 github gsec eZchat
 github gsec glowing-mustache
+github MikePearce Git-Status
 github oblique63 Python-GoogleCalendarParser
 github olivierverdier pydflatex
+github philchristensen svn-color
 github sickill git-dude
 github sickill bitpocket
 
@@ -30,3 +32,5 @@ bitbucket bijancn vm_paper
 
 ln -s $HOME/pydflatex/bin/pydflatex $HOME/install/bin/pydflatex
 ln -s $HOME/bitpocket/bin/bitpocket $HOME/install/bin/bitpocket
+ln -s $HOME/svn-color/svn-color.py $HOME/install/bin/svn-color
+ln -s $HOME/Git-Status/show_status $HOME/install/bin/show_status
