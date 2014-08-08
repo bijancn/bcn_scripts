@@ -116,7 +116,7 @@ if [ -d $spider_dir ]; then
 fi
 
 # opam
-if opam 2>/dev/null; then
+if opam &> /dev/null; then
   eval `opam config env`
 fi
 

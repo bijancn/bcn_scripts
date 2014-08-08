@@ -407,6 +407,7 @@ let g:syntastic_ocaml_checkers = ['merlin']
 let g:syntastic_auto_jump = 2
 " Open and close the error window automatically
 let g:syntastic_auto_loc_list = 1
+let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
 
 "=============================================================================="
 "                                   FORTRAN                                    "
