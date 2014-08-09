@@ -2,7 +2,7 @@
 shopt -s extglob
 mpwd=`pwd`
 bcn=~/bcn_scripts
-safe=~/safe/keys
+safe=~/hive/keys
 cd $bcn
 
 files=".@(vim|bash|colorit|dir_colors|pylint)rc .gitignore_global "

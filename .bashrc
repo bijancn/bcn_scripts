@@ -553,6 +553,13 @@ function show_disk_speed () {
 function show_big_files () {
   find . -type f -size +20000k -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
 }
+
+function show_pylint_scores () {
+  for i in ./*.py; do
+  score=`pylint $i | grep "rated at" | awk '{print $7}'`
+  echo "$i : $score"
+done
+}
 #======================#
 #  surpressing output  #
 #======================#
