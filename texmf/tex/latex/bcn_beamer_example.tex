@@ -1,15 +1,16 @@
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %
-% bcn_beamer_example.tex - An customizable example file for bcn_letter.lco
+% bcn_beamer_example.tex - A customizable example file for bcn_letter.lco
 %
-% Copyright (C)     2014-01-16    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
-% Recent versions:  https://github.com/bijanc/bcn_scripts
+% Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+% Recent versions:  https://github.com/bijancn/bcn_scripts
 %
-% This source code is free software; you can redistribute it and/or
-% modify it under the terms of the GNU General Public License Version 2: 
+% This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+% can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
 % http://www.gnu.org/licenses/gpl-2.0-standalone.html
 %
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 \documentclass[mathserif]{beamer}
 \usepackage{bcn_beamer}
 \usepackage[english]{babel}
@@ -28,11 +29,11 @@
 \newcommand\good[1]{{\color{\sndcol}#1}}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\newcommand\fstcol\myorange
-\newcommand\sndcol\mygreenblue
+\newcommand\fstcol{\myorange}
+\newcommand\sndcol{\mygreenblue}
 
 % Enable this to set background_file as transparent background
-%\usebackgroundtemplate{\transparent{0.06} 
+%\usebackgroundtemplate{\transparent{0.06}
 %\includegraphics[height=\paperheight]{background_file}
 %}
 
@@ -58,12 +59,12 @@
 \begin{document}
 
 \begin{frame}
-  \titlepage
+  \titlepage{}
 \end{frame}
 
 % A simple footer
-\setbeamertemplate{footline}{{}{ \hfill\insertframenumber
-  /\inserttotalframenumber\hskip 1em }
+\setbeamertemplate{footline}{\hfill{}\insertframenumber{}
+  /\inserttotalframenumber\hskip 1em
 }
 
 \begin{Bframe}{Outline}
@@ -72,7 +73,7 @@
 
 % A simple footer, now with navigation bar
 \setbeamertemplate{footline}{
-  \insertsectionnavigationhorizontal{\textwidth}{}{ \hfill\insertframenumber
+  \insertsectionnavigationhorizontal{\textwidth}{}{\hfill\insertframenumber{}
   /\inserttotalframenumber\hskip 1em }
 }
 
@@ -82,8 +83,8 @@
 \begin{Bframe}
   {Motivation}
   \begin{itemize}
-    \item Give some motivation \vs 1
-    \item It generally helps \vs 1
+    \item Give some motivation \vs1
+    \item It generally helps \vs1
     \item But sometimes not
   \end{itemize}
 \end{Bframe}
@@ -101,11 +102,11 @@
       %\includegraphics[width=\textwidth]{pics/some_pic.pdf}
     \column{.5\textwidth}
       Columns allow to put more informations on a slide and structure the slide.
-      \vs 1
+      \vs1
 
       In a proper unit system, you have
       \begin{Balign}
-        E = m 
+        E = m
       \end{Balign}
   \end{columns}
 \end{Bframe}
@@ -116,7 +117,7 @@
 \begin{Bframe}
   [Subtitle]{Title}
   The second part
-  \vs 1\pause
+  \vs1\pause{}
 
   is a bit \bad{short}! But then coffee break is \good{earlier}!
 \end{Bframe}
@@ -125,7 +126,7 @@
 \begin{Bframe}
   {Conclusions/Outlook}
   \begin{itemize}
-    \item This should give you the basic tools for a decent tools. \vs 1
+    \item This should give you the basic tools for a decent tools. \vs1
     \item Remember: Less is more.
   \end{itemize}
 \end{Bframe}

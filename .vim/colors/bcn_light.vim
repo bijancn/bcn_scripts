@@ -1,15 +1,19 @@
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN_LIGHT ~~~~~~~~~~~~~~~~~~~~~~~~~~
-" bcn:              bijan@chokoufe.com
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"
+" .vim/colors/bcn_light.vim - color file with strong colors on white background
+"
+" Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
 " Recent versions:  https://github.com/bijancn/bcn_scripts
-" Last Change:      2014 Mar 31
 "
-" Put me in:
-"             for Unix and OS/2:     ~/.vim/colors/bcn_light.vim
+" This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+" can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
+" http://www.gnu.org/licenses/gpl-2.0-standalone.html
 "
-" vim color file
-" This color scheme gives you strong colors on white background
-" Helps in bright environments, where you can't use bcn_dark
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+"=========="
+"  prelim  "
+"=========="
 " First remove all existing highlighting.
 set background=light
 hi clear
@@ -19,15 +23,18 @@ endif
 
 let colors_name = "bcn_light"
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ COLORS ~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Enable 256 colors
 set t_Co=256
 
+"=========="
+"  colors  "
+"=========="
 " Setting some colors for light background. hi == highlight.
 " To see the color codes, use bcn_color_demo.vim
 hi Normal	        ctermbg=white          ctermfg=233         cterm=none
-"hi Cursor         ctermbg=black       ctermfg=255        cterm=None
-"hi iCursor        ctermbg=17          ctermfg=white        cterm=None
+" Can only be used for gvim. See vimrc for cursor customization
+hi Cursor         ctermbg=black       ctermfg=255        cterm=None
+hi iCursor        ctermbg=17          ctermfg=white        cterm=None
 hi Directory	    ctermbg=none        ctermfg=57          cterm=None
 hi ErrorMsg       ctermbg=none        ctermfg=160         cterm=None
 hi NonText	      ctermbg=None        ctermfg=105         cterm=Bold

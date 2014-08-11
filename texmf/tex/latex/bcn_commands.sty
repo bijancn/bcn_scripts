@@ -1,127 +1,131 @@
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %
-% bcn_commands.sty - Some commands and shorthands
+% texmf/tex/latex/bcn_commands.sty - Some commands and shorthands
 %
-% Copyright (C)     2013-08-25    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
-% Recent versions:  https://github.com/bijanc/bcn_scripts
+% Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+% Recent versions:  https://github.com/bijancn/bcn_scripts
 %
-% This source code is free software; you can redistribute it and/or
-% modify it under the terms of the GNU General Public License Version 2: 
+% This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+% can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
 % http://www.gnu.org/licenses/gpl-2.0-standalone.html
 %
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-% 
-% Put me in:
-%   for Unix/Linux with Texlive vanilla setup:
-%     /usr/local/texlive/texmf-local/tex/latex/local
-%   or:
-%     ~/texmf/tex/latex/
-%   then run 'sudo texhash'
-%   for Windows with MikTex
-%     C:\Program Files\MiKTeX 2.9\tex\latex\bijan\
-%   then go to MikTex Options -> Refresh FNDB, Update Formats
-% 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%
+% Eventually you have to `sudo texhash` or click
+% `MikTex Options -> Refresh FNDB, Update Formats`
+%
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-\NeedsTeXFormat{LaTeX2e} 
-\ProvidesPackage{bcn_commands} 
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{bcn_commands}
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 \newcommand{\lectureof}[1]
   {\begin{center}\textbf{\color{red}Lecture on #1 starts here.}\end{center}}
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MATH ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+\newcommand{\mathnote}[1]{\ems{\mbox{\smaller[1] $#1$}}}
 
-\DeclareMathOperator{\var}  {Var}
-\DeclareMathOperator{\re}  {Re}
-\DeclareMathOperator{\im}  {Im}
-\DeclareMathOperator{\vol}  {Vol}
+%========%
+%  math  %
+%========%
+\DeclareMathOperator{\var}{Var}
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\vol}{Vol}
 \DeclareMathOperator{\asinh}{asinh}
 \DeclareMathOperator{\acosh}{acosh}
 \DeclareMathOperator{\atanh}{atanh}
-\DeclareMathOperator{\li}   {Li}
-\DeclareMathOperator{\diag}   {diag}
-\DeclareMathOperator{\tr}   {Tr}
+\DeclareMathOperator{\li}{Li}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\tr}{Tr}
 \DeclareMathOperator{\sech}{sech}
 \DeclareMathOperator{\sgn}{sgn}
 
-\newcommand\scalprod[2] {\ems{ \,#1\hspace{-.1em}\cdot\hspace{-.1em}#2\, }}
-\newcommand\pder[3][]   {\ems{ \frac{\del^{#1} #2}{\del #3^{#1}} }}
-\newcommand\tder[2]     {\ems{\frac{\D #1}{\D #2}}}
-\newcommand\Int[2][]      {\ems{\int#1 #2\:}}
+\newcommand\scalprod[2]{\ems{\,#1\hspace{-.1em}\cdot\hspace{-.1em}#2\,}}
+\newcommand\pder[3][]{\ems{\frac{\del^{#1}#2}{\del#3^{#1}}}}
+\newcommand\tder[2]{\ems{\frac{\D{#1}}{\D{#2}}}}
+\newcommand\Int[2][]{\ems{\int#1#2\:}}
 
-\let\vect\vec
-\renewcommand{\vec}[1]{\ems{\boldsymbol{#1} }}
+%\let\vect\vec
+\let\vect\vec{}
+\renewcommand{\vec}[1]{\ems{\boldsymbol{#1}}}
 \newcommand{\nvec}[1]{\ems{\vec{\hat{#1}}}}
-\newcommand{\norm}[1] {\ems{\left\lVert #1 \right\rVert }}
-\newcommand{\abs}[1]  {\ems{\left\lvert #1 \right\rvert }}
-\newcommand{\mean}[1] {\ems{\left< #1 \right>}}
+\newcommand{\norm}[1]{\ems{\left\lVert#1\right\rVert}}
+\newcommand{\abs}[1]{\ems{\left\lvert#1\right\rvert}}
+\newcommand{\mean}[1]{\ems{\left<{#1}\right>}}
 \newcommand{\order}[1]{\ems{\mathcal{O}\left(#1\right)}}
 \newcommand{\set}[1]{\ems{\left\{#1\right\}}}
 \newcommand{\transpose}{\T{T}}
 
-\newcommand\Sgn[1]  {\sgn{\left\{#1\right\}}}
-\newcommand\Tr[1]   {\tr{\left[#1\right]}}
-\newcommand\Log[1]  {\log{\left\{#1\right\}}}
-\newcommand\Exp[1]  {\exp{\left\{#1\right\}}}
-\newcommand\Cos[1]  {\cos{\left(#1\right)}}
-\newcommand\Sin[1]  {\sin{\left(#1\right)}}
-\newcommand\Tanh[1] {\tanh{\left\{#1\right\}}}
-\newcommand\Vol[1] {\vol{\left(#1\right)}}
+\newcommand\Sgn[1]{\sgn{\left\{#1\right\}}}
+\newcommand\Tr[1]{\tr{\left[#1\right]}}
+\newcommand\Log[1]{\log{\left\{#1\right\}}}
+\newcommand\Exp[1]{\exp{\left\{#1\right\}}}
+\newcommand\Cos[1]{\cos{\left(#1\right)}}
+\newcommand\Sin[1]{\sin{\left(#1\right)}}
+\newcommand\Tanh[1]{\tanh{\left\{#1\right\}}}
+\newcommand\Vol[1]{\vol{\left(#1\right)}}
 
 \newcommand{\deltadist}[1]{\delta\left(#1\right)}
 \newcommand{\heaviside}[1]{\theta\left(#1\right)}
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ QUANTUM MECHANICS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-
-\newcommand{\ket}[1]{\ems{\left| #1 \right> }}
-\newcommand{\bra}[1]{\ems{\left< #1 \right| }}
+%=====================%
+%  quantum mechanics  %
+%=====================%
+\newcommand{\ket}[1]{\ems{\left|{#1}\right>}}
+\newcommand{\bra}[1]{\ems{\left<{#1}\right|}}
 \newcommand{\braket}[2]
-  {\ems{\bra{#1\vphantom{#2}\,}\left.\vphantom{#1}#2\right> }}
+  {\ems{\bra{#1\vphantom{#2}\,}\left.\vphantom{#1}#2\right>}}
 \newcommand{\ketbra}[2]{\ems{\ket{#1\vphantom{#2}}\bra{#2\vphantom{#1}}}}
 \newcommand{\braketop}[3]
-  {\ems{\bra{#1\vphantom{#2 #3}\,}#2\ket{#3\vphantom{#1 #2}} }}
+  {\ems{\bra{#1\vphantom{#2#3}\,}#2\ket{#3\vphantom{#1#2}}}}
 
-\newcommand{\comm}[2]{\ems{\left[#1,#2\right] }}
-\newcommand{\anticomm}[2]{\ems{\left[ #1 , #2 \right]_+ }}
-\newcommand{\BF}{\genfrac{}{}{0pt}{}{B}{F} }                % Boson-Fermion
+\newcommand{\comm}[2]{\ems{\left[#1,#2\right]}}
+\newcommand{\anticomm}[2]{\ems{\left[#1,#2\right]_+}}
+% Boson-Fermion
+\newcommand{\BF}{\genfrac{}{}{0pt}{}{B}{F}}
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DRAWINGS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-
+%============%
+%  drawings  %
+%============%
 \newcommand*\circled[1]{
-  \tikz[baseline=(char.base)]{
-  \node[shape=circle,draw,inner sep=1pt] (char) {#1};
+  %\tikz[baseline=(char.base)]{
+  \tikz[baseline=char.base]{
+  \node[shape=circle,draw,inner sep=1pt] (char){#1};
   }
 }
-\newcommand{\uuline}[1]{\ems{\underline{\underline{#1}} }}
-\newcommand{\scontract}[2]{\bcontraction{}{#1}{}{#2}#1#2}   % Simple contraction
-\newcommand{\phfrac}[2]{\genfrac{}{}{0pt}{}{#1}{#2} }     
+\newcommand{\uuline}[1]{\ems{\underline{\underline{#1}}}}
+% Simple contraction
+\newcommand{\scontract}[2]{\bcontraction{}{#1}{}{#2}#1#2}
+\newcommand{\phfrac}[2]{\genfrac{}{}{0pt}{}{#1}{#2}}
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FERMION PROPAGATORS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-
+%=======================%
+%  fermion propagators  %
+%=======================%
 % You can use \Slash p- to put a minus in front of p. Last argument is the mass.
 % You have to supply the propagator with the sign \fermpropp{p}{q-}{m}.
 % Enter indexed impulses with a space: \fermprop{q _2}{m}.
-\def\Slash#1#2 {\ems{#2 \slashed{#1} }}
-\def\Flip#1#2 {#2 #1 }
+\def\Slash#1#2{\ems{#2\slashed{#1}}}
+\def\Flip#1#2{#2#1}
 
 \newcommand\fermprop[2]{\ems{
-  \frac{\I}{ \Slash #1 - #2 } }
+  \frac{\I}{\Slash{#1}-#2}}
 }
 \newcommand\fermProp[2]{\ems{
-  \frac{\I\left( \Slash #1 + #2\right) }{( \Flip #1 )^2-#2^2 } }
+  \frac{\I\left(\Slash{#1}+#2\right)}{(\Flip#1)^2-#2^2}}
 }
 \newcommand\fermpropp[3]{\ems{
-  \frac{\I}{\Slash #1 \Slash #2 - #3 } }
-} 
+  \frac{\I}{\Slash{#1}\Slash{#2}-#3}}
+}
 \newcommand\fermPropp[3]{\ems{
-  \frac{\I\left(\Slash #1 \Slash #2 + #3\right) }
-  {\left(#1 \Flip #2 \right)^2-#3^2 } }
+  \frac{\I\left(\Slash{#1}\Slash{#2}+#3\right)}
+  {\left(#1\Flip{#2}\right)^2-#3^2}}
 }
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SHORTHANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-
+%==============%
+%  shorthands  %
+%==============%
 \newcommand\Rcite[1]{Ref.~\cite{#1}}
 \newcommand\etal{{et al.}}
 \newcommand\ie{i.e.\ }
@@ -129,106 +133,103 @@
 \newcommand\cf{cf.\ }
 \newcommand\program[1]{\textsc{#1}}
 \newcommand\cd[1]{\lstinline{#1}}
-\newcommand\pg\program
+\newcommand\pg{\program}
 \newcommand\pe{{+}\hs{-.15}{=}}
-\newcommand\tp\transpose
+\newcommand\tp{\transpose}
 
 % Spaces
-\newcommand\vs[1]{\vspace{#1 em}} 
-\newcommand\hs[1]{\hspace{#1 em}} 
+\newcommand\vs[1]{\vspace{#1em}}
+\newcommand\hs[1]{\hspace{#1em}}
 
 % Formatting
 \newcommand\fl{\flushleft}
 \newcommand\fr{\flushright}
 \newcommand\ct{\centering}
-\newcommand\mr[1]{\mathrm{#1}} 
-\newcommand\mT\mathtt
-\newcommand\mC\mathcal
+\newcommand\mr[1]{\mathrm{#1}}
+\newcommand\mT{\mathtt}
+\newcommand\mC{\mathcal}
 
 % Math text
 \newcommand{\ems}[1]{\ensuremath{#1}}
 \newcommand{\T}[1]{\mr{#1}}
 \newcommand{\MT}[1]{\quad\T{#1}\quad}
-\newcommand\with {\MT{with}}
-\newcommand\no {\notag \\ }
+\newcommand\with{\MT{with}}
+\newcommand\no{\notag{}\\}
 \newcommand\po{\;.}
 \newcommand\co{\;,}
 
 % Math
 \newcommand{\del}{\partial}
-\newcommand{\E}{\ems{\T e}}
-\newcommand{\I}{\ems{\T i}}
-\newcommand{\D}{\ems{\T d}}
-\newcommand{\1}{\mathbbm 1}
-\newcommand{\R}{\mathbb R}
-\newcommand{\N}{\mathbb N}
+\newcommand{\E}{\ems{\T{e}}}
+\newcommand{\I}{\ems{\T{i}}}
+\newcommand{\D}{\ems{\T{d}}}
+\newcommand{\1}{\mathbbm{1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
 \newcommand{\Hs}[1]{\heaviside{#1}}
 \newcommand{\dd}[1]{\deltadist{#1}}
 \newcommand{\nfrac}[2]{\ems{\nicefrac{#1}{#2}}}
-\newcommand\Sp\scalprod
+\newcommand\Sp{\scalprod}
 
 % Quantum Field Theory
-\newcommand\ham   {\ems{\mathcal H}}
-\newcommand\lag   {\ems{\mathcal L}}
-\newcommand\Sl[1] {\ems{\slashed{#1}}}
+\newcommand\ham{\ems{\mathcal{H}}}
+\newcommand\lag{\ems{\mathcal{L}}}
+\newcommand\Sl[1]{\ems{\slashed{#1}}}
 
 % Standard model
-\newcommand\sw  {\ems{\T s_W}}
-\newcommand\cw  {\ems{\T c_W}}
-\newcommand\as  {\ems{\alpha_S}}
-\newcommand\Mv  {\ems{m_V}}
-\newcommand\Mw  {\ems{m_W}}
-\newcommand\Mz  {\ems{m_Z}}
-\newcommand\Me  {\ems{m_e}}
-\newcommand\Mmu {\ems{m_\mu}}  
+\newcommand\sw{\ems{\T s_W}}
+\newcommand\cw{\ems{\T c_W}}
+\newcommand\as{\ems{\alpha_S}}
+\newcommand\Mv{\ems{m_V}}
+\newcommand\Mw{\ems{m_W}}
+\newcommand\Mz{\ems{m_Z}}
+\newcommand\Me{\ems{m_e}}
+\newcommand\Mmu{\ems{m_\mu}}
 \newcommand\Mtau{\ems{m_\tau}}
-\newcommand\Mu  {\ems{m_u}}
-\newcommand\Md  {\ems{m_d}}
-\newcommand\Ms  {\ems{m_s}}
-\newcommand\Mc  {\ems{m_c}}
-\newcommand\Mb  {\ems{m_b}}
-\newcommand\Mt  {\ems{m_t}}
-\newcommand\Mh  {\ems{m_H}}
+\newcommand\Mu{\ems{m_u}}
+\newcommand\Md{\ems{m_d}}
+\newcommand\Ms{\ems{m_s}}
+\newcommand\Mc{\ems{m_c}}
+\newcommand\Mb{\ems{m_b}}
+\newcommand\Mt{\ems{m_t}}
+\newcommand\Mh{\ems{m_H}}
 
 % Arrows
-\newcommand\lrarrow {\ems{\leftrightarrow}}
-\newcommand\LRarrow {\ems{\Leftrightarrow}}
-\newcommand\rarrow  {\ems{\rightarrow}}
-\newcommand\Rarrow  {\ems{\Rightarrow}}
-\newcommand\larrow  {\ems{\leftarrow }}
-\newcommand\Larrow  {\ems{\Leftarrow }}
-\newcommand\up  {\ems{\uparrow}}
+\newcommand\lrarrow{\ems{\leftrightarrow}}
+\newcommand\LRarrow{\ems{\Leftrightarrow}}
+\newcommand\rarrow{\ems{\rightarrow}}
+\newcommand\Rarrow{\ems{\Rightarrow}}
+\newcommand\larrow{\ems{\leftarrow}}
+\newcommand\Larrow{\ems{\Leftarrow}}
+\newcommand\up{\ems{\uparrow}}
 \newcommand\down{\ems{\downarrow}}
-\newcommand\Up  {\ems{\Uparrow}}
+\newcommand\Up{\ems{\Uparrow}}
 \newcommand\Down{\ems{\Downarrow}}
 
 % Parentheses
-\newcommand\Al {\bigl}
-\newcommand\Ar {\bigr}
-\newcommand\Bl {\Bigl}
-\newcommand\Br {\Bigr}
-\newcommand\Cl {\biggl}
-\newcommand\Cr {\biggr}
-\newcommand\Dl {\Biggl}
-\newcommand\Dr {\Biggr}
+\newcommand\Al{\bigl}
+\newcommand\Ar{\bigr}
+\newcommand\Bl{\Bigl}
+\newcommand\Br{\Bigr}
+\newcommand\Cl{\biggl}
+\newcommand\Cr{\biggr}
+\newcommand\Dl{\Biggl}
+\newcommand\Dr{\Biggr}
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ENVIRONMENTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-
-\newcommand{\mathnote}[1]{\ems{\mbox{\smaller[1] $#1$}}}
-
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTO FEYNMP CALL ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+%=========================%
+%  automatic feynmp call  %
+%=========================%
 % This allows to generate feynman graphs automatically
-% Might need option for pdflatex
-
+% Might need shellescape option for pdflatex
 \makeatletter
 \def\endfmffile{%
   \fmfcmd{\p@rcent\space the end.^^J%
           end.^^J%
           endinput;}%
-  \if@fmfio
-    \immediate\closeout\@outfmf
+  \if@fmfio{}
+    \immediate\closeout\@outfmf{}
   \fi
-  \ifnum\pdfshellescape=\@ne
+  \ifnum\pdfshellescape=\@ne{}
     \immediate\write18{cd Feynmp;mpost \thefmffile}%
   \fi}
 \makeatother

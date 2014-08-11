@@ -1,33 +1,27 @@
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %
-% bcn_beamer.sty - Wrapper package for my commonly used packages in BEAMER files
+% texmf/tex/latex/bcn_beamer.sty - Wrapper for commonly used packages in beamer
 %
-% Copyright (C)     2013-08-25    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
-% Recent versions:  https://github.com/bijanc/bcn_scripts
+% Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+% Recent versions:  https://github.com/bijancn/bcn_scripts
 %
-% This source code is free software; you can redistribute it and/or
-% modify it under the terms of the GNU General Public License Version 2: 
+% This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+% can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
 % http://www.gnu.org/licenses/gpl-2.0-standalone.html
 %
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-% 
-% Put me in:
-%   for Unix/Linux with Texlive vanilla setup:
-%     /usr/local/texlive/texmf-local/tex/latex/local
-%   or:
-%     ~/texmf/tex/latex/
-%   then run 'sudo texhash'
-%   for Windows with MikTex
-%     C:\Program Files\MiKTeX 2.9\tex\latex\bijan\
-%   then go to MikTex Options -> Refresh FNDB, Update Formats
-% 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%
+% Eventually you have to `sudo texhash` or click
+% `MikTex Options -> Refresh FNDB, Update Formats`
+%
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-\NeedsTeXFormat{LaTeX2e} 
-\ProvidesPackage{bcn_beamer} 
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{bcn_beamer}
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-
+%============%
+%  packages  %
+%============%
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{relsize}             % Allows to use relative sizes
 \RequirePackage{siunitx}             % Correct typesetting of units
@@ -41,8 +35,9 @@
 \RequirePackage{transparent}         % \transparent{0.5} -> 50 % transparency
 \RequirePackage{listings}            % For code listings
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BEAMER COLORS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-
+%==========%
+%  colors  %
+%==========%
 \RequirePackage{bcn_color}
 
 % \fstcol and \sndcol has to be set in document
@@ -61,13 +56,14 @@
 \setbeamercolor{bibliography entry note}{fg =\sndcol}
 \setbeamercolor{bibliography entry location}{fg =\sndcol!60!white}
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMMANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-
+%============%
+%  commands  %
+%============%
 \RequirePackage{bcn_commands}
 
-\newcommand\scite[1]{\alert{\scriptsize #1}} 
-\newcommand\os\onslide
-\newcommand\al\alert
+\newcommand\scite[1]{\alert{\scriptsize #1}}
+\newcommand\os{\onslide}
+\newcommand\al{\alert}
 
 \NewEnviron{Balign}{
   \begin{align*}
@@ -78,14 +74,14 @@
 % \animation has to be set in document, e.g. to \transdissolve or {}
 \NewEnviron{Bframe}[2][]{
   \begin{frame}{#2}{#1}
-    \animation
-    \BODY
+    \animation{}
+    \BODY{}
   \end{frame}
 }
 
 \newcommand{\beamersection}[1]{
   \section{#1}
-  \begin{frame} \animation
+  \begin{frame} \animation{}
     \begin{center}
       \huge \textcolor{\sndcol}{#1}
     \end{center}

@@ -2,11 +2,11 @@
 "
 " bcn .vimrc - vim configuration file. Maintained since 2011.
 "
-" Copyright (C)     2014-05-27    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
+" Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
 " Recent versions:  https://github.com/bijancn/bcn_scripts
 "
-" This source code is free software; you can redistribute it and/or
-" modify it under the terms of the GNU General Public License Version 2:
+" This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+" can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
 " http://www.gnu.org/licenses/gpl-2.0-standalone.html
 "
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -47,6 +47,9 @@ Plugin 'Valloric/YouCompleteMe'
 " Diffing parts of one or two files
 Plugin 'AndrewRadev/linediff.vim'
 
+" Show errors and warnings of compilers and checkers
+Plugin 'scrooloose/syntastic'
+
 "==========="
 "  testing  "
 "==========="
@@ -55,9 +58,6 @@ Plugin 'AndrewRadev/linediff.vim'
 
 " Reasonably good. Not perfect. Also doesn't change in noweb.
 Plugin 'scrooloose/nerdcommenter'
-
-" Show errors and warnings of compilers
-Plugin 'scrooloose/syntastic'
 
 " Allows to use % on keywords like if
 Plugin 'matchit.zip'
@@ -405,9 +405,19 @@ execute "set rtp+=".s:ocamlmerlin."/vimbufsync"
 let g:syntastic_ocaml_checkers = ['merlin']
 " Jump to the first error
 let g:syntastic_auto_jump = 2
-" Open and close the error window automatically
-let g:syntastic_auto_loc_list = 1
+" Close the error window but don't open it automatically
+let g:syntastic_auto_loc_list = 2
+" Height of the location lists
+let g:syntastic_loc_list_height = 5
+" Regexs for files to ignore
+let g:syntastic_ignore_files = ['\m^/usr/include/', '\m^/home/bijancn/vm_paper/codes/ovm']
 let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
+let g:syntastic_enable_signs = 1
+" Pretty 2 character signs for the left border
+let g:syntastic_error_symbol = "✗"
+let g:syntastic_style_error_symbol = 'S✗'
+let g:syntastic_warning_symbol = "⚠"
+let g:syntastic_style_warning_symbol = 'S⚠'
 
 "=============================================================================="
 "                                   FORTRAN                                    "

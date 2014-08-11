@@ -1,14 +1,19 @@
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN_DARK ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-" bcn:              bijan@chokoufe.com
-" Recent versions:  https://github.com/bijanc/bcn_scripts
-" Last Change:      2013 Mar 15
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "
-" Put me in:
-"             for Unix and OS/2:     ~/.vim/colors/bcn_dark.vim
+" .vim/colors/bcn_dark.vim - color file with decent colors on dark background
 "
-" vim color file
-" This color scheme gives you decent colors on dark background
+" Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+" Recent versions:  https://github.com/bijancn/bcn_scripts
+"
+" This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+" can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
+" http://www.gnu.org/licenses/gpl-2.0-standalone.html
+"
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+"=========="
+"  prelim  "
+"=========="
 " First remove all existing highlighting.
 set background=dark
 hi clear
@@ -18,17 +23,18 @@ endif
 
 let colors_name = "bcn_dark"
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~ COLORS ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 " Enable 256 colors
 set t_Co=256
 
-" Setting some colors for dark background. hi == highlight. 
+"=========="
+"  colors  "
+"=========="
+" Setting some colors for dark background. hi == highlight.
 " To see the color codes, use bcn_color_demo.vim
 hi Normal	      ctermbg=none  ctermfg=254    cterm=none guibg=gray9 guifg=snow
 " Can only be used for gvim. See vimrc for cursor customization
 hi Cursor       guibg=blue guifg=white
 hi iCursor      ctermbg=17    ctermfg=254    guibg=orange guifg=white
-"
 hi SpecialKey	  ctermbg=None  ctermfg=70     cterm=none
 hi Directory	  ctermbg=none  ctermfg=86     cterm=none
 hi ErrorMsg     ctermbg=245   ctermfg=160    cterm=none
@@ -42,7 +48,7 @@ hi DiffDelete   ctermbg=232   ctermfg=1      cterm=bold guifg=red guibg=black
 hi DiffChange   ctermbg=232   ctermfg=15     cterm=bold  guibg=black
 hi DiffText     ctermbg=232   ctermfg=227    cterm=bold   guibg=black
 hi Conceal      ctermbg=None  ctermfg=magenta    guibg=gray9  guifg=Magenta
-hi Search       ctermbg=17    ctermfg=NONE 
+hi Search       ctermbg=17    ctermfg=NONE
 hi LineNr                     ctermfg=gray
 hi SpellBad     ctermbg=88
 hi Comment      ctermbg=none  ctermfg=lightblue  cterm=none
@@ -56,8 +62,8 @@ hi Visual       ctermbg=238   ctermfg=250    cterm=None guibg=gray15 guifg=gray6
 hi ColorColumn  ctermbg=232                                 guibg=black
 hi CursorColumn ctermbg=17    ctermfg=white      cterm=NONE guibg=blue guifg=white
 hi CursorLine   ctermbg=232                      cterm=none guibg=black
-hi Folded       ctermbg=235   ctermfg=DarkBlue 
-hi FoldColumn   ctermbg=235   ctermfg=DarkBlue 
+hi Folded       ctermbg=235   ctermfg=DarkBlue
+hi FoldColumn   ctermbg=235   ctermfg=DarkBlue
 hi Pmenu        ctermbg=238   ctermfg=DarkBlue   gui=bold   guibg=brown gui=bold
 hi PmenuSel     ctermbg=232   ctermfg=DarkBlue   gui=bold   guibg=brown gui=bold
 hi PmenuSbar    ctermbg=232   ctermfg=DarkBlue   gui=bold   guibg=brown gui=bold

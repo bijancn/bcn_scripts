@@ -14,7 +14,7 @@ base_dir = '/scratch/bcho'
 if not os.path.exists(base_dir):
   base_dir = '/data/bcho'
 if not os.path.exists(base_dir):
-  base_dir = '~'
+  base_dir = os.path.expanduser('~')
 print('Using ' + base_dir + ' as base_dir.')
 
 bytecode_dir = base_dir + '/bytecodes'
@@ -25,8 +25,11 @@ bin_QCD = bin_dir + '/omega_QCD_VM.opt'
 bin_QED = bin_dir + '/omega_QED_VM.opt'
 bin_SM = bin_dir + '/omega_SM_VM.opt'
 binaries = [bin_QCD, bin_QED, bin_SM]
+binaries_F95 = map(lambda x: x.replace('_VM', ''), binaries)
+bin_QCD_F95, bin_QED_F95, bin_SM_F95 = binaries_F95
 if not any(map(os.path.isfile, binaries)):
   sys.exit('At least one of ' + ' '.join(binaries) + ' were not found!')
+binaries2 = [binaries, binaries_F95]
 
 def gluons_amplitude(n):
   return 'gl gl ->' + ' gl' * n
@@ -45,6 +48,7 @@ def file_name_of_proc(proc, flv=None):
         raise ValueError("Not tested")
     proc = re.sub(r"(.* -> )([ (" + flv + ")]*)", repl, proc)
     proc = proc + flv
+  proc = proc.replace(':', '-')
   proc = proc.replace(' -> ', '_to_')
   proc = proc.replace(' ', '')
   return proc
@@ -57,34 +61,51 @@ def test_file_name_of_proc():
   eq_(file_name_of_proc(gluons_amplitude(1), 'gl'), 'glgl_to_1gl')
   eq_(file_name_of_proc(gluons_amplitude(6), 'gl'), 'glgl_to_6gl')
   eq_(file_name_of_proc('u u -> u d'), 'uu_to_ud')
+  eq_(file_name_of_proc('u:d u -> u:d d'), 'u-du_to_u-dd')
   eq_(file_name_of_proc('u u -> u u', 'u'), 'uu_to_2u')
   eq_(file_name_of_proc('u ubar -> t tbar'), 'uubar_to_ttbar')
 
-def produce_bc(binary, process):
-  filename = os.path.join(bytecode_dir, file_name_of_proc(process)) + '.hbc'
+def produce_bc(binary, process, suffix):
+  filename = os.path.join(bytecode_dir, file_name_of_proc(process)) + \
+                                                                '.' + suffix
   cmd = binary + " -scatter '" + process + "' > " + filename
   print cmd
   subprocess.call(cmd, shell=True)
 
+def produce(i, process, suffix):
+  if suffix == 'hbc':
+    produce_bc(binaries2[0][i], process, suffix)
+  else:
+    produce_bc(binaries2[1][i], process, suffix)
+
 def produce_QCD(process):
-  produce_bc(bin_QCD, process)
+  produce(0, process, 'hbc')
+
+def produce_QCD_F95(process):
+  produce(0, process, 'f95')
 
 def produce_QED(process):
-  produce_bc(bin_QED, process)
+  produce(0, process, 'hbc')
+
+def produce_QED_F95(process):
+  produce(0, process, 'f95')
 
 def produce_SM(process):
-  produce_bc(bin_SM, process)
+  produce(0, process, 'hbc')
+
+def produce_SM_F95(process):
+  produce(0, process, 'f95')
 
 processes_QCD = ['u u -> u u',
                  'u u -> u d',
                  'u d -> u d',
-                 'u d -> u d',
+                 'u u:d -> u u:d',
                  'u ubar -> u ubar',
                  'u ubar -> t tbar',
                  't tbar -> t tbar',
-                 'u ubar -> d dbar',
                  'u ubar -> gl gl',
                  'u gl -> u gl',
+                 'u:d gl -> u:d gl',
                  'gl gl -> u ubar' ]
 
 processes_QCD += map(gluons_amplitude, range(2,6))
@@ -92,3 +113,4 @@ processes_QCD += map(gluons_amplitude, range(2,6))
 if __name__ == "__main__":
   pool = mp.Pool(processes=N_proc)
   results = pool.map(produce_QCD, processes_QCD)
+  results = pool.map(produce_QCD_F95, processes_QCD)

@@ -1,39 +1,32 @@
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %
-% bcn_koma.sty - Wrapper package for commonly used packages in KOMA-Script files
+% texmf/tex/latex/bcn_koma.sty - Wrapper for commonly used packages in KOMA
 %
-% Copyright (C)     2013-08-25    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
-% Recent versions:  https://github.com/bijanc/bcn_scripts
+% Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+% Recent versions:  https://github.com/bijancn/bcn_scripts
 %
-% This source code is free software; you can redistribute it and/or
-% modify it under the terms of the GNU General Public License Version 2: 
+% This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+% can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
 % http://www.gnu.org/licenses/gpl-2.0-standalone.html
 %
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-% 
-% Put me in:
-%   for Unix/Linux with Texlive vanilla setup:
-%     /usr/local/texlive/texmf-local/tex/latex/local
-%   or:
-%     ~/texmf/tex/latex/
-%   then run 'sudo texhash'
-%   for Windows with MikTex
-%     C:\Program Files\MiKTeX 2.9\tex\latex\bijan\
-%   then go to MikTex Options -> Refresh FNDB, Update Formats
-% 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-
-\NeedsTeXFormat{LaTeX2e} 
-\ProvidesPackage{bcn_koma} 
-
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%
+% Eventually you have to `sudo texhash` or click
+% `MikTex Options -> Refresh FNDB, Update Formats`
+%
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{bcn_koma}
+
+%============%
+%  packages  %
+%============%
 \RequirePackage{lastpage}         % allows to use the last page number
-%\RequirePackage{subfig}						% Subcaption for several pics
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{relsize}          % Allows to use relative sizes
 \RequirePackage[tbtags]{amsmath}  % tbtags sets the number of split
-                                  % environments at the end 
+                                  % environments at the end
 \RequirePackage{amssymb,amsthm,amsfonts}
 \RequirePackage{simplewick}       % Wick contractions
 \RequirePackage{slashed}          % The almighty slash-notation
@@ -46,13 +39,15 @@
                                   % \midrule and \bottomrule
 \RequirePackage{setspace}         % Provides: /onehalfspacing,..
 \RequirePackage{nicefrac}         % Nice small fractions
-%\RequirePackage{tikz}             % Provides the means for \circled
 \RequirePackage{environ}          % Allows to use \NewEnviron
 \RequirePackage{listings}         % For code listings
 \RequirePackage{hyperref}         % Customize with \hypersetup{}. Has to be last!
+%\RequirePackage{subfig}						% Subcaption for several pics
+%\RequirePackage{tikz}             % Provides the means for \circled
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMMANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-
+%============%
+%  commands  %
+%============%
 \RequirePackage{bcn_commands}
 
 \NewEnviron{Balign}{

@@ -1,12 +1,15 @@
-dnl  ~~~~~~~~~~~~~~~~~~~~~~~~~~ BCN COLORITRC ~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-dnl  bcn:              bijan@chokoufe.com
-dnl  Recent versions:  https://github.com/bijanc/bcn_scripts
-dnl  Last Change:      2013 Mar 15
+dnl ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 dnl
-dnl  Put me in:
-dnl              for Unix and OS/2:     ~/.coloritrc
-dnl  
-dnl  colorit configuration file. Maintained since 2012.
+dnl bcn .coloritrc - colorit configuration file. Maintained since 2012.
+dnl
+dnl Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+dnl Recent versions:  https://github.com/bijancn/bcn_scripts
+dnl
+dnl This source code is free software that comes with ABSOLUTELY NO WARRANTY;
+dnl you can redistribute it and/or modify it under the terms of the GNU GPL
+dnl Version 2: http://www.gnu.org/licenses/gpl-2.0-standalone.html
+dnl
+dnl ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 dnl
 dnl  Usage: e.g. make 2>&1 | colorit
 dnl
@@ -53,6 +56,5 @@ mark(`make', green)
 mark(`ok', green)
 mark(`OK', green)
 mark(`PASS', green)
-dnl mark(`opt', green)
 mark(`(File | line | characters | in )', blue)
 mark(`No such file or directory', brown)

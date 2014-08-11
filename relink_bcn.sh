@@ -1,4 +1,16 @@
-#/bin/bash
+#/bin/bash ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# relink_bcn.sh - Create soft links from this repo to the home folder
+#
+# Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+# Recent versions:  https://github.com/bijancn/bcn_scripts
+#
+# This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+# can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
+# http://www.gnu.org/licenses/gpl-2.0-standalone.html
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 shopt -s extglob
 mpwd=`pwd`
 bcn=~/bcn_scripts
@@ -21,7 +33,7 @@ files+=".vim/colors/@(bcn_dark|bcn_light|print_bw).vim "
 files+=".vim/after/ftplugin/@(c|markdown|noweb|ocaml|python|tex).vim "
 files+=".vim/spell/en.utf-8.add "
 files+=".vim/syntax/@(fortran|markdown|noweb|sindarin).vim "
-files+=".vim/UltiSnips/@(all|fortran|noweb|pandoc|sh|tex).snippets "
+files+=".vim/UltiSnips/@(all|fortran|noweb|ocaml|pandoc|sh|tex).snippets "
 l="texmf/tex/latex"
 files+="$l/bcn_beamer@(.sty|_example.pdf|_example.tex) "
 files+="$l/bcn_@(color|commands|koma).sty "
@@ -30,7 +42,7 @@ files+="$l/bcn_letter@(.lco|_example.pdf|_example.tex) "
 for f in $files; do
   mkdir ~/$(dirname $f) -p
   if [ -f ~/$f ]; then
-    echo "--- $f already exists, doing nothing"
+    echo "--- $f   already exists, doing nothing"
   else
     echo "+++ Linking $f"
     # Try to use public file. If not there use private.

@@ -1,10 +1,35 @@
-# Build and Release Folders
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# bcn .gitignore - intended for global use
+#
+# Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+# Recent versions:  https://github.com/bijancn/bcn_scripts
+#
+# This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+# can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
+# http://www.gnu.org/licenses/gpl-2.0-standalone.html
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#=============================#
+#  Build and Release Folders  #
+#=============================#
 build/
 install/
 dist/
 __pycache__/
 
-# Packages 
+#===============#
+#  build files  #
+#===============#
+*.mod
+*.so
+*.o
+*.py[cod]
+
+#============#
+#  Packages  #
+#============#
 # it's better to unpack these files and commit the raw source
 # git has its own built in compression methods
 *.7z
@@ -16,22 +41,18 @@ __pycache__/
 *.tar
 *.zip
 
-# autotools
+#=============#
+#  autotools  #
+#=============#
 aclocal.m4
 autom4te.cache/
 configure
 Makefile.in
 #missing
 
-# Whizard / autotools might be necessary for libtool
-#config.guess
-#config.sub
-#config.scripts
-#depcomp
-#install-sh
-#libtool-config
-
-# Ocaml
+#=========#
+#  OCaml  #
+#=========#
 *.annot
 *.cmo
 *.cma
@@ -41,7 +62,9 @@ Makefile.in
 *.cmxs
 *.cmxa
 
-# TeX
+#=======#
+#  TeX  #
+#=======#
 *.aux
 *.bbl
 *.bcf
@@ -56,20 +79,19 @@ Makefile.in
 #*.t[123456789]
 #*.[123456789]
 
-# Logs and data
+#======================#
+#  Logs and databases  #
+#======================#
 *.log
 *.sql
 *.sqlite
 
-# Other files and folders
-*.mod
+#=========#
+#  other  #
+#=========#
 *.swp
-*.py[cod]
-*.so
-*.o
 *.vertices
 .vimsession
 .netrwhist
-.vim/bundle/vundle/.netrwhist
 .svn
 .merlin

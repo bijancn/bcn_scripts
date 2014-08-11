@@ -1,36 +1,35 @@
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %
-% bcn_letter_example.tex - A customizable example file for bcn_letter.lco
+% texmf/tex/latex/bcn_letter_example.tex - Customizable example for bcn_letter
 %
-% Copyright (C)     2014-01-16    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
-% Recent versions:  https://github.com/bijanc/bcn_scripts
+% Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+% Recent versions:  https://github.com/bijancn/bcn_scripts
 %
-% This source code is free software; you can redistribute it and/or
-% modify it under the terms of the GNU General Public License Version 2: 
+% This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+% can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
 % http://www.gnu.org/licenses/gpl-2.0-standalone.html
 %
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 \documentclass[a4paper,version=last]{scrlttr2}
 
-\usepackage[ngerman]{babel}    
+\usepackage[ngerman]{babel}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{graphicx}
-\usepackage[utf8x]{inputenc}    
+\usepackage[utf8x]{inputenc}
 \usepackage{eurosym}
 \usepackage{siunitx}
 
-\KOMAoptions{
-foldmarks=true,
-backaddress=true,
-enlargefirstpage=false,   
-fromalign=right,    
-fromrule=no,
-firsthead=no
+\KOMAoptions{foldmarks=true,
+             backaddress=true,
+             enlargefirstpage=false,
+             fromalign=right,
+             fromrule=no,
+             firsthead=no
 }
 
 \begin{document}
-\LoadLetterOption{bcn_letter}           
+\LoadLetterOption{bcn_letter}
 
 % Put your personal data here.
 
@@ -51,11 +50,10 @@ firsthead=no
 \setkomavar{yourref}{01010412208}
 \setkomavar{yourmail}{27.02.2012}
 
-
 \begin{letter}{
-Sanity  \\ 
-Krankenversicherungs-AG \\
-12345 Berlin }
+  Sanity \\
+  Krankenversicherungs-AG \\
+  12345 Berlin}
 
 \opening{Sehr geehrte Damen und Herren,}
 
@@ -64,10 +62,10 @@ Krankenversicherungsnummer lautet \textbf{7895643218985}.
 
 \closing{Mit freundlichen Grüßen, \vspace{2em}}
 
-%\ps PS: Post-Skriptum.			
+%\ps PS: Post-Skriptum.
 
 \setkomavar*{enclseparator}{Anlage}					%Anlagen
-\encl{Abrechnung}						
+\encl{Abrechnung}
 
 \end{letter}
 \end{document}

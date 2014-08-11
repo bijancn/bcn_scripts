@@ -1,88 +1,98 @@
-# This file contains snippets that are always defined
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# .vim/Ultisnips/all.snippets - Snippets that are always defined
+#
+# Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+# Recent versions:  https://github.com/bijancn/bcn_scripts
+#
+# This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+# can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
+# http://www.gnu.org/licenses/gpl-2.0-standalone.html
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 global !p
 import string, vim
 
-""" Maps a filetype to comment format used for boxes.
+"""Maps a filetype to comment format used for boxes.
 Automatically filled during usage"""
 _commentDict = { }
 
 def _parse_comments(s):
-    """ Parses vim's comments option to extract comment format """
-    i = iter(s.split(","))
+  """Parses vim's comments option to extract comment format"""
+  i = iter(s.split(","))
 
-    rv = []
-    try:
-        while True:
-            # get the flags and text of a comment part
-            flags,text = i.next().split(':', 1)
+  rv = []
+  try:
+    while True:
+      # get the flags and text of a comment part
+      flags,text = i.next().split(':', 1)
 
-            if len(flags) == 0:
-                if len(text) == 1:
-                    rv.append((text,text,text, ""))
-            # parse 3-part comment, but ignore those with O flag
-            elif flags[0] == 's' and 'O' not in flags:
-                ctriple = []
-                indent = ""
+      if len(flags) == 0:
+        if len(text) == 1:
+          rv.append((text,text,text, ""))
+      # parse 3-part comment, but ignore those with O flag
+      elif flags[0] == 's' and 'O' not in flags:
+        ctriple = []
+        indent = ""
 
-                if flags[-1] in string.digits:
-                    indent = " " * int(flags[-1])
-                ctriple.append(text)
+        if flags[-1] in string.digits:
+            indent = " " * int(flags[-1])
+        ctriple.append(text)
 
-                flags,text = i.next().split(':', 1)
-                assert(flags[0] == 'm')
-                ctriple.append(text)
+        flags,text = i.next().split(':', 1)
+        assert(flags[0] == 'm')
+        ctriple.append(text)
 
-                flags,text = i.next().split(':', 1)
-                assert(flags[0] == 'e')
-                ctriple.append(text)
-                ctriple.append(indent)
+        flags,text = i.next().split(':', 1)
+        assert(flags[0] == 'e')
+        ctriple.append(text)
+        ctriple.append(indent)
 
-                rv.append(ctriple)
+        rv.append(ctriple)
 
-            elif flags[0] == 'b':
-                if len(text) == 1:
-                    rv.insert(0, (text,text,text, ""))
+      elif flags[0] == 'b':
+        if len(text) == 1:
+          rv.insert(0, (text,text,text, ""))
 
-    except StopIteration:
-       return rv
+  except StopIteration:
+		return rv
 
 def _get_comment_format():
-    """ Returns a 4-element tuple representing the comment format for
-    the current file. """
+		"""Return a 4-tuple representing comment format for the current file."""
 
-    ft = vim.eval("&filetype")
-    # check if the comment dict has the format for the current file
-    if _commentDict.has_key(ft):
-      return _commentDict[ft]
+		ft = vim.eval("&filetype")
+		# check if the comment dict has the format for the current file
+		if _commentDict.has_key(ft):
+			return _commentDict[ft]
 
-    # otherwise parse vim's comments and add it for later use
-    if ft == 'noweb':
-      commentformat = 4 * ["!"]
-    else:
-      commentformat = _parse_comments(vim.eval("&comments"))[0]
-      _commentDict[ft] = commentformat
+		# otherwise parse vim's comments and add it for later use
+		if ft == 'noweb':
+			commentformat = 4 * ["!"]
+		else:
+			commentformat = _parse_comments(vim.eval("&comments"))[0]
+			_commentDict[ft] = commentformat
 
-    return commentformat
+		return commentformat
 
 
 def make_box(twidth, bwidth=None, sym=None):
-    b, m, e, i = _get_comment_format()
-    if sym: 
-      m2 = sym 
-    else: 
-      m2 = m
-    bwidth_inner = bwidth - 3 - max(len(b), len(i + e)) if bwidth else twidth + 2
-    sline = b + m2 + bwidth_inner * m2 + m2 + m
-    nspaces = (bwidth_inner - twidth) // 2
-    mlines = i + m + " " + " " * nspaces
-    mlinee = " " + " "*(bwidth_inner - twidth - nspaces) + m
-    eline = i + m + m2 + bwidth_inner * m2 + m2 + e
-    return sline, mlines, mlinee, eline, e
+  b, m, e, i = _get_comment_format()
+  if sym:
+    m2 = sym
+  else:
+    m2 = m
+  bwidth_inner = bwidth - 3 - max(len(b), len(i + e)) if bwidth else twidth + 2
+  sline = b + m2 + bwidth_inner * m2 + m2 + m
+  nspaces = (bwidth_inner - twidth) // 2
+  mlines = i + m + " " + " " * nspaces
+  mlinee = " " + " "*(bwidth_inner - twidth - nspaces) + m
+  eline = i + m + m2 + bwidth_inner * m2 + m2 + e
+  return sline, mlines, mlinee, eline, e
 
 def foldmarker():
-    "Return a tuple of (open fold marker, close fold marker)"
-    return vim.eval("&foldmarker").split(",")
+  """Return a tuple of (open fold marker, close fold marker)"""
+  return vim.eval("&foldmarker").split(",")
 
 def lines(t, sym):
   width = int(vim.eval("&textwidth")) or 71
@@ -168,14 +178,9 @@ snippet $ "braces" i
 $${1:${VISUAL}}$$0
 endsnippet
 
-##########################
-# LOREM IPSUM GENERATORS #
-##########################
 snippet lorem "Lorem Ipsum - 50 Words" b
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
 tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
 vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
 no sea takimata sanctus est Lorem ipsum dolor sit amet.
 endsnippet
-
-# vim:ft=snippets:

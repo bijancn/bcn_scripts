@@ -1,6 +1,15 @@
-#==============================================================================#
-#                                   FORTRAN                                    #
-#==============================================================================#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# .vim/Ultisnips/fortran.snippets - Snippets that are defined for Fortran files
+#
+# Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+# Recent versions:  https://github.com/bijancn/bcn_scripts
+#
+# This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+# can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
+# http://www.gnu.org/licenses/gpl-2.0-standalone.html
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Debugging
 snippet dbg "dbg"
@@ -37,7 +46,7 @@ endsnippet
 
 snippet if_dealloc "deallocate only if allocated"
 if (allocated (${1:var})) then
-	 deallocate ($1)
+   deallocate ($1)
 end if
 $0
 endsnippet
@@ -136,7 +145,6 @@ snippet where "where"
 where (${1:var} ${2:<=condition}) $2 = ${3:expression}
 endsnippet
 
-#
 # Where / elsewhere construct
 snippet elsewhere "elsewhere"
 where (${1:var} ${2:<=condition})
@@ -146,13 +154,11 @@ elsewhere
 end where
 endsnippet
 
-#
 # Forall statement
 snippet forall "forall"
 forall (${1:i} = ${2:condition}) ${2:var}($1) = ${3:expression}
 endsnippet
 
-#
 # General variables
 snippet var "var"
 ${1:type}(${2:kind})${3:, properties} :: ${4:varname}

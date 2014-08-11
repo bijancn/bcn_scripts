@@ -2,11 +2,11 @@
 #
 # bcn .bashrc - bash configuration file. Maintained since 2012.
 #
-# Copyright (C)     2014-04-27    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
-# Recent versions:  https://github.com/bijanc/bcn_scripts
+# Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+# Recent versions:  https://github.com/bijancn/bcn_scripts
 #
-# This source code is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License Version 2:
+# This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+# can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
 # http://www.gnu.org/licenses/gpl-2.0-standalone.html
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
