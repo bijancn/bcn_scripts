@@ -26,6 +26,13 @@ apache2 chromium-browser curlftpfs gimp gparted krb5-user libav-tools libavcodec
 
 manual installations
 ================================================================================
+newer compiler installations (gcc, gfortran, etc.)
+--------------------------------------------------------------------------------
+More info on [wiki](https://wiki.ubuntu.com/ToolChain#PPA_packages) and
+[ppa](https://launchpad.net/~ubuntu-toolchain-r/+archive/ubuntu/test)
+```
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+```
 
 default terminal
 --------------------------------------------------------------------------------
@@ -35,15 +42,15 @@ gsettings set org.cinnamon.desktop.default-applications.terminal exec /usr/bin/t
 
 swapiness settings
 --------------------------------------------------------------------------------
-`sysctl.conf`
+Usually only relevant for small memory. See `/etc/sysctl.conf`
 
 mendeley
 --------------------------------------------------------------------------------
-http://www.mendeley.com/download-mendeley-desktop/ubuntu/instructions/
+Download [package](http://www.mendeley.com/download-mendeley-desktop/ubuntu/instructions/)
 
 SpiderOak
 --------------------------------------------------------------------------------
-https://spideroak.com/opendownload/
+Download [package](https://spideroak.com/opendownload/)
 
 skype
 --------------------------------------------------------------------------------
