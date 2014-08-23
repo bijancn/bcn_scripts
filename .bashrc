@@ -75,6 +75,7 @@ fi
 export wingames=/data/win_games
 export lingames=/data/lnx_games
 export syncd=$HOME/safe
+export hive=$HOME/hive
 export desy_soft=/afs/desy.de/group/theorie/software/ELF64
 export install=$HOME/install
 export whiz_soft=$HOME/trunk/install/
@@ -172,8 +173,8 @@ alias prnt_1s='lp -d t00ps1 -o sides=one-sided'
 #=======#
 #  IPs  #
 #=======#
-if [ -f $syncd/keys/IPs.sh ]; then
-  source $syncd/keys/IPs.sh
+if [ -f $hive/keys/IPs.sh ]; then
+  source $hive/keys/IPs.sh
 fi
 
 function my_ip() # Get IP adress on ethernet.

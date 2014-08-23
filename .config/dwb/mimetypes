@@ -1,4 +1,12 @@
 application/download evince
+application/force-download evince
+application/vnd.ms-powerpoint gnome-open
+application/x-gzip gnome-open
+application/x-tar gnome-open
+application/x-tex gvim
 text/x-tex gvim
 application/octetstream gvim
+application/postscript evince
 application/pdf evince
+application/octet-stream gnome-open
+application/zip gnome-open

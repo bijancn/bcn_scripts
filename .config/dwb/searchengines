@@ -1,8 +1,21 @@
-g http://www.google.de/search?output=search&sclient=psy-ab&q=_dwb_search_submit_&oq=&gs_l=&pbx=1
-y http://www.youtube.com/results?search_query=_dwb_search_submit_&oq=&gs_l=
+g http://www.google.de/search?hl=de&source=hp&q=_dwb_search_submit_&gbv=2&oq=&gs_l=
+
+d http://www.dict.cc/?s=_dwb_search_submit_
+
+y https://www.youtube.com/results?search_query=_dwb_search_submit_
+yt https://www.youtube.com/results?search_query=_dwb_search_submit_
+
+m https://maps.google.de/maps?f=q&source=s_q&output=js&hl=de&geocode=&abauth=5215e7dfGoYGcO3yXRsVtXrZ0JRJ3_P5Wxc&authuser=0&q=_dwb_search_submit_
+gm https://maps.google.de/maps?f=q&source=s_q&output=js&hl=de&geocode=&abauth=5215e7dfGoYGcO3yXRsVtXrZ0JRJ3_P5Wxc&authuser=0&q=_dwb_search_submit_
+
+a http://arxiv.org/search?query=_dwb_search_submit_
+
 hn http://inspirehep.net/search?ln=de&cc=HepNames&p=_dwb_search_submit_
 h http://inspirehep.net/search?ln=de&p=_dwb_search_submit_&of=hb
-d http://www.dict.cc/?s=_dwb_search_submit_
-w http://de.wikipedia.org/w/index.php?search=_dwb_search_submit_&title=Spezial:Suche
-we http://en.wikipedia.org/w/index.php?search=_dwb_search_submit_&title=Special:Search
-gm https://maps.google.de/maps?f=q&source=s_q&output=js&hl=de&geocode=&abauth=5215e7dfGoYGcO3yXRsVtXrZ0JRJ3_P5Wxc&authuser=0&q=_dwb_search_submit_
+i http://inspirehep.net/search?ln=en&p=_dwb_search_submit_&of=hb
+
+w https://whizard.hepforge.org/trac/search?q=_dwb_search_submit_
+wh https://whizard.hepforge.org/trac/search?q=_dwb_search_submit_
+
+wi http://de.wikipedia.org/w/index.php?search=_dwb_search_submit_&title=Spezial:Suche
+wie http://en.wikipedia.org/w/index.php?search=_dwb_search_submit_&title=Special:Search

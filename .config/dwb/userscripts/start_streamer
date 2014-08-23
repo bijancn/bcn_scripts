@@ -1,0 +1,4 @@
+#!/bin/bash
+# dwb: Control v
+
+livestreamer $DWB_URI best

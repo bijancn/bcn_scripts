@@ -18,6 +18,9 @@ safe=~/hive/keys
 cd $bcn
 
 files=".@(vim|bash|colorit|dir_colors|pylint)rc .gitignore_global "
+files+=".config/dwb/default/@(bookmarks|quickmarks) "
+files+=".config/dwb/@(keys|mimetypes|searchengines|settings) "
+files+=".config/dwb/userscripts/@(autostart_player.js|extension_loader.js|start_streamer) "
 files+=".config/evince/@(accels|print-settings) "
 files+=".config/keepassx/config.ini "
 files+=".config/matplotlib/matplotlibrc "
