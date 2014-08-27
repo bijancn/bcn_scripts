@@ -24,7 +24,7 @@ files+="$l/bcn_@(color|commands|koma).sty "
 files+="$l/bcn_letter@(.lco|_example.pdf|_example.tex) "
 
 bcn=~/bcn_scripts
-safe=~/safe/keys
+safe="~/SpiderOak Hive/keys"
 
 for f in $files; do
   mkdir ~/$(dirname $f) -p
@@ -33,12 +33,13 @@ for f in $files; do
   else
     echo "+++ Linking $f"
     # Try to use public file. If not there use private.
+    ls -al "$safe/$f"
     if [ -f $bcn/$f ] ; then
       ln -sf $bcn/$f                      ~/$f
-    elif [ -f $safe/$f ] ; then
+    elif [ -e "$safe/$f" ] ; then
       ln -sf $safe/$f                     ~/$f
     else
-      echo "000 FILE $f NOT FOUND"
+      echo "000 FILE $f NOT FOUND in $bcn or $safe"
     fi
   fi
 done
