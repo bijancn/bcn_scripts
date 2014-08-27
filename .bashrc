@@ -32,8 +32,20 @@ export difftool='vim -d'
 set -o vi
 bind '"\e."':yank-last-arg
 
-# Avoid overflows. Might be dangerous
-ulimit -c unlimited
+# Max out machine limits
+ulimit -t unlimited              # cputime
+ulimit -f unlimited              # filesize
+ulimit -d unlimited              # datasize
+ulimit -s unlimited              # stacksize
+ulimit -c unlimited              # coredumpsize
+ulimit -m unlimited              # memoryuse
+ulimit -v unlimited              # vmemoryuse
+# These are usually not permitted
+#ulimit -n unlimited              # descriptors
+#ulimit -l unlimited              # memorylocked
+#ulimit -u unlimited              # maxproc
+# This is for processes spawned by CPUs within !OMP PARALLEL DO
+export KMP_STACKSIZE=500000000
 
 # Narrowing greps search realms
 a='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo '
@@ -154,7 +166,7 @@ export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -g"
 # Is bugged in gfortran 4.7.1
 #export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan -g"
 export DEBUG="$DEBUG -fcheck=all -fmax-errors=1 -ffpe-trap=invalid,zero,overflow"
-export FCFLAGS="-fmax-errors=1 -O2"
+export FCFLAGS="-fmax-errors=1 -O2 -fbounds-check"
 # Simply append this this to your configure command with a space in front
 export DEBUG_FCFLAGS="FCFLAGS=\"$DEBUG\""
 export CFLAGS="-fPIC"

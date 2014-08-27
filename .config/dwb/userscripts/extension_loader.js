@@ -4,25 +4,25 @@ extensions.load("adblock_subscriptions", {
 //<adblock_subscriptions___CONFIG
 
 // Shortcut to subscribe to a filterlist
-scSubscribe : null, 
+scSubscribe : null,
 // Command to subscribe to a filterlist
-cmdSubscribe : "adblock_subscribe", 
+cmdSubscribe : "adblock_subscribe",
 
 // Shortcut to unsubscribe from a filterlist
-scUnsubscribe : null, 
+scUnsubscribe : null,
 
 // Command to unsubscribe from a filterlist
 cmdUnsubscribe : "adblock_unsubscribe",
 
 // Shortcut to update subscriptions and reload filter rules
 // Note that dwb will also update all subscriptions on startup
-scUpdate : null, 
+scUpdate : null,
 
 // Command to update subscriptions and reload filter rules
 // Note that dwb will also update all subscriptions on startup
-cmdUpdate : "adblock_update", 
+cmdUpdate : "adblock_update",
 
-// Path to the filterlist directory, will be created if it doesn't exist. 
+// Path to the filterlist directory, will be created if it doesn't exist.
 filterListDir : data.configDir + "/adblock_lists"
 //>adblock_subscriptions___CONFIG
 });
@@ -54,21 +54,21 @@ extensions.load("contenthandler", {
   // %u will be replaced with the uri of the request, if the handler is a
   // function the first parameter of the function will be the uri and the
   // function must return the command to execute.
-  
+
   // Handle requests based on filename extension
   extension : {
-    // "torrent" : "xterm -e 'aria2 %u'", 
+    // "torrent" : "xterm -e 'aria2 %u'",
     // "pdf" : "xterm -e 'wget %u --directory-prefix=~/mypdfs'"
   },
 
   // Handle requests based on URI scheme
   uriScheme : {
-      //ftp : function(uri) { 
-      //    if (uri[uri.length-1] == "/") 
-      //        return "xterm -e 'ncftp " + uri + "'"; 
-      //    else 
-      //        return "xterm -e 'ncftpget " + uri + "'"; 
-      //}
+      ftp : function(uri) {
+          if (uri[uri.length-1] == "/")
+              return "xterm -e 'ncftp " + uri + "'";
+          else
+              return "xterm -e 'ncftpget " + uri + "'";
+      }
   },
 
 uriScheme: {

@@ -413,6 +413,7 @@ let g:syntastic_loc_list_height = 5
 let g:syntastic_ignore_files = ['\m^/usr/include/', '\m^/home/bijancn/vm_paper/codes/ovm']
 let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
 let g:syntastic_enable_signs = 1
+let g:syntastic_fortran_checkers = [""]
 " Pretty 2 character signs for the left border
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_style_error_symbol = 'S✗'
