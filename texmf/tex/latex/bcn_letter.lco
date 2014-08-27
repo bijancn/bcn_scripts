@@ -1,29 +1,22 @@
-﻿% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+﻿% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %
-% bcn_letter.lco - A convenient template for german scrlttr2 letters
+% texmf/tex/latex/bcn_letter.lco - Template for german scrlttr2 letters
 %
-% Copyright (C)     2013-08-25    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
-% Recent versions:  https://github.com/bijanc/bcn_scripts
+% Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+% Recent versions:  https://github.com/bijancn/bcn_scripts
 %
-% This source code is free software; you can redistribute it and/or
-% modify it under the terms of the GNU General Public License Version 2: 
+% This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+% can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
 % http://www.gnu.org/licenses/gpl-2.0-standalone.html
 %
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-% 
-% Put me in:
-%   for Unix/Linux with Texlive vanilla setup:
-%     /usr/local/texlive/texmf-local/tex/latex/local
-%   or:
-%     ~/texmf/tex/latex/
-%   then run 'sudo texhash'
-%   for Windows with MikTex
-%     C:\Program Files\MiKTeX 2.9\tex\latex\bijan\
-%   then go to MikTex Options -> Refresh FNDB, Update Formats
-% 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%
+% Eventually you have to `sudo texhash` or click
+% `MikTex Options -> Refresh FNDB, Update Formats`
+%
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-\ProvidesFile{bcn_letter.lco}[2013/08/25 letter class option Bijan Chokoufe Nejad]
+\ProvidesFile{bcn_letter.lco}[2014/08/11 letter class option Bijan Chokoufe Nejad]
 %
 % You can change these for a unique look.
 %
@@ -40,34 +33,32 @@
 % The footer.
 %
 \setkomavar{firstfoot}{%
-\rule{\textwidth}{0.4pt} \\ \centering
-\parbox[t]{.9\textwidth}{\footnotesize
-\begin{tabular}[t]{l@{}}
-\multicolumn{1} {@{}l@{}} {\usekomavar{fromname}}\\[.5em]
-\usekomavar{fromaddress}
-\end{tabular}
-%
-% Workaround for the cases where you don't want to share all information with
-% your correspondence (bank data and or phone/mail) and but still want a nice
-% footer.
-%
-\ifkomavarempty{fromphone}{}
-{
-  \hfill
-  \begin{tabular}[t]{l@{}}
-  \multicolumn{1}{@{}l@{}}{\usekomavar*{fromphone}} \\ \usekomavar{fromphone}
-  \\[.5em]
-  \multicolumn{1}{@{}l@{}}{\usekomavar*{fromemail}}\\\usekomavar{fromemail}
-  \end{tabular}
-}
-\ifkomavarempty{frombank}{}
-{
-  \hfill
-  \begin{tabular}[t]{l@{}}
-  \multicolumn{1}{@{}l@{}}{
-  \usekomavar*{frombank}}\\[.5em]
-  \usekomavar{frombank}
-  \end{tabular}
-}
-}
+  \rule{\textwidth}{0.4pt} \\ \centering
+  \parbox[t]{.9\textwidth}{\footnotesize
+    \begin{tabular}[t]{l@{}}
+    \multicolumn{1} {@{}l@{}} {\usekomavar{fromname}}\\[.5em]
+    \usekomavar{fromaddress}
+    \end{tabular}
+    %
+    % Workaround for the cases where you don't want to share all information with
+    % your correspondence (bank data and or phone/mail) and but still want a nice
+    % footer.
+    %
+    \ifkomavarempty{fromphone}{}{
+      \hfill
+      \begin{tabular}[t]{l@{}}
+      \multicolumn{1}{@{}l@{}}{\usekomavar*{fromphone}} \\ \usekomavar{fromphone}
+      \\[.5em]
+      \multicolumn{1}{@{}l@{}}{\usekomavar*{fromemail}}\\\usekomavar{fromemail}
+      \end{tabular}
+    }
+    \ifkomavarempty{frombank}{}{
+      \hfill
+      \begin{tabular}[t]{l@{}}
+      \multicolumn{1}{@{}l@{}}{
+      \usekomavar*{frombank}}\\[.5em]
+      \usekomavar{frombank}
+      \end{tabular}
+    }
+  }
 }

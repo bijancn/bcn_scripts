@@ -2,11 +2,11 @@
 #
 # bcn .bashrc - bash configuration file. Maintained since 2012.
 #
-# Copyright (C)     2014-04-27    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
-# Recent versions:  https://github.com/bijanc/bcn_scripts
+# Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+# Recent versions:  https://github.com/bijancn/bcn_scripts
 #
-# This source code is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License Version 2:
+# This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+# can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
 # http://www.gnu.org/licenses/gpl-2.0-standalone.html
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -32,8 +32,20 @@ export difftool='vim -d'
 set -o vi
 bind '"\e."':yank-last-arg
 
-# Avoid overflows. Might be dangerous
-ulimit -c unlimited
+# Max out machine limits
+ulimit -t unlimited              # cputime
+ulimit -f unlimited              # filesize
+ulimit -d unlimited              # datasize
+ulimit -s unlimited              # stacksize
+ulimit -c unlimited              # coredumpsize
+ulimit -m unlimited              # memoryuse
+ulimit -v unlimited              # vmemoryuse
+# These are usually not permitted
+#ulimit -n unlimited              # descriptors
+#ulimit -l unlimited              # memorylocked
+#ulimit -u unlimited              # maxproc
+# This is for processes spawned by CPUs within !OMP PARALLEL DO
+export KMP_STACKSIZE=500000000
 
 # Narrowing greps search realms
 a='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo '
@@ -75,6 +87,7 @@ fi
 export wingames=/data/win_games
 export lingames=/data/lnx_games
 export syncd=$HOME/safe
+export hive=$HOME/hive
 export desy_soft=/afs/desy.de/group/theorie/software/ELF64
 export install=$HOME/install
 export whiz_soft=$HOME/trunk/install/
@@ -116,7 +129,7 @@ if [ -d $spider_dir ]; then
 fi
 
 # opam
-if opam 2>/dev/null; then
+if opam &> /dev/null; then
   eval `opam config env`
 fi
 
@@ -153,7 +166,7 @@ export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -g"
 # Is bugged in gfortran 4.7.1
 #export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan -g"
 export DEBUG="$DEBUG -fcheck=all -fmax-errors=1 -ffpe-trap=invalid,zero,overflow"
-export FCFLAGS="-fmax-errors=1 -O2"
+export FCFLAGS="-fmax-errors=1 -O2 -fbounds-check"
 # Simply append this this to your configure command with a space in front
 export DEBUG_FCFLAGS="FCFLAGS=\"$DEBUG\""
 export CFLAGS="-fPIC"
@@ -172,8 +185,8 @@ alias prnt_1s='lp -d t00ps1 -o sides=one-sided'
 #=======#
 #  IPs  #
 #=======#
-if [ -f $syncd/keys/IPs.sh ]; then
-  source $syncd/keys/IPs.sh
+if [ -f $hive/keys/IPs.sh ]; then
+  source $hive/keys/IPs.sh
 fi
 
 function my_ip() # Get IP adress on ethernet.
@@ -552,6 +565,13 @@ function show_disk_speed () {
 
 function show_big_files () {
   find . -type f -size +20000k -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
+}
+
+function show_pylint_scores () {
+  for i in ./*.py; do
+  score=`pylint $i | grep "rated at" | awk '{print $7}'`
+  echo "$i : $score"
+done
 }
 #======================#
 #  surpressing output  #

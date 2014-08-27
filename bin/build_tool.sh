@@ -7,21 +7,22 @@ echo "Base dir is $whiz"
 
 if [ $# -lt 3 ]; then
   echo 'Usage: build_tool.sh build n k'
-  echo 'build = a -> all builds = def doc debug ifort'
-  echo 'build = def -> default compiler and flags'
-  echo 'build = debug -> gfortran with DEBUG flags'
-  echo 'build = doc -> default compiler, producing documentation '
-  echo 'build = ifort -> ifort -O2, only omega build '
-  echo 'build = openmp -> gfortran with OpenMP support'
-  echo 'n = 0 -> only make'
-  echo 'n = 1 -> configure and make'
-  echo 'n = 2 -> autoreconf, configure and make'
-  echo 'k = 0 -> dont test'
-  echo 'k = 1 -> perform make check'
+  echo '- build = a -> all builds = def doc debug ifort'
+  echo '- build = def -> default compiler and flags'
+  echo '- build = debug -> gfortran with DEBUG flags'
+  echo '- build = doc -> default compiler, producing documentation '
+  echo '- build = ifomegaO2warns -> ifort -O2, only omega build with more OCaml warnings'
+  echo '- build = gfopenmp -> gfortran with OpenMP support'
+  echo '- build = ifopenmp -> ifort with OpenMP support, only omega build'
+  echo '- n = 0 -> only make'
+  echo '- n = 1 -> configure and make'
+  echo '- n = 2 -> autoreconf, configure and make'
+  echo '- k = 0 -> dont test'
+  echo '- k = 1 -> perform make check'
   exit
 fi
 if [ $1 == 'a'  ]; then
-  builds='def doc debug ifort openmp'
+  builds='def debug doc ifort ifomegaO3 gfomegaO3 gfopenmp ifopenmp'
 else
   builds=$1
 fi
@@ -47,13 +48,9 @@ for b in $builds; do
   cd $b
   if (($conf > 0)); then
     case $b in
-      ifort)
-        $whiz/omega/configure --prefix=$whiz/install/$b OCAMLFLAGS='-w +a-4' FC=ifort FCFLAGS=-O2 > /dev/null
-        ;;
-
       doc)
         $whiz/configure --prefix=$whiz/install/$b \
-          --disable-static --enable-distribution > /dev/null
+          --enable-distribution > /dev/null
         ;;
 
       debug)
@@ -65,9 +62,29 @@ for b in $builds; do
         $whiz/configure --prefix=$whiz/install/$b > /dev/null
         ;;
 
-      openmp)
+      ifomegaO2warns)
+        $whiz/omega/configure --prefix=$whiz/install/$b OCAMLFLAGS='-w +a-4' \
+          FC=ifort FCFLAGS=-O2 > /dev/null
+        ;;
+
+      ifomegaO3)
+        $whiz/omega/configure --prefix=$whiz/install/$b FC=ifort FCFLAGS=-O3 \
+          > /dev/null
+        ;;
+
+      gfomegaO3)
+        $whiz/omega/configure --prefix=$whiz/install/$b FC=gfortran \
+          FCFLAGS=-O3 > /dev/null
+        ;;
+
+      gfwhizopenmp)
         $whiz/configure --prefix=$whiz/install/$b FC=gfortran \
           --enable-fc-openmp > /dev/null
+        ;;
+
+      ifomegaopenmp)
+        $whiz/omega/configure --prefix=$whiz/install/$b FC=ifort \
+          FCFLAGS='-O2 -openmp' --enable-fc-openmp > /dev/null
 
     esac
   fi

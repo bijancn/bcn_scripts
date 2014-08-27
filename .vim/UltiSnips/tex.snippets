@@ -1,26 +1,50 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# .vim/Ultisnips/tex.snippets - Snippets that are defined for TeX files
+#
+# Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+# Recent versions:  https://github.com/bijancn/bcn_scripts
+#
+# This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+# can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
+# http://www.gnu.org/licenses/gpl-2.0-standalone.html
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 extends texmath
 
-###########################################################################
-#                             LATEX SNIPPETS                              #
-###########################################################################
-
+#=================#
+#  general stuff  #
+#=================#
 snippet r "\\ref{}" w
 \ref{$1}
 endsnippet
 
-###########################################################################
-#                            TEXTMATE SNIPPETS                            #
-###########################################################################
-
-#################
-# GENERAL STUFF #
-#################
 snippet "b(egin)?" "begin{} / end{}" br
 \begin{${1:something}}
 	${0:${VISUAL}}
 \end{$1}
 endsnippet
 
+snippet graphic "include graphics"
+\includegraphics[width=\textwidth]{${1:\picdir}/${2:pic_name}.pdf}
+endsnippet
+
+snippet pac "Package" b
+\usepackage[${1:options}]{${2:package}}$0
+endsnippet
+
+snippet lp "Long parenthesis"
+\left(${1:${VISUAL:contents}}\right)$0
+endsnippet
+
+snippet si "SI" w
+\SI{$1}{$2}$0
+endsnippet
+
+#==========#
+#  beamer  #
+#==========#
 snippet frame "begin frame end" b
 \begin{Bframe}
 	{${1:title}}
@@ -39,12 +63,8 @@ snippet al "tex command"
 \al{${1:${VISUAL}}}$0
 endsnippet
 
-snippet graphic "include graphics"
-\includegraphics[width=\textwidth]{${1:\picdir}/${2:pic_name}.pdf}
-endsnippet
-
 #========#
-#  MATH  #
+#  math  #
 #========#
 snippet align "Align environment" b
 \begin{Balign}
@@ -60,19 +80,18 @@ snippet equation "Equation environment" b
 $0
 endsnippet
 
-####################
-# TABULARS, ARRAYS #
-####################
-
+#============#
+#  tabulars  #
+#============#
 snippet tab
 \begin{${1:t}${1/(t)$|(a)$|(.*)/(?1:abular)(?2:rray)/}}{${2:c}}
 $0${2/((?<=.)c|l|r)|./(?1: & )/g}
 \end{$1${1/(t)$|(a)$|(.*)/(?1:abular)(?2:rray)/}}
 endsnippet
 
-########################
-# ENUM, DESCR, ITEMIZE #
-########################
+#===============#
+#  enumerators  #
+#===============#
 snippet enum "Enumerate" b
 \begin{enumerate}
 	\item $0
@@ -91,10 +110,9 @@ snippet desc "Description" b
 \end{description}
 endsnippet
 
-#####################################
-# SECTIONS, CHAPTERS AND THEIR LIKE #
-#####################################
-
+#==============#
+#  sectioning  #
+#==============#
 snippet part "Part" b
 \part{${1:part name}}
 \label{prt:${2:${1/(\w+)|\W+/(?1:\L$0\E:_)/ga}}}
@@ -152,16 +170,3 @@ snippet subp "Subparagraph" b
 %
 ${0}
 endsnippet
-
-###############
-#  Utilities  #
-###############
-
-snippet pac "Package" b
-\usepackage[${1:options}]{${2:package}}$0
-endsnippet
-
-snippet lp "Long parenthesis"
-\left(${1:${VISUAL:contents}}\right)$0
-endsnippet
-# vim:ft=snippets:

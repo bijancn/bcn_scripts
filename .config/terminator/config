@@ -21,8 +21,9 @@
     background_type = transparent
     use_system_font = False
     foreground_color = "#000000"
+    scroll_on_output = False
     show_titlebar = False
-    font = Monospace 11
+    font = Monospace 10.5
     background_color = "#ffffff"
     cursor_blink = False
     scrollback_infinite = True

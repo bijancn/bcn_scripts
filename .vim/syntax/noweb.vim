@@ -1,16 +1,19 @@
-"=============================================================================="
-"                                 noweb.vim                                 "
-"=============================================================================="
-" bcn:              bijan@chokoufe.com
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"
+" .vim/syntax/noweb.vim - very specific noweb file for LaTeX and Fortran2003
+"
+" Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
 " Recent versions:  https://github.com/bijancn/bcn_scripts
-" Last Change:      2014-04-27
 "
-" Put me in:
-"             for Unix/Linux:     ~/.vim/syntax/sindarin.vim
+" This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+" can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
+" http://www.gnu.org/licenses/gpl-2.0-standalone.html
 "
-" This noweb file is very specific for use with LaTeX and Fortran2003 but orders
-" of magnitudes faster than the default
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+"=========="
+"  prelim  "
+"=========="
 " Remove any old syntax stuff hanging around
 if version < 600
   syntax clear
@@ -27,14 +30,15 @@ syntax region codeChunk
 " Gather the Fortran objects
 syntax cluster fortran contains=fortranComment,fortranString,fortranStatement,fortranDoStatement,fortranBuiltin,fortranOperator,fortranBoolean,fortranType
 
-" Keywords and regexes where necessary
+"=================="
+"  keyword regexs  "
+"=================="
 syn match nowebChunkName contained      "^<<.*>>=$"
 syn match nowebChunkName contained      "\( \|^\)<<.*>>"
 syn match nowebVerbatim                 "\[\[.\{-}\]\]"
 syn region latexMath                    start='\$' end='\$'
 syn match latexComment                  " *%.*$"
 syn match latexStatement                "\\\([a-z]\|[A-Z]\|\$\|\\\)*"
-
 " This is only highlighted because it comes after latexStatement
 syn match latexSection                  "\\chapter"
 syn match latexSection                  "\\\(sub\)*section"
@@ -58,11 +62,15 @@ syn keyword fortranBoolean contained .false. .true.
 syn keyword fortranOperator contained .and. .or. .not.
 syn keyword fortranType contained logical procedure complex public private save pointer target allocatable generic parameter optional
 
-syn keyword fortranType	contained intent dimension type class real integer character nextgroup=fortranTy
+syn keyword fortranType	contained intent dimension type class real integer character
+" nextgroup is a bit expensive
+" syn keyword fortranType	contained intent dimension type class real integer character nextgroup=fortranTy
 " Special highlighting for the 'type argument'
-syn match fortranTy contained "(\(\w\|=\|_\|\*\)*)"
+" syn match fortranTy contained "(\(\w\|=\|_\|\*\)*)"
 
-" Linking keywords to highlighted objects
+"===================="
+"  linking keywords  "
+"===================="
 hi def link nowebChunkName     Identifier
 hi def link nowebVerbatim      SpecialKey
 hi def link latexMath          Special

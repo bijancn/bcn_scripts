@@ -1,33 +1,27 @@
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %
-% bcn_color.sty - Some color mixtures and codes
+% texmf/tex/latex/bcn_color.sty - Some color mixtures and codes
 %
-% Copyright (C)     2013-08-25    Bijan Chokoufe Nejad    <bijan@chokoufe.com>
-% Recent versions:  https://github.com/bijanc/bcn_scripts
+% Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+% Recent versions:  https://github.com/bijancn/bcn_scripts
 %
-% This source code is free software; you can redistribute it and/or
-% modify it under the terms of the GNU General Public License Version 2: 
+% This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+% can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
 % http://www.gnu.org/licenses/gpl-2.0-standalone.html
 %
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-% 
-% Put me in:
-%   for Unix/Linux with Texlive vanilla setup:
-%     /usr/local/texlive/texmf-local/tex/latex/local
-%   or:
-%     ~/texmf/tex/latex/
-%   then run 'sudo texhash'
-%   for Windows with MikTex
-%     C:\Program Files\MiKTeX 2.9\tex\latex\bijan\
-%   then go to MikTex Options -> Refresh FNDB, Update Formats
-% 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%
+% Eventually you have to `sudo texhash` or click
+% `MikTex Options -> Refresh FNDB, Update Formats`
+%
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-\NeedsTeXFormat{LaTeX2e} 
-\ProvidesPackage{bcn_color} 
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{bcn_color}
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-
+%==========%
+%  colors  %
+%==========%
 \definecolor{petrol}{RGB}{55,200,85}
 \definecolor{greenblue}{RGB}{0,255,75}
 \definecolor{desycyan}{RGB}{0,166,235}
@@ -41,4 +35,3 @@
 \newcommand\mypetrol{petrol!80!black}
 \newcommand\mygreenblue{greenblue!70!black}
 \newcommand\myorange{orange!90!white}
-

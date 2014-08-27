@@ -1,15 +1,19 @@
-"=============================================================================="
-"                                 noweb.vim                                 "
-"=============================================================================="
-" bcn:              bijan@chokoufe.com
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"
+" .vim/syntax/fortran.vim - fast modern Fortran keyword highlighting
+"
+" Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
 " Recent versions:  https://github.com/bijancn/bcn_scripts
-" Last Change:      2014-04-27
 "
-" Put me in:
-"             for Unix/Linux:     ~/.vim/syntax/fortran.vim
+" This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+" can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
+" http://www.gnu.org/licenses/gpl-2.0-standalone.html
 "
-" This is Fortran90+ but orders of magnitudes faster than the default
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+"=========="
+"  prelim  "
+"=========="
 " Remove any old syntax stuff hanging around
 if version < 600
   syntax clear
@@ -18,6 +22,9 @@ elseif exists("b:current_syntax")
   w
 endif
 
+"=================="
+"  keyword regexs  "
+"=================="
 syn match fortranComment      " *!.*$"
 syn match fortranString       "\".\{-}\""
 syn match fortranString       "\'.\{-}\'"
@@ -32,12 +39,15 @@ syn keyword fortranBoolean  .false. .true.
 syn keyword fortranOperator  .and. .or. .not.
 syn keyword fortranType  logical procedure complex public private save pointer target allocatable generic parameter optional
 
-syn keyword fortranType	 intent dimension type class real integer character
-"syn keyword fortranType	 intent dimension type class real integer character nextgroup=fortranTy
-" Special highlighting for the 'type argument'
-"syn match fortranTy contained "(\(\w\|=\|_\|\*\)*)"
+syn keyword fortranType intent dimension type class real integer character
+" nextgroup is a bit expensive
+" syn keyword fortranType intent dimension type class real integer character nextgroup=fortranTy
+" special highlighting for the 'type argument'
+" syn match fortranTy contained "(\(\w\|=\|_\|\*\)*)"
 
-" Linking keywords to highlighted objects
+"===================="
+"  linking keywords  "
+"===================="
 hi def link nowebChunkName     Identifier
 hi def link nowebVerbatim      SpecialKey
 hi def link latexMath          Special

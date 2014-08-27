@@ -1,7 +1,26 @@
-#/bin/bash
-shopt -s extglob
+#/bin/bash ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# relink_bcn.sh - Create soft links from this repo to the home folder
+#
+# Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+# Recent versions:  https://github.com/bijancn/bcn_scripts
+#
+# This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+# can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
+# http://www.gnu.org/licenses/gpl-2.0-standalone.html
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-files=".@(vim|bash|colorit|dir_colors)rc .gitignore_global "
+shopt -s extglob
+mpwd=`pwd`
+bcn=~/bcn_scripts
+safe=~/hive/keys
+cd $bcn
+
+files=".@(vim|bash|colorit|dir_colors|pylint)rc .gitignore_global "
+files+=".config/dwb/default/@(bookmarks|quickmarks) "
+files+=".config/dwb/@(keys|mimetypes|searchengines|settings) "
+files+=".config/dwb/userscripts/@(autostart_player.js|extension_loader.js|start_streamer) "
 files+=".config/evince/@(accels|print-settings) "
 files+=".config/keepassx/config.ini "
 files+=".config/matplotlib/matplotlibrc "
@@ -15,21 +34,18 @@ files+="$s/accountrc $s/colorlabelrc $s/menurc $s/sylpheedrc "
 files+=".vim/@(bcn_color_demo|filetype).vim "
 files+=".vim/colors/@(bcn_dark|bcn_light|print_bw).vim "
 files+=".vim/after/ftplugin/@(c|markdown|noweb|ocaml|python|tex).vim "
-files+=".vim/spell/en.utf-8.add?(.spl) "
+files+=".vim/spell/en.utf-8.add "
 files+=".vim/syntax/@(fortran|markdown|noweb|sindarin).vim "
-files+=".vim/UltiSnips/@(all|fortran|noweb|pandoc|sh|tex).snippets "
+files+=".vim/UltiSnips/@(all|fortran|noweb|ocaml|pandoc|sh|tex).snippets "
 l="texmf/tex/latex"
 files+="$l/bcn_beamer@(.sty|_example.pdf|_example.tex) "
 files+="$l/bcn_@(color|commands|koma).sty "
 files+="$l/bcn_letter@(.lco|_example.pdf|_example.tex) "
 
-bcn=~/bcn_scripts
-safe="~/SpiderOak Hive/keys"
-
 for f in $files; do
   mkdir ~/$(dirname $f) -p
   if [ -f ~/$f ]; then
-    echo "--- $f already exists, doing nothing"
+    echo "--- $f   already exists, doing nothing"
   else
     echo "+++ Linking $f"
     # Try to use public file. If not there use private.
@@ -57,3 +73,4 @@ fi
 rm ~/.gitconfig
 ln -sf $bcn/gitconf/.gitconfig$app      ~/.gitconfig
 #sudo ln -sf $bcn/metacity-theme-1.xml /usr/share/themes/Mint-X/metacity-1/metacity-theme-1.xml
+cd $mpwd

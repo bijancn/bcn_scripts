@@ -1,3 +1,16 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# .vim/Ultisnips/sh.snippets - Snippets that are defined for bash files
+#
+# Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+# Recent versions:  https://github.com/bijancn/bcn_scripts
+#
+# This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+# can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
+# http://www.gnu.org/licenses/gpl-2.0-standalone.html
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 snippet case "case" b
 case ${1:var} in
 	${2:case1})
@@ -14,4 +27,10 @@ snippet if "if" b
 if [ ${1:case} ]; then
   ${2:do_something}
 fi
+endsnippet
+
+snippet for "for" b
+for ${1:var} in ${2:list}; do
+  ${4:do_something}
+done
 endsnippet
