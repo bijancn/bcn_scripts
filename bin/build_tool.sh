@@ -62,9 +62,19 @@ for b in $builds; do
         $whiz/configure --prefix=$whiz/install/$b > /dev/null
         ;;
 
-      ifomegaO2warns)
-        $whiz/omega/configure --prefix=$whiz/install/$b OCAMLFLAGS='-w +a-4' \
-          FC=ifort FCFLAGS=-O2 > /dev/null
+      gfomegaO3)
+        $whiz/omega/configure --prefix=$whiz/install/$b FC=gfortran \
+          FCFLAGS=-O3 > /dev/null
+        ;;
+
+      gfomegaO0)
+        $whiz/omega/configure --prefix=$whiz/install/$b FC=gfortran \
+          FCFLAGS=-O0 > /dev/null
+        ;;
+
+      gfwhizopenmp)
+        $whiz/configure --prefix=$whiz/install/$b FC=gfortran \
+          --enable-fc-openmp > /dev/null
         ;;
 
       ifomegaO3)
