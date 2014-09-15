@@ -9,18 +9,26 @@ else
   echo '~/.git-completion.sh already exists!'
 fi
 
-cd $HOME
 function github {
   git clone git@github.com:$1/$2.git
 }
 function bitbucket {
   git clone ssh://git@bitbucket.org/$1/$2.git
 }
+function bitbucket_hg {
+  hg clone ssh://hg@bitbucket.org/$1/$2
+}
+function get_logilab {
+  mkdir logilab && touch logilab/__init__.py
+  hg clone http://hg.logilab.org/logilab/common logilab/common
+}
 
+cd $HOME
 github bijancn bcn_scripts
 github gfxmonk termstyle # is needed by pydflatex
 github gsec eZchat
 github gsec glowing-mustache
+github JNicL Durak
 github MikePearce Git-Status
 github oblique63 Python-GoogleCalendarParser
 github olivierverdier pydflatex
@@ -29,6 +37,12 @@ github sickill git-dude
 github sickill bitpocket
 
 bitbucket bijancn vm_paper
+
+if [ hg 2> /dev/null ]; then
+  bitbucket_hg logilab pylint
+  bitbucket_hg logilab astroid
+  get_logilab
+fi
 
 ln -s $HOME/pydflatex/bin/pydflatex $HOME/install/bin/pydflatex
 ln -s $HOME/bitpocket/bin/bitpocket $HOME/install/bin/bitpocket
