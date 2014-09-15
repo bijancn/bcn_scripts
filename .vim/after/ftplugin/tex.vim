@@ -16,12 +16,12 @@
 " %< expands to the name of the file without the extension
 
 " Checks if Makefile or SConstruct exists. If not we run pdflatex to produce pdf.
-if !filereadable(expand("%:p:h")."/Makefile")
-  if !filereadable(expand("%:p:h")."/SConstruct")
+if !filereadable(expand("%:p:h")."/SConstruct")
+  if !filereadable(expand("%:p:h")."/Makefile")
     setlocal makeprg=pdflatex\ %
-  else
-    setlocal makeprg=scons\ .
   endif
+else
+  setlocal makeprg=scons\ .
 endif
 
 set foldmethod=indent

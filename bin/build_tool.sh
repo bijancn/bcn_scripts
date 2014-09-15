@@ -77,6 +77,36 @@ for b in $builds; do
           --enable-fc-openmp > /dev/null
         ;;
 
+      ifomegaO0)
+        $whiz/omega/configure --prefix=$whiz/install/$b FC=ifort FCFLAGS=-O0 \
+          > /dev/null
+        ;;
+
+      gfomegaO0)
+        $whiz/omega/configure --prefix=$whiz/install/$b FC=gfortran \
+          FCFLAGS=-O0 > /dev/null
+        ;;
+
+      ifomegaO1)
+        $whiz/omega/configure --prefix=$whiz/install/$b FC=ifort FCFLAGS=-O1 \
+          > /dev/null
+        ;;
+
+      gfomegaO1)
+        $whiz/omega/configure --prefix=$whiz/install/$b FC=gfortran \
+          FCFLAGS=-O1 > /dev/null
+        ;;
+
+      ifomegaO2)
+        $whiz/omega/configure --prefix=$whiz/install/$b FC=ifort FCFLAGS=-O2 \
+          > /dev/null
+        ;;
+
+      gfomegaO2)
+        $whiz/omega/configure --prefix=$whiz/install/$b FC=gfortran \
+          FCFLAGS=-O2 > /dev/null
+        ;;
+
       ifomegaO3)
         $whiz/omega/configure --prefix=$whiz/install/$b FC=ifort FCFLAGS=-O3 \
           > /dev/null
