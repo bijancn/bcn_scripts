@@ -26,6 +26,15 @@ snippet "b(egin)?" "begin{} / end{}" br
 \end{$1}
 endsnippet
 
+snippet fig "figure"
+\begin{figure}[${1:htbp}]
+\centering
+\includegraphics[width=${2:1.0}\textwidth]{\picpath{}/${3:figname}}
+\caption[${4:short}]{${5:long}}
+\label{fig:$3}
+\end{figure}
+endsnippet
+
 snippet graphic "include graphics"
 \includegraphics[width=\textwidth]{${1:\picdir}/${2:pic_name}.pdf}
 endsnippet

@@ -112,11 +112,14 @@ export HEPMC_DIR=$install
 export LHAPDF_DIR=$install
 
 # python
-export PYTHONPATH=$PYTHONPATH:$syncd/codes/python
-export PYTHONPATH=$PYTHONPATH:$HOME/Python-GoogleCalendarParser
-export PYTHONPATH=$PYTHONPATH:$HOME/eZchat
-export PYTHONPATH=$PYTHONPATH:$HOME/termstyle
-export PYTHONPATH=$PYTHONPATH:$HOME/pydflatex
+function add_pythonpath {
+  export PYTHONPATH=$PYTHONPATH:$HOME/$1
+}
+add_pythonpath bcn_scripts/include
+add_pythonpath Python-GoogleCalendarParser
+add_pythonpath eZchat
+add_pythonpath termstyle
+add_pythonpath pydflatex
 export PYTHONUSERBASE=$HOME/install
 
 # perl
@@ -162,10 +165,10 @@ fi
 #==================#
 #  compiler flags  #
 #==================#
-export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -g"
 # Is bugged in gfortran 4.7.1
-#export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan -g"
-export DEBUG="$DEBUG -fcheck=all -fmax-errors=1 -ffpe-trap=invalid,zero,overflow"
+#export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -g"
+export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan -g"
+export DEBUG="$DEBUG -fcheck=all -fmax-errors=1 -ffpe-trap=invalid,zero,overflow,underflow,denormal"
 export FCFLAGS="-fmax-errors=1 -O2 -fbounds-check"
 # Simply append this this to your configure command with a space in front
 export DEBUG_FCFLAGS="FCFLAGS=\"$DEBUG\""
@@ -306,6 +309,7 @@ else
   alias mp='make pdf'
   alias mf='make force_pdf'
 fi
+alias s='scons'
 alias ac='autoreconf'
 
 #===========#

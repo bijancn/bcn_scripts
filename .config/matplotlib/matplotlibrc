@@ -151,17 +151,15 @@ text.usetex         : True  # use latex for all text handling. The following fon
                               # matplotlib mailing list
 #text.latex.unicode : False # use "ucs" and "inputenc" LaTeX packages for handling
                             # unicode strings.
-#text.latex.preamble :  # IMPROPER USE OF THIS FEATURE WILL LEAD TO LATEX FAILURES
-                            # AND IS THEREFORE UNSUPPORTED. PLEASE DO NOT ASK FOR HELP
-                            # IF THIS FEATURE DOES NOT DO WHAT YOU EXPECT IT TO.
-                            # preamble is a comma separated list of LaTeX statements
-                            # that are included in the LaTeX document preamble.
-                            # An example:
-text.latex.preamble : \usepackage{amsmath}\boldmath
-                            # The following packages are always loaded with usetex, so
-                            # beware of package collisions: color, geometry, graphicx,
-                            # type1cm, textcomp. Adobe Postscript (PSSNFS) font packages
-                            # may also be loaded, depending on your font settings
+
+# IMPROPER USE OF THIS FEATURE WILL LEAD TO LATEX FAILURES AND IS THEREFORE
+# UNSUPPORTED. PLEASE DO NOT ASK FOR HELP IF THIS FEATURE DOES NOT DO WHAT YOU
+# EXPECT IT TO.  preamble is a comma separated list of LaTeX statements that are
+# included in the LaTeX document preamble.
+# The following packages are always loaded with usetex, so beware of package
+# collisions: color, geometry, graphicx, type1cm, textcomp. Adobe Postscript
+# (PSSNFS) font packages may also be loaded, depending on your font settings
+text.latex.preamble : \usepackage{amsmath}, \usepackage{hepnames}, \boldmath
 
 #text.dvipnghack : None      # some versions of dvipng don't handle alpha
                              # channel properly.  Use True to correct
