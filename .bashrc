@@ -36,11 +36,11 @@ bind '"\e."':yank-last-arg
 ulimit -t unlimited              # cputime
 ulimit -f unlimited              # filesize
 ulimit -d unlimited              # datasize
-ulimit -s unlimited              # stacksize
 ulimit -c unlimited              # coredumpsize
 ulimit -m unlimited              # memoryuse
 ulimit -v unlimited              # vmemoryuse
 # These are usually not permitted
+#ulimit -s unlimited              # stacksize
 #ulimit -n unlimited              # descriptors
 #ulimit -l unlimited              # memorylocked
 #ulimit -u unlimited              # maxproc
