@@ -542,6 +542,14 @@ function show_nr_of_own_threads () {
   ps -eLF | grep ^$USER | wc -l
 }
 
+function show_process () {
+  ps -ef | grep $1
+}
+
+function kill_process () {
+  pkill -f $1
+}
+
 function show_how_often_used_here () {
   rgrep $1 * | wc -l
 }
