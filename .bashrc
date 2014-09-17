@@ -154,9 +154,9 @@ intel_dir=/opt/intel
 if [ -f $intel_dir/bin/compilervars.sh ]; then
   source $intel_dir/bin/compilervars.sh intel64
 fi
-if [ -f $intel_dir/2015/bin/compilervars.sh ]; then
-  source $intel_dir/2015/bin/compilervars.sh intel64
-  source $intel_dir/2015/vtune_amplifier_xe/amplxe-vars.sh
+if [ -f $intel_dir/2013/bin/compilervars.sh ]; then
+  source $intel_dir/2013/bin/compilervars.sh intel64
+  #source $intel_dir/2011/vtune_amplifier_xe/amplxe-vars.sh
 fi
 
 # rivet
