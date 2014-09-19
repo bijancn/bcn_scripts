@@ -113,6 +113,11 @@ for b in $builds; do
           --enable-fc-openmp > /dev/null &
         ;;
 
+      gfomegaopenmp)
+        $whiz/omega/configure --prefix=$whiz/install/$b FC=gfortran FCFLAGS='-O2' \
+          --enable-fc-openmp > /dev/null &
+        ;;
+
       ifomegaopenmp)
         $whiz/omega/configure --prefix=$whiz/install/$b FC=ifort \
           FCFLAGS='-O2' --enable-fc-openmp > /dev/null &
