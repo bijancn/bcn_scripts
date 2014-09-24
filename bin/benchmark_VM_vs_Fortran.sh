@@ -15,9 +15,11 @@ if [ $# -lt 0 ]; then
 fi
 #builds='gfomegaO0'
 #builds='gfomegaO0 ifomegaO0 gfomegaO1 ifomegaO1 gfomegaO2 ifomegaO2 gfomegaO3 ifomegaO3'
-#builds='gfomegaO2 ifomegaO2 gfomegaO3 ifomegaO3'
 #builds='gfomegaO0 ifomegaO0 gfomegaO1 ifomegaO1'
-builds='gfomegaO0 ifomegaO0 ifomegaO1 ifomegaO2 ifomegaO3'
+#builds='gfomegaO0 ifomegaO0 ifomegaO1 ifomegaO2 ifomegaO3'
+#builds='ifomegaO2warns'
+#builds='ifomegaO3'
+builds='gfomegaO2 ifomegaO2warns gfomegaO3 ifomegaO3'
 echo "Benchmarking $builds"
 
 if [ -d $whiz ]; then
