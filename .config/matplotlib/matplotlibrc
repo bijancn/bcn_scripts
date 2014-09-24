@@ -46,7 +46,7 @@ backend      : GTKAgg
 # you if backend_fallback is True
 #backend_fallback: True
 
-#interactive  : False
+interactive  : False
 #toolbar      : toolbar2   # None | toolbar2  ("classic" is deprecated)
 #timezone     : UTC        # a pytz timezone string, eg US/Central or Europe/Paris
 
@@ -58,12 +58,12 @@ backend      : GTKAgg
 ### LINES
 # See http://matplotlib.org/api/artist_api.html#module-matplotlib.lines for more
 # information on line properties.
-#lines.linewidth   : 1.0     # line width in points
-#lines.linestyle   : -       # solid line
+lines.linewidth   : 1.5     # line width in points
+lines.linestyle   : -       # solid line
 #lines.color       : blue    # has no affect on plot(); see axes.color_cycle
 #lines.marker      : None    # the default marker
 #lines.markeredgewidth  : 0.5     # the line width around the marker symbol
-#lines.markersize  : 6            # markersize, in points
+lines.markersize  : 6            # markersize, in points
 #lines.dash_joinstyle : miter        # miter|round|bevel
 #lines.dash_capstyle : butt          # butt|round|projecting
 #lines.solid_joinstyle : miter       # miter|round|bevel
@@ -125,7 +125,7 @@ font.family         : serif
 # settings for axes and ticks. Special text sizes can be defined
 # relative to font.size, using the following values: xx-small, x-small,
 # small, medium, large, x-large, xx-large, larger, or smaller
-font.size           : 17.0
+font.size           : 16.0
 #font.serif          : Bitstream Vera Serif, New Century Schoolbook, Century Schoolbook L, Utopia, ITC Bookman, Bookman, Nimbus Roman No9 L, Times New Roman, Times, Palatino, Charter, serif
 #font.sans-serif     : Bitstream Vera Sans, Lucida Grande, Verdana, Geneva, Lucid, Arial, Helvetica, Avant Garde, sans-serif
 #font.cursive        : Apple Chancery, Textile, Zapf Chancery, Sand, cursive
@@ -214,13 +214,13 @@ mathtext.fallback_to_cm : True  # When True, use symbols from the Computer Moder
 #axes.hold           : True    # whether to clear the axes by default on
 #axes.facecolor      : white   # axes background color
 #axes.edgecolor      : black   # axes edge color
-#axes.linewidth      : 1.0     # edge linewidth
-#axes.grid           : False   # display grid or not
-#axes.titlesize      : large   # fontsize of the axes title
-#axes.labelsize      : medium  # fontsize of the x any y labels
-#axes.labelweight    : normal  # weight of the x and y labels
-#axes.labelcolor     : black
-#axes.axisbelow      : False   # whether axis gridlines and ticks are below
+axes.linewidth      : 1.0     # edge linewidth
+axes.grid           : False   # display grid or not
+axes.titlesize      : large   # fontsize of the axes title
+axes.labelsize      : medium  # fontsize of the x any y labels
+axes.labelweight    : normal  # weight of the x and y labels
+axes.labelcolor     : black
+axes.axisbelow      : True   # whether axis gridlines and ticks are below
                               # the axes elements (lines, text, etc)
 #axes.formatter.limits : -7, 7 # use scientific notation if log10
                                # of the axis range is smaller than the
@@ -234,7 +234,8 @@ mathtext.fallback_to_cm : True  # When True, use symbols from the Computer Moder
 #axes.unicode_minus  : True    # use unicode for the minus symbol
                                # rather than hyphen.  See
                                # http://en.wikipedia.org/wiki/Plus_and_minus_signs#Character_codes
-#axes.color_cycle    : b, g, r, c, m, y, k  # color cycle for plot lines
+#desyorange          : (242,142,0) #f28e00ff
+axes.color_cycle    : blue, cyan, red, orange, magenta, green, black   # color cycle for plot lines
                                             # as list of string colorspecs:
                                             # single letter, long name, or
                                             # web-style hex
@@ -266,10 +267,10 @@ ytick.minor.width    : 1       # minor tick width in points
 
 
 ### GRIDS
-#grid.color       :   black   # grid color
-#grid.linestyle   :   :       # dotted
-#grid.linewidth   :   0.5     # in points
-#grid.alpha       :   1.0     # transparency, between 0.0 and 1.0
+grid.color       :   black   # grid color
+grid.linestyle   :   :       # dotted
+grid.linewidth   :   0.3     # in points
+grid.alpha       :   0.3     # transparency, between 0.0 and 1.0
 
 ### Legend
 #legend.fancybox      : False  # if True, use a rounded box for the
@@ -284,7 +285,7 @@ legend.borderpad     : 0.2    # border whitespace in fontsize units
 #legend.labelsep      : 0.010  # deprecated; the vertical space between the legend entries
 legend.labelspacing  : 0.2    # the vertical space between the legend entries in fraction of fontsize
 #legend.handlelen     : 0.05   # deprecated; the length of the legend lines
-legend.handlelength  : 1.2     # the length of the legend lines in fraction of fontsize
+legend.handlelength  : 1.7     # the length of the legend lines in fraction of fontsize
 #legend.handleheight  : 0.7     # the height of the legend handle in fraction of fontsize
 #legend.handletextsep : 0.02   # deprecated; the space between the legend line and legend text
 legend.handletextpad : 0.7    # the space between the legend line and legend text in fraction of fontsize
@@ -305,10 +306,11 @@ figure.figsize   : 9, 6    # figure size in inches
 
 # The figure subplot parameters.  All dimensions are a fraction of the
 # figure width or height
-figure.subplot.left    : 0.10  # the left side of the subplots of the figure
-figure.subplot.right   : 0.99    # the right side of the subplots of the figure
-figure.subplot.bottom  : 0.10    # the bottom of the subplots of the figure
-figure.subplot.top     : 0.98    # the top of the subplots of the figure
+#figure.subplot.left    : 0.10  # the left side of the subplots of the figure
+#figure.subplot.right   : 0.99    # the right side of the subplots of the figure
+#figure.subplot.bottom  : 0.10    # the bottom of the subplots of the figure
+#figure.subplot.top     : 0.98    # the top of the subplots of the figure
+#figure.subplot.top     : 0.94    # the top of the subplots of the figure
 #figure.subplot.wspace  : 0.2    # the amount of width reserved for blank space between subplots
 #figure.subplot.hspace  : 0.2    # the amount of height reserved for white space between subplots
 
