@@ -62,8 +62,8 @@ Plugin 'scrooloose/nerdcommenter'
 " Allows to use % on keywords like if
 Plugin 'matchit.zip'
 
-" A decent color scheme from which I want to borrow some concepts
-"Plugin 'jonathanfilip/vim-lucius'
+" A very decent color scheme from which I want to borrow some concepts
+Plugin 'jonathanfilip/vim-lucius'
 
 " Good support for Markdown
 Plugin 'vim-pandoc/vim-pandoc'
@@ -71,15 +71,21 @@ Plugin 'vim-pandoc/vim-pandoc'
 " Syntax file for form
 Plugin 'tueda/form.vim'
 
+" Nice fuzzy search on files, buffers and more
+Plugin 'Shougo/unite.vim'
+" Can be used by unite for more efficient search
+Plugin 'Shougo/vimproc.vim'
+" Powerful file explorer that needs unite
+Plugin 'Shougo/vimfiler.vim'
+
+" Generate a fast shell prompt with powerline symbols and airline colors
+" in vim: :PromptlineSnapshot ~/.shell_prompt.sh airline
+" in bashrc: source ~/.shell_prompt.sh
+Plugin 'edkolev/promptline.vim'
+
 "=============="
 "  deprecated  "
 "=============="
-" Don't really use it
-"Plugin 'taglist.vim'
-
-" Sadly it is bugged for me. Must collide with some setting I can't find
-"Plugin 'scrooloose/nerdtree'
-
 " Just can't get used to it
 "Plugin 'tpope/vim-surround'
 "Plugin 'tpope/vim-repeat'
@@ -92,15 +98,11 @@ call vundle#end()
 " Use the default filetype settings. Also load indent files,
 " to automatically do language-dependent indenting.
 filetype plugin indent on
+syntax on                 " Switch syntax highlighting on
 
 " Reuse the indentation of the previous line if no filetype indent is available
 set autoindent
-
-" Consistent tabbing. Note: Clean up existing files with :retab
 set shiftwidth=2        " Size of indentation
-set expandtab           " Always uses spaces instead of tab characters
-set tabstop=2           " Size of insterted spaces if tab is pressed
-
 set textwidth=80        " Vim will break after 80 characters
 set linebreak           " Vim will not break words. See :help breakat
 set showbreak=-->\      " Prefix soft-wrapped lines with these characters
@@ -112,55 +114,65 @@ else
   " Mark as Error if no consistent line is available
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>81v.\+', -1)
 endif
+set cursorline          " Highlight current line
+
+" Tabs. Note: Use :retab to clean up mixed indentation
+set expandtab           " Always uses spaces instead of tab characters
+set tabstop=2           " Size of insterted spaces if tab is pressed
+set list                " Highlight tab characters in files
+" disabled highlighting of trailing spaces: trail:.,
+set listchars=tab:>.,extends:#,nbsp:.
 
 " This allows backspacing over everything in insert mode. Don't insert spaces.
 set backspace=indent,eol,start
 
-set incsearch           " do incremental searching
-set ignorecase          " Standard searches are case insensitive
-set smartcase           " Case sensitive only when uppercase characters appear
-set hlsearch            " Switch on highlighting the last used search pattern
+" Searching
+set incsearch             " do incremental searching
+set ignorecase            " Standard searches are case insensitive
+set smartcase             " Case sensitive only when uppercase characters appear
+set hlsearch              " Switch on highlighting the last used search pattern
 
-set fdo-=search         " Search only in unfolded text. Does this work?
-set foldmethod=syntax   " Fold per default according to syntax
-setlocal foldlevel=99   " Open all folds per default
-set foldnestmax=3       " Create 3 levels of folds overall
+" Folds
+set fdo-=search           " Search only in unfolded text. Does this work?
+set foldmethod=syntax     " Fold per default according to syntax
+setlocal foldlevel=99     " Open all folds per default
+set foldnestmax=3         " Create 3 levels of folds overall
 
-" The mode of wildmenu is set by wildmode. Gives way better tab completion of
-" file names. Only completes as far as possible and gives list of possibilities
-" with second TAB
+set wildmenu              " Mode of wildmenu is set by wildmode
+" Complete only as far as possible then give list of possibilities
 set wildmode=longest,list
-set wildmenu
 
-set nobackup            " do not keep a backup file
-set history=500         " keep 500 lines of command line history
-set ssop-=options       " Do not store global and local values in a session
-set showcmd             " display incomplete commands
+set nobackup              " do not keep a backup file
+set directory=~/.vim/swap " Don't put swap files in local directories
+set history=500           " keep 500 lines of command line history
+set ssop-=options         " Do not store global and local values in a session
+set showcmd               " display incomplete commands
+set number                " Activate line numbers on the left side
 
-syntax on               " Switch syntax highlighting on
-colorscheme bcn_light
+" Colors
+set t_Co=256              " Enable 256 colors
+set background=light
+colorscheme lucius
+LuciusLight
+" LuciusLightLowContrast
+" LuciusLightHighContrast
+" colorscheme bcn_light
 
+" Mouse
 if has('mouse')         " Activate mouse
   set mouse=a
 endif
-
-set guioptions-=m       " remove menu bar in gVim
-set guioptions-=T       " remove toolbar in gVim
-set number              " Activate line numbers on the left side
-
-set cursorline          " Highlight current line
-
-" GVIM cursor
 set guicursor=n-v-c:block-Cursor
 set guicursor+=i:ver100-iCursor
 set guicursor+=n-v-c:blinkon0
 set guicursor+=i:blinkwait10
 
-" Terminal cursor. Use different colors for insert and normal mode.
-let &t_SI = "\<Esc>]12;blue\x7"
-let &t_EI = "\<Esc>]12;orange\x7"
+set guioptions-=m       " remove menu bar in gVim
+set guioptions-=T       " remove toolbar in gVim
 
-set lazyredraw          " Performance option
+" Terminal cursor. Use different colors for insert and normal mode.
+"let &t_SI = "\<Esc>]12;blue\x7"
+"let &t_EI = "\<Esc>]12;orange\x7"
 
 set clipboard=unnamedplus " Allows to use the overall clipboard
 
@@ -170,10 +182,23 @@ let python_highlight_all = 1
 
 let g:Tex_flavor='latex'  " Defaulting to latex and not plain tex
 
-" Apparantly those are performance settings. I see no difference, though.
+" Pretty vsplit and fold symbols
+set fillchars=vert:│,fold:─
+hi VertSplit      ctermbg=none ctermfg=gray
+
+" A buffer becomes hidden when it is abandoned. Allows to have unsaved changes
+" in different buffers.
+set hidden
+
+" Set new splits below and right
+set splitbelow
+set splitright
+
+" Performance
 syntax sync minlines=256
 autocmd BufEnter * :syntax sync fromstart
 set ttyfast
+set lazyredraw
 
 "if has ("conceal")
   "" Enable concealing, i.e. greek letters are shown as unicode
@@ -192,7 +217,8 @@ set ttyfast
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 nnoremap <silent> <C-Space> @=(foldlevel('.')?'zA':"\<Space>")<CR>
 vnoremap <Space> zf
-nnoremap <Leader>f :set foldmethod=none
+"nnoremap <Leader>f :set foldmethod=none
+nnoremap <Leader>f :VimFilerExplorer <c-r>=expand("%:p:h")<cr>/
 
 " Toggle between highlighting line or column
 nnoremap <Leader>o :set cursorline! cursorcolumn!<CR>
@@ -206,15 +232,60 @@ no <right> >>
 
 " Create new tab
 map tn :tabnew <CR>
-
-" Tab opened buffers
-map ta :tab all <CR>
+"
+" Create a new empty buffer
+map bn :enew <CR>
 
 " Open new tab with directory of current file
 map te :tabedit <c-r>=expand("%:p:h")<cr>/
 
+" Open new buffer with directory of current file
+map be :e <c-r>=expand("%:p:h")<cr>/
+
+" Use less shift key
+nnoremap ; :
+
+" Easy window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+" Tab opened buffers. No good command!
+"map ta :tab all <CR>
+
+" Yank from current position to end
+nnoremap Y y$
+
+" Center to new location after movement
+nnoremap n nzz
+nnoremap } }zz
+
+" Don't skip rows when long lines are wrapped
+nnoremap j gj
+nnoremap k gk
+
+" Go to the next buffer
+nmap K :bnext<CR>
+
+" Go to the last buffer
+nmap J :bprevious<CR>
+
+" Close the current buffer and move to the previous one
+nmap bq :bp <BAR> bd #<CR>
+nmap bc :bp <BAR> bd #<CR>
+
+" Show all open buffers and their status
+nmap bl :ls<CR>
+
+" Join lines
+nmap <Leader>j :join<CR>
+
 " Change working directory to current file
 map <Leader>d :cd %:p:h<CR>:pwd<CR>
+
+" Move working directory one level higher
+map <Leader>.. :cd ..<CR>:pwd<CR>
 
 " Filetype specific make commands are in ~/.vim/ftplugin/<lang>.vim
 nmap <Leader>m :w<CR>:make<CR> <CR>
@@ -438,8 +509,17 @@ let g:airline_powerline_fonts = 1
 " Ensure that airline shows up
 set laststatus=2
 
-" Super fancy tabline
+" Super fancy tabline for tabs and buffers
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#bufferline#enabled = 1
+"let g:airline#extensions#bufferline#overwrite_variables = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+" Show just the filename
+"let g:airline#extensions#tabline#fnamemod = ':t'
+
+" Do not use tagbar which can be slow
+let g:airline#extensions#tagbar#enabled = 0
 
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
@@ -448,6 +528,45 @@ let g:airline_symbols.space = "\ua0"
 
 " Shows trailing whitespace
 let g:airline_detect_whitespace=1
+
+"=============================================================================="
+"                                    UNITE                                     "
+"=============================================================================="
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+
+" -no-split opens search in current window
+" -start-insert causes Unite to open with the prompt activated
+" -quick-match allows to open an entry quickly with one keypress
+" async uses vimproc behind the scenes, which affords for searching while it
+" populates the file list in the background
+"nnoremap <space><space> :Unite -no-split -start-insert file_rec<CR>
+nnoremap <space><space> :Unite -no-split -start-insert file_rec/async<CR>
+nnoremap <space>f       :Unite -no-split -start-insert file<cr>
+nnoremap <space>b       :Unite -no-split -start-insert buffer<cr>
+nnoremap <space>/       :Unite grep:.<cr>
+
+" Allow to delete files in unite (might be dangerous)
+call unite#custom#alias('file', 'delete', 'vimfiler__delete')
+
+"=============================================================================="
+"                                   VIMFILER                                   "
+"=============================================================================="
+let g:vimfiler_as_default_explorer = 1
+
+" Pretty symbols
+let g:vimfiler_tree_leaf_icon = "¦"
+"let g:vimfiler_tree_leaf_icon = "⋮"
+let g:vimfiler_tree_opened_icon = "▼"
+let g:vimfiler_tree_closed_icon = "▷"
+"let g:vimfiler_tree_closed_icon = '▸'
+let g:vimfiler_file_icon = '-'
+let g:vimfiler_marked_file_icon = '※'
+
+" Enable file operation commands
+call vimfiler#custom#profile('default', 'context', {
+      \ 'safe' : 0,
+      \ })
 
 "=============================================================================="
 "                                   ULTISNIP                                   "
@@ -473,29 +592,29 @@ nmap <Leader>g :Goyo<CR>
 "=============================================================================="
 " Toggle spell with a specific language and spellfile
 function! ToggleSpell(lang)
-	if !exists("b:old_spelllang")
-		let b:old_spelllang = &spelllang
-		let b:old_spellfile = &spellfile
-		let b:old_dictionary = &dictionary
-	endif
+  if !exists("b:old_spelllang")
+    let b:old_spelllang = &spelllang
+    let b:old_spellfile = &spellfile
+    let b:old_dictionary = &dictionary
+  endif
 
-	let l:newMode = ""
-	if !&l:spell || a:lang != &l:spelllang
-		setlocal spell
-		let l:newMode = "spell"
-		execute "setlocal spelllang=" . a:lang
-		execute "setlocal spellfile=" . "~/.vim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
-		execute "setlocal dictionary=" . "~/.vim/spell/" . a:lang . "." . &encoding . ".dic"
-		let l:newMode .= ", " . a:lang
-	else
-		setlocal nospell
-		let l:newMode = "nospell"
-		execute "setlocal spelllang=" . b:old_spelllang
-		execute "setlocal spellfile=" . b:old_spellfile
-		execute "setlocal dictionary=" . b:old_dictionary
-	endif
-	return l:newMode
+  let l:newMode = ""
+  if !&l:spell || a:lang != &l:spelllang
+    setlocal spell
+    let l:newMode = "spell"
+    execute "setlocal spelllang=" . a:lang
+    execute "setlocal spellfile=" . "~/.vim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
+    execute "setlocal dictionary=" . "~/.vim/spell/" . a:lang . "." . &encoding . ".dic"
+    let l:newMode .= ", " . a:lang
+  else
+    setlocal nospell
+    let l:newMode = "nospell"
+    execute "setlocal spelllang=" . b:old_spelllang
+    execute "setlocal spellfile=" . b:old_spellfile
+    execute "setlocal dictionary=" . b:old_dictionary
+  endif
+  return l:newMode
 endfunction
 
-nmap <silent> <F7> :echo ToggleSpell("en")<CR>			  " Toggle English spell.
-nmap <silent> <F8> :echo ToggleSpell("de_de")<CR>     " Toggle German spell.
+nmap <silent> <F7> :echo ToggleSpell("en")<CR>\        " Toggle English spell.
+nmap <silent> <F8> :echo ToggleSpell("de_de")<CR>\     " Toggle German spell.

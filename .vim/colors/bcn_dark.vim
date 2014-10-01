@@ -23,9 +23,6 @@ endif
 
 let colors_name = "bcn_dark"
 
-" Enable 256 colors
-set t_Co=256
-
 "=========="
 "  colors  "
 "=========="

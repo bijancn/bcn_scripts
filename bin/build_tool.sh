@@ -11,9 +11,11 @@ if [ $# -lt 3 ]; then
   echo '- build = def -> default compiler and flags'
   echo '- build = debug -> gfortran with DEBUG flags'
   echo '- build = doc -> default compiler, producing documentation '
-  echo '- build = gfwhizopenmp -> gfortran with OpenMP support'
-  echo '- build = ifomegaopenmp -> ifort with OpenMP support, only omega build'
-  echo '- n = 0 -> '
+  echo '- build = gfomegaXX -> gfortran (only omega)'
+  echo '- build = ifomegaXX-> ifort (only omega)'
+  echo '- XX = openmp -> with OpenMP support'
+  echo '- XX = O[0-3] -> Optimization level'
+  echo '- n = 0 -> Dont configure'
   echo '- n = 1 -> configure '
   echo '- n = 2 -> autoreconf, configure '
   echo '- k = 0 -> Dont make'
@@ -34,7 +36,7 @@ fi
 conf=$2
 make=$3
 check=$4
-echo "Building $builds, confing $conf and checking $check"
+echo "Building $builds, confing $conf, making $make and checking $check"
 
 if [ -d $whiz ]; then
   cd $whiz
@@ -46,13 +48,14 @@ mkdir build
 if [ $conf -eq 2 ]; then
   echo 'Autoreconfing...'
   autoreconf
-  echo 'Done! Going to configure.'
+  echo "========= AUTOCONFIGURE IS DONE ========="
 fi
 cd build
 for b in $builds; do
   mkdir $b
   cd $b
   if (($conf > 0)); then
+    echo "Configuring $b"
     case $b in
       doc)
         $whiz/configure --prefix=$whiz/install/$b \
@@ -108,7 +111,7 @@ for b in $builds; do
           FCFLAGS=-O3 > /dev/null &
         ;;
 
-      gfwhizopenmp)
+      gfopenmp)
         $whiz/configure --prefix=$whiz/install/$b FC=gfortran FCFLAGS='-O2' \
           --enable-fc-openmp > /dev/null &
         ;;
@@ -120,18 +123,31 @@ for b in $builds; do
 
       ifomegaopenmp)
         $whiz/omega/configure --prefix=$whiz/install/$b FC=ifort \
-          FCFLAGS='-O2' --enable-fc-openmp > /dev/null &
+          FCFLAGS='-O2 -openmp' --enable-fc-openmp > /dev/null &
 
     esac
-  fi
-  echo "Building $b"
-  if [ $make -eq 1 ]; then
-    (make -j 2 --silent; make install) &
-  fi
-  if [ $check -eq 1 ]; then
-    make check
   fi
   cd ..
 done
 wait
-echo 'Done'
+echo "========= CONFIGURE IS DONE ========="
+for b in $builds; do
+  cd $b
+  echo "Building and installing $b"
+  if [ $make -eq 1 ]; then
+    (make -j 2 --silent; make install) &
+  fi
+  cd ..
+done
+wait
+echo "========= MAKE IS DONE ========="
+for b in $builds; do
+  cd $b
+  echo "Checking $b"
+  if [ $check -eq 1 ]; then
+    make check &
+  fi
+  cd ..
+done
+wait
+echo "========= MAKECHECK IS DONE ========="

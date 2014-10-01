@@ -20,6 +20,9 @@
 # Allow to use backspace when connected via ssh to certain systems
 stty erase ^?
 
+# Airline as prompt
+source ~/.shell_prompt.sh
+
 #============#
 #  settings  #
 #============#
@@ -65,8 +68,12 @@ set -o notify
 set -o noclobber
 set -o ignoreeof
 
+# These should be in a local file
 # Number of cores for the CUBA library
-export CUBACORES=1
+#export CUBACORES=1
+
+# Number of cores for the OpenMP library
+#export OMP_NUM_THREADS=2
 
 # Enabling backtracing in OCaml
 export OCAMLRUNPARAM=b
