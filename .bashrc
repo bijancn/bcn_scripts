@@ -17,38 +17,35 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-# Allow to use backspace when connected via ssh to certain systems
-stty erase ^?
-
 # Airline as prompt
 source ~/.shell_prompt.sh
 
 #============#
 #  settings  #
 #============#
+# Allow to use backspace when connected via ssh to certain systems
+stty erase ^?
+
 # Customize colors for ls
 eval `dircolors $HOME/.dir_colorsrc`
-
-export difftool='vim -d'
 
 # VI mode for bash
 set -o vi
 bind '"\e."':yank-last-arg
 
-# Max out machine limits
-ulimit -t unlimited              # cputime
-ulimit -f unlimited              # filesize
-ulimit -d unlimited              # datasize
-ulimit -c unlimited              # coredumpsize
-ulimit -m unlimited              # memoryuse
-ulimit -v unlimited              # vmemoryuse
-# These are usually not permitted
-#ulimit -s unlimited              # stacksize
-#ulimit -n unlimited              # descriptors
-#ulimit -l unlimited              # memorylocked
-#ulimit -u unlimited              # maxproc
-# This is for processes spawned by CPUs within !OMP PARALLEL DO
-export KMP_STACKSIZE=500000000
+# Enable custom vim
+if [ -f $HOME/install/bin/vim ]; then
+  export VIMRUNTIME=$HOME/install/share/vim/vim74/
+  export EDITOR=$HOME/install/bin/vim
+  export VISUAL=$HOME/install/bin/vim
+else
+  export VIMRUNTIME=/usr/share/vim/vim74/
+  export EDITOR=/usr/bin/vim
+  export VISUAL=/usr/bin/vim
+fi
+
+# Use vim for my diffing functions
+export difftool='vim -d'
 
 # Narrowing greps search realms
 a='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo '
@@ -68,25 +65,37 @@ set -o notify
 set -o noclobber
 set -o ignoreeof
 
-# These should be in a local file
-# Number of cores for the CUBA library
-#export CUBACORES=1
-
-# Number of cores for the OpenMP library
-#export OMP_NUM_THREADS=2
-
 # Enabling backtracing in OCaml
 export OCAMLRUNPARAM=b
 
-if [ -f $HOME/install/bin/vim ]; then
-  export VIMRUNTIME=$HOME/install/share/vim/vim74/
-  export EDITOR=$HOME/install/bin/vim
-  export VISUAL=$HOME/install/bin/vim
-else
-  export VIMRUNTIME=/usr/share/vim/vim74/
-  export EDITOR=/usr/bin/vim
-  export VISUAL=/usr/bin/vim
-fi
+#============#
+#  hardware  #
+#============#
+# These should be in a local file
+
+# Max out machine limits
+ulimit -t unlimited              # cputime
+ulimit -f unlimited              # filesize
+ulimit -d unlimited              # datasize
+ulimit -c unlimited              # coredumpsize
+ulimit -m unlimited              # memoryuse
+ulimit -v unlimited              # vmemoryuse
+# These are usually not permitted
+#ulimit -s unlimited              # stacksize
+#ulimit -n unlimited              # descriptors
+#ulimit -l unlimited              # memorylocked
+#ulimit -u unlimited              # maxproc
+
+# Number of cores for the CUBA library
+export CUBACORES=1
+
+# This is for processes spawned by CPUs within !OMP PARALLEL DO
+export KMP_STACKSIZE=500000000
+export KMP_AFFINITY='compact'
+
+# Number of cores for the OpenMP library
+export OMP_NUM_THREADS=12
+export GOMP_CPU_AFFINITY="0 2 4 6 8 10 1 3 5 7 9 11"
 
 #===========#
 #  folders  #
@@ -97,37 +106,51 @@ export syncd=$HOME/safe
 export hive=$HOME/hive
 export desy_soft=/afs/desy.de/group/theorie/software/ELF64
 export install=$HOME/install
-export whiz_soft=$HOME/trunk/install/
+whiz_dir1=$HOME/trunk/install
+whiz_dir2=/data/bcho/trunk/install
+if [ -d $whiz_dir1 ]; then
+  export whiz_soft=$whiz_dir1
+fi
+if [ -d $whiz_dir2 ]; then
+  export whiz_soft=$whiz_dir2
+fi
 
 #=========#
 #  paths  #
 #=========#
-# bin
-export PATH=$desy_soft/bin:$PATH
-export PATH=$HOME/bcn_scripts/bin:$PATH
-export PATH=$install/bin:$PATH
-export PATH=$whiz_soft/def/bin:$PATH
-export PATH=$HOME/MG5_aMC_v2_1_1:$PATH
-
-# lib
-export LD_LIBRARY_PATH=$desy_soft/lib:$desy_soft/lib64:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=$install/lib:$install/lib64:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=$whiz_soft/def/lib:$whiz_soft/def/lib64:$LD_LIBRARY_PATH
-
-# hep
-export HEPMC_DIR=$install
-export LHAPDF_DIR=$install
-
-# python
-function add_pythonpath {
+prepend_path () {
+  export PATH=$1/bin:$PATH
+}
+prepend_libpath () {
+  export LD_LIBRARY_PATH=$1/lib64:$1/lib:$LD_LIBRARY_PATH
+}
+prepend_all_paths () {
+  prepend_path $1
+  prepend_libpath $1
+}
+add_pythonpath () {
   export PYTHONPATH=$PYTHONPATH:$HOME/$1
 }
+
+prepend_all_paths $install
+prepend_all_paths $desy_soft
+prepend_all_paths $whiz_soft/def
+
+prepend_path $HOME/bcn_scripts
+
+# python
 add_pythonpath bcn_scripts/include
 add_pythonpath Python-GoogleCalendarParser
 add_pythonpath eZchat
 add_pythonpath termstyle
 add_pythonpath pydflatex
 export PYTHONUSERBASE=$HOME/install
+
+export CPATH=$desy_soft/include:$CPATH
+
+# hep
+export HEPMC_DIR=$install
+export LHAPDF_DIR=$install
 
 # perl
 export PERL5LIB=$install/lib/perl5/
@@ -138,18 +161,21 @@ if [ -d $spider_dir ]; then
   export SPIDEROAKDATADIR=$spider_dir
 fi
 
+command_exists () {
+      type "$1" &> /dev/null ;
+}
 # opam
-if opam &> /dev/null; then
+if command_exists opam; then
   eval `opam config env`
 fi
 
 # pydflatex
-if pydflatex 2>/dev/null; then
+if command_exists pydflatex; then
   export pdftool=pydflatex
 fi
 
 # java
-java_path=$syncd/Codes/java
+java_path=$syncd/codes/java
 am_tp=$java_path/Amazon-MWS/third-party
 am_bu=$java_path/Amazon-MWS/build/classes/com/amazonservices/mws
 am_pro=$am_bu/products
@@ -172,8 +198,6 @@ fi
 #==================#
 #  compiler flags  #
 #==================#
-# Is bugged in gfortran 4.7.1
-#export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -g"
 export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan -g"
 export DEBUG="$DEBUG -fcheck=all -fmax-errors=1 -ffpe-trap=invalid,zero,overflow,underflow,denormal"
 export FCFLAGS="-fmax-errors=1 -O2 -fbounds-check"
@@ -289,7 +313,7 @@ alias c='./configure'
 #========#
 #  make  #
 #========#
-if cit 2>/dev/null; then
+if command_exists cit; then
   alias n='cit nosetests'
   alias nv='cit "nosetests -v"'
   alias nt='cit "nosetests --with-timer"'
@@ -379,7 +403,7 @@ alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 #  other  #
 #=========#
 alias le='less'
-if trash-put 2>/dev/null; then
+if command_exists trash-put; then
   alias rm='trash-put -v'
   alias rmm='/bin/rm'
 else
@@ -537,36 +561,40 @@ function show-wlan-channels () {
   sudo iwlist wlan0 scan | grep Frequency | sort | uniq -c | sort -n
 }
 
-function show_diff () {
+function show-diff () {
   $difftool err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
 }
 
-function show_path () {
+function show-path () {
   tr ':' '\n' <<< "$PATH"
 }
 
-function show_failed_tests () {
+function show-lib-path () {
+  tr ':' '\n' <<< "$LD_LIBRARY_PATH"
+}
+
+function show-failed-tests () {
   find -name 'test-suite.log' | xargs grep -v 'XFAIL' | grep -v ' 0' | grep 'FAIL'
 }
 
-function show_nr_of_own_threads () {
+function show-nr-of-own-threads () {
   ps -eLF | grep ^$USER | wc -l
 }
 
-function show_process () {
+function show-process () {
   ps -ef | grep $1
 }
 
-function kill_process () {
+function kill-all () {
   pkill -f $1
 }
 
-function show_how_often_used_here () {
+function show-how-often-used-here () {
   rgrep $1 * | wc -l
 }
 
 # Get current host related info.
-function show_host_information () {
+function show-host-information () {
   echo -e "\nYou are logged on ${BRed}$HOST"
   echo -e "\n${BRed}Additional information:$NC " ; uname -a
   echo -e "\n${BRed}Users logged on:$NC " ; w -hs |
@@ -580,17 +608,17 @@ function show_host_information () {
   echo
 }
 
-alias show_cpu_info='lscpu; grep -i "model name" /proc/cpuinfo | uniq'
+alias show-cpu-info='lscpu; grep -i "model name" /proc/cpuinfo | uniq'
 
-function show_disk_speed () {
+function show-disk-speed () {
   dd if=/dev/zero of=$1/output conv=fdatasync bs=100k count=1k; rm -f $1/output
 }
 
-function show_big_files () {
+function show-big-files () {
   find . -type f -size +20000k -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
 }
 
-function show_pylint_scores () {
+function show-pylint-scores () {
   for i in ./*.py; do
   score=`pylint $i | grep "rated at" | awk '{print $7}'`
   echo "$i : $score"
@@ -637,6 +665,13 @@ function fa () {
 function sfa () {
  sudo find -iname "*$1*"
 }
+
+#========#
+#  htop  #
+#========#
+if ! command_exists htop ; then
+  alias htop=top
+fi
 
 #==============================================================================#
 #                                     GIT                                      #
