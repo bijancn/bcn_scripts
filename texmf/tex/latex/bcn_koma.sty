@@ -28,7 +28,7 @@
 \RequirePackage[tbtags]{amsmath}  % tbtags sets the number of split
                                   % environments at the end
 \RequirePackage{amssymb,amsthm,amsfonts}
-\RequirePackage{simplewick}       % Wick contractions
+\RequirePackage{mathrsfs}         % For \mathsrc
 \RequirePackage{slashed}          % The almighty slash-notation
 \RequirePackage{xcolor}           % Allows every colormixture
 \RequirePackage{bbm}              % $\mathbbm{N}$ -> |N, etc.
@@ -41,9 +41,38 @@
 \RequirePackage{nicefrac}         % Nice small fractions
 \RequirePackage{environ}          % Allows to use \NewEnviron
 \RequirePackage{listings}         % For code listings
+\RequirePackage{acronym}          % Use acronyms consistently
+\RequirePackage{hepnames}         % Names of particles
+\RequirePackage{siunitx}          % Correct typesetting of units
+\RequirePackage[capitalise]{cleveref} % Enable \cref
+\RequirePackage[font=small,labelfont=bf,format=plain,margin=1em,indention=1em,labelsep=space,skip=5em]{caption}
+\RequirePackage[babel]{csquotes}  % Loading 'csquotes' recommended by biber
+\RequirePackage{bcn_color}
 \RequirePackage{hyperref}         % Customize with \hypersetup{}. Has to be last!
+%\RequirePackage{simplewick}       % Wick contractions
 %\RequirePackage{subfig}						% Subcaption for several pics
 %\RequirePackage{tikz}             % Provides the means for \circled
+
+\DeclareSIUnit[number-unit-product = \;]{\permil}{\textperthousand}
+\DeclareSIUnit[number-unit-product = \;]\byte{B}
+\DeclareSIUnit[number-unit-product = \;]\flops{FLOPS}
+\DeclareBinaryPrefix\kibi{Ki}{10}
+\DeclareBinaryPrefix\mibi{Mi}{20}
+
+\crefformat{section}{Section~#2#1#3}
+\crefformat{figure}{Fig.~#2#1#3}
+\crefformat{table}{Tab.~#2#1#3}
+\crefformat{chapter}{Chapter~#2#1#3}
+\crefformat{appendix}{Appendix~#2#1#3}
+
+\newcommand\hypercitecolor{darkblue}
+\hypersetup{%
+    colorlinks,
+    citecolor=\hypercitecolor,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
 
 %============%
 %  commands  %

@@ -167,9 +167,9 @@ zoom= =
 zoom_in= +
 zoom_out= -
 entry_delete_active=Control d
-tabgrep= 
-jump= '
-mark= `
-adblock_reload_rules= 
-repeat= .
-hints_selector= 
+tabgrep=
+jump='
+mark=`
+adblock_reload_rules=
+repeat=.
+hints_selector=

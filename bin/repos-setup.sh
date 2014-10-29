@@ -9,15 +9,6 @@ else
   echo '~/.git-completion.sh already exists!'
 fi
 
-function github {
-  git clone git@github.com:$1/$2.git
-}
-function bitbucket {
-  git clone ssh://git@bitbucket.org/$1/$2.git
-}
-function bitbucket_hg {
-  hg clone ssh://hg@bitbucket.org/$1/$2
-}
 function get_logilab {
   mkdir logilab && touch logilab/__init__.py
   hg clone http://hg.logilab.org/logilab/common logilab/common

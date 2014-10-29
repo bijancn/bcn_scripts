@@ -20,6 +20,34 @@ snippet r "\\ref{}" w
 \ref{$1}
 endsnippet
 
+snippet ^ "^{}" i
+^{$1}$0
+endsnippet
+
+snippet _ "_{}" i
+_{$1}$0
+endsnippet
+
+snippet T "\T{}" i
+\T{$1}$0
+endsnippet
+
+snippet . "\po{}"
+\po{}$0
+endsnippet
+
+snippet , "\co{}"
+\co{}$0
+endsnippet
+
+snippet \ "\{}" i
+\\$1{$2}$0
+endsnippet
+
+snippet rc "Rcite"
+\Rcite{$1}$0
+endsnippet
+
 snippet "b(egin)?" "begin{} / end{}" br
 \begin{${1:something}}
 	${0:${VISUAL}}
@@ -82,7 +110,7 @@ snippet align "Align environment" b
 $0
 endsnippet
 
-snippet equation "Equation environment" b
+snippet eq "Equation environment" b
 \begin{equation}
 	${1:${VISUAL}}
 \end{equation}
