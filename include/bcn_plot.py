@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib._cm import cubehelix
-from matplotlib.ticker import AutoMinorLocator
+from matplotlib.ticker import AutoMinorLocator, ScalarFormatter
 
 # Valid legend locations
 # right         # center left   # upper right    # lower right   # best
@@ -57,6 +57,13 @@ class Plotter(object):
       ax.yaxis.set_minor_locator(minorLocator)
     #plt.tick_params(which='both', width=2)
     #plt.tick_params(which='major', length=7)
+
+    # This should allow to use scientific format of logarithmic scale with 10^X
+    # above the axe.
+    #formatter = ScalarFormatter(useMathText=True)
+    #formatter.set_scientific(True)
+    #formatter.set_powerlimits((-1,1))
+    #ax.yaxis.set_major_formatter(formatter)
 
     # legend
     if not legend_hide:

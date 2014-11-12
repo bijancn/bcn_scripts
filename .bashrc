@@ -402,6 +402,7 @@ alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 #=========#
 #  other  #
 #=========#
+alias py='ipython notebook --pylab inline &'
 alias le='less'
 if command_exists trash-put; then
   alias rm='trash-put -v'

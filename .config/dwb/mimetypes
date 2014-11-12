@@ -9,4 +9,4 @@ application/postscript evince
 application/octet-stream gnome-open
 application/x-gzip gnome-open
 application/zip gnome-open
-application/pdf evince
+application/pdf gnome-open
