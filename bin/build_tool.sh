@@ -1,7 +1,11 @@
 if [ -d $HOME/trunk ]; then
   whiz="$HOME/trunk"
 else
-  whiz=`pwd`
+  if [ -d /data/bcho/trunk ]; then
+    whiz="/data/bcho/trunk"
+  else
+    whiz=`pwd`
+  fi
 fi
 echo "Base dir is $whiz"
 
