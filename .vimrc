@@ -40,8 +40,8 @@ Plugin 'SirVer/ultisnips'
 Plugin 'junegunn/goyo.vim'
 
 " Nice fuzzy autocompletion with supertab support
-" Ubuntu libs: build-essential cmake python-dev
-" cd ~/.vim/bundle/YouCompleteMe && ./install.sh
+" Ubuntu libs:  build-essential cmake python-dev
+" Build with:   cd ~/.vim/bundle/YouCompleteMe && ./install.sh
 Plugin 'Valloric/YouCompleteMe'
 
 " Diffing parts of one or two files
@@ -49,6 +49,26 @@ Plugin 'AndrewRadev/linediff.vim'
 
 " Show errors and warnings of compilers and checkers
 Plugin 'scrooloose/syntastic'
+
+" Faster syntax and indent for free-form Fortran
+Plugin 'bijancn/free-fortran.vim'
+
+" Syntax file for sindarin
+Plugin 'bijancn/whizard.vim'
+
+" Syntax file for form
+Plugin 'tueda/form.vim'
+
+" Rainbow parentheses
+Bundle 'luochen1990/rainbow'
+
+" Generate a fast shell prompt with powerline symbols and airline colors
+" in vim:     :PromptlineSnapshot ~/.shell_prompt.sh airline
+" in bashrc:  source ~/.shell_prompt.sh
+Plugin 'edkolev/promptline.vim'
+
+" A very decent color scheme from which I want to borrow some concepts
+Plugin 'jonathanfilip/vim-lucius'
 
 "==========="
 "  testing  "
@@ -62,14 +82,8 @@ Plugin 'scrooloose/nerdcommenter'
 " Allows to use % on keywords like if
 Plugin 'matchit.zip'
 
-" A very decent color scheme from which I want to borrow some concepts
-Plugin 'jonathanfilip/vim-lucius'
-
 " Good support for Markdown
 Plugin 'vim-pandoc/vim-pandoc'
-
-" Syntax file for form
-Plugin 'tueda/form.vim'
 
 " Nice fuzzy search on files, buffers and more
 Plugin 'Shougo/unite.vim'
@@ -78,17 +92,9 @@ Plugin 'Shougo/vimproc.vim'
 " Powerful file explorer that needs unite
 Plugin 'Shougo/vimfiler.vim'
 
-" Generate a fast shell prompt with powerline symbols and airline colors
-" in vim: :PromptlineSnapshot ~/.shell_prompt.sh airline
-" in bashrc: source ~/.shell_prompt.sh
-Plugin 'edkolev/promptline.vim'
-
-"=============="
-"  deprecated  "
-"=============="
-" Just can't get used to it
-"Plugin 'tpope/vim-surround'
-"Plugin 'tpope/vim-repeat'
+" Add the surround physics. Repeat allows to repeat those
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
 
 call vundle#end()
 
@@ -120,8 +126,8 @@ set cursorline          " Highlight current line
 set expandtab           " Always uses spaces instead of tab characters
 set tabstop=2           " Size of insterted spaces if tab is pressed
 set list                " Highlight tab characters in files
-" disabled highlighting of trailing spaces: trail:.,
-set listchars=tab:>.,extends:#,nbsp:.
+" disabled highlighting of trailing spaces: trail:., eol:¬,
+set listchars=tab:▸\ ,extends:#,nbsp:.
 
 " This allows backspacing over everything in insert mode. Don't insert spaces.
 set backspace=indent,eol,start
@@ -153,9 +159,7 @@ set number                " Activate line numbers on the left side
 set t_Co=256              " Enable 256 colors
 set background=light
 colorscheme lucius
-LuciusLight
-" LuciusLightLowContrast
-" LuciusLightHighContrast
+LuciusWhite
 " colorscheme bcn_light
 
 " Mouse
@@ -194,6 +198,10 @@ set hidden
 set splitbelow
 set splitright
 
+" Per default replace all with :s/pattern/replacement/ and replace only one by
+" adding g
+set gdefault
+
 " Performance
 syntax sync minlines=256
 autocmd BufEnter * :syntax sync fromstart
@@ -217,7 +225,6 @@ set lazyredraw
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 nnoremap <silent> <C-Space> @=(foldlevel('.')?'zA':"\<Space>")<CR>
 vnoremap <Space> zf
-"nnoremap <Leader>f :set foldmethod=none
 nnoremap <Leader>f :VimFilerExplorer <c-r>=expand("%:p:h")<cr>/
 
 " Toggle between highlighting line or column
@@ -266,10 +273,10 @@ nnoremap j gj
 nnoremap k gk
 
 " Go to the next buffer
-nmap K :bnext<CR>
+map K :bnext<CR>
 
 " Go to the last buffer
-nmap J :bprevious<CR>
+map J :bprevious<CR>
 
 " Close the current buffer and move to the previous one
 nmap bq :bp <BAR> bd #<CR>
@@ -278,8 +285,8 @@ nmap bc :bp <BAR> bd #<CR>
 " Show all open buffers and their status
 nmap bl :ls<CR>
 
-" Join lines
-nmap <Leader>j :join<CR>
+" Join lines and stay at the same position
+map <Leader>j mz:join<CR>`z
 
 " Change working directory to current file
 map <Leader>d :cd %:p:h<CR>:pwd<CR>
@@ -287,8 +294,8 @@ map <Leader>d :cd %:p:h<CR>:pwd<CR>
 " Move working directory one level higher
 map <Leader>.. :cd ..<CR>:pwd<CR>
 
-" Filetype specific make commands are in ~/.vim/ftplugin/<lang>.vim
-nmap <Leader>m :w<CR>:make<CR> <CR>
+" Filetype specific make commands are in ~/.vim/after/ftplugin/<lang>.vim
+nmap <silent> <Leader>m :w<CR>:make<CR><CR>:!update_mupdf.sh<CR><CR>
 
 " Update biber file
 nmap <Leader>b :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
@@ -306,7 +313,7 @@ xnoremap P pgvy
 map <silent> <F11>
 \    :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
 
-" Don't use Ex-mode, use Q for formatting
+" Don't use Ex-mode, use Q for formatting the current line (or selection)
 map Q gq
 
 "=============="
@@ -322,26 +329,22 @@ map Q gq
 " key-mappings for range un-comment lines in visual <Shift-V> mode
 "vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
 
-" Open NERDTree with \n
-"nmap <Leader>n :NERDTreeToggle<CR>
-
-" Open Taglist with \t
-"nmap <Leader>t :TlistToggle<CR>
-
-" Open corresponding html file
-"nmap <Leader>v :!google-chrome %<.html<CR><CR>
-
 "=============================================================================="
 "                                ABBREVIATIONS                                 "
 "=============================================================================="
-
 iabbrev lamda lambda
 iabbrev teh the
+iabbrev halfed halved
+iabbrev halfe halve
 iabbrev wether whether
 iabbrev excecute execute
 iabbrev pertubation perturbation
 iabbrev acchieved achieved
 iabbrev acchieve achieve
+" American versions
+iabbrev analyse analyze
+iabbrev behaviour behavior
+iabbrev generalisation generalization
 " These should be snippets
 "iabbrev Icg \includegraphics[[width=\textwidth]{
 "iabbrev Ecl \begin{{columns}<CR><CR>\end{{columns}<Esc>ki<Space><Space>
@@ -414,26 +417,10 @@ function! OpenPDF()
 endfunction
 map <Leader>v :call OpenPDF()<CR>
 
-"==============="
-"  ocaml annot  "
-"==============="
-" Merlin does a better job
-function! OCamlType()
-  let col  = col('.')
-  let line = line('.')
-  let file = expand("%:r")
-  let folder = "~/decrypted/bcn_omega211-build/src/"
-  let cmd = "annot -n -type ".line." ".col." ".file.".annot"
-  echo system('cd '.folder.' && '.cmd)
-endfunction
-map <Leader>t :TypeOf<CR>
-map <Leader>l :Locate<CR>
-
 "=============================================================================="
 "                                   AUTOCMD                                    "
 "=============================================================================="
-" This is the not recommended version for .less support. There are proper addons
-" for full highlighting.
+" Poor mans .less support. There are proper addons for this.
 autocmd BufNewFile,BufRead *.less set filetype=css
 
 " Enable omni completion. Complete things with CTRL-X O.
@@ -445,16 +432,31 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 
-" Saving views for noweb viles
-autocmd BufWinLeave *.nw mkview
-autocmd BufWinEnter *.nw silent loadview
+" Automatically save and load views for files
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent loadview
+
+" Load indentexpr from fortran and switch back to noweb for syntax hl
+autocmd BufWinEnter *.nw setlocal filetype=fortran | setlocal filetype=noweb
 
 " Don't screw up folds when inserting text that might affect them, until
 " leaving insert mode. Foldmethod is local to the window. Protect against
 " screwing up folding when switching between windows.
 " http://vim.wikia.com/wiki/Keep_folds_closed_while_inserting_text
-autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+autocmd InsertEnter * if !exists('w:last_fdm')
+                      \ | let w:last_fdm=&foldmethod
+                      \ | setlocal foldmethod=manual
+                      \ | endif
+autocmd InsertLeave,WinLeave * if exists('w:last_fdm')
+                               \ | let &l:foldmethod=w:last_fdm
+                               \ | unlet w:last_fdm
+                               \ | endif
+
+" Automatically save when losing focus
+autocmd FocusLost *.* :wa
+
+" This would update when saving
+"autocmd BufWritePost * silent !update_mupdf.sh
 
 "=============================================================================="
 "                                  OCP-INDENT                                  "
@@ -466,25 +468,33 @@ let g:ocp_indent_vimfile = g:ocp_indent_vimfile . "/vim/syntax/ocp-indent.vim"
 autocmd FileType ocaml exec ":source " . g:ocp_indent_vimfile
 
 "=============================================================================="
+"
 "                                    MERLIN                                    "
 "=============================================================================="
 let s:ocamlmerlin=substitute(system('opam config var share'),'\n$','','''') .  "/ocamlmerlin"
 execute "set rtp+=".s:ocamlmerlin."/vim"
 execute "set rtp+=".s:ocamlmerlin."/vimbufsync"
 
-" Syntastic integration
+"=============================================================================="
+"                                  SYNTASTIC                                   "
+"=============================================================================="
+" Checkers
 let g:syntastic_ocaml_checkers = ['merlin']
+let g:syntastic_fortran_checkers = [""]
+let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
+
+" Regexs for files to ignore
+let g:syntastic_ignore_files = ['\m^/usr/include/', '\m^/home/bijancn/vm_paper/codes/ovm']
+
+let g:syntastic_enable_signs = 1
+"
 " Jump to the first error
 let g:syntastic_auto_jump = 2
 " Close the error window but don't open it automatically
 let g:syntastic_auto_loc_list = 2
 " Height of the location lists
 let g:syntastic_loc_list_height = 5
-" Regexs for files to ignore
-let g:syntastic_ignore_files = ['\m^/usr/include/', '\m^/home/bijancn/vm_paper/codes/ovm']
-let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
-let g:syntastic_enable_signs = 1
-let g:syntastic_fortran_checkers = [""]
+
 " Pretty 2 character signs for the left border
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_style_error_symbol = 'S✗'
@@ -495,9 +505,17 @@ let g:syntastic_style_warning_symbol = 'S⚠'
 "                                   FORTRAN                                    "
 "=============================================================================="
 " We will always use Fortran free not fixed form
-let fortran_free_source=1
-let fortran_fold=1
-let fortran_fold_conditionals=1
+"let fortran_free_source=1
+"unlet! fortran_fixed_source
+"let fortran_fold=1                  " Define fold regions for foldmethod=syntax
+"let fortran_fold_conditionals=1     " Also fold do, if and select case
+
+let fortran_indent_more=1           " Also indent function, subroutine, program
+let g:fortran_do_enddo=1            " Guarantee that do's are matched for indent
+
+" This includes do, if, select case, where, interface
+let g:fortran_extra_structure_indent=1
+let g:fortran_extra_continuation_indent=3
 
 "=============================================================================="
 "                                   AIR-LINE                                   "
@@ -541,7 +559,8 @@ call unite#filters#matcher_default#use(['matcher_fuzzy'])
 " async uses vimproc behind the scenes, which affords for searching while it
 " populates the file list in the background
 "nnoremap <space><space> :Unite -no-split -start-insert file_rec<CR>
-nnoremap <space><space> :Unite -no-split -start-insert file_rec/async<CR>
+" The :! tells unite to run things in the background
+nnoremap <space><space> :Unite -no-split -start-insert file_rec/async:!<CR>
 nnoremap <space>f       :Unite -no-split -start-insert file<cr>
 nnoremap <space>b       :Unite -no-split -start-insert buffer<cr>
 nnoremap <space>/       :Unite grep:.<cr>
@@ -586,6 +605,33 @@ let g:goyo_margin_top=3
 let g:goyo_margin_bottom=3
 let g:goyo_linenr=0
 nmap <Leader>g :Goyo<CR>
+
+"=============================================================================="
+"                                   RAINBOW                                    "
+"=============================================================================="
+let g:rainbow_active = 1
+map <Leader>r :RainbowToggle<CR>
+let g:rainbow_conf = {
+    \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+    \   'ctermfgs': ['black', '21', 'darkmagenta', '160', '172'],
+    \   'operators': '_,_',
+    \   'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
+    \   'separately': {
+    \       '*': {},
+    \       'lisp': {
+    \           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+    \           'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan', 'darkred', 'darkgreen'],
+    \       },
+    \       'vim': {
+    \           'parentheses': [['fu\w* \s*.*)','endfu\w*'], ['for','endfor'], ['while', 'endwhile'], ['if','_elseif\|else_','endif'], ['(',')'], ['\[','\]'], ['{','}']],
+    \       },
+    \       'tex': {
+    \           'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
+    \       },
+    \       'css': 0,
+    \       'stylus': 0,
+    \   }
+    \}
 
 "=============================================================================="
 "                              erikw/toggle_spell                              "

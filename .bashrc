@@ -402,6 +402,7 @@ alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 #=========#
 #  other  #
 #=========#
+alias py='ipython notebook --pylab inline &'
 alias le='less'
 if command_exists trash-put; then
   alias rm='trash-put -v'
@@ -557,6 +558,10 @@ function mm () {
 #============================#
 #  Show certain information  #
 #============================#
+function show-wlan-channels () {
+  sudo iwlist wlan0 scan | grep Frequency | sort | uniq -c | sort -n
+}
+
 function show-diff () {
   $difftool err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
 }
@@ -633,6 +638,14 @@ function go () {
 
 function start () {
   $1 &> /dev/null &
+}
+
+function apv () {
+  start "apvlv $1"
+}
+
+function mu () {
+  start "mupdf-x11 $1"
 }
 
 #===========#
@@ -714,6 +727,9 @@ alias gitrm='git rm'
 # Commit the staged changes to the HEAD
 alias gitc='git commit -m'
 
+# Clean the current directory of all build products and other non-tracked files
+alias gitcl='git clean -x -i'
+
 # Interactively add chunks and see what u have done (CUSTOM ALIAS)
 alias giti='git interactive'
 
@@ -790,6 +806,12 @@ fi
 #==========#
 function github {
   git clone git@github.com:$1/$2.git
+}
+function bitbucket {
+  git clone ssh://git@bitbucket.org/$1/$2.git
+}
+function bitbucket_hg {
+  hg clone ssh://hg@bitbucket.org/$1/$2
 }
 
 #==============================================================================#

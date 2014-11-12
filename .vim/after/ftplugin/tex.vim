@@ -18,10 +18,10 @@
 " Checks if Makefile or SConstruct exists. If not we run pdflatex to produce pdf.
 if !filereadable(expand("%:p:h")."/SConstruct")
   if !filereadable(expand("%:p:h")."/Makefile")
-    setlocal makeprg=pdflatex\ %
+    setlocal makeprg=pdflatex\ %\ 
   endif
 else
-  setlocal makeprg=scons\ .
+  setlocal makeprg=scons\ .\ 
 endif
 
 set foldmethod=indent

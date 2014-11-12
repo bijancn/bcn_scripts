@@ -74,7 +74,7 @@ syn keyword fortranType	contained intent dimension type class real integer chara
 hi def link nowebChunkName     Identifier
 hi def link nowebVerbatim      SpecialKey
 hi def link latexMath          Special
-hi def link latexSection       pandocEmphasis
+hi def link latexSection       PreProc
 hi def link latexComment	     Comment
 hi def link latexStatement     Statement
 hi def link fortranComment	   Comment

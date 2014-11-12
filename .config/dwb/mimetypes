@@ -7,6 +7,6 @@ text/x-tex gvim
 application/octetstream gvim
 application/postscript evince
 application/octet-stream gnome-open
-application/zip gnome-open
 application/x-gzip gnome-open
-application/pdf evince
+application/zip gnome-open
+application/pdf gnome-open
