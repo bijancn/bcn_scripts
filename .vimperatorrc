@@ -1,0 +1,71 @@
+"============"
+"  mappings  "
+"============"
+map J gT
+map K gt
+map b go
+map B gn
+
+"============"
+"  settings  "
+"============"
+set runtimepath=~/.vimperator
+set titlestring="Mozilla Firefox"
+set messages=100
+set verbose=1
+" set defsearch=google
+set toolbars=noaddons,nobookmarks,nomenu,nonavigation,tabs
+set complete=slS
+set history=1000
+set newtab=all
+set popups=tab
+set nohlsearch
+set ignorecase
+set incsearch
+set smartcase
+set nofocuscontent
+set visualbell
+set hintchars=jfkdlsarueiwoqpghvncmxzb
+
+" about:config
+set! general.autoScroll=false
+set! ui.key.generalAccessKey=0
+set! browser.tabs.closeButtons=2
+set! browser.tabs.closeWindowWithLastTab=true
+set! browser.tabs.loadDivertedInBackground=true
+set! browser.urlbar.filter.javascript=false
+set! browser.urlbar.maxRichResults=20
+set! browser.sessionstore.max_tabs_undo=20
+set! browser.sessionstore.max_concurrent_tabs=0
+set! browser.startup.homepage=http://www.google.com
+set! dom.popup_maximum=200
+set! mousewheel.withnokey.numlines=6
+set! mousewheel.withnokey.sysnumlines=false
+
+"let mapleader = ";"
+
+" BMarks {{{1
+"javascript <<EOM
+"function bmark(title, url, keyword) {
+  "if (!bookmarks.isBookmarked(url)) {
+    "bookmarks.add(false, title, url, keyword, ['keyword'], false);
+  "}
+"}
+"bmark('Google Search' , 'http://www.google.com/search?q=%s' , 'g');
+"EOM
+
+"=========="
+"  qmarks  "
+"=========="
+silent qmark c http://google.com/calendar
+silent qmark C https://kunde.comdirect.de/lp/wt/login
+silent qmark f http://facebook.com
+silent qmark F http://feedly.com
+silent qmark g https://github.com
+silent qmark j http://localhost:8080/job/whizard-trunk-dist/
+silent qmark m https://maps.google.com
+silent qmark m http://phdcomics.com
+silent qmark s http://soundcloud.com
+silent qmark t http://twitter.com/home
+silent qmark w https://whizard.hepforge.org/trac/timeline
+silent qmark x http://xkcd.com
