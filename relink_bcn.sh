@@ -25,6 +25,8 @@ files+=".config/evince/@(accels|print-settings) "
 files+=".config/keepassx/config.ini "
 files+=".config/matplotlib/matplotlibrc "
 files+=".config/terminator/config "
+files+=".fonts/AvantGarde_LT_Medium.ttf .fonts/GE_Inspira.ttf "
+files+=".fonts/PowerlineSymbols.otf .fonts/Ubuntu.ttf "
 files+=".local/share/applications/mimeapps.list "
 files+=".profile "
 files+=".ssh/config .ssh/known_hosts "
@@ -47,12 +49,12 @@ for f in $files; do
   if [ -f ~/$f ]; then
     echo "--- $f   already exists, doing nothing"
   else
-    echo "+++ Linking $f"
     # Try to use public file. If not there use private.
-    ls -al "$safe/$f"
     if [ -f $bcn/$f ] ; then
+      echo "+++ Linking $f"
       ln -sf $bcn/$f                      ~/$f
     elif [ -e "$safe/$f" ] ; then
+      echo "+++ Linking $f"
       ln -sf $safe/$f                     ~/$f
     else
       echo "000 FILE $f NOT FOUND in $bcn or $safe"
