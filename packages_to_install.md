@@ -58,10 +58,6 @@ http://www.skype.com/en/download-skype/skype-for-linux/
 The one in the repositories used to be more broken
 In Ubuntu 14.04 you get skype 4.3 now which looks better
 
-git
---------------------------------------------------------------------------------
-See `setup_git.sh`
-
 vim
 --------------------------------------------------------------------------------
 See `.vimrc`
