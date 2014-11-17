@@ -384,12 +384,12 @@ alias AGU='agu; agg; agd'
 #  whizard  #
 #===========#
 alias twhizard='~/trunk/install/bin/whizard'
-alias wsrc='go '$whiz_soft/doc/share/doc/whizard/whizard.pdf
-alias vsrc='go '$whiz_soft/doc/share/doc/vamp/vamp.pdf
-alias osrc='go '$whiz_soft/doc/share/doc/omega/omega.pdf
-alias csrc='go '$whiz_soft/doc/share/doc/circe2/circe2.pdf
-alias wman='go '$whiz_soft/doc/share/doc/whizard/manual.pdf
-alias gman='go '$whiz_soft/doc/share/doc/whizard/gamelan_manual.pdf
+alias wsrc='go '$whiz_soft/dist/share/doc/whizard/whizard.pdf
+alias vsrc='go '$whiz_soft/dist/share/doc/vamp/vamp.pdf
+alias osrc='go '$whiz_soft/dist/share/doc/omega/omega.pdf
+alias csrc='go '$whiz_soft/dist/share/doc/circe2/circe2.pdf
+alias wman='go '$whiz_soft/dist/share/doc/whizard/manual.pdf
+alias gman='go '$whiz_soft/dist/share/doc/whizard/gamelan_manual.pdf
 
 #=========#
 #  games  #

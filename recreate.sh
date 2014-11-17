@@ -5,7 +5,8 @@ sudo apt-get install \
   python-numpy python-pip python-scipy python-unidecode subversion terminator \
   unetbootin vim-gtk
 gsettings set org.cinnamon.desktop.default-applications.terminal exec /usr/bin/terminator
-mkdir ~/.vim/swap
+mkdir -p ~/.vim/swap
+mkdir -p ~/install/bin
 git clone https://github.com/bijancn/bcn_scripts.git ~/bcn_scripts
 git clone https://github.com/gmarik/Vundle.vim.git  ~/.vim/bundle/Vundle.vim
 vim -c 'PluginInstall' -c qa
@@ -24,6 +25,7 @@ vim -c 'PromptlineSnapshot ~/.shell_prompt.sh airline' -c quit
 # for umlaute
 ~/bcn_scripts/relink_bcn.sh
 source ~/.bashrc
+fc-cache -vf ~/.fonts/
 
 echo "Do you want to install Latex?"
 select yn in "Yes" "No"; do

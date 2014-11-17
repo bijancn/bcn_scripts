@@ -1,3 +1,15 @@
+function github {
+  git clone git@github.com:$1/$2.git
+}
+
+function bitbucket {
+  git clone ssh://git@bitbucket.org/$1/$2.git
+}
+
+function bitbucket_hg {
+  hg clone ssh://hg@bitbucket.org/$1/$2
+}
+
 if [ ! -f ~/.git-prompt.sh ]; then
   curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > ~/.git-prompt.sh
 else
