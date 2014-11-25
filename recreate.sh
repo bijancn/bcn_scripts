@@ -10,6 +10,7 @@ mkdir -p ~/install/bin
 git clone https://github.com/bijancn/bcn_scripts.git ~/bcn_scripts
 git clone https://github.com/gmarik/Vundle.vim.git  ~/.vim/bundle/Vundle.vim
 vim -c 'PluginInstall' -c qa
+cd ~/.vim/bundle/vimproc.vim && make
 echo "Do you want to build YouCompleteMe?"
 select yn in "Yes" "No"; do
   case $yn in
@@ -34,7 +35,7 @@ select yn in "Yes" "No"; do
             biber ocamlweb texlive texlive-fonts-extra texlive-humanities \
             texlive-lang-german texlive-latex-extra texlive-metapost      \
             texlive-publishers texlive-science feynmf latexmk latex-mk    \
-            latex-xcolor                                                  \
+            latex-xcolor context                                          \
       ; break;;
     No ) break;;
   esac

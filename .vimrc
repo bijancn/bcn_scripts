@@ -88,6 +88,7 @@ Plugin 'vim-pandoc/vim-pandoc'
 " Nice fuzzy search on files, buffers and more
 Plugin 'Shougo/unite.vim'
 " Can be used by unite for more efficient search
+" Hase to be build with `make`
 Plugin 'Shougo/vimproc.vim'
 " Powerful file explorer that needs unite
 Plugin 'Shougo/vimfiler.vim'
@@ -202,8 +203,8 @@ set splitright
 " adding g
 set gdefault
 
-" Performance
-syntax sync minlines=256
+" Performance (?)
+syntax sync minlines=2048
 autocmd BufEnter * :syntax sync fromstart
 set ttyfast
 set lazyredraw
@@ -461,11 +462,13 @@ autocmd FocusLost *.* :wa
 "=============================================================================="
 "                                  OCP-INDENT                                  "
 "=============================================================================="
-let g:ocp_indent_vimfile = system("opam config var share")
-let g:ocp_indent_vimfile = substitute(g:ocp_indent_vimfile, '[\r\n]*$', '', '')
-let g:ocp_indent_vimfile = g:ocp_indent_vimfile . "/vim/syntax/ocp-indent.vim"
+" How to install?
+"let g:ocp_indent_vimfile = system("opam config var share")
+"let g:ocp_indent_vimfile = substitute(g:ocp_indent_vimfile, '[\r\n]*$', '', '')
+"let g:ocp_indent_vimfile = g:ocp_indent_vimfile . "/vim/syntax/ocp-indent.vim"
 
-autocmd FileType ocaml exec ":source " . g:ocp_indent_vimfile
+"autocmd FileType ocaml exec ":source " . g:ocp_indent_vimfile
+autocmd FileType ocaml exec ":RainbowToggle"
 
 "=============================================================================="
 "
@@ -532,9 +535,9 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#bufferline#enabled = 1
 "let g:airline#extensions#bufferline#overwrite_variables = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+"let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 " Show just the filename
-"let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 " Do not use tagbar which can be slow
 let g:airline#extensions#tagbar#enabled = 0

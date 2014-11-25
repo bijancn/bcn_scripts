@@ -110,8 +110,7 @@ whiz_dir1=$HOME/trunk/install
 whiz_dir2=/data/bcho/trunk/install
 if [ -d $whiz_dir1 ]; then
   export whiz_soft=$whiz_dir1
-fi
-if [ -d $whiz_dir2 ]; then
+elif [ -d $whiz_dir2 ]; then
   export whiz_soft=$whiz_dir2
 fi
 
@@ -297,144 +296,6 @@ On_Cyan='\e[46m'        # Cyan
 On_White='\e[47m'       # White
 
 NC="\e[m"               # Color Reset
-
-#==============================================================================#
-#                                  SHORTHANDS                                  #
-#==============================================================================#
-#============#
-#  shortest  #
-#============#
-alias k='kill -9'
-alias x='exit'
-alias p='python'
-alias t='/usr/bin/time'
-alias c='./configure'
-
-#========#
-#  make  #
-#========#
-if command_exists cit; then
-  alias n='cit nosetests'
-  alias nv='cit "nosetests -v"'
-  alias nt='cit "nosetests --with-timer"'
-  alias ns='cit "nosetests -s"'
-  alias no='nosetests_cover'
-  alias m='cit make'
-  alias mj='cit "make -j"'
-  alias mi='cit "make install"'
-  alias mc='cit "make check"'
-  alias mcl='cit "make clean"'
-  alias mp='cit "make pdf"'
-  alias mf='cit "make force_pdf"'
-else
-  alias n='nosetests'
-  alias nv='nosetests -v'
-  alias nt='nosetests --with-timer'
-  alias ns='nosetests -s'
-  alias no='nosetests_cover'
-  alias m='make'
-  alias mj='make -j'
-  alias mi='make install'
-  alias mc='make check'
-  alias mcl='make clean'
-  alias mp='make pdf'
-  alias mf='make force_pdf'
-fi
-alias s='scons'
-alias ac='autoreconf'
-
-#===========#
-#  configs  #
-#===========#
-alias so='source ~/.bashrc'
-alias brc='vim ~/.bashrc'
-alias vrc='vim ~/.vimrc'
-alias gitrc='vim ~/.gitconfig'
-
-#====================#
-#  change directory  #
-#====================#
-alias cd-='cd -'
-alias cd..='cd ..'
-alias ..='cd ..'
-alias ..2="cd ../.."
-alias ..3="cd ../../.."
-alias ..4="cd ../../../.."
-alias ..5="cd ../../../../.."
-
-#=========#
-#  lists  #
-#=========#
-alias ls='ls --color'
-alias ll='ls --color -lh'
-alias la='ls --color -lah'
-alias lk='ls --color -lSrh'         #  Sort by size, biggest last.
-
-#===========#
-#  apt-get  #
-#===========#
-alias agi='sudo apt-get install'
-alias agr='sudo apt-get remove'
-alias agu='sudo apt-get update'
-alias agg='sudo apt-get upgrade'
-alias agd='sudo apt-get dist-upgrade'
-alias AGU='agu; agg; agd'
-
-#===========#
-#  whizard  #
-#===========#
-alias twhizard='~/trunk/install/bin/whizard'
-alias wsrc='go '$whiz_soft/dist/share/doc/whizard/whizard.pdf
-alias vsrc='go '$whiz_soft/dist/share/doc/vamp/vamp.pdf
-alias osrc='go '$whiz_soft/dist/share/doc/omega/omega.pdf
-alias csrc='go '$whiz_soft/dist/share/doc/circe2/circe2.pdf
-alias wman='go '$whiz_soft/dist/share/doc/whizard/manual.pdf
-alias gman='go '$whiz_soft/dist/share/doc/whizard/gamelan_manual.pdf
-
-#=========#
-#  games  #
-#=========#
-alias sc='cd '$lingames'/Stronghold; wine Stronghold\ Crusader.exe'
-alias ut='wine '$wingames'/UnrealTournament/System/UnrealTournament.exe'
-alias wc3='wine '$wingames'/Warcraft\ III/Frozen\ Throne.exe'
-alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
-
-#=========#
-#  other  #
-#=========#
-alias py='ipython notebook --pylab inline &'
-alias le='less'
-if command_exists trash-put; then
-  alias rm='trash-put -v'
-  alias rmm='/bin/rm'
-else
-  alias rm='rm -vI'
-fi
-alias mv='mv -v'
-alias md='mkdir'
-alias mdc='mkdircd'
-alias mt='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: \t%M"'
-alias sd='sudo shutdown now -P'
-alias rb='sudo reboot'
-alias rs='rem_show'
-alias ca='cit ant'
-alias re='export DISPLAY=:0; cinnamon &'
-alias nhr='nohup ./run_all.sh 2>&1 &'
-alias rgrep='grep -r'
-alias hgrep='history | grep '
-alias du_dirs='du * -sh | sort -h'
-alias du_subdirs='du -h | sort -h'
-alias briss="java -jar $syncd/scripts/briss-0.9/briss-0.9.jar"
-alias primrun='vblank_mode=0 primusrun'
-alias todo='rgrep --binary-files=without-match -n todo: *'
-alias yt_mp3='youtube-dl -t --extract-audio --audio-format=mp3'
-# dubious
-alias ddiff='diff -x *.swp -q' #?
-alias mount_wue='sshfs $int_quad_core1: /home/bijancn/Dropbox/uniwue/'
-alias mount_out='sshfs $int_quad_core1:output_ovm/ /home/bijancn/Dropbox/master_thesis/output_ovm/'
-alias get_thesis='git clone $nick:~/bcn_git/thesis.git'
-alias reset_file_perms='find . -type f -exec chmod 644 {} +'
-alias reset_dir_perms='find . -type d -exec chmod 755 {} +'
 
 #==============================================================================#
 #                                  FUNCTIONS                                   #
@@ -675,6 +536,138 @@ if ! command_exists htop ; then
 fi
 
 #==============================================================================#
+#                                  SHORTHANDS                                  #
+#==============================================================================#
+#============#
+#  shortest  #
+#============#
+alias k='kill -9'
+alias x='exit'
+alias p='python'
+alias t='/usr/bin/time'
+alias c='./configure'
+
+#========#
+#  make  #
+#========#
+if command_exists cit; then
+  alias n='cit nosetests'
+  alias nv='cit "nosetests -v"'
+  alias nt='cit "nosetests --with-timer"'
+  alias ns='cit "nosetests -s"'
+  alias no='nosetests_cover'
+  alias m='cit "make -j"'
+  alias mi='cit "make install -j"'
+  alias mc='cit "make check -j"'
+  alias mcl='cit "make clean -j"'
+else
+  alias n='nosetests'
+  alias nv='nosetests -v'
+  alias nt='nosetests --with-timer'
+  alias ns='nosetests -s'
+  alias no='nosetests_cover'
+  alias m='make'
+  alias mj='make -j'
+  alias mi='make install'
+  alias mc='make check'
+  alias mcl='make clean'
+fi
+alias s='scons'
+alias ac='autoreconf'
+
+#===========#
+#  configs  #
+#===========#
+alias so='source ~/.bashrc'
+alias brc='vim ~/.bashrc'
+alias vrc='vim ~/.vimrc'
+alias gitrc='vim ~/.gitconfig'
+
+#====================#
+#  change directory  #
+#====================#
+alias cd-='cd -'
+alias cd..='cd ..'
+alias ..='cd ..'
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
+
+#=========#
+#  lists  #
+#=========#
+alias ls='ls --color'
+alias ll='ls --color -lh'
+alias la='ls --color -lah'
+alias lk='ls --color -lSrh'         #  Sort by size, biggest last.
+
+#===========#
+#  apt-get  #
+#===========#
+alias agi='sudo apt-get install'
+alias agr='sudo apt-get remove'
+alias agu='sudo apt-get update'
+alias agg='sudo apt-get upgrade'
+alias agd='sudo apt-get dist-upgrade'
+alias AGU='agu; agg; agd'
+
+#===========#
+#  whizard  #
+#===========#
+alias wsrc='go '$whiz_soft/dist/share/doc/whizard/whizard.pdf
+alias vsrc='go '$whiz_soft/dist/share/doc/vamp/vamp.pdf
+alias osrc='go '$whiz_soft/dist/share/doc/omega/omega.pdf
+alias csrc='go '$whiz_soft/dist/share/doc/circe2/circe2.pdf
+alias wman='go '$whiz_soft/dist/share/doc/whizard/manual.pdf
+alias gman='go '$whiz_soft/dist/share/doc/whizard/gamelan_manual.pdf
+
+#=========#
+#  games  #
+#=========#
+alias sc='cd '$lingames'/Stronghold; wine Stronghold\ Crusader.exe'
+alias ut='wine '$wingames'/UnrealTournament/System/UnrealTournament.exe'
+alias wc3='wine '$wingames'/Warcraft\ III/Frozen\ Throne.exe'
+alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
+
+#=========#
+#  other  #
+#=========#
+alias py='ipython notebook --pylab inline &'
+alias le='less'
+if command_exists trash-put; then
+  alias rm='trash-put -v'
+  alias rmm='/bin/rm'
+else
+  alias rm='rm -vI'
+fi
+alias mv='mv -v'
+alias md='mkdir'
+alias mdc='mkdircd'
+alias mt='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: \t%M"'
+alias sd='sudo shutdown now -P'
+alias rb='sudo reboot'
+alias rs='rem_show'
+alias ca='cit ant'
+alias re='export DISPLAY=:0; cinnamon &'
+alias nhr='nohup ./run_all.sh 2>&1 &'
+alias rgrep='grep -r'
+alias hgrep='history | grep '
+alias du_dirs='du * -sh | sort -h'
+alias du_subdirs='du -h | sort -h'
+alias briss="java -jar $syncd/scripts/briss-0.9/briss-0.9.jar"
+alias primrun='vblank_mode=0 primusrun'
+alias todo='rgrep --binary-files=without-match -n todo: *'
+alias yt_mp3='youtube-dl -t --extract-audio --audio-format=mp3'
+# dubious
+alias ddiff='diff -x *.swp -q' #?
+alias mount_wue='sshfs $int_quad_core1: /home/bijancn/Dropbox/uniwue/'
+alias mount_out='sshfs $int_quad_core1:output_ovm/ /home/bijancn/Dropbox/master_thesis/output_ovm/'
+alias get_thesis='git clone $nick:~/bcn_git/thesis.git'
+alias reset_file_perms='find . -type f -exec chmod 644 {} +'
+alias reset_dir_perms='find . -type d -exec chmod 755 {} +'
+
+#==============================================================================#
 #                                     GIT                                      #
 #==============================================================================#
 # Ignore changes to local file in status,
@@ -822,6 +815,7 @@ function bitbucket_hg {
 if [ svn-color 2> /dev/null ]; then
   alias svn=svn-color
 fi
+alias svna='svn add'
 alias svnu='svn update'
 alias svns='svn status'
 alias svnd='svn diff'

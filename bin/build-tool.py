@@ -42,6 +42,9 @@ parser.add_argument("-f", '--fcflags', action='append',
          " -FCFLAGS=['-fmax-errors=1 -O2 -fbounds-check']")
 parser.add_argument("-p", '--openmp', action='store_true',
     help='Activate OpenMP')
+parser.add_argument('--only_omega', action='store_true',
+    help='Only build the OMega subpackage.')
+
 args = parser.parse_args()
 
 # Select a base path
@@ -66,12 +69,23 @@ if 'ifort' in args.build:
   args.compiler = ['ifort']
   args.optimization = ['3']
   args.fcflags = ['']
+  args.only_omega = True
+
+if 'omega' in args.build:
+  args.only_omega = True
 
 if 'omp' in args.build:
   args.configureflags = ['--enable-fc-openmp']
 
 if 'dist' in args.build:
   args.configureflags = ['--enable-distribution']
+
+if 'check' in args.build:
+  args.compiler = ['gfortran']
+  args.optimization = ['0']
+  args.fcflags = ['-fmax-errors=1 -fbounds-check -Wall -fbacktrace ' +
+                  '-finit-real=nan -g -fcheck=all ' +
+                  '-ffpe-trap=invalid,zero,overflow,underflow,denormal']
 
 # show set options for builder
 tasks = ['configure', 'autoreconf', 'make', 'makecheck', 'remove']
@@ -96,7 +110,7 @@ if args.autoreconf:
 build_name = args.build
 if args.tag:
   build_name += '-' + args.tag
-build_path = os.path.join('build', build_name)
+build_path = os.path.join('_build', build_name)
 if args.remove:
   if os.path.isdir(build_path):
     shutil.rmtree(build_path)
@@ -109,12 +123,12 @@ optimization = args.optimization[0]
 fcflags = args.fcflags[0]
 configureflags = args.configureflags[0]
 
-prefix = '--prefix=' + os.path.join(base_path, 'install', build_name)
+prefix = '--prefix=' + os.path.join(base_path, '_install', build_name)
 fortran_compiler = 'FC=' + compiler
 fortran_flags = "FCFLAGS=-O" + optimization + " " + fcflags
 configure_options = [prefix, fortran_compiler, fortran_flags, configureflags]
 if args.configure:
-  if compiler == 'ifort': package = os.path.join(base_path, 'omega')
+  if args.only_omega: package = os.path.join(base_path, 'omega')
   else:                   package = base_path
   _call_verbose([os.path.join(package, 'configure')] + configure_options)
 

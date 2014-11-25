@@ -34,7 +34,8 @@ syntax cluster fortran contains=fortranComment,fortranString,fortranStatement,fo
 "  keyword regexs  "
 "=================="
 syn match nowebChunkName contained      "^<<.*>>=$"
-syn match nowebChunkName contained      "\( \|^\)<<.*>>"
+"syn match nowebChunkName contained      "\( \|^\)<<.*>>"
+syn match nowebChunkName contained      "<<.\{-}>>"
 syn match nowebVerbatim                 "\[\[.\{-}\]\]"
 syn region latexMath                    start='\$' end='\$'
 syn match latexComment                  " *%.*$"

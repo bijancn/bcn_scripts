@@ -57,15 +57,17 @@ set! mousewheel.withnokey.sysnumlines=false
 "=========="
 "  qmarks  "
 "=========="
+silent qmark a http://amazon.de
 silent qmark c http://google.com/calendar
 silent qmark C https://kunde.comdirect.de/lp/wt/login
 silent qmark f http://facebook.com
 silent qmark F http://feedly.com
 silent qmark g https://github.com
-silent qmark j http://localhost:8080/job/whizard-trunk-dist/
+silent qmark j http://localhost:8080/job/whizard-trunk-dist
 silent qmark m https://maps.google.com
 silent qmark m http://phdcomics.com
 silent qmark s http://soundcloud.com
+silent qmark S https://calendar.sunrise.am
 silent qmark t http://twitter.com/home
 silent qmark w https://whizard.hepforge.org/trac/timeline
 silent qmark x http://xkcd.com
