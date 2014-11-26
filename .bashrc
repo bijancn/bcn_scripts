@@ -106,8 +106,8 @@ export syncd=$HOME/safe
 export hive=$HOME/hive
 export desy_soft=/afs/desy.de/group/theorie/software/ELF64
 export install=$HOME/install
-whiz_dir1=$HOME/trunk/install
-whiz_dir2=/data/bcho/trunk/install
+whiz_dir1=$HOME/trunk/_install
+whiz_dir2=/data/bcho/trunk/_install
 if [ -d $whiz_dir1 ]; then
   export whiz_soft=$whiz_dir1
 elif [ -d $whiz_dir2 ]; then
@@ -150,6 +150,7 @@ export CPATH=$desy_soft/include:$CPATH
 # hep
 export HEPMC_DIR=$install
 export LHAPDF_DIR=$install
+source $install/rivetenv.sh
 
 # perl
 export PERL5LIB=$install/lib/perl5/
@@ -615,6 +616,7 @@ alias AGU='agu; agg; agd'
 #===========#
 #  whizard  #
 #===========#
+alias wh='whizard test.sin'
 alias wsrc='go '$whiz_soft/dist/share/doc/whizard/whizard.pdf
 alias vsrc='go '$whiz_soft/dist/share/doc/vamp/vamp.pdf
 alias osrc='go '$whiz_soft/dist/share/doc/omega/omega.pdf
@@ -820,6 +822,7 @@ alias svnu='svn update'
 alias svns='svn status'
 alias svnd='svn diff'
 alias svnc='svn commit'
+alias svnp='svn propedit svn:ignore .'
 
 #==============================================================================#
 #                                    PROMPT                                    #

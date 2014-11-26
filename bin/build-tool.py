@@ -25,7 +25,7 @@ parser.add_argument("-r", '--remove', action='store_true',
     help='Remove build dir before building')
 
 # options how to behave
-parser.add_argument("-j", '--jobs', default=1,
+parser.add_argument("-j", '--jobs', default=4,
     help='Set number of jobs for make and make check')
 parser.add_argument("-e", '--errors', action='store_true',
     help='Show STDERR during all executed commands')
@@ -50,19 +50,15 @@ args = parser.parse_args()
 # Select a base path
 base_path = get_base_path()
 
-# Default compiler and optimization level
-#def set_default(option, value):
-  #if not args.getitem(option):
-    #args.setitem(option) = [value]
-#set_default('compiler', 'gfortran')
 if not args.compiler:
   args.compiler = ['gfortran']
 if not args.optimization:
   args.optimization = ['2']
 if not args.fcflags:
-  args.fcflags = ['-fmax-errors=1 -fbounds-check -Wall -Wuninitialized']
+  # gcc doesn't recognize our test function construction as use of a function
+  args.fcflags = ['-fmax-errors=1 -fbounds-check -Wall -Wuninitialized -Wextra -Wno-unused-function']
 if not args.configureflags:
-  args.configureflags = ['']
+  args.configureflags = [['--enable-fastjet']]
 
 # Convenience magic
 if 'ifort' in args.build:
@@ -75,10 +71,21 @@ if 'omega' in args.build:
   args.only_omega = True
 
 if 'omp' in args.build:
-  args.configureflags = ['--enable-fc-openmp']
+  args.configureflags = [['--enable-fc-openmp']]
 
 if 'dist' in args.build:
-  args.configureflags = ['--enable-distribution']
+  args.configureflags = [['--enable-distribution']]
+
+if 'slim' in args.build:
+  args.configureflags = [['--disable-shower', '--disable-static',
+                          '--disable-omega']]
+
+if 'debug' in args.build:
+  args.compiler = ['gfortran']
+  args.optimization = ['0']
+  args.fcflags = ['-fmax-errors=1 -fbounds-check -Wall -fbacktrace ' +
+                  '-g -fcheck=all ' +
+                  '-ffpe-trap=invalid,zero,overflow,underflow,denormal']
 
 if 'check' in args.build:
   args.compiler = ['gfortran']
@@ -126,7 +133,7 @@ configureflags = args.configureflags[0]
 prefix = '--prefix=' + os.path.join(base_path, '_install', build_name)
 fortran_compiler = 'FC=' + compiler
 fortran_flags = "FCFLAGS=-O" + optimization + " " + fcflags
-configure_options = [prefix, fortran_compiler, fortran_flags, configureflags]
+configure_options = [prefix, fortran_compiler, fortran_flags] + configureflags
 if args.configure:
   if args.only_omega: package = os.path.join(base_path, 'omega')
   else:                   package = base_path

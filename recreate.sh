@@ -34,8 +34,8 @@ select yn in "Yes" "No"; do
     Yes ) sudo apt-get install \
             biber ocamlweb texlive texlive-fonts-extra texlive-humanities \
             texlive-lang-german texlive-latex-extra texlive-metapost      \
-            texlive-publishers texlive-science feynmf latexmk latex-mk    \
-            latex-xcolor context                                          \
+            texlive-pstricks texlive-publishers texlive-science feynmf    \
+            latexmk latex-mk latex-xcolor context                         \
       ; break;;
     No ) break;;
   esac
@@ -44,9 +44,9 @@ echo "Do you want to install extra packages?"
 select yn in "Yes" "No"; do
   case $yn in
     Yes ) sudo apt-get install \
-            apache2 curlftpfs gimp gparted krb5-user libav-tools          \
-            libavcodec-extra nemo-dropbox node-less openssh-server php5   \
-            skype trash-cli youtube-dl wine \
+            apache2 curlftpfs gimp gparted gsl-bin imagemagick krb5-user libav-tools \
+            libavcodec-extra libboost-all-dev libgsl0-dev nemo-dropbox node-less \
+            openssh-server php5 skype trash-cli youtube-dl wine \
       ; break;;
     No ) break;;
   esac
@@ -62,6 +62,8 @@ select yn in "Yes" "No"; do
     No ) break;;
   esac
 done
+
+sudo pip install wgetter
 
 firefox \
   -new-tab http://www.mendeley.com/download-mendeley-desktop/ubuntu/instructions/ \

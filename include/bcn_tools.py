@@ -1,3 +1,7 @@
+# encoding=utf-8 ==============================================================#
+#                                  bcn_tools                                   #
+#==============================================================================#
+
 from __future__ import print_function
 import os
 import subprocess
@@ -10,6 +14,13 @@ def mkdirs(directory):
 def show_file(fname):
   with open(fname, 'r') as fin:
     print(fin.read())
+
+def make_filename(strg):
+  strg = strg.replace(' ', '_')
+  strg = strg.replace(get_base_path(), '')
+  strg = strg.replace(r'/', '')
+  strg = (strg[:130] + '..') if len(strg) > 130 else strg
+  return strg
 
 def call_verbose(action, filter_strgs=None, show_errors=False):
   if isinstance(action, list): string = ' '.join(action)
@@ -28,11 +39,20 @@ def call_verbose(action, filter_strgs=None, show_errors=False):
       print('\n'.join(list(collections.OrderedDict.fromkeys(show))))
     else:
       print(log)
+    with open('log_' + make_filename(string), 'w') as fout:
+      fout.write(log)
   except (subprocess.CalledProcessError, OSError) as e:
     print("Execution of " + string + " failed:\n" + str(e) + '\n' + e.output)
   print('\n... done!')
 
 def show_variable(var_name, var):
+  if isinstance(var, bool):
+    if var:
+      smb = '✓'
+    else:
+      smb = '✗'
+  else:
+    smb = str(var)
   print(var_name.ljust(17) + '=\t' + str(var))
 
 def get_base_path():
@@ -42,7 +62,6 @@ def get_base_path():
     if os.path.exists(bpath):
       base_path = bpath
   try:
-    show_variable('base_path', base_path)
     return base_path
   except NameError:
     print('No known base directory found!')
