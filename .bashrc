@@ -150,7 +150,9 @@ export CPATH=$desy_soft/include:$CPATH
 # hep
 export HEPMC_DIR=$install
 export LHAPDF_DIR=$install
-source $install/rivetenv.sh
+if [ -f $install/rivetenv.sh ]; then
+  source $install/rivetenv.sh
+fi
 
 # perl
 export PERL5LIB=$install/lib/perl5/
