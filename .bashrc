@@ -150,7 +150,9 @@ export CPATH=$desy_soft/include:$CPATH
 # hep
 export HEPMC_DIR=$install
 export LHAPDF_DIR=$install
-source $install/rivetenv.sh
+if [ -f $install/rivetenv.sh ]; then
+  source $install/rivetenv.sh
+fi
 
 # perl
 export PERL5LIB=$install/lib/perl5/
@@ -551,7 +553,7 @@ alias c='./configure'
 #========#
 #  make  #
 #========#
-if command_exists cit; then
+if command_exists colorit; then
   alias n='cit nosetests'
   alias nv='cit "nosetests -v"'
   alias nt='cit "nosetests --with-timer"'
@@ -567,11 +569,10 @@ else
   alias nt='nosetests --with-timer'
   alias ns='nosetests -s'
   alias no='nosetests_cover'
-  alias m='make'
-  alias mj='make -j'
-  alias mi='make install'
-  alias mc='make check'
-  alias mcl='make clean'
+  alias m='make -j12'
+  alias mi='make install -j12'
+  alias mc='make check -j12'
+  alias mcl='make clean -j12'
 fi
 alias s='scons'
 alias ac='autoreconf'

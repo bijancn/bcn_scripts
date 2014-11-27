@@ -11,7 +11,7 @@ def install(package, source, configure_options):
   tfile = package + '.tar.gz'
   filename = wgetter.download(source + tfile, outdir=os.path.join(home, 'Downloads'))
   tar = tarfile.open(name=os.path.join(home, 'Downloads', tfile), mode='r:gz')
-  tar.extractall()
+  tar.extractall(path=hep)
   os.chdir(os.path.join(hep, package))
   mkdirs('build')
   os.chdir('build')
