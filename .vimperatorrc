@@ -6,6 +6,8 @@ map K gt
 map b go
 map B gn
 
+let mapleader = ";"
+
 "============"
 "  settings  "
 "============"
@@ -42,18 +44,6 @@ set! dom.popup_maximum=200
 set! mousewheel.withnokey.numlines=6
 set! mousewheel.withnokey.sysnumlines=false
 
-"let mapleader = ";"
-
-" BMarks {{{1
-"javascript <<EOM
-"function bmark(title, url, keyword) {
-  "if (!bookmarks.isBookmarked(url)) {
-    "bookmarks.add(false, title, url, keyword, ['keyword'], false);
-  "}
-"}
-"bmark('Google Search' , 'http://www.google.com/search?q=%s' , 'g');
-"EOM
-
 "=========="
 "  qmarks  "
 "=========="
@@ -71,3 +61,13 @@ silent qmark S https://calendar.sunrise.am
 silent qmark t http://twitter.com/home
 silent qmark w https://whizard.hepforge.org/trac/timeline
 silent qmark x http://xkcd.com
+
+" BMarks {{{1
+"javascript <<EOM
+"function bmark(title, url, keyword) {
+  "if (!bookmarks.isBookmarked(url)) {
+    "bookmarks.add(false, title, url, keyword, ['keyword'], false);
+  "}
+"}
+"bmark('Google Search' , 'http://www.google.com/search?q=%s' , 'g');
+"EOM
