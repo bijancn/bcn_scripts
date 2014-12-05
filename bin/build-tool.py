@@ -50,13 +50,15 @@ args = parser.parse_args()
 # Select a base path
 base_path = get_base_path()
 
+warnings = '-fmax-errors=1 -fbounds-check -Wall -Wuninitialized -Wextra '
+warnings += '-Wno-unused-function -Wno-unused-dummy-argument -pedantic -fimplicit-none '
 if not args.compiler:
   args.compiler = ['gfortran']
 if not args.optimization:
   args.optimization = ['2']
 if not args.fcflags:
   # gcc doesn't recognize our test function construction as use of a function
-  args.fcflags = ['-fmax-errors=1 -fbounds-check -Wall -Wuninitialized -Wextra -Wno-unused-function']
+  args.fcflags = [warnings]
 if not args.configureflags:
   args.configureflags = [['--enable-fastjet']]
 
@@ -71,28 +73,38 @@ if 'omega' in args.build:
   args.only_omega = True
 
 if 'omp' in args.build:
-  args.configureflags = [['--enable-fc-openmp']]
-
-if 'dist' in args.build:
-  args.configureflags = [['--enable-distribution']]
+  args.configureflags += ['--enable-fc-openmp']
 
 if 'slim' in args.build:
-  args.configureflags = [['--disable-shower', '--disable-static',
-                          '--disable-omega']]
+  args.configureflags += ['--disable-shower', '--disable-static',
+                          '--disable-omega']
+
+if 'profile' in args.build:
+  args.configureflags += ['--disable-shared']
+  args.configureflags += ['--enable-fc-profiling']
+
+if 'dist' in args.build:
+  args.optimization = ['0']
+  args.configureflags += ['--enable-distribution']
+
+if 'develop' in args.build:
+  args.optimization = ['0']
+  args.fcflags = ['-fbacktrace ' + warnings + '-fcheck=all ']
+  args.configureflags += ['--disable-static']
 
 if 'debug' in args.build:
-  args.compiler = ['gfortran']
   args.optimization = ['0']
-  args.fcflags = ['-fmax-errors=1 -fbounds-check -Wall -fbacktrace ' +
+  args.fcflags = ['-fbacktrace ' + warnings +
                   '-g -fcheck=all ' +
                   '-ffpe-trap=invalid,zero,overflow,underflow,denormal']
 
-if 'check' in args.build:
+if 'debugnan' in args.build:
   args.compiler = ['gfortran']
   args.optimization = ['0']
-  args.fcflags = ['-fmax-errors=1 -fbounds-check -Wall -fbacktrace ' +
+  args.fcflags = ['-fbacktrace ' + warnings +
                   '-finit-real=nan -g -fcheck=all ' +
                   '-ffpe-trap=invalid,zero,overflow,underflow,denormal']
+  args.configureflags = [['--enable-fc-profiling']]
 
 # show set options for builder
 tasks = ['configure', 'autoreconf', 'make', 'makecheck', 'remove']

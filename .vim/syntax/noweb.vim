@@ -36,8 +36,9 @@ syntax cluster fortran contains=fortranComment,fortranString,fortranStatement,fo
 syn match nowebChunkName contained      "^<<.*>>=$"
 "syn match nowebChunkName contained      "\( \|^\)<<.*>>"
 syn match nowebChunkName contained      "<<.\{-}>>"
-syn match nowebVerbatim                 "\[\[.\{-}\]\]"
+" latexMath has to be BEFORE nowebVerbatim
 syn region latexMath                    start='\$' end='\$'
+syn match nowebVerbatim                 "\[\[.\{-}\]\]"
 syn match latexComment                  " *%.*$"
 syn match latexStatement                "\\\([a-z]\|[A-Z]\|\$\|\\\)*"
 " This is only highlighted because it comes after latexStatement

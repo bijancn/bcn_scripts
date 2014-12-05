@@ -117,32 +117,32 @@ fi
 #=========#
 #  paths  #
 #=========#
-prepend_path () {
+prepend-path () {
   export PATH=$1/bin:$PATH
 }
-prepend_libpath () {
+prepend-libpath () {
   export LD_LIBRARY_PATH=$1/lib64:$1/lib:$LD_LIBRARY_PATH
 }
-prepend_all_paths () {
-  prepend_path $1
-  prepend_libpath $1
+prepend-all-paths () {
+  prepend-path $1
+  prepend-libpath $1
 }
-add_pythonpath () {
+add-pythonpath () {
   export PYTHONPATH=$PYTHONPATH:$HOME/$1
 }
 
-prepend_all_paths $install
-prepend_all_paths $desy_soft
-prepend_all_paths $whiz_soft/def
+prepend-all-paths $install
+prepend-all-paths $desy_soft
+prepend-all-paths $whiz_soft/def
 
-prepend_path $HOME/bcn_scripts
+prepend-path $HOME/bcn_scripts
 
 # python
-add_pythonpath bcn_scripts/include
-add_pythonpath Python-GoogleCalendarParser
-add_pythonpath eZchat
-add_pythonpath termstyle
-add_pythonpath pydflatex
+add-pythonpath bcn_scripts/include
+add-pythonpath Python-GoogleCalendarParser
+add-pythonpath eZchat
+add-pythonpath termstyle
+add-pythonpath pydflatex
 export PYTHONUSERBASE=$HOME/install
 
 export CPATH=$desy_soft/include:$CPATH
@@ -163,16 +163,16 @@ if [ -d $spider_dir ]; then
   export SPIDEROAKDATADIR=$spider_dir
 fi
 
-command_exists () {
+command-exists () {
       type "$1" &> /dev/null ;
 }
 # opam
-if command_exists opam; then
+if command-exists opam; then
   eval `opam config env`
 fi
 
 # pydflatex
-if command_exists pydflatex; then
+if command-exists pydflatex; then
   export pdftool=pydflatex
 fi
 
@@ -225,7 +225,7 @@ if [ -f $hive/keys/IPs.sh ]; then
   source $hive/keys/IPs.sh
 fi
 
-function my_ip() # Get IP adress on ethernet.
+function my-ip() # Get IP adress on ethernet.
 {
     MY_IP=$(/sbin/ifconfig eth0 | awk '/inet/ { print $2 } ' |
       sed -e s/addr://)
@@ -236,13 +236,13 @@ function my_ip() # Get IP adress on ethernet.
 #  nosetests  #
 #=============#
 nosetests_cover_cmd="nosetests --with-coverage --cover-erase --cover-tests --cover-package=\$(ls *.py | sed -r 's/[.]py$//' | fgrep -v '.' | paste -s -d ',') "
-alias nosetests_cover=$nosetests_cover_cmd
-alias nosetests_cover_sort="$nosetests_cover_cmd 2>&1 | fgrep '%' | sort -nr -k 4"
+alias -- nosetests-cover="$nosetests_cover_cmd"
+alias -- nosetests-cover-sort="$nosetests_cover_cmd 2>&1 | fgrep '%' | sort -nr -k 4"
 
 #=========#
 #  cmake  #
 #=========#
-function cmake_recreate() {
+function cmake-recreate() {
   rm *
   cmake -D CMAKE_Fortran_COMPILER="$1" -D CMAKE_Fortran_FLAGS="$2" ../..
 }
@@ -335,7 +335,7 @@ function extract() {
   fi
 }
 
-function shrink_pdf () {
+function shrink-pdf () {
   fname=$(basename $1)
   fbname=${fname%.*}
   gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
@@ -352,44 +352,48 @@ function bisect () {
   split -dl $lines "$1" "$1."
 }
 
-function rem_print_1s () {
+function rem-print-1s () {
   scp "$1" $ip:~/temp.pdf
   ssh $ip "lp -d lp-tp2 -o media=a4 -o sides=one-sided temp.pdf"
 }
 
-function rem_show () {
+function rem-show () {
   scp "$1" $ip:~/temp.pdf
   ssh -X $ip "evince ~/temp.pdf"
 }
 
-function use_as_ref () {
+function use-as-ref () {
   cp err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
 }
 
-function make_dot () {
+function use-this-as-ref () {
+  cp $1.log ~/trunk/share/tests/ref-output/$1.ref
+}
+
+function make-dot () {
   dot -Tpdf -o ${1%.dot}.pdf $1
 }
 
-function vim_print () {
+function vim-print () {
   vim -c 'hardcopy > ~/output.ps' -c quit "$1"
   ps2pdf ~/output.ps ./"$1".pdf
   rm ~/output.ps
 }
 
-function backup_settings () {
+function backup-settings () {
   sudo cp /etc/fstab ~/decrypted/scripts/backup/
   sudo cp ~/.local/share/keyrings ~/decrypted/scripts/backup/ -r
 }
 
-#function backup_root () {
-  ##sudo rsync -avz /!(data|home|proc|sys|win_fs) /data/root_backup/
-#}
-
-function backup_home () {
-  sudo rsync -avz $HOME /data/home_backup/
+function backup-root () {
+  sudo rsync -avz /!(data|home|proc|sys) /data/root-backup/
 }
 
-function kill_tty () {
+function backup-home () {
+  rsync -avz $HOME /data/home-backup/
+}
+
+function kill-tty () {
   pid=$(ps -t $1 | grep 'bash' | head -c 6)
   kill -9 $pid
 }
@@ -398,11 +402,11 @@ function mkdircd () {
   mkdir -p "$@" && eval cd "\"\$$#\"";
 }
 
-function ft_renamer () {
+function ft-renamer () {
   for file in *.$1; do mv "$file" "${file%.$1}.$2"; done
 }
 
-function replace_by () {
+function replace-by () {
   for file in *$1*; do mv $file ${file/$1/$2}; done
 }
 
@@ -428,6 +432,10 @@ function show-wlan-channels () {
 
 function show-diff () {
   $difftool err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
+}
+
+function show-this-diff () {
+  $difftool $1.log ~/trunk/share/tests/ref-output/$1.ref
 }
 
 function show-path () {
@@ -458,6 +466,14 @@ function show-how-often-used-here () {
   rgrep $1 * | wc -l
 }
 
+function fmo () {
+  rgrep "module $1" --exclude-dir=_build -- *
+}
+
+function fsu () {
+  rgrep "subroutine $1" --exclude-dir=_build -- *
+}
+
 # Get current host related info.
 function show-host-information () {
   echo -e "\nYou are logged on ${BRed}$HOST"
@@ -468,7 +484,7 @@ function show-host-information () {
   echo -e "\n${BRed}Machine stats :$NC " ; uptime
   echo -e "\n${BRed}Memory stats (in MB):$NC " ; free -m
   echo -e "\n${BRed}Diskspace :$NC " ; df -h / $HOME
-  echo -e "\n${BRed}Local IP Address :$NC" ; my_ip
+  echo -e "\n${BRed}Local IP Address :$NC" ; my-ip
   #echo -e "\n${BRed}Open connections :$NC "; netstat -pan --inet;
   echo
 }
@@ -534,7 +550,7 @@ function sfa () {
 #========#
 #  htop  #
 #========#
-if ! command_exists htop ; then
+if ! command-exists htop ; then
   alias htop=top
 fi
 
@@ -553,22 +569,24 @@ alias c='./configure'
 #========#
 #  make  #
 #========#
-if command_exists colorit; then
+if command-exists colorit; then
   alias n='cit nosetests'
   alias nv='cit "nosetests -v"'
   alias nt='cit "nosetests --with-timer"'
   alias ns='cit "nosetests -s"'
-  alias no='nosetests_cover'
-  alias m='cit "make -j"'
-  alias mi='cit "make install -j"'
-  alias mc='cit "make check -j"'
-  alias mcl='cit "make clean -j"'
+  alias no='nosetests-cover'
+  alias m='cit "make V=0 -j4"'
+  alias mv='cit "make V=1 -j4"'
+  alias mi='cit "make V=0 install -j4"'
+  alias miv='cit "make V=1 install -j4"'
+  alias mc='cit "make check -j4"'
+  alias mcl='cit "make clean -j4"'
 else
   alias n='nosetests'
   alias nv='nosetests -v'
   alias nt='nosetests --with-timer'
   alias ns='nosetests -s'
-  alias no='nosetests_cover'
+  alias no='nosetests-cover'
   alias m='make -j12'
   alias mi='make install -j12'
   alias mc='make check -j12'
@@ -638,7 +656,7 @@ alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 #=========#
 alias py='ipython notebook --pylab inline &'
 alias le='less'
-if command_exists trash-put; then
+if command-exists trash-put; then
   alias rm='trash-put -v'
   alias rmm='/bin/rm'
 else
@@ -650,25 +668,22 @@ alias mdc='mkdircd'
 alias mt='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: \t%M"'
 alias sd='sudo shutdown now -P'
 alias rb='sudo reboot'
-alias rs='rem_show'
+alias rs='rem-show'
 alias ca='cit ant'
 alias re='export DISPLAY=:0; cinnamon &'
 alias nhr='nohup ./run_all.sh 2>&1 &'
 alias rgrep='grep -r'
 alias hgrep='history | grep '
-alias du_dirs='du * -sh | sort -h'
-alias du_subdirs='du -h | sort -h'
+alias du-dirs='du * -sh | sort -h'
+alias du-subdirs='du -h | sort -h'
 alias briss="java -jar $syncd/scripts/briss-0.9/briss-0.9.jar"
 alias primrun='vblank_mode=0 primusrun'
 alias todo='rgrep --binary-files=without-match -n todo: *'
-alias yt_mp3='youtube-dl -t --extract-audio --audio-format=mp3'
+alias yt-mp3='youtube-dl -t --extract-audio --audio-format=mp3'
 # dubious
 alias ddiff='diff -x *.swp -q' #?
-alias mount_wue='sshfs $int_quad_core1: /home/bijancn/Dropbox/uniwue/'
-alias mount_out='sshfs $int_quad_core1:output_ovm/ /home/bijancn/Dropbox/master_thesis/output_ovm/'
-alias get_thesis='git clone $nick:~/bcn_git/thesis.git'
-alias reset_file_perms='find . -type f -exec chmod 644 {} +'
-alias reset_dir_perms='find . -type d -exec chmod 755 {} +'
+alias reset-file-perms='find . -type f -exec chmod 644 {} +'
+alias reset-dir-perms='find . -type d -exec chmod 755 {} +'
 
 #==============================================================================#
 #                                     GIT                                      #
@@ -808,7 +823,7 @@ function bitbucket {
   git clone ssh://git@bitbucket.org/$1/$2.git
 }
 
-function bitbucket_hg {
+function bitbucket-hg {
   hg clone ssh://hg@bitbucket.org/$1/$2
 }
 
@@ -830,7 +845,7 @@ alias svnp='svn propedit svn:ignore .'
 #==============================================================================#
 ## Print nickname for git/hg/bzr/svn version control in CWD
 ## Optional $1 of format string for printf, default "(%s) "
-function get_branch {
+function get-branch {
   local dir="$PWD"
   local vcs
   local nick
@@ -865,7 +880,7 @@ export GIT_PS1_SHOWDIRTYSTATE=yes
 if [ -f ~/.git-prompt.sh ] ; then
   source ~/.git-prompt.sh
   PS1='\[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]\n $ '
-  export PS1="\$(get_branch "$2")${PS1}";
+  export PS1="\$(get-branch "$2")${PS1}";
 else
   PS1='\[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]\n $ '
 fi
