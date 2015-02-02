@@ -1,5 +1,5 @@
 [global_config]
-  suppress_multiple_term_dialog = True
+  enabled_plugins = TerminalShot, APTURLHandler, LaunchpadCodeURLHandler, LaunchpadBugURLHandler
   handle_size = 2
   tab_position = bottom
 [keybindings]

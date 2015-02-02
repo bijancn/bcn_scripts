@@ -15,29 +15,62 @@ extends fortran
 extends tex
 
 # Chunks
-snippet nc "Create new noweb chunk"
+snippet nch "Create new noweb chunk"
+@
 <<${1:chunkname}>>=
 @ %def
-@
 endsnippet
 
-snippet ec "Extract Chunk" b
+
+snippet nec "Extract Chunk" b
 <<$1>>
 <<${1:chunkname}>>=
 ${0:${VISUAL}}
-@$2
+@
 endsnippet
 
-snippet ni "A template for a noweb/fortran interface"
+
+snippet npa "Template for a noweb/fortran parameter"
+@
+<<${1:module}: parameters>>=
+	${2:type}, parameter :: ${3:name} = ${4:value}
+@ %def $3
+endsnippet
+
+
+snippet nppa "Template for a noweb/fortran public parameter"
+@
 <<${1:module}: public>>=
-  public :: ${2:function}
-<<$1: interfaces>>=
-  interface $2
-     module procedure $2_${3:type}
-  end interface
+	public :: ${3:name}
+<<$1: parameters>>=
+	${2:type}, parameter :: $3 = ${4:value}
+@ %def $3
 endsnippet
 
-snippet nm "A template for the typical structure of a noweb/fortran module"
+
+snippet nin "Template for a noweb/fortran interface"
+@
+<<${1:module}: public>>=
+	public :: ${2:function}
+<<$1: interfaces>>=
+	interface $2
+		 module procedure $2_${3:type}
+	end interface
+@ %def $2
+endsnippet
+
+
+snippet nti "Template for a noweb/fortran generic binding"
+@
+<<${1:module}: ${2:class}: TBP>>=
+	generic :: ${3:function} => $2_$3_${4}, $2_$3_${5}
+	procedure, private :: $2_$3_$4, $2_$3_$5
+@ %def $3
+endsnippet
+
+
+snippet nmo "Template for the typical structure of a noweb/fortran module"
+@
 <<[[${1:name}.f90]]>>=
 <<File header>>
 
@@ -62,107 +95,144 @@ contains
 
 end module $1
 @ %def $1
-@
 endsnippet
 
-snippet nt "A template for a noweb/fortran type"
+
+snippet nty "Template for a noweb/fortran type"
+@
 <<${1:module}: public>>=
-  public :: ${2:type}
+	public :: ${2:type}_t
 <<$1: types>>=
-  type :: $2
-		${3: values}
+	type :: $2_t
+		 ${3: values}
 	contains
-<<$1: ${2/_/ /g}: TBP>>
-  end type $2
+	 <<$1: ${2/_/ /g}: TBP>>
+	end type $2_t
 
-@ %def $2
-@
+@ %def $2_t
 endsnippet
 
-snippet np "A template for a noweb/fortran subroutine"
+
+snippet nsu "Template for a noweb/fortran subroutine"
+@
 <<${1:module}: procedures>>=
 	pure subroutine ${2:procedure} (${3:args})
 		${4:implementation}
-  end subroutine $2
+	end subroutine $2
 
 @ %def $2
-@
 endsnippet
 
-snippet nf "A template for a noweb/fortran function"
-<<${1:module}: procedures>>=
-  elemental function ${2:procedure} (${3:args}) result (${4:y})
-    real(default) :: $4
-		${5:implementation}
-  end function $2
 
-@ %def $2
+snippet npsu "Template for a noweb/fortran public subroutine"
 @
-endsnippet
-
-snippet ntp "A template for a noweb/fortran type bound procedure"
-<<${1:module}: ${2:class}: TBP>>=
-  procedure :: ${3:procedure} => ${2/ /_/g}_$3
-<<$1: procedures>>=
-	pure subroutine ${2/ /_/g}_$3 (${2/ /_/g})
-		class(${2/ /_/g}_t), intent(${4:inout}) :: ${2/ /_/g}
-		${5:implementation}
-  end subroutine ${2/ /_/g}_$3
-
-@ %def ${2/ /_/g}_$3
-@
-endsnippet
-
-snippet npp "A template for a noweb/fortran public subroutine"
 <<${1:module}: public>>=
 	public :: ${2:procedure}
 <<$1: procedures>>=
 	pure subroutine $2 (${3:args})
 		${4:implementation}
-  end subroutine $2
+	end subroutine $2
 
 @ %def $2
-@
 endsnippet
 
-snippet npf "A template for a noweb/fortran public function"
+
+snippet nfu "Template for a noweb/fortran function"
+@
+<<${1:module}: procedures>>=
+	elemental function ${2:procedure} (${3:args}) result (${4:y})
+		real(default) :: $4
+		${5:implementation}
+	end function $2
+
+@ %def $2
+endsnippet
+
+
+snippet ntp "Template for a noweb/fortran type bound procedure"
+@
+<<${1:module}: ${2:class}: TBP>>=
+	procedure :: ${3:procedure} => ${2/ /_/g}_$3
+<<$1: procedures>>=
+	pure subroutine ${2/ /_/g}_$3 (${2/ /_/g})
+		class(${2/ /_/g}_t), intent(${4:inout}) :: ${2/ /_/g}
+		${5:implementation}
+	end subroutine ${2/ /_/g}_$3
+
+@ %def ${2/ /_/g}_$3
+endsnippet
+
+
+snippet ntw "Template for a noweb/fortran type bound write procedure"
+@
+<<${1:module}: ${2:class}: TBP>>=
+	procedure :: write => ${2/ /_/g}_write
+<<$1: procedures>>=
+	subroutine ${2/ /_/g}_write (${2/ /_/g}, unit)
+		class(${2/ /_/g}_t), intent(in) :: ${2/ /_/g}
+		integer, intent(in), optional :: unit
+		integer :: u
+		u = given_output_unit (unit);  if (u < 0)  return
+		write (u, *) ${2/ /_/g}%${3:member}
+	end subroutine ${2/ /_/g}_write
+
+@ %def ${2/ /_/g}_write
+endsnippet
+
+
+snippet npf "Template for a noweb/fortran public function"
+@
 <<${1:module}: public>>=
 	public :: ${2:procedure}
 <<$1: procedures>>=
-  elemental function $2 (${3:args}) result (${4:y})
-    real(default) :: $4
+	elemental function $2 (${3:args}) result (${4:y})
+		real(default) :: $4
 		${5:implementation}
-  end function $2
+	end function $2
 
 @ %def $2
-@
 endsnippet
 
-snippet nup "A template for a noweb/fortran unit test procedure"
-<<${1:module}: execute tests>>=
-  call test(${1/ /_/g}_${2:i}, "${1/ /_/g}_$2", &
-						"${3:description}", u, results)
-<<$1: UT: procedures>>=
-	subroutine ${1/ /_/g}_$2 (u)
-    integer, intent(in) :: u
-		${4:implementation}
-  end subroutine ${1/ /_/g}_$2
 
-@ %def ${1/ /_/g}_$2
-@
+snippet as "assert"
+call assert (u, ${1:condition}, "$1")
 endsnippet
 
-snippet nut "A template for noweb/fortran unit tests"
+
+snippet nut "Template for noweb/fortran unit tests"
+@
 \subsection{Unit tests}
-<<${1:module}: UT: public>>=
-  public :: ${1/ /_/g}_test
-<<$1: UT: procedures>>=
-  subroutine ${1/ /_/g}_test (u, results)
-    integer, intent(in) :: u
-    type(test_results_t), intent(inout) :: results
-  <<$1: execute tests>>
-  end subroutine ${1/ /_/g}_test
+<<${1:module}: public>>=
+	public :: ${1/ /_/g}_test
+<<$1: procedures>>=
+	subroutine ${1/ /_/g}_test (u, results)
+		integer, intent(in) :: u
+		type(test_results_t), intent(inout) :: results
+	<<$1: execute tests>>
+	end subroutine ${1/ /_/g}_test
 
 @ %def ${1/ /_/g}_test
+endsnippet
+
+
+snippet nup "Template for a noweb/fortran unit test procedure"
 @
+\subsubsection{${1:Purpose}}
+<<${2:module}: execute tests>>=
+	call test(${2/ /_/g}_${3:i}, "${2/ /_/g}_$3", &
+						"$1", u, results)
+<<$2: procedures>>=
+	subroutine ${2/ /_/g}_$3 (u)
+		integer, intent(in) :: u
+		write (u, "(A)")  "* Test output: ${2/ /_/g}_$3"
+		write (u, "(A)")  "*   Purpose: $1"
+		write (u, "(A)")
+
+		${4:implementation}
+
+		write (u, "(A)")
+		write (u, "(A)")  "* Test output end: ${2/ /_/g}_$3"
+	end subroutine ${2/ /_/g}_$3
+
+@ %def ${2/ /_/g}_$3
 endsnippet

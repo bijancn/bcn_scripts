@@ -58,7 +58,7 @@ silent qmark m https://maps.google.com
 silent qmark m http://phdcomics.com
 silent qmark s http://soundcloud.com
 silent qmark S https://calendar.sunrise.am
-silent qmark t http://twitter.com/home
+silent qmark t http://todoist.com
 silent qmark w https://whizard.hepforge.org/trac/timeline
 silent qmark x http://xkcd.com
 

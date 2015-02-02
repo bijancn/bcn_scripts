@@ -2,8 +2,8 @@ sudo apt-get install \
   autoconf automake autotools-dev build-essential cmake curl dict diffpdf g++ \
   gfortran git graphviz htop inkscape ipython keepassx libtool meld mercurial \
   noweb libfindlib-ocaml-dev ocaml pandoc pdftk python-dev python-matplotlib  \
-  python-numpy python-pip python-scipy python-unidecode subversion terminator \
-  unetbootin vim-gtk
+  python-numpy python-pip python-scipy python-unidecode scons subversion      \
+  terminator unetbootin extlinux vim-gtk
 gsettings set org.cinnamon.desktop.default-applications.terminal exec /usr/bin/terminator
 mkdir -p ~/.vim/swap
 mkdir -p ~/install/bin

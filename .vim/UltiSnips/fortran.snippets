@@ -21,6 +21,10 @@ snippet vdbg "vdbg"
 print *, '${1:var} =    ', $1   !!! Debugging
 endsnippet
 
+snippet lo "logical"
+logical$2 :: ${3:name}
+endsnippet
+
 snippet re "real"
 real(default)$2 :: ${3:name}
 endsnippet
@@ -37,18 +41,22 @@ snippet op "optional"
 optional
 endsnippet
 
-snippet if_present "class snippet of optional stuff"
+snippet ifpresent "class snippet of optional stuff"
 if (present (${1:var})) then
-   allocate (${2:class}%$1 (size ($1)), source=$1)
+	 allocate (${2:class}%$1 (size ($1)), source=$1)
 end if
-$0
 endsnippet
 
-snippet if_dealloc "deallocate only if allocated"
+snippet ifdealloc "deallocate only if allocated"
 if (allocated (${1:var})) then
-   deallocate ($1)
+	 deallocate ($1)
 end if
-$0
+endsnippet
+
+snippet ifalloc "deallocate only if allocated"
+if (allocated (${1:var})) then
+	 $0
+end if
 endsnippet
 
 snippet ii "intent"
@@ -131,22 +139,22 @@ end do
 endsnippet
 
 # Write statement
-snippet write "write"
+snippet wri "write"
 write (${1:*}, ${2:*}) ${3:variable}
 endsnippet
 
 # Read statement
-snippet read "read"
+snippet rea "read"
 read (${1:*}, ${2:*}) ${3:target}
 endsnippet
 
 # Where statement
-snippet where "where"
+snippet whe "where"
 where (${1:var} ${2:<=condition}) $2 = ${3:expression}
 endsnippet
 
 # Where / elsewhere construct
-snippet elsewhere "elsewhere"
+snippet ewh "elsewhere"
 where (${1:var} ${2:<=condition})
 	$1 = ${3:expression}
 elsewhere

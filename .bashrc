@@ -370,6 +370,10 @@ function use-this-as-ref () {
   cp $1.log ~/trunk/share/tests/ref-output/$1.ref
 }
 
+function find-type () {
+  rgrep "public :: ${1}_t\$" -B1
+}
+
 function make-dot () {
   dot -Tpdf -o ${1%.dot}.pdf $1
 }
@@ -385,9 +389,9 @@ function backup-settings () {
   sudo cp ~/.local/share/keyrings ~/decrypted/scripts/backup/ -r
 }
 
-function backup-root () {
-  sudo rsync -avz /!(data|home|proc|sys) /data/root-backup/
-}
+#function backup-root () {
+  #sudo rsync -avz /!(data|home|proc|sys) /data/root-backup/
+#}
 
 function backup-home () {
   rsync -avz $HOME /data/home-backup/
@@ -463,7 +467,7 @@ function kill-all () {
 }
 
 function show-how-often-used-here () {
-  rgrep $1 * | wc -l
+  rgrep "$1" * | wc -l
 }
 
 function fmo () {
@@ -565,20 +569,21 @@ alias x='exit'
 alias p='python'
 alias t='/usr/bin/time'
 alias c='./configure'
+alias b="cd $HOME/trunk/_build"
 
 #========#
 #  make  #
 #========#
 if command-exists colorit; then
   alias n='cit nosetests'
-  alias nv='cit "nosetests -v"'
+  alias nV='cit "nosetests -v"'
   alias nt='cit "nosetests --with-timer"'
   alias ns='cit "nosetests -s"'
   alias no='nosetests-cover'
   alias m='cit "make V=0 -j4"'
-  alias mv='cit "make V=1 -j4"'
+  alias mV='cit "make V=1 -j4"'
   alias mi='cit "make V=0 install -j4"'
-  alias miv='cit "make V=1 install -j4"'
+  alias miV='cit "make V=1 install -j4"'
   alias mc='cit "make check -j4"'
   alias mcl='cit "make clean -j4"'
 else
@@ -618,8 +623,10 @@ alias ..5="cd ../../../../.."
 #  lists  #
 #=========#
 alias ls='ls --color'
+alias lsd='ls --color -d */'
 alias ll='ls --color -lh'
 alias la='ls --color -lah'
+alias lad='ls --color -lah -d */'
 alias lk='ls --color -lSrh'         #  Sort by size, biggest last.
 
 #===========#
