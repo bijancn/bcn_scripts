@@ -60,6 +60,23 @@ snippet nin "Template for a noweb/fortran interface"
 endsnippet
 
 
+snippet ntd "Template for a noweb/fortran deferred procedure with interface"
+@
+<<${1:module}: ${2:class}: TBP>>=
+	procedure ($2_${3:function}), deferred :: $3
+<<$1: interfaces>>=
+  interface
+     subroutine $2_$3 ($2, ${4:args})
+       import
+       class($2_t), intent(${5:inout}) :: $2
+       ${6:type} :: $4
+     end subroutine $2_$3
+  end interface
+
+@ %def $2_$3
+endsnippet
+
+
 snippet nti "Template for a noweb/fortran generic binding"
 @
 <<${1:module}: ${2:class}: TBP>>=
@@ -158,6 +175,20 @@ snippet ntp "Template for a noweb/fortran type bound procedure"
 		class(${2/ /_/g}_t), intent(${4:inout}) :: ${2/ /_/g}
 		${5:implementation}
 	end subroutine ${2/ /_/g}_$3
+
+@ %def ${2/ /_/g}_$3
+endsnippet
+
+
+snippet ntf "Template for a noweb/fortran type bound function"
+@
+<<${1:module}: ${2:class}: TBP>>=
+	procedure :: ${3:procedure} => ${2/ /_/g}_$3
+<<$1: procedures>>=
+	pure function ${2/ /_/g}_$3 (${2/ /_/g}) result (${4:y})
+		class(${2/ /_/g}_t), intent(${5:inout}) :: ${2/ /_/g}
+		${6:implementation}
+	end function ${2/ /_/g}_$3
 
 @ %def ${2/ /_/g}_$3
 endsnippet

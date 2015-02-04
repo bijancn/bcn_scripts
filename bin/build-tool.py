@@ -50,7 +50,9 @@ args = parser.parse_args()
 # Select a base path
 base_path = get_base_path()
 
-warnings = '-fmax-errors=1 -fbounds-check -Wall -Wuninitialized -Wextra -fno-whole-program '
+# -fbounds-check doesnt seem to play well with c_char of len 1
+#warnings = '-fmax-errors=1 -fbounds-check -Wall -Wuninitialized -Wextra -fno-whole-program '
+warnings = '-fmax-errors=1 -Wall -Wuninitialized -Wextra -fno-whole-program '
 # gcc doesn't recognize our test function construction as use of a function
 warnings += '-Wno-unused-function -Wno-unused-dummy-argument -fimplicit-none -pedantic '
 if not args.compiler:
@@ -68,6 +70,14 @@ if 'ifort' in args.build:
   args.optimization = ['3']
   args.fcflags = ['']
   args.only_omega = True
+
+if 'gosam' in args.build:
+  gosam_dir = os.path.expanduser('~/hep/GoSam/local')
+  gosam_options = ['--with-gosam=', '--with-golem=', '--with-samurai=',
+                   '--with-ninja=', '--with-form=', '--with-qgraf=']
+  gosam_options = [go + gosam_dir for go in gosam_options]
+  print ('gosam options' , gosam_options)
+  args.configureflags[0] += ['--enable-gosam'] + gosam_options
 
 if 'omega' in args.build:
   args.only_omega = True
