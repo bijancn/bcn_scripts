@@ -113,6 +113,13 @@ if [ -d $whiz_dir1 ]; then
 elif [ -d $whiz_dir2 ]; then
   export whiz_soft=$whiz_dir2
 fi
+gosam_dir1=$HOME/hep/GoSam/local
+gosam_dir2=/data/bcho/gosam/local
+if [ -d $gosam_dir1 ]; then
+  export gosam_soft=$gosam_dir1
+elif [ -d $gosam_dir2 ]; then
+  export gosam_soft=$gosam_dir2
+fi
 
 #=========#
 #  paths  #
@@ -153,6 +160,7 @@ export LHAPDF_DIR=$install
 if [ -f $install/rivetenv.sh ]; then
   source $install/rivetenv.sh
 fi
+prepend-all-paths $gosam_soft
 
 # perl
 export PERL5LIB=$install/lib/perl5/
@@ -193,9 +201,6 @@ if [ -f $intel_dir/2013/bin/compilervars.sh ]; then
   source $intel_dir/2013/bin/compilervars.sh intel64
   #source $intel_dir/2011/vtune_amplifier_xe/amplxe-vars.sh
 fi
-
-# rivet
-#source $install/rivet/rivet211/rivetenv.sh
 
 #==================#
 #  compiler flags  #
