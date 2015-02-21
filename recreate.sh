@@ -1,8 +1,12 @@
 sudo apt-get install \
-  autoconf automake autotools-dev build-essential cmake curl dict diffpdf g++ \
-  gfortran git graphviz htop inkscape ipython keepassx libtool meld mercurial \
-  noweb libfindlib-ocaml-dev ocaml pandoc pdftk python-dev python-matplotlib  \
-  python-numpy python-pip python-scipy python-unidecode scons subversion      \
+  autoconf automake autotools-dev build-essential \
+  cmake curl dict diffpdf g++ \
+  gfortran git graphviz htop inkscape ipython \
+  keepassx libtool meld mercurial \
+  noweb libfindlib-ocaml-dev ocaml pandoc \
+  pdftk python-dev python-matplotlib \
+  python-numpy python-pip python-scipy \
+  python-unidecode scons subversion \
   terminator unetbootin extlinux vim-gtk
 gsettings set org.cinnamon.desktop.default-applications.terminal exec /usr/bin/terminator
 mkdir -p ~/.vim/swap
@@ -32,10 +36,13 @@ echo "Do you want to install Latex?"
 select yn in "Yes" "No"; do
   case $yn in
     Yes ) sudo apt-get install \
-            biber ocamlweb texlive texlive-fonts-extra texlive-humanities \
-            texlive-lang-german texlive-latex-extra texlive-metapost      \
-            texlive-pstricks texlive-publishers texlive-science feynmf    \
-            latexmk latex-mk latex-xcolor context                         \
+            biber ocamlweb texlive texlive-bibtex-extra \
+            texlive-fonts-extra texlive-humanities \
+            texlive-lang-german texlive-latex-extra \
+            texlive-metapost texlive-pstricks \
+            texlive-publishers texlive-science \
+            feynmf latexmk latex-beamer \
+            latex-mk latex-xcolor context \
       ; break;;
     No ) break;;
   esac
