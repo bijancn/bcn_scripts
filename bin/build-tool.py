@@ -23,6 +23,8 @@ parser.add_argument("-k", '--makecheck', action='store_true',
     help='Perform make check')
 parser.add_argument("-r", '--remove', action='store_true',
     help='Remove build dir before building')
+parser.add_argument("-A", '--all', action='store_true',
+    help='Remove, configure, make, make check')
 
 # options how to behave
 parser.add_argument("-j", '--jobs', default=4,
@@ -72,13 +74,12 @@ if 'ifort' in args.build:
   args.only_omega = True
 
 if 'gosam' in args.build:
-  args.optimization = ['0']
   args.fcflags = ['-fbacktrace ' + warnings]
   gosam_dir = os.path.expanduser('~/hep/GoSam/local')
   gosam_options = ['--with-gosam=', '--with-golem=', '--with-samurai=',
                    '--with-ninja=', '--with-form=', '--with-qgraf=']
   gosam_dirs = [go + gosam_dir for go in gosam_options]
-  args.configureflags[0] += ['--disable-static', '--enable-gosam']
+  args.configureflags[0] += ['--enable-gosam']
 
 if 'omega' in args.build:
   args.only_omega = True
@@ -91,7 +92,8 @@ if 'slim' in args.build:
                           '--disable-omega']
 
 if 'profile' in args.build:
-  args.configureflags[0] += ['--enable-fc-profiling']
+  args.optimization = ['2']
+  args.configureflags[0] += ['--enable-fc-profiling', '--enable-static']
 
 if 'dist' in args.build:
   args.optimization = ['0']
@@ -110,7 +112,7 @@ if 'extended' in args.build:
 
 if 'develop' in args.build:
   args.optimization = ['0']
-  args.fcflags = ['-fbacktrace ' + warnings + '-fcheck=all ']
+  args.fcflags = ['-fbacktrace ' + warnings]
   args.configureflags[0] += ['--disable-static']
 
 if 'debug' in args.build:
@@ -127,8 +129,14 @@ if 'debugnan' in args.build:
                   '-ffpe-trap=invalid,zero,overflow,underflow,denormal']
   args.configureflags[0] = [['--enable-fc-profiling']]
 
+if args.all:
+  args.remove = True
+  args.configure = True
+  args.make = True
+  args.makecheck = True
+
 # show set options for builder
-tasks = ['configure', 'autoreconf', 'make', 'makecheck', 'remove']
+tasks = ['autoreconf', 'remove', 'configure', 'make', 'makecheck', 'all']
 options = ['jobs', 'errors']
 variants = ['configureflags', 'compiler', 'optimization', 'fcflags', 'build', 'tag']
 arg_dict = vars(args)
@@ -139,7 +147,6 @@ def _call_verbose(cmd):
   lines_to_show = ['Package name:', 'Version:', 'Date:', 'Status:', 'version',
                    ' path.', ' path ']
   call_verbose(cmd, filter_strgs=lines_to_show, show_errors=args.errors)
-
 
 # autoreconf if desired
 os.chdir(base_path)

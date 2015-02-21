@@ -70,17 +70,26 @@ Plugin 'edkolev/promptline.vim'
 " A very decent color scheme from which I want to borrow some concepts
 Plugin 'jonathanfilip/vim-lucius'
 
+" This is part of the distro and not necessary
+"Plugin 'matchit.zip'
+
 "==========="
 "  testing  "
 "==========="
+" Interesting color scheme
+Plugin 'sjl/badwolf'
+
+" Git wrapper, shows branch in airline
+Plugin 'tpope/vim-fugitive'
+
+" Allow to increment/decremt dates, roman numerals, ordinals, letters
+Plugin 'tpope/vim-speeddating'
+
 " Does not change in noweb chunks, might be fixable
 "Plugin 'comments.vim'
 
 " Reasonably good. Not perfect. Also doesn't change in noweb.
 Plugin 'scrooloose/nerdcommenter'
-
-" Allows to use % on keywords like if
-Plugin 'matchit.zip'
 
 " Good support for Markdown
 Plugin 'vim-pandoc/vim-pandoc'
@@ -96,6 +105,16 @@ Plugin 'Shougo/vimfiler.vim'
 " Add the surround physics. Repeat allows to repeat those
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
+
+" Add support for emacs org-mode
+Plugin 'jceb/vim-orgmode'
+
+" Show an outline / table of content of org or tex file and move things around
+" Seems to conflict with vim-orgmodes <CR> and <TAB> behavior
+"Plugin 'vim-voom/VOoM'
+
+" Create tables automatically and allow spreadsheet computations
+Plugin 'dhruvasagar/vim-table-mode'
 
 call vundle#end()
 
@@ -140,7 +159,6 @@ set smartcase             " Case sensitive only when uppercase characters appear
 set hlsearch              " Switch on highlighting the last used search pattern
 
 " Folds
-set fdo-=search           " Search only in unfolded text. Does this work?
 set foldmethod=syntax     " Fold per default according to syntax
 setlocal foldlevel=99     " Open all folds per default
 set foldnestmax=3         " Create 3 levels of folds overall
@@ -160,7 +178,8 @@ set number                " Activate line numbers on the left side
 set t_Co=256              " Enable 256 colors
 set background=light
 colorscheme lucius
-LuciusWhite
+"LuciusWhite
+LuciusDarkLowContrast
 " colorscheme bcn_light
 
 " Mouse
@@ -204,8 +223,8 @@ set splitright
 set gdefault
 
 " Performance (?)
-syntax sync minlines=2048
-autocmd BufEnter * :syntax sync fromstart
+"syntax sync minlines=2048
+"autocmd BufEnter * :syntax sync fromstart
 set ttyfast
 set lazyredraw
 
@@ -434,8 +453,9 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 
 " Automatically save and load views for files
-autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
+" TODO: (bcn 2015-02-09) This screws up viewing the same file with a split
+"autocmd BufWinLeave *.* mkview
+"autocmd BufWinEnter *.* silent loadview
 
 " Load indentexpr from fortran and switch back to noweb for syntax hl
 autocmd BufWinEnter *.nw setlocal filetype=fortran | setlocal filetype=noweb
@@ -468,7 +488,8 @@ autocmd FocusLost *.* :wa
 "let g:ocp_indent_vimfile = g:ocp_indent_vimfile . "/vim/syntax/ocp-indent.vim"
 
 "autocmd FileType ocaml exec ":source " . g:ocp_indent_vimfile
-autocmd FileType ocaml exec ":RainbowToggle"
+"autocmd FileType ocaml exec ":RainbowToggle"
+"autocmd FileType noweb exec ":RainbowToggle"
 
 "=============================================================================="
 "
@@ -548,7 +569,7 @@ endif
 let g:airline_symbols.space = "\ua0"
 
 " Shows trailing whitespace
-let g:airline_detect_whitespace=1
+let g:airline#extensions#whitespace#enabled = 1
 
 "=============================================================================="
 "                                    UNITE                                     "
@@ -601,6 +622,15 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "ultisnips_my"]
 
 "=============================================================================="
+"                                YOUCOMPLETEME                                 "
+"=============================================================================="
+" Defines the max size (in Kb) for a file to be considered for completion
+let g:ycm_disable_for_files_larger_than_kb = 2000
+
+" Query the UltiSnips plugin for possible completions of snippet triggers
+let g:ycm_use_ultisnips_completer = 1
+
+"=============================================================================="
 "                                     GOYO                                     "
 "=============================================================================="
 let g:goyo_width=120
@@ -610,9 +640,22 @@ let g:goyo_linenr=0
 nmap <Leader>g :Goyo<CR>
 
 "=============================================================================="
+"                                 VIM-ORGMODE                                  "
+"=============================================================================="
+
+" Files used for the global agenda
+let g:org_agenda_files=['~/safe/phd/index.org']
+
+" Wether to make the leading stars less visible
+let g:org_heading_shade_leading_stars = 1
+
+" Multi-state workflows
+let g:org_todo_keywords=['TODO', 'GETFEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATED']
+
+"=============================================================================="
 "                                   RAINBOW                                    "
 "=============================================================================="
-let g:rainbow_active = 1
+let g:rainbow_active = 0
 map <Leader>r :RainbowToggle<CR>
 let g:rainbow_conf = {
     \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],

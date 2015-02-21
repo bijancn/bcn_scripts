@@ -25,7 +25,7 @@ endif
 " Code will only appear in chunks
 syntax region codeChunk
   \ start="^<<.*>>=$" end="^@"
-  \ contains=@fortran,nowebChunkName fold
+  \ contains=@fortran,nowebChunkName
 
 " Gather the Fortran objects
 syntax cluster fortran contains=fortranComment,fortranString,fortranStatement,fortranDoStatement,fortranBuiltin,fortranOperator,fortranBoolean,fortranType

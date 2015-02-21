@@ -48,6 +48,7 @@ set! mousewheel.withnokey.sysnumlines=false
 "  qmarks  "
 "=========="
 silent qmark a http://amazon.de
+silent qmark b http://bitbucket.org
 silent qmark c http://google.com/calendar
 silent qmark C https://kunde.comdirect.de/lp/wt/login
 silent qmark f http://facebook.com
@@ -56,6 +57,7 @@ silent qmark g https://github.com
 silent qmark j http://localhost:8080/job/whizard-trunk-dist
 silent qmark m https://maps.google.com
 silent qmark m http://phdcomics.com
+silent qmark q http://quora.com
 silent qmark s http://soundcloud.com
 silent qmark S https://calendar.sunrise.am
 silent qmark t http://todoist.com
