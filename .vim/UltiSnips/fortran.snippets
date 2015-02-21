@@ -13,12 +13,12 @@
 
 # Debugging
 snippet dbg "dbg"
-print *, 'Still working'
+print *, '${1:Hello}' !!! Debugging
 endsnippet
 
 # Variable Debugging
 snippet vdbg "vdbg"
-print *, '${1:var} =    ', $1   !!! Debugging
+print *, '${1:var} =    ', $1 !!! Debugging
 endsnippet
 
 snippet lo "logical"
@@ -141,6 +141,14 @@ endsnippet
 # Write statement
 snippet wri "write"
 write (${1:*}, ${2:*}) ${3:variable}
+endsnippet
+
+snippet wrrvar "write variable"
+write (${1:u}, "(A," // FMT_19 // ")") "${3:variable} = ", $3
+endsnippet
+
+snippet wrivar "write variable"
+write (${1:u}, "(A, I12)") "${3:variable} = ", $3
 endsnippet
 
 # Read statement
