@@ -33,17 +33,6 @@ eval `dircolors $HOME/.dir_colorsrc`
 set -o vi
 bind '"\e."':yank-last-arg
 
-# Enable custom vim
-if [ -f $HOME/install/bin/vim ]; then
-  export VIMRUNTIME=$HOME/install/share/vim/vim74/
-  export EDITOR=$HOME/install/bin/vim
-  export VISUAL=$HOME/install/bin/vim
-else
-  export VIMRUNTIME=/usr/share/vim/vim74/
-  export EDITOR=/usr/bin/vim
-  export VISUAL=/usr/bin/vim
-fi
-
 # Use vim for my diffing functions
 export difftool='vim -d'
 
@@ -106,6 +95,7 @@ export syncd=$HOME/safe
 export hive=$HOME/hive
 export desy_soft=/afs/desy.de/group/theorie/software/ELF64
 export install=$HOME/install
+
 whiz_dir1=$HOME/trunk/_install
 whiz_dir2=/data/bcho/trunk/_install
 if [ -d $whiz_dir1 ]; then
@@ -113,6 +103,7 @@ if [ -d $whiz_dir1 ]; then
 elif [ -d $whiz_dir2 ]; then
   export whiz_soft=$whiz_dir2
 fi
+
 gosam_dir1=$HOME/hep/GoSam/local
 gosam_dir2=/data/bcho/gosam/local
 if [ -d $gosam_dir1 ]; then
@@ -127,6 +118,9 @@ fi
 prepend-path () {
   export PATH=$1/bin:$PATH
 }
+prepend-pure-path () {
+  export PATH=$1:$PATH
+}
 prepend-libpath () {
   export LD_LIBRARY_PATH=$1/lib64:$1/lib:$LD_LIBRARY_PATH
 }
@@ -139,10 +133,14 @@ add-pythonpath () {
 }
 
 prepend-all-paths $install
+export C_INCLUDE_PATH=$install/include
+export CPLUS_INCLUDE_PATH=$install/include
 prepend-all-paths $desy_soft
 prepend-all-paths $whiz_soft/def
 
 prepend-path $HOME/bcn_scripts
+
+prepend-pure-path $HOME/jrfonseca.gprof2dot
 
 # python
 add-pythonpath bcn_scripts/include
@@ -155,18 +153,27 @@ export PYTHONUSERBASE=$HOME/install
 export CPATH=$desy_soft/include:$CPATH
 
 # hep
-export HEPMC_DIR=$install
-export LHAPDF_DIR=$install
 if [ -f $install/rivetenv.sh ]; then
   source $install/rivetenv.sh
 fi
 prepend-all-paths $gosam_soft
+export HEPMC_DIR=$install
+export LHAPDF_DIR=$install
+export LATEXINPUTS=${HOME}/texmf:${LATEXINPUTS}
+export TEXINPUTS=${HOME}/texmf:${TEXINPUTS}
+export TEXMFCNF=${HOME}/texmf:${TEXMFCNF}
+export HOMETEXMF=${HOME}/texmf:${HOMETEXMF}
+export TEXMFHOME=${HOME}/texmf:${TEXMFHOME}
+pythia-configure(){
+  packages='--with-hepmc2=$install --with-lhapdf6=$install --with-fastjet3=$install'
+  ./configure --prefix=$install $packages
+}
 
 # perl
-export PERL5LIB=$install/lib/perl5/
+export PERL5LIB=$install/lib/perl5
 
 # spideroak
-spider_dir=/scratch/bcho/SpiderOak/tmp/
+spider_dir=/scratch/bcho/SpiderOak/tmp
 if [ -d $spider_dir ]; then
   export SPIDEROAKDATADIR=$spider_dir
 fi
@@ -202,12 +209,23 @@ if [ -f $intel_dir/2013/bin/compilervars.sh ]; then
   #source $intel_dir/2011/vtune_amplifier_xe/amplxe-vars.sh
 fi
 
+# vim
+if [ -f $install/bin/vim ]; then
+  export VIMRUNTIME=$install/share/vim/vim74/
+  export EDITOR=$install/bin/vim
+  export VISUAL=$install/bin/vim
+else
+  export VIMRUNTIME=/usr/share/vim/vim74/
+  export EDITOR=/usr/bin/vim
+  export VISUAL=/usr/bin/vim
+fi
+
 #==================#
 #  compiler flags  #
 #==================#
 export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan -g"
 export DEBUG="$DEBUG -fcheck=all -fmax-errors=1 -ffpe-trap=invalid,zero,overflow,underflow,denormal"
-export FCFLAGS="-fmax-errors=1 -O2 -fbounds-check"
+export FCFLAGS="-fmax-errors=1 -O2"
 # Simply append this this to your configure command with a space in front
 export DEBUG_FCFLAGS="FCFLAGS=\"$DEBUG\""
 export CFLAGS="-fPIC"
@@ -262,7 +280,9 @@ export today=`date -I`
 export USER_ACR=bcn
 
 # Set the title of terminal
-echo -en "\e]0;$USER_ACR - terminal\a"
+function set-title() {
+  echo -en "\e]0;$1\a"
+}
 
 #==============================================================================#
 #                                    COLORS                                    #
@@ -553,7 +573,7 @@ function fa () {
 }
 
 function sfa () {
- sudo find -iname "*$1*"
+  sudo find -iname "*$1*"
 }
 
 #========#
@@ -562,6 +582,17 @@ function sfa () {
 if ! command-exists htop ; then
   alias htop=top
 fi
+
+#=============#
+#  callgrind  #
+#=============#
+function callgrind-graph () {
+  gprof2dot.py -f callgrind $1 | dot -Tpdf -o ${1}.pdf
+}
+
+function callgrind () {
+  valgrind --tool=callgrind $1
+}
 
 #==============================================================================#
 #                                  SHORTHANDS                                  #
@@ -604,6 +635,7 @@ else
 fi
 alias s='scons'
 alias ac='autoreconf'
+alias bp='bitpocket'
 
 #===========#
 #  configs  #
@@ -654,6 +686,10 @@ alias osrc='go '$whiz_soft/dist/share/doc/omega/omega.pdf
 alias csrc='go '$whiz_soft/dist/share/doc/circe2/circe2.pdf
 alias wman='go '$whiz_soft/dist/share/doc/whizard/manual.pdf
 alias gman='go '$whiz_soft/dist/share/doc/whizard/gamelan_manual.pdf
+function make-test () {
+  make check TESTS=$1.run
+}
+alias mt=make-test
 
 #=========#
 #  games  #
@@ -677,7 +713,7 @@ fi
 alias mv='mv -v'
 alias md='mkdir'
 alias mdc='mkdircd'
-alias mt='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: \t%M"'
+alias mti='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: \t%M"'
 alias sd='sudo shutdown now -P'
 alias rb='sudo reboot'
 alias rs='rem-show'
@@ -848,9 +884,16 @@ fi
 alias svna='svn add'
 alias svnu='svn update'
 alias svns='svn status'
-alias svnd='svn diff'
 alias svnc='svn commit'
+
+# Show the changes that will be commited
+alias svnd='svn diff'
+
+# Edit which files are ignored in the current directory
 alias svnp='svn propedit svn:ignore .'
+
+# Revert all changes made recursively
+alias svnR='svn revert -R .'
 
 #==============================================================================#
 #                                    PROMPT                                    #
