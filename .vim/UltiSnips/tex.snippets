@@ -100,6 +100,10 @@ snippet al "tex command"
 \al{${1:${VISUAL}}}$0
 endsnippet
 
+snippet pg "tex command"
+\pg{${1:${VISUAL}}}$0
+endsnippet
+
 #========#
 #  math  #
 #========#
@@ -131,14 +135,18 @@ endsnippet
 #===============#
 snippet enum "Enumerate" b
 \begin{enumerate}
-	\item $0
+	\item $0 \vs{.5}
 \end{enumerate}
 endsnippet
 
 snippet item "Itemize" b
 \begin{itemize}
-	\item $0
+	\item ${1:${VISUAL}} \vs{.5}$0
 \end{itemize}
+endsnippet
+
+snippet it "Item" b
+\item ${1:${VISUAL}} \vs{.5} $0
 endsnippet
 
 snippet desc "Description" b

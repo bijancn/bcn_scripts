@@ -64,6 +64,19 @@
 \newcommand\scite[1]{\alert{\scriptsize #1}}
 \newcommand\os{\onslide}
 \newcommand\al{\alert}
+\newcommand\fstal[1]{{\color{\fstcol}#1}}
+\newcommand\bad[1]{{\color{red}#1}}
+\newcommand\good[1]{{\color{\mygreen}#1}}
+\newcommand\ccite[1]{\smaller[3]\textcolor{desygray}
+{[\citeauthor{#1} \citeyear{#1}]}\larger[3]}
+  %{[\citeauthor{#1} \citeyear{#1}]}\larger[3]}
+\newcommand\mcite[1]{\smaller[3]\textcolor{desygray}
+  {[#1]}\larger[3]}
+\newcommand\vcite[1]{\smaller[3]\textcolor{desygray}
+  {[#1]}\larger[3]}
+\newcommand\talkby[1]{\textcolor{desyorange}{$\rightarrow$ talk by #1}}
+\newcommand\ask[1]{\textcolor{desyorange}{$\rightarrow$ ask #1}}
+\newcommand\crossreftalk[1]{\textcolor{desyorange}{$\rightarrow$ #1}}
 
 \NewEnviron{Balign}{
   \begin{align*}

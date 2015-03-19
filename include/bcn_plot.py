@@ -18,10 +18,12 @@ class Plotter(object):
       legend_columns=1, legend_outside=False, legend_resizer=0.80,
       legend_hide=False, legend_ordering=[]):
     # label axes and set ranges and scales
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(ylabel)
-    _set_puffed_scale(puff, xmax, xmin, xlog, ax.set_xlim, plt.xscale)
-    _set_puffed_scale(puff, ymax, ymin, ylog, ax.set_ylim, plt.yscale)
+    if xlabel is not None:
+      ax.set_xlabel(xlabel)
+    if ylabel is not None:
+      ax.set_ylabel(ylabel)
+    _set_puffed_scale(puff, xmax, xmin, xlog, ax.set_xlim, ax.set_xscale)
+    _set_puffed_scale(puff, ymax, ymin, ylog, ax.set_ylim, ax.set_yscale)
 
     # title (ensuring no double set)
     if title is not None and self.title_notset:

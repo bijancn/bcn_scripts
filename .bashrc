@@ -37,8 +37,8 @@ bind '"\e."':yank-last-arg
 export difftool='vim -d'
 
 # Narrowing greps search realms
-a='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo '
-export GREP_OPTIONS=$a'--exclude=*.swp --exclude=Makefile.in'
+a='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude-dir=_build '
+export GREP_OPTIONS=$a'--exclude=*.swp --exclude=Makefile.in --exclude-dir=_install'
 
 # Enable some bash options
 shopt -s cdspell
@@ -634,6 +634,7 @@ else
   alias mcl='make clean -j12'
 fi
 alias s='scons'
+alias scl='scons --clean'
 alias ac='autoreconf'
 alias bp='bitpocket'
 
@@ -642,6 +643,7 @@ alias bp='bitpocket'
 #===========#
 alias so='source ~/.bashrc'
 alias brc='vim ~/.bashrc'
+alias src='vim ~/.ssh/config'
 alias vrc='vim ~/.vimrc'
 alias gitrc='vim ~/.gitconfig'
 

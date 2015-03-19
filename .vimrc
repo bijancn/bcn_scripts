@@ -111,7 +111,7 @@ Plugin 'jceb/vim-orgmode'
 
 " Show an outline / table of content of org or tex file and move things around
 " Seems to conflict with vim-orgmodes <CR> and <TAB> behavior
-"Plugin 'vim-voom/VOoM'
+Plugin 'vim-voom/VOoM'
 
 " Create tables automatically and allow spreadsheet computations
 Plugin 'dhruvasagar/vim-table-mode'
