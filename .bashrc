@@ -463,8 +463,26 @@ function show-diff () {
   $difftool err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
 }
 
+function update-variable-refs () {
+  use-this-as-ref show_4
+  cp process_log_1_p1.log ~/trunk/share/tests/ref-output/process_log.ref
+  use-this-as-ref vars
+  use-as-ref rt_data_1
+  use-as-ref rt_data_2
+  use-as-ref rt_data_3
+}
+
+
 function show-this-diff () {
   $difftool $1.log ~/trunk/share/tests/ref-output/$1.ref
+}
+
+function show-this-diff-double () {
+  $difftool $1.log ~/trunk/share/tests/ref-output-double/$1.ref
+}
+
+function show-this-diff-ext () {
+  $difftool $1.log ~/trunk/share/tests/ref-output-ext/$1.ref
 }
 
 function show-path () {
