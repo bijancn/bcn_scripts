@@ -1,0 +1,39 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# bcn .screenrc - screen configuration file. Maintained since 2015.
+#
+# Copyright (C) 2015         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+# Recent versions:  https://github.com/bijancn/bcn_scripts
+#
+# This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+# can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
+# http://www.gnu.org/licenses/gpl-2.0-standalone.html
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# status line
+hardstatus alwayslastline
+# %A : AM/PM
+hardstatus string '%{= kG} %{G}%H%{g} | %-Lw%{= kW}%50> %n*%f %t%{= kG}%+Lw%< %{= kG}%-=%D %m/%d/%y | %C:%s | %l '
+
+# settings
+defscrollback      10000        # Buffer of scroll back lines
+defutf8               on        # utf8
+msgwait                1        # Show messages for 1 second
+startup_message      off        # No welcome message
+vbell                off        # No visual blinking
+altscreen             on        # Dont put fullscreen programs in scrollback
+
+# activate 256 colors
+term screen-256color
+attrcolor b ".I"                # allow bold colors - necessary for some reason
+# tell screen how to set colors. AB = background, AF = foreground
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+defbce on                       # use current bg color for erased chars
+
+# screen windows
+screen bash
+
+# bindings
+bindkey "^[Od" prev             # change window with ctrl-left
+bindkey "^[Oc" next             # change window with ctrl-right

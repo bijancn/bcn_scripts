@@ -94,6 +94,7 @@ export lingames=/data/lnx_games
 export syncd=$HOME/safe
 export hive=$HOME/hive
 export desy_soft=/afs/desy.de/group/theorie/software/ELF64
+export desy_tex=/afs/desy.de/products/texlive/2012/bin/x86_64-linux
 export install=$HOME/install
 
 whiz_dir1=$HOME/trunk/_install
@@ -132,6 +133,7 @@ add-pythonpath () {
   export PYTHONPATH=$PYTHONPATH:$HOME/$1
 }
 
+prepend-pure-path $desy_tex
 prepend-all-paths $install
 export C_INCLUDE_PATH=$install/include
 export CPLUS_INCLUDE_PATH=$install/include
@@ -166,6 +168,10 @@ export HOMETEXMF=${HOME}/texmf:${HOMETEXMF}
 export TEXMFHOME=${HOME}/texmf:${TEXMFHOME}
 pythia-configure(){
   packages='--with-hepmc2=$install --with-lhapdf6=$install --with-fastjet3=$install'
+  ./configure --prefix=$install $packages
+}
+pythia-configure-desy(){
+  packages='--with-hepmc2=$desy_soft --with-lhapdf6=$desy_soft --with-fastjet3=$desy_soft'
   ./configure --prefix=$install $packages
 }
 
@@ -706,6 +712,7 @@ alias osrc='go '$whiz_soft/dist/share/doc/omega/omega.pdf
 alias csrc='go '$whiz_soft/dist/share/doc/circe2/circe2.pdf
 alias wman='go '$whiz_soft/dist/share/doc/whizard/manual.pdf
 alias gman='go '$whiz_soft/dist/share/doc/whizard/gamelan_manual.pdf
+export WHIZARD_BIN=$whiz_soft/gosam-develop/bin/whizard
 function make-test () {
   make check TESTS=$1.run
 }
@@ -1153,3 +1160,22 @@ _killall() {
 }
 
 complete -F _killall killall killps
+
+#================#
+#  screen title  #
+#================#
+if [[ "$TERM" == screen* ]]; then
+  screen_set_window_title () {
+  local HPWD="$PWD"
+  # replace $HOME with ~
+  case $HPWD in
+    $HOME) HPWD="~";;
+    $HOME/*) HPWD="~${HPWD#$HOME}";;
+  esac
+  # Only use current directory name (without path)
+  HPWD=${HPWD##*/}
+  printf '\ek%s\e\\' "$HPWD"
+  }
+  PROMPT_COMMAND="screen_set_window_title;
+  $PROMPT_COMMAND"
+fi

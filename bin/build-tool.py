@@ -74,6 +74,16 @@ if 'ifort' in args.build:
   args.fcflags = ['']
   args.only_omega = True
 
+if 'pgf' in args.build:
+  args.compiler = ['pgf90_2015']
+  args.optimization = ['0']
+  args.fcflags = ['']
+
+if 'pgf95' in args.build:
+  args.compiler = ['pgf95_2015']
+  args.optimization = ['0']
+  args.fcflags = ['']
+
 if 'gosam' in args.build:
   args.fcflags = [warnings]
   gosam_dir = os.path.expanduser('~/hep/GoSam/local')
