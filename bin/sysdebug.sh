@@ -2,7 +2,8 @@
 
 echo SYSTEM
 uname -a
-echo "PATH = $PATH"
+#echo "PATH = `tr ':' '\n' <<< "$PATH"`"
+tr ':' '\n' <<< "$PATH"
 echo "LD_LIBRARY_PATH = $LD_LIBRARY_PATH"
 echo "DYLD_LIBRARY_PATH = $DYLD_LIBRARY_PATH"
 echo "FC = $FC"

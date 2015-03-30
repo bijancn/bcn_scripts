@@ -57,6 +57,7 @@ base_path = get_base_path()
 warnings = '-fmax-errors=1 -Wall -Wuninitialized -Wextra -fno-whole-program '
 # gcc doesn't recognize our test function construction as use of a function
 warnings += '-Wno-unused-function -Wno-unused-dummy-argument -fimplicit-none -pedantic '
+warnings += '-fbacktrace '
 if not args.compiler:
   args.compiler = ['gfortran']
 if not args.optimization:
@@ -74,7 +75,7 @@ if 'ifort' in args.build:
   args.only_omega = True
 
 if 'gosam' in args.build:
-  args.fcflags = ['-fbacktrace ' + warnings]
+  args.fcflags = [warnings]
   gosam_dir = os.path.expanduser('~/hep/GoSam/local')
   gosam_options = ['--with-gosam=', '--with-golem=', '--with-samurai=',
                    '--with-ninja=', '--with-form=', '--with-qgraf=']
@@ -99,35 +100,27 @@ if 'dist' in args.build:
   args.optimization = ['0']
   args.configureflags[0] += ['--enable-distribution']
 
-if 'weekly' in args.build:
-  args.optimization = ['0']
-  args.fcflags = ['-fbacktrace ' + warnings + '-fcheck=all ']
-  args.configureflags[0] += ['--enable-distribution']
-  args.configureflags[0] += ['--disable-pythia6']
-
 if 'extended' in args.build:
   args.optimization = ['0']
-  args.fcflags = ['-fbacktrace ' + warnings + '-fcheck=all ']
+  args.fcflags = [warnings + '-fcheck=all ']
   args.configureflags[0] += ['--enable-fc-extended']
 
 if 'develop' in args.build:
   args.optimization = ['0']
-  args.fcflags = ['-fbacktrace ' + warnings]
+  args.fcflags = [warnings]
   args.configureflags[0] += ['--disable-static']
 
+debug_warnings = warnings + '-g -fcheck=all ' + \
+    '-ffpe-trap=invalid,zero,overflow,underflow,denormal'
 if 'debug' in args.build:
   args.optimization = ['0']
-  args.fcflags = ['-fbacktrace ' + warnings +
-                  '-g -fcheck=all ' +
-                  '-ffpe-trap=invalid,zero,overflow,underflow,denormal']
+  args.fcflags = [debug_warnings]
 
 if 'debugnan' in args.build:
   args.compiler = ['gfortran']
   args.optimization = ['0']
-  args.fcflags = ['-fbacktrace ' + warnings +
-                  '-finit-real=nan -g -fcheck=all ' +
-                  '-ffpe-trap=invalid,zero,overflow,underflow,denormal']
-  args.configureflags[0] = [['--enable-fc-profiling']]
+  args.fcflags = [debug_warnings + '-finit-real=nan']
+  args.configureflags[0] = ['--enable-fc-profiling']
 
 if args.all:
   args.remove = True
