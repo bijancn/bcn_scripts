@@ -1,14 +1,14 @@
 #! /usr/bin/env bash
 
-test -z "$BUILD_PREFIX" && BUILD_PREFIX="$HOME/hep"
+test -z "$BUILD_PREFIX" && BUILD_PREFIX="/data/bcho"
 test -z "$INSTALL_PREFIX" && INSTALL_PREFIX="$HOME/install"
-test -z "$MAKE" && MAKE="make -j4"
+test -z "$MAKE" && MAKE="make -j12"
 
 test -z "$INSTALL_GSL" && INSTALL_GSL="0"
 test -z "$INSTALL_BOOST" && INSTALL_BOOST="0"
 test -z "$INSTALL_HEPMC" && INSTALL_HEPMC="0"
 test -z "$INSTALL_FASTJET" && INSTALL_FASTJET="0"
-test -z "$INSTALL_YODA" && INSTALL_YODA="0"
+test -z "$INSTALL_YODA" && INSTALL_YODA="1"
 test -z "$INSTALL_RIVET" && INSTALL_RIVET="1"
 
 test -z "$RIVET_VERSION" && RIVET_VERSION="2.2.0"
@@ -22,9 +22,9 @@ test -z "$GSL_VERSION" && GSL_VERSION="1.16"
 
 ## Paths for the case of existing installations
 test -z "$GSLPATH" && GSLPATH="/usr"
-test -z "$BOOSTPATH" && BOOSTPATH="/usr"
-test -z "$HEPMCPATH" && HEPMCPATH="$HOME/install"
-test -z "$FASTJETPATH" && FASTJETPATH="$HOME/install"
+test -z "$BOOSTPATH" && BOOSTPATH="$desy_soft"
+test -z "$HEPMCPATH" && HEPMCPATH="$desy_soft"
+test -z "$FASTJETPATH" && FASTJETPATH="$desy_soft"
 test -z "$YODAPATH" && YODAPATH="$HOME/install"
 
 test -z "$RIVET_CONFFLAGS" && RIVET_CONFFLAGS="" #--enable-unvalidated

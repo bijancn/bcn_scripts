@@ -175,7 +175,8 @@ set showcmd               " display incomplete commands
 set number                " Activate line numbers on the left side
 
 " Colors
-set t_Co=256              " Enable 256 colors
+" This shouldnt be set ?!
+"set t_Co=256              " Enable 256 colors
 set background=light
 colorscheme lucius
 "LuciusWhite
@@ -365,10 +366,6 @@ iabbrev acchieve achieve
 iabbrev analyse analyze
 iabbrev behaviour behavior
 iabbrev generalisation generalization
-" These should be snippets
-"iabbrev Icg \includegraphics[[width=\textwidth]{
-"iabbrev Ecl \begin{{columns}<CR><CR>\end{{columns}<Esc>ki<Space><Space>
-"iabbrev Efi \begin{{figure}<CR><CR>\end{{figure}<Esc>ki<Space><Space>\includegraphics[[width=\textwidth]{{}
 
 "=============================================================================="
 "                                  SCROLLING                                   "
@@ -376,32 +373,6 @@ iabbrev generalisation generalization
 " Set the number of lines you want to stay off of bottom and top. This induces
 " vim to scroll automatically when the cursor comes close.
 set scrolloff=2
-
-" Sadly this script isn't robust for scrolling in really large files
-" The bang tells vim that it can reload the function
-"function! SmoothScroll(up)
-    "if a:up
-        "let scrollaction="\<C-Y>k"
-    "else
-        "let scrollaction="\<C-E>j"
-    "endif
-    "exec "normal " . scrollaction
-    "redraw
-    "let counter=1
-    "while counter<&scroll
-        "let counter+=1
-        "sleep 1m
-        "redraw
-        "exec "normal " . scrollaction
-    "endwhile
-"endfunction
-
-"nnoremap <C-U> :call SmoothScroll(1)<Enter>
-"nnoremap <C-D> :call SmoothScroll(0)<Enter>
-"nnoremap <C-B> :call SmoothScroll(1)<Enter> :call SmoothScroll(1)<Enter>
-"nnoremap <C-F> :call SmoothScroll(0)<Enter> :call SmoothScroll(0)<Enter>
-"inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
-"inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
 
 "=============================================================================="
 "                               Functionalities                                "

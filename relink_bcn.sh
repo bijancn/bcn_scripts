@@ -17,7 +17,7 @@ bcn=~/bcn_scripts
 safe=~/hive/keys
 cd $bcn
 
-files=".@(vim|bash|colorit|dir_colors|pylint)rc .gitignore_global "
+files=".@(bash|colorit|dir_colors|pylint|screen|vim|vimperator)rc .gitignore_global "
 files+=".config/dwb/default/@(bookmarks|quickmarks) "
 files+=".config/dwb/@(keys|mimetypes|searchengines|settings) "
 files+=".config/dwb/userscripts/@(autostart_player.js|extension_loader.js|start_streamer) "
@@ -40,7 +40,6 @@ files+=".vim/after/ftplugin/@(c|markdown|noweb|ocaml|python|tex).vim "
 files+=".vim/spell/en.utf-8.add "
 files+=".vim/syntax/@(fortran|markdown|noweb|sindarin).vim "
 files+=".vim/UltiSnips/@(all|fortran|noweb|ocaml|pandoc|sh|tex).snippets "
-files+=".vimperatorrc "
 l="texmf/tex/latex"
 files+="$l/bcn_beamer@(.sty|_example.pdf|_example.tex) "
 files+="$l/bcn_@(color|commands|koma).sty "
