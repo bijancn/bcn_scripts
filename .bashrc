@@ -749,7 +749,7 @@ alias re='export DISPLAY=:0; cinnamon &'
 alias nhr='nohup ./run_all.sh 2>&1 &'
 alias rgrep='grep -r'
 alias hgrep='history | grep '
-alias du-dirs='du * -sh | sort -h'
+alias du-dirs='du -sh -- * | sort -h'
 alias du-subdirs='du -h | sort -h'
 alias briss="java -jar $syncd/scripts/briss-0.9/briss-0.9.jar"
 alias primrun='vblank_mode=0 primusrun'
@@ -970,17 +970,17 @@ fi
 #==============================================================================#
 #                              Colored Man Pages                               #
 #==============================================================================#
-man() {
-	env \
-		LESS_TERMCAP_mb=$(printf "$BGreen") \
-		LESS_TERMCAP_md=$(printf "$BRed") \
-		LESS_TERMCAP_me=$(printf "$Black") \
-		LESS_TERMCAP_se=$(printf "$Blue") \
-		LESS_TERMCAP_so=$(printf "$Black") \
-		LESS_TERMCAP_ue=$(printf "$Black") \
-		LESS_TERMCAP_us=$(printf "$BBlue") \
-			man "$@"
-}
+#man() {
+  #env \
+    #LESS_TERMCAP_mb=$(printf "$BGreen") \
+    #LESS_TERMCAP_md=$(printf "$BRed") \
+    #LESS_TERMCAP_me=$(printf "$Red") \
+    #LESS_TERMCAP_se=$(printf "$Blue") \
+    #LESS_TERMCAP_so=$(printf "$Green") \
+    #LESS_TERMCAP_ue=$(printf "$BBlue") \
+    #LESS_TERMCAP_us=$(printf "$BBlue") \
+      #man "$@"
+#}
 
 #==============================================================================#
 #                       PROGRAMMABLE COMPLETION SECTION                        #
@@ -1179,3 +1179,4 @@ if [[ "$TERM" == screen* ]]; then
   PROMPT_COMMAND="screen_set_window_title;
   $PROMPT_COMMAND"
 fi
+export TERM='xterm-256color'
