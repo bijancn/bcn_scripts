@@ -56,8 +56,8 @@ base_path = get_base_path()
 # interface however
 warnings = '-fmax-errors=1 -Wall -Wuninitialized -Wextra -fno-whole-program '
 # gcc doesn't recognize our test function construction as use of a function
-warnings += '-Wno-unused-function -Wno-unused-dummy-argument -fimplicit-none -pedantic '
-warnings += '-fbacktrace '
+warnings += '-Wno-unused-function -Wno-unused-parameter -Wno-unused-dummy-argument '
+warnings += '-fimplicit-none -pedantic -fbacktrace '
 if not args.compiler:
   args.compiler = ['gfortran']
 if not args.optimization:
@@ -92,6 +92,12 @@ if 'gosam' in args.build:
   gosam_dirs = [go + gosam_dir for go in gosam_options]
   args.configureflags[0] += ['--enable-gosam']
 
+if 'openloops' in args.build:
+  args.fcflags = [warnings]
+  openloops_dir = os.path.expanduser('~/hep/OpenLoops')
+  args.configureflags[0] += ['--enable-openloops']
+  args.configureflags[0] += ['--with-openloops=' + openloops_dir]
+
 if 'omega' in args.build:
   args.only_omega = True
 
@@ -125,6 +131,7 @@ debug_warnings = warnings + '-g -fcheck=all ' + \
 if 'debug' in args.build:
   args.optimization = ['0']
   args.fcflags = [debug_warnings]
+  args.configureflags[0] = ['--enable-fc-profiling']
 
 if 'debugnan' in args.build:
   args.compiler = ['gfortran']
