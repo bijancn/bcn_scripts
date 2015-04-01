@@ -36,3 +36,4 @@ CDPATH=.:$HOME:
 PRINTER=t00ps1
 LPDEST=$PRINTER
 export LPDEST PRINTER
+export TERM=xterm-256color
