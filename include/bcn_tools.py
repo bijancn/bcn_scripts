@@ -6,6 +6,7 @@ from __future__ import print_function
 import os
 import subprocess
 import collections
+import sys
 
 def mkdirs(directory):
   if not os.path.exists(directory):
@@ -56,7 +57,7 @@ def show_variable(var_name, var):
   print(var_name.ljust(17) + '=\t' + str(var))
 
 def get_base_path():
-  base_paths = ['~/trunk', '/data/bcho/trunk']
+  base_paths = ['/scratch/bcho/trunk', '/data/bcho/trunk', '~/trunk']
   base_paths = map(os.path.expanduser, base_paths)
   for bpath in base_paths:
     if os.path.exists(bpath):
