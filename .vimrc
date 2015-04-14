@@ -116,6 +116,8 @@ Plugin 'vim-voom/VOoM'
 " Create tables automatically and allow spreadsheet computations
 Plugin 'dhruvasagar/vim-table-mode'
 
+Plugin 'visSum.vim'
+
 call vundle#end()
 
 "=============================================================================="

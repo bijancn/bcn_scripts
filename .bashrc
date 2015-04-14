@@ -970,17 +970,17 @@ fi
 #==============================================================================#
 #                              Colored Man Pages                               #
 #==============================================================================#
-#man() {
-  #env \
-    #LESS_TERMCAP_mb=$(printf "$BGreen") \
-    #LESS_TERMCAP_md=$(printf "$BRed") \
-    #LESS_TERMCAP_me=$(printf "$Red") \
-    #LESS_TERMCAP_se=$(printf "$Blue") \
-    #LESS_TERMCAP_so=$(printf "$Green") \
-    #LESS_TERMCAP_ue=$(printf "$BBlue") \
-    #LESS_TERMCAP_us=$(printf "$BBlue") \
-      #man "$@"
-#}
+man() {
+  env \
+    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+    LESS_TERMCAP_md=$(printf "\e[1;31m") \
+    LESS_TERMCAP_me=$(printf "\e[0m") \
+    LESS_TERMCAP_se=$(printf "\e[0m") \
+    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+    LESS_TERMCAP_ue=$(printf "\e[0m") \
+    LESS_TERMCAP_us=$(printf "\e[1;32m") \
+      man "$@"
+}
 
 #==============================================================================#
 #                       PROGRAMMABLE COMPLETION SECTION                        #
