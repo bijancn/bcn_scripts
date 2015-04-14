@@ -170,7 +170,7 @@ set wildmenu              " Mode of wildmenu is set by wildmode
 set wildmode=longest,list
 
 set nobackup              " do not keep a backup file
-set directory=~/.vim/swap " Don't put swap files in local directories
+set directory=/tmp/       " Don't put swap files in local directories
 set history=500           " keep 500 lines of command line history
 set ssop-=options         " Do not store global and local values in a session
 set showcmd               " display incomplete commands

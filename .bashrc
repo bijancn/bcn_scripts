@@ -644,18 +644,18 @@ if command-exists colorit; then
   alias mV='cit "make V=1 -j4"'
   alias mi='cit "make V=0 install -j4"'
   alias miV='cit "make V=1 install -j4"'
-  alias mc='cit "make check -j4"'
-  alias mcl='cit "make clean -j4"'
+  alias mc='cit "make check -j4 V=0"'
+  alias mcl='cit "make clean -j4 V=0"'
 else
   alias n='nosetests'
   alias nv='nosetests -v'
   alias nt='nosetests --with-timer'
   alias ns='nosetests -s'
   alias no='nosetests-cover'
-  alias m='make -j12'
-  alias mi='make install -j12'
-  alias mc='make check -j12'
-  alias mcl='make clean -j12'
+  alias m='make -j12 V=0'
+  alias mi='make install -j12 V=0'
+  alias mc='make check -j12 V=0'
+  alias mcl='make clean -j12 V=0'
 fi
 alias s='scons'
 alias scl='scons --clean'
@@ -715,6 +715,12 @@ alias gman='go '$whiz_soft/dist/share/doc/whizard/gamelan_manual.pdf
 export WHIZARD_BIN=$whiz_soft/gosam-develop/bin/whizard
 function make-test () {
   make check TESTS=$1.run
+}
+function enable-debug () {
+  sed -i "s/DEBUG_$1 = \.false\./DEBUG_$1 = .true./" -- src/*/*.nw
+}
+function disable-debug () {
+  sed -i "s/DEBUG_$1 = \.true\./DEBUG_$1 = .false./" -- src/*/*.nw
 }
 alias mt=make-test
 

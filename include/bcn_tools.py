@@ -8,6 +8,7 @@ import subprocess
 import collections
 import textwrap
 from termcolor import colored, cprint
+import sys
 
 def mkdirs(directory):
   if not os.path.exists(directory):
@@ -66,7 +67,7 @@ def show_variable(var_name, var):
       print(text1 + '      ' + text2)
 
 def get_base_path():
-  base_paths = ['~/trunk', '/data/bcho/trunk']
+  base_paths = ['/scratch/bcho/trunk', '/data/bcho/trunk', '~/trunk']
   base_paths = map(os.path.expanduser, base_paths)
   for bpath in base_paths:
     if os.path.exists(bpath):
