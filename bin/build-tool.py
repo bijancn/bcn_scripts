@@ -4,6 +4,7 @@ import os
 import sys
 import argparse
 import shutil
+from distutils import spawn
 from bcn_tools import *
 
 # Parse command line options
@@ -58,90 +59,78 @@ warnings = '-fmax-errors=1 -Wall -Wuninitialized -Wextra -fno-whole-program '
 # gcc doesn't recognize our test function construction as use of a function
 warnings += '-Wno-unused-function -Wno-unused-parameter -Wno-unused-dummy-argument '
 warnings += '-fimplicit-none -pedantic -fbacktrace '
+debug_warnings = warnings + '-g -fcheck=all ' + \
+    '-ffpe-trap=invalid,zero,overflow,underflow,denormal'
 if not args.compiler:
-  args.compiler = ['gfortran']
+  args.compiler = 'gfortran'
 if not args.optimization:
-  args.optimization = ['2']
+  args.optimization = '2'
 if not args.fcflags:
-  args.fcflags = [warnings]
+  args.fcflags = warnings
 if not args.configureflags:
-  args.configureflags = [['--enable-fastjet']]
+  args.configureflags = []
+
+# Plugins
+if spawn.find_executable('fastjet-config'):
+  args.configureflags += ['--enable-fastjet']
+
+if spawn.find_executable('gosam-config.py'):
+  args.configureflags += ['--enable-gosam']
+
+fmcfio = '/afs/desy.de/group/theorie/software/ELF64/lib/libFmcfio.a'
+if os.path.isfile(fmcfio):
+  args.configureflags += ['FMCFIO=' + fmcfio]
+stdhep = '/afs/desy.de/group/theorie/software/ELF64/lib/libstdhep.a'
+if os.path.isfile(stdhep):
+  args.configureflags += ['STDHEP=' + stdhep]
+
+openloops_dir = os.path.expanduser('~/hep/OpenLoops')
+if os.path.exists(openloops_dir):
+  args.configureflags += ['--enable-openloops',
+                          '--with-openloops=' + openloops_dir]
 
 # Convenience magic
 if 'ifort' in args.build:
-  args.compiler = ['ifort']
-  args.optimization = ['3']
-  args.fcflags = ['']
-  args.only_omega = True
+  args.compiler = 'ifort'
+  args.optimization = '3'
+  args.fcflags = ''
 
 if 'pgf' in args.build:
-  args.compiler = ['pgf90_2015']
-  args.optimization = ['0']
-  args.fcflags = ['']
-
-if 'pgf95' in args.build:
-  args.compiler = ['pgf95_2015']
-  args.optimization = ['0']
-  args.fcflags = ['']
-
-if 'gosam' in args.build:
-  args.fcflags = [warnings]
-  gosam_dir = os.path.expanduser('~/hep/GoSam/local')
-  gosam_options = ['--with-gosam=', '--with-golem=', '--with-samurai=',
-                   '--with-ninja=', '--with-form=', '--with-qgraf=']
-  gosam_dirs = [go + gosam_dir for go in gosam_options]
-  args.configureflags[0] += ['--enable-gosam']
-
-if 'stdhep' in args.build:
-  args.configureflags[0] += ['FMCFIO=/afs/desy.de/group/theorie/software/ELF64/lib/libFmcfio.a']
-  args.configureflags[0] += ['STDHEP=/afs/desy.de/group/theorie/software/ELF64/lib/libstdhep.a']
-
-if 'openloops' in args.build:
-  args.fcflags = [warnings]
-  openloops_dir = os.path.expanduser('~/hep/OpenLoops')
-  args.configureflags[0] += ['--enable-openloops']
-  args.configureflags[0] += ['--with-openloops=' + openloops_dir]
+  args.compiler = 'pgf90_2015'
+  args.fcflags = ''
 
 if 'omega' in args.build:
   args.only_omega = True
 
 if 'omp' in args.build:
-  args.configureflags[0] += ['--enable-fc-openmp']
+  args.configureflags += ['--enable-fc-openmp']
 
-if 'slim' in args.build:
-  args.configureflags[0] += ['--disable-pythia6', '--disable-static',
+if 'disabled' in args.build:
+  args.configureflags += ['--disable-pythia6', '--disable-static',
                           '--disable-omega']
 
 if 'profile' in args.build:
-  args.optimization = ['2']
-  args.configureflags[0] += ['--enable-fc-profiling', '--enable-static']
+  args.configureflags += ['--enable-fc-profiling', '--enable-static']
 
 if 'dist' in args.build:
-  args.optimization = ['0']
-  args.configureflags[0] += ['--enable-distribution']
+  args.configureflags += ['--enable-distribution']
 
 if 'extended' in args.build:
-  args.optimization = ['0']
-  args.fcflags = [warnings + '-fcheck=all ']
-  args.configureflags[0] += ['--enable-fc-extended']
+  args.configureflags += ['--enable-fc-extended']
 
 if 'develop' in args.build:
-  args.optimization = ['0']
-  args.fcflags = [warnings]
-  args.configureflags[0] += ['--disable-static']
+  args.fcflags = warnings + '-fcheck=all '
+  args.configureflags += ['--disable-static']
 
-debug_warnings = warnings + '-g -fcheck=all ' + \
-    '-ffpe-trap=invalid,zero,overflow,underflow,denormal'
 if 'debug' in args.build:
-  args.optimization = ['0']
-  args.fcflags = [debug_warnings]
-  args.configureflags[0] = ['--enable-fc-profiling']
+  args.optimization = '0'
+  args.fcflags = debug_warnings
+  args.configureflags += ['--enable-fc-profiling']
 
 if 'debugnan' in args.build:
-  args.compiler = ['gfortran']
-  args.optimization = ['0']
-  args.fcflags = [debug_warnings + '-finit-real=nan']
-  args.configureflags[0] = ['--enable-fc-profiling']
+  args.optimization = '0'
+  args.fcflags = debug_warnings + '-finit-real=nan'
+  args.configureflags += ['--enable-fc-profiling']
 
 if args.all:
   args.remove = True
@@ -154,6 +143,7 @@ tasks = ['autoreconf', 'remove', 'configure', 'make', 'makecheck', 'all']
 options = ['jobs', 'errors']
 variants = ['configureflags', 'compiler', 'optimization', 'fcflags', 'build', 'tag']
 arg_dict = vars(args)
+show_variable('base_path', base_path)
 for item in tasks + options + variants:
   show_variable(item, arg_dict[item])
 
@@ -179,10 +169,10 @@ mkdirs(build_path)
 os.chdir(build_path)
 
 # configure if desired
-compiler = args.compiler[0]
-optimization = args.optimization[0]
-fcflags = args.fcflags[0]
-configureflags = args.configureflags[0]
+compiler = args.compiler
+optimization = args.optimization
+fcflags = args.fcflags
+configureflags = args.configureflags
 
 prefix = '--prefix=' + os.path.join(base_path, '_install', build_name)
 fortran_compiler = 'FC=' + compiler
@@ -190,7 +180,7 @@ fortran_flags = "FCFLAGS=-O" + optimization + " " + fcflags
 configure_options = [prefix, fortran_compiler, fortran_flags] + configureflags
 if args.configure:
   if args.only_omega: package = os.path.join(base_path, 'omega')
-  else:                   package = base_path
+  else:               package = base_path
   _call_verbose([os.path.join(package, 'configure')] + configure_options)
 
 # build if desired

@@ -57,7 +57,7 @@ def show_variable(var_name, var):
   print(var_name.ljust(17) + '=\t' + str(var))
 
 def get_base_path():
-  base_paths = ['/scratch/bcho/trunk', '/data/bcho/trunk', '~/trunk']
+  base_paths = ['/data/bcho/trunk', '~/trunk', '/scratch/bcho/trunk']
   base_paths = map(os.path.expanduser, base_paths)
   for bpath in base_paths:
     if os.path.exists(bpath):

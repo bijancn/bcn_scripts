@@ -465,6 +465,18 @@ function show-wlan-channels () {
   sudo iwlist wlan0 scan | grep Frequency | sort | uniq -c | sort -n
 }
 
+parallel_jobs=
+if test -r /proc/cpuinfo; then
+  n=`grep -c '^processor' /proc/cpuinfo`
+  if test $n -gt 1; then
+    parallel_jobs="-j `expr \( 1 \* $n \) / 2`"
+  fi
+fi
+
+function show-parallel-jobs () {
+  echo $parallel_jobs
+}
+
 function show-diff () {
   $difftool err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
 }
@@ -640,22 +652,22 @@ if command-exists colorit; then
   alias nt='cit "nosetests --with-timer"'
   alias ns='cit "nosetests -s"'
   alias no='nosetests-cover'
-  alias m='cit "make V=0 -j4"'
-  alias mV='cit "make V=1 -j4"'
-  alias mi='cit "make V=0 install -j4"'
-  alias miV='cit "make V=1 install -j4"'
-  alias mc='cit "make check -j4 V=0"'
-  alias mcl='cit "make clean -j4 V=0"'
+  alias m='cit "make V=0 $parallel_jobs"'
+  alias mV='cit "make V=1 $parallel_jobs"'
+  alias mi='cit "make V=0 install $parallel_jobs"'
+  alias miV='cit "make V=1 install $parallel_jobs"'
+  alias mc='cit "make check $parallel_jobs V=0"'
+  alias mcl='cit "make clean $parallel_jobs V=0"'
 else
   alias n='nosetests'
   alias nv='nosetests -v'
   alias nt='nosetests --with-timer'
   alias ns='nosetests -s'
   alias no='nosetests-cover'
-  alias m='make -j12 V=0'
-  alias mi='make install -j12 V=0'
-  alias mc='make check -j12 V=0'
-  alias mcl='make clean -j12 V=0'
+  alias m='make $parallel_jobs V=0'
+  alias mi='make install $parallel_jobs V=0'
+  alias mc='make check $parallel_jobs V=0'
+  alias mcl='make clean $parallel_jobs V=0'
 fi
 alias s='scons'
 alias scl='scons --clean'
