@@ -25,10 +25,19 @@ def make_filename(strg):
   strg = (strg[:130] + '..') if len(strg) > 130 else strg
   return strg
 
+def pcmd(strg):
+  return colored(strg, 'blue', attrs=['bold'])
+
+def perr(strg):
+  return colored(strg, 'red')
+
+def plog(strg):
+  return colored(strg, 'blue')
+
 def call_verbose(action, filter_strgs=None, show_errors=False):
   if isinstance(action, list): string = ' '.join(action)
   else: string = action
-  print('Performing ' + string + ' ...\n')
+  print(pcmd('Performing ') + plog(string) + pcmd(' ...\n'))
   try:
     # Redirect stderr to stdout
     if show_errors: log = subprocess.check_output(action)
@@ -45,25 +54,28 @@ def call_verbose(action, filter_strgs=None, show_errors=False):
     with open('log_' + make_filename(string), 'w') as fout:
       fout.write(log)
   except (subprocess.CalledProcessError, OSError) as e:
-    print("Execution of " + string + " failed:\n" + str(e) + '\n' + e.output)
-  print('\n... done!')
+    print(pcmd("Execution of ") + plog(string) + pcmd(" failed:\n") +\
+        perr(str(e)) + '\n' + e.output)
+  print(pcmd('\n... done!'))
 
 def show_variable(var_name, var):
+  varlist = None
   if isinstance(var, bool):
     if var:
       smb = '✓'
+      text2 = colored(smb, 'green')
     else:
       smb = '✗'
+      text2 = perr(smb)
   else:
-    smb = str(var)
-  smb = textwrap.wrap(smb)
-  text1 = colored(var_name.ljust(17), 'blue', attrs=['bold'])
-  text2 = colored(smb[0], 'red', attrs=['bold'])
+    varlist = textwrap.wrap(str(var))
+    text2 = colored(varlist[0], 'blue')
+  text1 = pcmd(var_name.ljust(17))
   print(text1 + '  =  ' + text2)
-  if len (smb) > 1:
+  if varlist:
     text1 = ''.ljust(17)
-    for s in smb[1:]:
-      text2 = colored(s, 'red', attrs=['bold'])
+    for s in varlist[1:]:
+      text2 = colored(s, 'blue')
       print(text1 + '      ' + text2)
 
 def get_base_path():
