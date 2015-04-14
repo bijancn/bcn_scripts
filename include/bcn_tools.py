@@ -6,6 +6,8 @@ from __future__ import print_function
 import os
 import subprocess
 import collections
+import textwrap
+from termcolor import colored, cprint
 
 def mkdirs(directory):
   if not os.path.exists(directory):
@@ -53,7 +55,15 @@ def show_variable(var_name, var):
       smb = '✗'
   else:
     smb = str(var)
-  print(var_name.ljust(17) + '=\t' + str(var))
+  smb = textwrap.wrap(smb)
+  text1 = colored(var_name.ljust(17), 'blue', attrs=['bold'])
+  text2 = colored(smb[0], 'red', attrs=['bold'])
+  print(text1 + '  =  ' + text2)
+  if len (smb) > 1:
+    text1 = ''.ljust(17)
+    for s in smb[1:]:
+      text2 = colored(s, 'red', attrs=['bold'])
+      print(text1 + '      ' + text2)
 
 def get_base_path():
   base_paths = ['~/trunk', '/data/bcho/trunk']
