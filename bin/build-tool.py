@@ -92,6 +92,10 @@ if 'gosam' in args.build:
   gosam_dirs = [go + gosam_dir for go in gosam_options]
   args.configureflags[0] += ['--enable-gosam']
 
+if 'stdhep' in args.build:
+  args.configureflags[0] += ['FMCFIO=/afs/desy.de/group/theorie/software/ELF64/lib/libFmcfio.a']
+  args.configureflags[0] += ['STDHEP=/afs/desy.de/group/theorie/software/ELF64/lib/libstdhep.a']
+
 if 'openloops' in args.build:
   args.fcflags = [warnings]
   openloops_dir = os.path.expanduser('~/hep/OpenLoops')

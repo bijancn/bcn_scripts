@@ -716,6 +716,12 @@ export WHIZARD_BIN=$whiz_soft/gosam-develop/bin/whizard
 function make-test () {
   make check TESTS=$1.run
 }
+function enable-debug () {
+  sed -i "s/DEBUG_$1 = \.false\./DEBUG_$1 = .true./" -- src/*/*.nw
+}
+function disable-debug () {
+  sed -i "s/DEBUG_$1 = \.true\./DEBUG_$1 = .false./" -- src/*/*.nw
+}
 alias mt=make-test
 
 #=========#
