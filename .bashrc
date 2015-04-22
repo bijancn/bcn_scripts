@@ -473,6 +473,14 @@ function show-diff () {
   $difftool err-output/$1.out ../../../share/tests/ref-output/$1.ref
 }
 
+function show-diff-double () {
+  $difftool err-output/$1.out ../../../share/tests/ref-output-double/$1.ref
+}
+
+function show-diff-ext () {
+  $difftool err-output/$1.out ../../../share/tests/ref-output-ext/$1.ref
+}
+
 function use-as-ref () {
   cp err-output/$1.out ../../../share/tests/ref-output/$1.ref
 }

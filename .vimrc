@@ -181,8 +181,8 @@ set number                " Activate line numbers on the left side
 "set t_Co=256              " Enable 256 colors
 set background=light
 colorscheme lucius
-"LuciusWhite
-LuciusDarkLowContrast
+LuciusWhite
+"LuciusDarkLowContrast
 " colorscheme bcn_light
 
 " Mouse

@@ -40,8 +40,6 @@
     cursor_blink = False
     scrollback_infinite = True
   [[dark]]
-    background_image = None
-  [[black]]
     scrollbar_position = hidden
     palette = "#444444:#ff1919:#5dbf00:#fff000:#3f94ff:#ec6bff:#00fcff:#d3d7cf:#868686:#ff7c7c:#7eff00:#fffc99:#9ecdff:#ffc4f9:#b2ffff:#ffffff"
     background_image = None
@@ -53,6 +51,10 @@
     background_color = "#262626"
     cursor_blink = False
     scrollback_infinite = True
+  [[black]]
+    background_color = "#ffffff"
+    show_titlebar = False
+    foreground_color = "#000000"
 [layouts]
   [[default]]
     [[[child1]]]
