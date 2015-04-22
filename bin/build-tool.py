@@ -60,7 +60,7 @@ warnings = '-fmax-errors=1 -Wall -Wuninitialized -Wextra -fno-whole-program '
 warnings += '-Wno-unused-function -Wno-unused-parameter -Wno-unused-dummy-argument '
 warnings += '-fimplicit-none -pedantic -fbacktrace '
 debug_warnings = warnings + '-g -fcheck=all ' + \
-    '-ffpe-trap=invalid,zero,overflow,underflow,denormal'
+    '-ffpe-trap=invalid,zero,overflow,underflow,denormal '
 if not args.compiler:
   args.compiler = 'gfortran'
 if not args.optimization:
@@ -97,13 +97,23 @@ if 'ifort' in args.build:
 
 if 'pgf' in args.build:
   args.compiler = 'pgf90_2015'
-  args.fcflags = ''
 
 if 'omega' in args.build:
   args.only_omega = True
 
 if 'omp' in args.build:
   args.configureflags += ['--enable-fc-openmp']
+
+if 'autoparallel' in args.build:
+  graphite_enabled = False
+  cores = 8
+  args.fcflags += '-ftree-parallelize-loops=' + str(cores) + ' '
+  if graphite_enabled:
+    args.fcflags += '-floop-parallelize-all '
+
+if 'vectorize' in args.build:
+  args.optimization = '3'
+  args.fcflags += '-ftree-vectorizer-verbose=2 '
 
 if 'disabled' in args.build:
   args.configureflags += ['--disable-pythia6', '--disable-static',
@@ -119,7 +129,7 @@ if 'extended' in args.build:
   args.configureflags += ['--enable-fc-extended']
 
 if 'develop' in args.build:
-  args.fcflags = warnings + '-fcheck=all '
+  args.fcflags += '-fcheck=all '
   args.configureflags += ['--disable-static']
 
 if 'debug' in args.build:
@@ -129,7 +139,7 @@ if 'debug' in args.build:
 
 if 'debugnan' in args.build:
   args.optimization = '0'
-  args.fcflags = debug_warnings + '-finit-real=nan'
+  args.fcflags = debug_warnings + '-finit-real=nan '
   args.configureflags += ['--enable-fc-profiling']
 
 if args.all:

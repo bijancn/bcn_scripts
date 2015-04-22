@@ -393,14 +393,6 @@ function rem-show () {
   ssh -X $ip "evince ~/temp.pdf"
 }
 
-function use-as-ref () {
-  cp err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
-}
-
-function use-this-as-ref () {
-  cp $1.log ~/trunk/share/tests/ref-output/$1.ref
-}
-
 function find-type () {
   rgrep "public :: ${1}_t\$" -B1
 }
@@ -469,7 +461,7 @@ parallel_jobs=
 if test -r /proc/cpuinfo; then
   n=`grep -c '^processor' /proc/cpuinfo`
   if test $n -gt 1; then
-    parallel_jobs="-j `expr \( 1 \* $n \) / 2`"
+    parallel_jobs="-j `expr \( 1 \* $n \) / 3`"
   fi
 fi
 
@@ -478,7 +470,35 @@ function show-parallel-jobs () {
 }
 
 function show-diff () {
-  $difftool err-output/$1.out ~/trunk/share/tests/ref-output/$1.ref
+  $difftool err-output/$1.out ../../../share/tests/ref-output/$1.ref
+}
+
+function use-as-ref () {
+  cp err-output/$1.out ../../../share/tests/ref-output/$1.ref
+}
+
+function show-this-diff () {
+  $difftool $1.log ../../../share/tests/ref-output/$1.ref
+}
+
+function use-this-as-ref () {
+  cp $1.log ../../../share/tests/ref-output/$1.ref
+}
+
+function show-this-diff-double () {
+  $difftool $1.log ../../../share/tests/ref-output-double/$1.ref
+}
+
+function use-this-as-ref-double () {
+  cp $1.log ../../../share/tests/ref-output-double/$1.ref
+}
+
+function show-this-diff-ext () {
+  $difftool $1.log ../../../share/tests/ref-output-ext/$1.ref
+}
+
+function use-this-as-ref-ext () {
+  cp $1.log ../../../share/tests/ref-output-ext/$1.ref
 }
 
 function update-variable-refs () {
@@ -488,19 +508,6 @@ function update-variable-refs () {
   use-as-ref rt_data_1
   use-as-ref rt_data_2
   use-as-ref rt_data_3
-}
-
-
-function show-this-diff () {
-  $difftool $1.log ~/trunk/share/tests/ref-output/$1.ref
-}
-
-function show-this-diff-double () {
-  $difftool $1.log ~/trunk/share/tests/ref-output-double/$1.ref
-}
-
-function show-this-diff-ext () {
-  $difftool $1.log ~/trunk/share/tests/ref-output-ext/$1.ref
 }
 
 function show-path () {
@@ -513,6 +520,10 @@ function show-lib-path () {
 
 function show-failed-tests () {
   find -name 'test-suite.log' | xargs grep -v 'XFAIL' | grep -v ' 0' | grep 'FAIL'
+}
+
+function show-our-lines-of-code () {
+  wc -l */*.nw | sort -n
 }
 
 function show-nr-of-own-threads () {
@@ -747,6 +758,7 @@ alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 #=========#
 #  other  #
 #=========#
+alias regain_afs='kinit && aklog'
 alias py='ipython notebook --pylab inline &'
 alias le='less'
 if command-exists trash-put; then
