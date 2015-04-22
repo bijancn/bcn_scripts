@@ -244,6 +244,9 @@ set lazyredraw
 " vmap, vnoremap, vunmap          Visual and Select mode
 " <CR> sends Enter
 
+map ]p ]cdp
+map [p [cdp
+
 " Unfolding and folding with space
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 nnoremap <silent> <C-Space> @=(foldlevel('.')?'zA':"\<Space>")<CR>
