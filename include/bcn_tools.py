@@ -29,10 +29,13 @@ def pcmd(strg):
   return colored(strg, 'blue', attrs=['bold'])
 
 def perr(strg):
-  return colored(strg, 'red')
+  return colored(strg, 'red', attrs=['bold'])
+
+def pgood(strg):
+  return colored(strg, 'green', attrs=['bold'])
 
 def plog(strg):
-  return colored(strg, 'blue')
+  return colored(strg, 'white', attrs=['bold'])
 
 def call_verbose(action, filter_strgs=None, show_errors=False):
   if isinstance(action, list): string = ' '.join(action)
@@ -63,19 +66,19 @@ def show_variable(var_name, var):
   if isinstance(var, bool):
     if var:
       smb = '✓'
-      text2 = colored(smb, 'green')
+      text2 = pgood(smb)
     else:
       smb = '✗'
       text2 = perr(smb)
   else:
     varlist = textwrap.wrap(str(var))
-    text2 = colored(varlist[0], 'blue')
+    text2 = plog(varlist[0])
   text1 = pcmd(var_name.ljust(17))
   print(text1 + '  =  ' + text2)
   if varlist:
     text1 = ''.ljust(17)
     for s in varlist[1:]:
-      text2 = colored(s, 'blue')
+      text2 = plog(s)
       print(text1 + '      ' + text2)
 
 def get_base_path():

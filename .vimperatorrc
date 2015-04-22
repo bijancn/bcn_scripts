@@ -56,8 +56,9 @@ silent qmark F http://feedly.com
 silent qmark g https://github.com
 silent qmark j http://localhost:8080/job/whizard-trunk-dist
 silent qmark m https://maps.google.com
-silent qmark m http://phdcomics.com
+silent qmark M https://mail.google.com
 silent qmark q http://quora.com
+silent qmark p http://phdcomics.com
 silent qmark s http://soundcloud.com
 silent qmark S https://calendar.sunrise.am
 silent qmark t http://todoist.com
