@@ -18,6 +18,7 @@ build/
 install/
 _build/
 _install/
+_test/
 log*
 dist/
 __pycache__/
