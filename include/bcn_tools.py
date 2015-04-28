@@ -35,7 +35,7 @@ def pgood(strg):
   return colored(strg, 'green', attrs=['bold'])
 
 def plog(strg):
-  return colored(strg, 'white', attrs=['bold'])
+  return colored(strg, 'blue')
 
 def call_verbose(action, filter_strgs=None, show_errors=False):
   if isinstance(action, list): string = ' '.join(action)

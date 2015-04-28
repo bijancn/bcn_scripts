@@ -1,9 +1,14 @@
 #!/bin/bash
-range=192.168.1
+# better alternative if possible : nmap -PS 192.168.2.*
+if test "$#" -ne 1; then
+    echo "Missing argument. Usage: ip-scan.sh [0-9]*.[0-9]*.[0-9]*"
+    exit
+fi
+range=$1
 
 is_alive_ping()
 {
-  ping -c 1 $1 > /dev/null
+  ping -c 50 $1 > /dev/null
   [ $? -eq 0 ] && echo $i >> ips.log
 }
 
