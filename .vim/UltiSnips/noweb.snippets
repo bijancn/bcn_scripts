@@ -63,25 +63,25 @@ endsnippet
 snippet ntd "Template for a noweb/fortran deferred procedure with interface"
 @
 <<${1:module}: ${2:class}: TBP>>=
-	procedure ($2_${3:function}), deferred :: $3
+	procedure (${2/ /_/g}_${3:function}), deferred :: $3
 <<$1: interfaces>>=
   abstract interface
-     subroutine $2_$3 ($2, ${4:args})
+     subroutine ${2/ /_/g}_$3 (${2/ /_/g}, ${4:args})
        import
-       class($2_t), intent(${5:inout}) :: $2
+       class(${2/ /_/g}_t), intent(${5:inout}) :: ${2/ /_/g}
        ${6:type} :: $4
-     end subroutine $2_$3
+     end subroutine ${2/ /_/g}_$3
   end interface
 
-@ %def $2_$3
+@ %def ${2/ /_/g}_$3
 endsnippet
 
 
 snippet nti "Template for a noweb/fortran generic binding"
 @
 <<${1:module}: ${2:class}: TBP>>=
-	generic :: ${3:function} => $2_$3_${4}, $2_$3_${5}
-	procedure, private :: $2_$3_$4, $2_$3_$5
+	generic :: ${3:function} => ${2/ /_/g}_$3_${4}, ${2/ /_/g}_$3_${5}
+	procedure, private :: ${2/ /_/g}_$3_$4, ${2/ /_/g}_$3_$5
 @ %def $3
 endsnippet
 
