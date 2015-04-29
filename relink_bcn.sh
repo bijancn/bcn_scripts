@@ -65,8 +65,7 @@ done
 
 gitversion=`git --version | awk '{print $3}'`
 bigger=`version_compare.py $gitversion 1.7.11`
-if [ $bigger == 'first' ] || \
-   [ $bigger == 'equal' ]; then
+if [ $bigger == 'first' ] || [ $bigger == 'equal' ]; then
   app=""
   echo "Found git version ($giversion) more recent or equal to 1.7.11"
 else

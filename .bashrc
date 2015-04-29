@@ -20,14 +20,13 @@
 # Airline as prompt
 source ~/.shell_prompt.sh
 
+export arch=`getconf LONG_BIT`
+
 #============#
 #  settings  #
 #============#
 # Allow to use backspace when connected via ssh to certain systems
 stty erase ^?
-
-# Customize colors for ls
-eval `dircolors $HOME/.dir_colorsrc`
 
 # VI mode for bash
 set -o vi
@@ -35,10 +34,6 @@ bind '"\e."':yank-last-arg
 
 # Use vim for my diffing functions
 export difftool='vim -d'
-
-# Narrowing greps search realms
-a='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude-dir=_build '
-export GREP_OPTIONS=$a'--exclude=*.swp --exclude=Makefile.in --exclude-dir=_install'
 
 # Enable some bash options
 shopt -s cdspell
@@ -93,17 +88,17 @@ export wingames=/data/win_games
 export lingames=/data/lnx_games
 export syncd=$HOME/safe
 export hive=$HOME/hive
-export desy_soft=/afs/desy.de/group/theorie/software/ELF64
-export desy_tex=/afs/desy.de/products/texlive/2012/bin/x86_64-linux
 export install=$HOME/install
 
-whiz_dir1=$HOME/trunk/_install
-whiz_dir2=/data/bcho/trunk/_install
+whiz_dir1=/scratch/bcho/trunk/_install
+whiz_dir2=$HOME/trunk/_install
 if [ -d $whiz_dir1 ]; then
   export whiz_soft=$whiz_dir1
 elif [ -d $whiz_dir2 ]; then
   export whiz_soft=$whiz_dir2
 fi
+trunk() { cd $whiz_soft/.. ; }
+trunk
 
 gosam_dir1=$HOME/hep/GoSam/local
 gosam_dir2=/data/bcho/gosam/local
@@ -133,10 +128,16 @@ add-pythonpath () {
   export PYTHONPATH=$PYTHONPATH:$HOME/$1
 }
 
+if test $arch = 64; then
+  export desy_soft=/afs/desy.de/group/theorie/software/ELF64
+  export desy_tex=/afs/desy.de/products/texlive/2012/bin/x86_64-linux
+  prepend-all-paths $install
+else
+  export desy_soft=/afs/desy.de/group/theorie/software/ELF32
+  export desy_tex=/afs/desy.de/products/texlive/2012/bin/i386-linux
+fi
+
 prepend-pure-path $desy_tex
-prepend-all-paths $install
-export C_INCLUDE_PATH=$install/include
-export CPLUS_INCLUDE_PATH=$install/include
 prepend-all-paths $desy_soft
 prepend-all-paths $whiz_soft/def
 
@@ -150,12 +151,13 @@ add-pythonpath Python-GoogleCalendarParser
 add-pythonpath eZchat
 add-pythonpath termstyle
 add-pythonpath pydflatex
+export C_INCLUDE_PATH=$install/include
+export CPLUS_INCLUDE_PATH=$install/include
 export PYTHONUSERBASE=$HOME/install
-
 export CPATH=$desy_soft/include:$CPATH
 
 # hep
-if [ -f $install/rivetenv.sh ]; then
+if test -f $install/rivetenv.sh -a $arch = 64; then
   source $install/rivetenv.sh
 fi
 prepend-all-paths $gosam_soft
@@ -207,10 +209,10 @@ export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
 
 # ifort
 intel_dir=/opt/intel
-if [ -f $intel_dir/bin/compilervars.sh ]; then
+if test -f $intel_dir/bin/compilervars.sh -a $arch = 64; then
   source $intel_dir/bin/compilervars.sh intel64
 fi
-if [ -f $intel_dir/2013/bin/compilervars.sh ]; then
+if test -f $intel_dir/2013/bin/compilervars.sh -a $arch = 64; then
   source $intel_dir/2013/bin/compilervars.sh intel64
   #source $intel_dir/2011/vtune_amplifier_xe/amplxe-vars.sh
 fi
@@ -220,7 +222,7 @@ if [ -f /usr/local/bin/nvim ]; then
   export VIMRUNTIME=/usr/local/share/nvim/runtime/
   export EDITOR=/usr/local/bin/nvim
   export VISUAL=/usr/local/bin/nvim
-elif [ -f $install/bin/vim ]; then
+elif test -n "`$install/bin/vim --version 2> /dev/null`"; then
   export VIMRUNTIME=$install/share/vim/vim74/
   export EDITOR=$install/bin/vim
   export VISUAL=$install/bin/vim
@@ -338,6 +340,13 @@ NC="\e[m"               # Color Reset
 #==============================================================================#
 #                                  FUNCTIONS                                   #
 #==============================================================================#
+# Check if a command has a version larger or equal than demanded
+version-bigger () {
+  version=`$1 --version | head -n1 | sed 's/[^0-9.]*\([0-9.]*\).*/\1/'`
+  bigger=`version_compare.py $version $2`
+  [ $bigger == 'first' ] || [ $bigger == 'equal' ]
+}
+
 # Swap 2 files, if they exist
 function swap() {
     local TMPFILE=tmp.$$
@@ -464,9 +473,10 @@ function show-wlan-channels () {
 parallel_jobs=
 if test -r /proc/cpuinfo; then
   n=`grep -c '^processor' /proc/cpuinfo`
-  if test $n -gt 1; then
-    parallel_jobs="-j `expr \( 1 \* $n \) / 3`"
-  fi
+  #if test $n -gt 1; then
+  #  parallel_jobs="-j `expr \( 1 \* $n \) / 3`"
+  #fi
+  parallel_jobs="-j $n"
 fi
 
 function show-parallel-jobs () {
@@ -777,7 +787,9 @@ if command-exists trash-put; then
   alias rm='trash-put -v'
   alias rmm='/bin/rm'
 else
-  alias rm='rm -vI'
+  if version-bigger rm 8.4; then
+    alias rm='rm -vI'
+  fi
 fi
 alias mv='mv -v'
 alias md='mkdir'
@@ -947,7 +959,7 @@ function bitbucket-hg {
 #==============================================================================#
 #                                     SVN                                      #
 #==============================================================================#
-if [ svn-color 2> /dev/null ]; then
+if test -n "`svn-color 2> /dev/null`"; then
   alias svn=svn-color
 fi
 alias svna='svn add'
@@ -1010,8 +1022,15 @@ else
 fi
 
 #==============================================================================#
-#                              Colored Man Pages                               #
+#                                More Settings                                 #
 #==============================================================================#
+# Narrowing greps search realms
+if version-bigger grep 2.6.3; then
+  a='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude-dir=_build '
+  export GREP_OPTIONS=$a'--exclude=*.swp --exclude=Makefile.in --exclude-dir=_install'
+fi
+
+# Colored man pages
 man() {
   env \
     LESS_TERMCAP_mb=$(printf "\e[1;31m") \
@@ -1023,6 +1042,11 @@ man() {
     LESS_TERMCAP_us=$(printf "\e[1;32m") \
       man "$@"
 }
+
+# Customize colors for ls
+if version-bigger dircolors 8; then
+  eval `dircolors $HOME/.dir_colorsrc`
+fi
 
 #==============================================================================#
 #                       PROGRAMMABLE COMPLETION SECTION                        #
