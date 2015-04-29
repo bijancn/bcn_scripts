@@ -216,7 +216,11 @@ if [ -f $intel_dir/2013/bin/compilervars.sh ]; then
 fi
 
 # vim
-if [ -f $install/bin/vim ]; then
+if [ -f /usr/local/bin/nvim ]; then
+  export VIMRUNTIME=/usr/local/share/nvim/runtime/
+  export EDITOR=/usr/local/bin/nvim
+  export VISUAL=/usr/local/bin/nvim
+elif [ -f $install/bin/vim ]; then
   export VIMRUNTIME=$install/share/vim/vim74/
   export EDITOR=$install/bin/vim
   export VISUAL=$install/bin/vim

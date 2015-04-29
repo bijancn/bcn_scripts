@@ -77,3 +77,6 @@ rm ~/.gitconfig
 ln -sf $bcn/gitconf/.gitconfig$app      ~/.gitconfig
 #sudo ln -sf $bcn/metacity-theme-1.xml /usr/share/themes/Mint-X/metacity-1/metacity-theme-1.xml
 cd $mpwd
+
+ln -sf ~/.vim ~/.nvim
+ln -sf ~/.vimrc ~/.nvimrc
