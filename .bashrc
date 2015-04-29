@@ -218,7 +218,11 @@ if test -f $intel_dir/2013/bin/compilervars.sh -a $arch = 64; then
 fi
 
 # vim
-if test -n "`~/install/bin/vim --version 2> /dev/null`"; then
+if [ -f /usr/local/bin/nvim ]; then
+  export VIMRUNTIME=/usr/local/share/nvim/runtime/
+  export EDITOR=/usr/local/bin/nvim
+  export VISUAL=/usr/local/bin/nvim
+elif test -n "`$install/bin/vim --version 2> /dev/null`"; then
   export VIMRUNTIME=$install/share/vim/vim74/
   export EDITOR=$install/bin/vim
   export VISUAL=$install/bin/vim

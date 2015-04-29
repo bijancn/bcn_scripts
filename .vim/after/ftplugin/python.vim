@@ -16,5 +16,6 @@
 " %< expands to the name of the file without the extension
 
 set makeprg=python\ %
+set errorformat=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 set foldmethod=indent
 set shiftwidth=2        " Shiftwidth in vimrc is being overwritten by something

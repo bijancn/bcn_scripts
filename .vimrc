@@ -36,13 +36,13 @@ Plugin 'bling/vim-airline'
 " The ultimate snippet solution
 Plugin 'SirVer/ultisnips'
 
-" Allows to focus completely
-Plugin 'junegunn/goyo.vim'
-
 " Nice fuzzy autocompletion with supertab support
 " Ubuntu libs:  build-essential cmake python-dev
 " Build with:   cd ~/.vim/bundle/YouCompleteMe && ./install.sh
 Plugin 'Valloric/YouCompleteMe'
+
+" Allows to focus completely
+Plugin 'junegunn/goyo.vim'
 
 " Diffing parts of one or two files
 Plugin 'AndrewRadev/linediff.vim'
@@ -70,9 +70,6 @@ Plugin 'edkolev/promptline.vim'
 " A very decent color scheme from which I want to borrow some concepts
 Plugin 'jonathanfilip/vim-lucius'
 
-" This is part of the distro and not necessary
-"Plugin 'matchit.zip'
-
 "==========="
 "  testing  "
 "==========="
@@ -93,6 +90,22 @@ Plugin 'scrooloose/nerdcommenter'
 
 " Good support for Markdown
 Plugin 'vim-pandoc/vim-pandoc'
+
+" Work together - apart. Only works with neovim
+Plugin 'floobits/floobits-neovim'
+
+"Asynchronous make. Asynchronous part only works with neovim
+Plugin 'benekastah/neomake'
+
+" Does not work with neovim. deoplete will and will use asynchronous completion
+"Plugin 'Shougo/neocomplete.vim'
+
+" 'awesome Python autocompletion library' - works with neocomplete
+" This is mostly part of YCM
+"Plugin 'davidhalter/jedi-vim'
+
+" Complete C, C++ using clang
+" Plugin 'osyo-manga/vim-marching'
 
 " Nice fuzzy search on files, buffers and more
 Plugin 'Shougo/unite.vim'
@@ -116,6 +129,7 @@ Plugin 'vim-voom/VOoM'
 " Create tables automatically and allow spreadsheet computations
 Plugin 'dhruvasagar/vim-table-mode'
 
+" Compute sums of columns
 Plugin 'visSum.vim'
 
 call vundle#end()
@@ -276,7 +290,7 @@ map te :tabedit <c-r>=expand("%:p:h")<cr>/
 map be :e <c-r>=expand("%:p:h")<cr>/
 
 " Use less shift key
-nnoremap ; :
+let mapleader=";"
 
 " Easy window navigation
 map <C-h> <C-w>h
@@ -327,10 +341,10 @@ nmap <silent> <Leader>m :w<CR>:make<CR><CR>:!update_mupdf.sh<CR><CR>
 nmap <Leader>b :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
 
 " Linediff two ranges
-vmap <Leader>ld :Linediff<CR>
+vmap <Leader>l :Linediff<CR>
 
 " Printing
-map <leader>p :hardcopy <CR>
+map <Leader>p :hardcopy <CR>
 
 " Put in yanked and keep it yanked
 xnoremap P pgvy
@@ -399,8 +413,17 @@ endif
 "map <Leader>so :%s/\(\w\|)\)\(=\|+\|-\|*\|/\|<\|>\)\(\w\|(\)/\1 \2 \3/<CR>
 map <Leader>so :%s/\(\w\)\(=\|+\|-\|*\|/\|<\|>\)\(\w\)/\1 \2 \3/c<CR>
 
-" Remove all trailing spaces in document
+" Strip Trailing spaces in document
 map <Leader>st :%s/\s\+$/<CR>
+
+" Remove ^M chars
+map <Leader>rm :%s/\r//g<CR>
+
+" Reload vimrc
+nmap <silent> <Leader>so :so ~/.vimrc<CR>
+
+" Edit vimrc
+nmap <silent> <Leader>vrc :e ~/.vimrc<CR>
 
 "map <Leader>j :call setline('.', join(sort(split(getline('.'), ' ')), " "))<CR>
 " Sort words in visual
@@ -456,6 +479,12 @@ autocmd FocusLost *.* :wa
 "autocmd BufWritePost * silent !update_mupdf.sh
 
 "=============================================================================="
+"                                    NEOVIM                                    "
+"=============================================================================="
+" Avoid UltiSnip errors with python3
+let g:loaded_python3_provider = 0
+
+"=============================================================================="
 "                                  OCP-INDENT                                  "
 "=============================================================================="
 " How to install?
@@ -471,9 +500,9 @@ autocmd FocusLost *.* :wa
 "
 "                                    MERLIN                                    "
 "=============================================================================="
-let s:ocamlmerlin=substitute(system('opam config var share'),'\n$','','''') .  "/ocamlmerlin"
-execute "set rtp+=".s:ocamlmerlin."/vim"
-execute "set rtp+=".s:ocamlmerlin."/vimbufsync"
+"let s:ocamlmerlin=substitute(system('opam config var share'),'\n$','','''') .  "/ocamlmerlin"
+"execute "set rtp+=".s:ocamlmerlin."/vim"
+"execute "set rtp+=".s:ocamlmerlin."/vimbufsync"
 
 "=============================================================================="
 "                                  SYNTASTIC                                   "
@@ -605,6 +634,8 @@ let g:ycm_disable_for_files_larger_than_kb = 2000
 
 " Query the UltiSnips plugin for possible completions of snippet triggers
 let g:ycm_use_ultisnips_completer = 1
+
+nnoremap <Leader>t :YcmCompleter GoTo<CR>
 
 "=============================================================================="
 "                                     GOYO                                     "
