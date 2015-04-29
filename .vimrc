@@ -413,8 +413,11 @@ endif
 "map <Leader>so :%s/\(\w\|)\)\(=\|+\|-\|*\|/\|<\|>\)\(\w\|(\)/\1 \2 \3/<CR>
 map <Leader>so :%s/\(\w\)\(=\|+\|-\|*\|/\|<\|>\)\(\w\)/\1 \2 \3/c<CR>
 
-" Remove all trailing spaces in document
+" Strip Trailing spaces in document
 map <Leader>st :%s/\s\+$/<CR>
+
+" Remove ^M chars
+map <Leader>rm :%s/\r//g<CR>
 
 " Reload vimrc
 nmap <silent> <Leader>so :so ~/.vimrc<CR>
