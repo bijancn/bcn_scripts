@@ -215,7 +215,7 @@ set guioptions-=T       " remove toolbar in gVim
 "let &t_SI = "\<Esc>]12;blue\x7"
 "let &t_EI = "\<Esc>]12;orange\x7"
 
-set clipboard=unnamedplus " Allows to use the overall clipboard
+set clipboard+=unnamedplus " Always use the overall clipboard
 
 set printoptions=paper:A4,syntax:y,wrap:y,number:y " Printing options
 
