@@ -7,9 +7,8 @@ sudo apt-get install \
   pdftk python-dev python-matplotlib \
   python-numpy python-pip python-scipy \
   python-unidecode scons subversion \
-  terminator unetbootin extlinux vim-gtk
+  terminator unetbootin extlinux vim-gtk xsel
 gsettings set org.cinnamon.desktop.default-applications.terminal exec /usr/bin/terminator
-mkdir -p ~/.vim/swap
 mkdir -p ~/install/bin
 git clone https://github.com/bijancn/bcn_scripts.git ~/bcn_scripts
 git clone https://github.com/gmarik/Vundle.vim.git  ~/.vim/bundle/Vundle.vim
