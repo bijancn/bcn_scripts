@@ -424,11 +424,24 @@ map <Leader>rm :%s/\r//g<CR>
 nmap <silent> <Leader>so :so ~/.vimrc<CR>
 
 " Edit vimrc
-nmap <silent> <Leader>vrc :e ~/.vimrc<CR>
+nmap <silent> <Leader>rc :e ~/.vimrc<CR>
 
 "map <Leader>j :call setline('.', join(sort(split(getline('.'), ' ')), " "))<CR>
 " Sort words in visual
 vnoremap <Leader>o d:execute 'normal a' . join(sort(split(getreg('"'))), ' ')<CR>
+
+" Yank selected text and paste it in search
+vnoremap // y/<C-R>"<CR>
+
+nnoremap <silent> <Leader>ff :grep -r 'public :: <cword>' %:p:h/../*<CR><CR>
+nnoremap <silent> <Leader>fm :grep -r 'module <cword>' %:p:h/../*<CR><CR>
+nnoremap <silent> <Leader>fa :grep -r '<cword>' %:p:h/../*<CR><CR>
+
+" Number of lines for command line
+set cmdheight=2
+
+" Show registers
+nnoremap <Leader>re :registers<CR>
 
 " Show the corresponding PDF file
 function! OpenPDF()
@@ -484,18 +497,6 @@ autocmd FocusLost *.* :wa
 "=============================================================================="
 " Avoid UltiSnip errors with python3
 let g:loaded_python3_provider = 0
-
-"=============================================================================="
-"                                  OCP-INDENT                                  "
-"=============================================================================="
-" How to install?
-"let g:ocp_indent_vimfile = system("opam config var share")
-"let g:ocp_indent_vimfile = substitute(g:ocp_indent_vimfile, '[\r\n]*$', '', '')
-"let g:ocp_indent_vimfile = g:ocp_indent_vimfile . "/vim/syntax/ocp-indent.vim"
-
-"autocmd FileType ocaml exec ":source " . g:ocp_indent_vimfile
-"autocmd FileType ocaml exec ":RainbowToggle"
-"autocmd FileType noweb exec ":RainbowToggle"
 
 "=============================================================================="
 "
@@ -664,7 +665,7 @@ let g:org_todo_keywords=['TODO', 'GETFEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATE
 "                                   RAINBOW                                    "
 "=============================================================================="
 let g:rainbow_active = 0
-map <Leader>r :RainbowToggle<CR>
+map <Leader>rt :RainbowToggle<CR>
 let g:rainbow_conf = {
     \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
     \   'ctermfgs': ['black', '21', 'darkmagenta', '160', '172'],

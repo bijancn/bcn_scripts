@@ -757,7 +757,7 @@ alias osrc='go '$whiz_soft/dist/share/doc/omega/omega.pdf
 alias csrc='go '$whiz_soft/dist/share/doc/circe2/circe2.pdf
 alias wman='go '$whiz_soft/dist/share/doc/whizard/manual.pdf
 alias gman='go '$whiz_soft/dist/share/doc/whizard/gamelan_manual.pdf
-export WHIZARD_BIN=$whiz_soft/gosam-develop/bin/whizard
+export WHIZARD_BIN=$whiz_soft/develop/bin/whizard
 function make-test () {
   make check TESTS=$1.run
 }
