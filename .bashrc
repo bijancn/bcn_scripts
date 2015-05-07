@@ -965,7 +965,7 @@ function bitbucket-hg {
 #==============================================================================#
 #                                     SVN                                      #
 #==============================================================================#
-if test -n "`svn-color 2> /dev/null`"; then
+if test -n "`svn-color --version 2> /dev/null`"; then
   alias svn=svn-color
 fi
 alias svna='svn add'

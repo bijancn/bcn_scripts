@@ -189,6 +189,7 @@ set history=500           " keep 500 lines of command line history
 set ssop-=options         " Do not store global and local values in a session
 set showcmd               " display incomplete commands
 set number                " Activate line numbers on the left side
+set diffopt+=iwhite       " Ignore whitespace when diffing
 
 set shell=/bin/bash
 
@@ -215,7 +216,7 @@ set guioptions-=T       " remove toolbar in gVim
 "let &t_SI = "\<Esc>]12;blue\x7"
 "let &t_EI = "\<Esc>]12;orange\x7"
 
-set clipboard+=unnamedplus " Always use the overall clipboard
+set clipboard=unnamedplus " Always use the overall clipboard
 
 set printoptions=paper:A4,syntax:y,wrap:y,number:y " Printing options
 
