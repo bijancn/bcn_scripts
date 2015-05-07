@@ -99,7 +99,6 @@ elif [ -d $whiz_dir2 ]; then
   export whiz_soft=$whiz_dir2
 fi
 trunk() { cd $whiz_soft/.. ; }
-trunk
 
 gosam_dir1=$HOME/hep/GoSam/local
 gosam_dir2=/data/bcho/gosam/local
