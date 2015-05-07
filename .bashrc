@@ -89,6 +89,7 @@ export lingames=/data/lnx_games
 export syncd=$HOME/safe
 export hive=$HOME/hive
 export install=$HOME/install
+export install2=/scratch/bcho/install
 
 whiz_dir1=/scratch/bcho/trunk/_install
 whiz_dir2=$HOME/trunk/_install
@@ -139,7 +140,11 @@ fi
 
 prepend-pure-path $desy_tex
 prepend-all-paths $desy_soft
-prepend-all-paths $whiz_soft/def
+prepend-all-paths $whiz_soft/develop
+
+if [ -d $install2 ]; then
+  prepend-all-paths $install2
+fi
 
 prepend-path $HOME/bcn_scripts
 
@@ -155,6 +160,7 @@ export C_INCLUDE_PATH=$install/include
 export CPLUS_INCLUDE_PATH=$install/include
 export PYTHONUSERBASE=$HOME/install
 export CPATH=$desy_soft/include:$CPATH
+export CC=gcc
 
 # hep
 if test -f $install/rivetenv.sh -a $arch = 64; then

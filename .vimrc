@@ -67,8 +67,8 @@ Bundle 'luochen1990/rainbow'
 " in bashrc:  source ~/.shell_prompt.sh
 Plugin 'edkolev/promptline.vim'
 
-" A very decent color scheme from which I want to borrow some concepts
-Plugin 'jonathanfilip/vim-lucius'
+" A very decent color scheme. Forked for minor color changes.
+Plugin 'bijancn/vim-lucius'
 
 "==========="
 "  testing  "
@@ -190,9 +190,9 @@ set ssop-=options         " Do not store global and local values in a session
 set showcmd               " display incomplete commands
 set number                " Activate line numbers on the left side
 
+set shell=/bin/bash
+
 " Colors
-" This shouldnt be set ?!
-"set t_Co=256              " Enable 256 colors
 set background=light
 colorscheme lucius
 LuciusWhite
@@ -249,6 +249,9 @@ set lazyredraw
   "" Enable concealing, i.e. greek letters are shown as unicode
   "set cole=2
 "endif
+
+" Toggle if vim should take paste from clipboard literally or try to reformat
+set pastetoggle=<F2>
 
 "=============================================================================="
 "                              KEYBOARD MAPPINGS                               "
@@ -432,8 +435,8 @@ vnoremap <Leader>o d:execute 'normal a' . join(sort(split(getreg('"'))), ' ')<CR
 " Yank selected text and paste it in search
 vnoremap // y/<C-R>"<CR>
 
-nnoremap <silent> <Leader>ff :grep -r 'public :: <cword>' %:p:h/../*<CR><CR>
-nnoremap <silent> <Leader>fm :grep -r 'module <cword>' %:p:h/../*<CR><CR>
+nnoremap <silent> <Leader>ff :grep -r 'public :: <cword>$' %:p:h/../*<CR><CR>
+nnoremap <silent> <Leader>fm :grep -r 'module <cword>$' %:p:h/../*<CR><CR>
 nnoremap <silent> <Leader>fa :grep -r '<cword>' %:p:h/../*<CR><CR>
 
 " Number of lines for command line

@@ -59,7 +59,7 @@ warnings = '-fmax-errors=1 -Wall -Wuninitialized -Wextra -fno-whole-program '
 # gcc doesn't recognize our test function construction as use of a function
 warnings += '-Wno-unused-function -Wno-unused-parameter -Wno-unused-dummy-argument '
 warnings += '-fimplicit-none -pedantic -fbacktrace '
-debug_warnings = warnings + '-g -fcheck=all ' + \
+debug_warnings = warnings + '-fcheck=all -ggdb ' + \
     '-ffpe-trap=invalid,zero,overflow,underflow,denormal '
 if not args.compiler:
   args.compiler = 'gfortran'
