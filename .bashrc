@@ -182,6 +182,17 @@ pythia-configure-desy(){
   packages='--with-hepmc2=$desy_soft --with-lhapdf6=$desy_soft --with-fastjet3=$desy_soft'
   ./configure --prefix=$install $packages
 }
+openloops-checkout(){
+  svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public_beta
+  mv public_beta OpenLoops
+  printf '[OpenLoops]\nprocess_repositories=public, whizard' >> OpenLoops/openloops.cfg
+  cd OpenLoops
+  ./scons
+  ./openloops libinstall ppzj
+  cd examples
+  scons
+  ./OL_fortran
+}
 
 # perl
 export PERL5LIB=$install/lib/perl5
