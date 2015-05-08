@@ -108,12 +108,15 @@ Plugin 'benekastah/neomake'
 " Plugin 'osyo-manga/vim-marching'
 
 " Nice fuzzy search on files, buffers and more
-Plugin 'Shougo/unite.vim'
+"Plugin 'Shougo/unite.vim'
 " Can be used by unite for more efficient search
 " Hase to be build with `make`
-Plugin 'Shougo/vimproc.vim'
+"Plugin 'Shougo/vimproc.vim'
 " Powerful file explorer that needs unite
-Plugin 'Shougo/vimfiler.vim'
+"Plugin 'Shougo/vimfiler.vim'
+
+" Fuzzy search on files, buffers and more
+Plugin 'kien/ctrlp.vim'
 
 " Add the surround physics. Repeat allows to repeat those
 Plugin 'tpope/vim-surround'
@@ -182,6 +185,8 @@ set foldnestmax=3         " Create 3 levels of folds overall
 set wildmenu              " Mode of wildmenu is set by wildmode
 " Complete only as far as possible then give list of possibilities
 set wildmode=longest,list
+set wildignore+=*.so,*.swp,*.zip,*/.git/*,*/.hg/*,*/.svn/*
+set wildignore+=*/_build/*,*/_install/*,*/_test/*
 
 set nobackup              " do not keep a backup file
 set directory=/tmp/       " Don't put swap files in local directories
@@ -269,6 +274,7 @@ map [p [cdp
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 nnoremap <silent> <C-Space> @=(foldlevel('.')?'zA':"\<Space>")<CR>
 vnoremap <Space> zf
+
 nnoremap <Leader>f :VimFilerExplorer <c-r>=expand("%:p:h")<cr>/
 
 " Toggle between highlighting line or column
@@ -582,10 +588,34 @@ let g:airline_symbols.space = "\ua0"
 let g:airline#extensions#whitespace#enabled = 1
 
 "=============================================================================="
+"                                    CTRLP                                     "
+"=============================================================================="
+let g:ctrlp_map = '<c-p>'
+" CtrlP : only files, CtrlPBuffer : only buffer, CtrlPMRU : only recent files
+" CtrlPMixed : all
+let g:ctrlp_cmd = 'CtrlPMixed'
+if exists("g:ctrl_user_command")
+  unlet g:ctrlp_user_command
+endif
+
+" 'c' - the directory of the current file.
+" 'r' - the nearest ancestor that contains one of these directories or
+"       files: .git .hg .svn .bzr _darcs
+" 'a' - like c, but only if the current working directory outside of
+"       CtrlP is not a direct ancestor of the directory of the current file.
+let g:ctrlp_working_path_mode = 'ra'
+
+"let g:ctrlp_custom_ignore = {
+"  \ 'dir':  '\v[\/]\.(git|hg|svn|_build|_install|_test)$',
+"  \ 'file': '\v\.(exe|so|dll)$',
+"  \ 'link': 'some_bad_symbolic_links',
+"  \ }
+
+"=============================================================================="
 "                                    UNITE                                     "
 "=============================================================================="
-let g:unite_source_history_yank_enable = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
+"let g:unite_source_history_yank_enable = 1
+"call unite#filters#matcher_default#use(['matcher_fuzzy'])
 
 " -no-split opens search in current window
 " -start-insert causes Unite to open with the prompt activated
@@ -594,32 +624,32 @@ call unite#filters#matcher_default#use(['matcher_fuzzy'])
 " populates the file list in the background
 "nnoremap <space><space> :Unite -no-split -start-insert file_rec<CR>
 " The :! tells unite to run things in the background
-nnoremap <space><space> :Unite -no-split -start-insert file_rec/async:!<CR>
-nnoremap <space>f       :Unite -no-split -start-insert file<cr>
-nnoremap <space>b       :Unite -no-split -start-insert buffer<cr>
-nnoremap <space>/       :Unite grep:.<cr>
+"nnoremap <space><space> :Unite -no-split -start-insert file_rec/async:!<CR>
+"nnoremap <space>f       :Unite -no-split -start-insert file<cr>
+"nnoremap <space>b       :Unite -no-split -start-insert buffer<cr>
+"nnoremap <space>/       :Unite grep:.<cr>
 
 " Allow to delete files in unite (might be dangerous)
-call unite#custom#alias('file', 'delete', 'vimfiler__delete')
+"call unite#custom#alias('file', 'delete', 'vimfiler__delete')
 
 "=============================================================================="
 "                                   VIMFILER                                   "
 "=============================================================================="
-let g:vimfiler_as_default_explorer = 1
+"let g:vimfiler_as_default_explorer = 1
 
 " Pretty symbols
-let g:vimfiler_tree_leaf_icon = "¦"
-"let g:vimfiler_tree_leaf_icon = "⋮"
-let g:vimfiler_tree_opened_icon = "▼"
-let g:vimfiler_tree_closed_icon = "▷"
-"let g:vimfiler_tree_closed_icon = '▸'
-let g:vimfiler_file_icon = '-'
-let g:vimfiler_marked_file_icon = '※'
+"let g:vimfiler_tree_leaf_icon = "¦"
+""let g:vimfiler_tree_leaf_icon = "⋮"
+"let g:vimfiler_tree_opened_icon = "▼"
+"let g:vimfiler_tree_closed_icon = "▷"
+""let g:vimfiler_tree_closed_icon = '▸'
+"let g:vimfiler_file_icon = '-'
+"let g:vimfiler_marked_file_icon = '※'
 
 " Enable file operation commands
-call vimfiler#custom#profile('default', 'context', {
-      \ 'safe' : 0,
-      \ })
+"call vimfiler#custom#profile('default', 'context', {
+"      \ 'safe' : 0,
+"      \ })
 
 "=============================================================================="
 "                                   ULTISNIP                                   "
