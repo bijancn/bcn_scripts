@@ -107,6 +107,7 @@ if [ -d $gosam_dir1 ]; then
 elif [ -d $gosam_dir2 ]; then
   export gosam_soft=$gosam_dir2
 fi
+export OpenLoopsPath=$HOME/hep/OpenLoops
 
 #=========#
 #  paths  #
