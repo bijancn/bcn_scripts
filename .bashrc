@@ -107,7 +107,6 @@ if [ -d $gosam_dir1 ]; then
 elif [ -d $gosam_dir2 ]; then
   export gosam_soft=$gosam_dir2
 fi
-export OpenLoopsPath=$HOME/hep/OpenLoops
 
 #=========#
 #  paths  #
@@ -183,16 +182,19 @@ pythia-configure-desy(){
   ./configure --prefix=$install $packages
 }
 openloops-checkout(){
-  svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public_beta
-  mv public_beta OpenLoops
+  #svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public_beta ./OpenLoops
+  svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public ./OpenLoops
   printf '[OpenLoops]\nprocess_repositories=public, whizard' >> OpenLoops/openloops.cfg
   cd OpenLoops
   ./scons
-  ./openloops libinstall ppzj
+  ./openloops libinstall ppzj ppzjj
   cd examples
   scons
   ./OL_fortran
 }
+
+export OpenLoopsPath=$HOME/hep/OpenLoops
+prepend-libpath $HOME/hep/OpenLoops
 
 # perl
 export PERL5LIB=$install/lib/perl5

@@ -1,10 +1,11 @@
-#! /usr/bin/env sh
+##! /usr/bin/env sh
 
 echo SYSTEM
 uname -a
-#echo "PATH = `tr ':' '\n' <<< "$PATH"`"
+echo "PATH"
 tr ':' '\n' <<< "$PATH"
-echo "LD_LIBRARY_PATH = $LD_LIBRARY_PATH"
+echo "LD_LIBRARY_PATH"
+tr ':' '\n' <<< "$LD_LIBRARY_PATH"
 echo "DYLD_LIBRARY_PATH = $DYLD_LIBRARY_PATH"
 echo "FC = $FC"
 echo "CC = $CC"
@@ -23,7 +24,6 @@ if (which gfortran &> /dev/null); then
     echo GFORTRAN
     which gfortran
     gfortran --version
-    #gfortran -v
 fi
 
 if (which gcc &> /dev/null); then
@@ -31,7 +31,6 @@ if (which gcc &> /dev/null); then
     echo GCC
     which gcc
     gcc --version
-    #gcc -v
 fi
 
 if (which g++ &> /dev/null); then
@@ -39,7 +38,6 @@ if (which g++ &> /dev/null); then
     echo G++
     which g++
     g++ --version
-    #g++ -v
 fi
 
 if (which clang &> /dev/null); then
@@ -47,7 +45,6 @@ if (which clang &> /dev/null); then
     echo CLANG
     which clang
     clang --version
-    #clang -v
 fi
 
 if (which clang++ &> /dev/null); then
@@ -55,7 +52,6 @@ if (which clang++ &> /dev/null); then
     echo CLANG++
     which clang++
     clang++ --version
-    #clang++ -v
 fi
 
 echo

@@ -21,6 +21,16 @@ snippet vdbg "vdbg"
 print *, '${1:var} =    ', $1 !!! Debugging
 endsnippet
 
+# Permanent Debugging
+snippet mdb "mdb"
+call msg_debug (D_${1:AREA}, "${2:msg}")
+endsnippet
+
+# Permanent Variable Debugging
+snippet mdbg "mdbg"
+call msg_debug (D_${1:AREA}, "${2:var}", $2)
+endsnippet
+
 snippet lo "logical"
 logical$2 :: ${3:name}
 endsnippet
