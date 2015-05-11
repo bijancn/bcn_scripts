@@ -181,7 +181,7 @@ pythia-configure-desy(){
   packages='--with-hepmc2=$desy_soft --with-lhapdf6=$desy_soft --with-fastjet3=$desy_soft'
   ./configure --prefix=$install $packages
 }
-openloops-checkout(){
+checkout-openloops(){
   #svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public_beta ./OpenLoops
   svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public ./OpenLoops
   printf '[OpenLoops]\nprocess_repositories=public, whizard' >> OpenLoops/openloops.cfg
