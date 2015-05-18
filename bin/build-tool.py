@@ -84,10 +84,13 @@ stdhep = '/afs/desy.de/group/theorie/software/ELF64/lib/libstdhep.a'
 if os.path.isfile(stdhep):
   args.configureflags += ['STDHEP=' + stdhep]
 
-openloops_dir = os.path.expanduser('~/hep/OpenLoops')
-if os.path.exists(openloops_dir):
+ol_path = None
+for path in os.environ["LD_LIBRARY_PATH"].split(':'):
+  if 'OpenLoops' in path:
+    ol_path = path
+if ol_path:
   args.configureflags += ['--enable-openloops',
-                          '--with-openloops=' + openloops_dir]
+                          '--with-openloops=' + ol_path[0:-3]]
 
 # Convenience magic
 if 'ifort' in args.build:

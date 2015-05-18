@@ -11,24 +11,36 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Debugging
-snippet dbg "dbg"
+snippet dbg "print *, 'text'"
 print *, '${1:Hello}' !!! Debugging
 endsnippet
 
-# Variable Debugging
-snippet vdbg "vdbg"
+snippet vdbg "print *, 'var ='"
 print *, '${1:var} =    ', $1 !!! Debugging
 endsnippet
 
-# Permanent Debugging
-snippet mdb "mdb"
+snippet mdbg "msg_debug text"
 call msg_debug (D_${1:AREA}, "${2:msg}")
 endsnippet
 
-# Permanent Variable Debugging
-snippet mdbg "mdbg"
+snippet mvdbg "msg_debug var ="
 call msg_debug (D_${1:AREA}, "${2:var}", $2)
+endsnippet
+
+snippet mdbg2 "msg_debug2 text"
+call msg_debug2 (D_${1:AREA}, "${2:msg}")
+endsnippet
+
+snippet mvdbg2 "msg_debug2 var ="
+call msg_debug2 (D_${1:AREA}, "${2:var}", $2)
+endsnippet
+
+snippet da "debug_active()"
+debug_active(D_${1:AREA})
+endsnippet
+
+snippet da2 "debug_active()"
+debug2_active(D_${1:AREA})
 endsnippet
 
 snippet lo "logical"

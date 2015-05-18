@@ -100,14 +100,21 @@ elif [ -d $whiz_dir2 ]; then
 fi
 trunk() { cd $whiz_soft/.. ; }
 
-gosam_dir1=$HOME/hep/GoSam/local
-gosam_dir2=/data/bcho/gosam/local
-if [ -d $gosam_dir1 ]; then
-  export gosam_soft=$gosam_dir1
-elif [ -d $gosam_dir2 ]; then
-  export gosam_soft=$gosam_dir2
+tmp1=$HOME/hep/GoSam/local
+tmp2=/data/bcho/gosam/local
+if [ -d $tmp1 ]; then
+  export gosam_soft=$tmp1
+elif [ -d $tmp2 ]; then
+  export gosam_soft=$tmp2
 fi
 
+tmp1=$HOME/hep/OpenLoops
+tmp2=/scratch/bcho/OpenLoops
+if [ -d $tmp1 ]; then
+  export openloops_soft=$tmp1
+elif [ -d $tmp2 ]; then
+  export openloops_soft=$tmp2
+fi
 #=========#
 #  paths  #
 #=========#
@@ -192,9 +199,12 @@ checkout-openloops(){
   scons
   ./OL_fortran
 }
+openloops-getlibs(){
+  ./openloops libinstall ppll eevvjj eett
+}
 
-export OpenLoopsPath=$HOME/hep/OpenLoops
-prepend-libpath $HOME/hep/OpenLoops
+export OpenLoopsPath=$openloops_soft
+prepend-libpath $openloops_soft
 
 # perl
 export PERL5LIB=$install/lib/perl5
