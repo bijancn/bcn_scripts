@@ -644,8 +644,8 @@ let g:ctrlp_working_path_mode = 'ra'
 "                                   FUGITIVE                                   "
 "=============================================================================="
 nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gpu :Dispatch! git push<CR>:redraw!<CR>
-nnoremap <Leader>gpl :Dispatch! git pull<CR>:redraw!<CR>
+nnoremap <Leader>gp :Dispatch! git push<CR>:redraw!<CR>
+nnoremap <Leader>gl :Dispatch! git pull<CR>:redraw!<CR>
 
 "=============================================================================="
 "                                   DISPATCH                                   "
