@@ -30,28 +30,11 @@ Plugin 'gmarik/vundle'
 "=========="
 "  stable  "
 "=========="
-" Pure epicness, the one and only statusbar
-Plugin 'bling/vim-airline'
-
-" The ultimate snippet solution
-Plugin 'SirVer/ultisnips'
-
-" Git wrapper
-Plugin 'tpope/vim-fugitive'
-
-" Nice fuzzy autocompletion with supertab support
-" Ubuntu libs:  build-essential cmake python-dev
-" Build with:   cd ~/.vim/bundle/YouCompleteMe && ./install.sh
-Plugin 'Valloric/YouCompleteMe'
-
-" Allows to focus completely
-Plugin 'junegunn/goyo.vim'
-
 " Diffing parts of one or two files
 Plugin 'AndrewRadev/linediff.vim'
 
-" Show errors and warnings of compilers and checkers
-Plugin 'scrooloose/syntastic'
+" A very decent color scheme. Forked for minor color changes.
+Plugin 'bijancn/vim-lucius'
 
 " Faster syntax and indent for free-form Fortran
 Plugin 'bijancn/free-fortran.vim'
@@ -59,71 +42,67 @@ Plugin 'bijancn/free-fortran.vim'
 " Syntax file for sindarin
 Plugin 'bijancn/whizard.vim'
 
-" Syntax file for form
-Plugin 'tueda/form.vim'
-
-" Rainbow parentheses
-Bundle 'luochen1990/rainbow'
+" Pure epicness, the one and only statusbar
+Plugin 'bling/vim-airline'
 
 " Generate a fast shell prompt with powerline symbols and airline colors
 " in vim:     :PromptlineSnapshot ~/.shell_prompt.sh airline
 " in bashrc:  source ~/.shell_prompt.sh
 Plugin 'edkolev/promptline.vim'
 
-" A very decent color scheme. Forked for minor color changes.
-Plugin 'bijancn/vim-lucius'
+" Allows to focus completely
+Plugin 'junegunn/goyo.vim'
 
-"==========="
-"  testing  "
-"==========="
+" Fuzzy search on files, buffers and more
+Plugin 'kien/ctrlp.vim'
+
+" Rainbow parentheses
+Bundle 'luochen1990/rainbow'
+
+" Show errors and warnings of compilers and checkers
+Plugin 'scrooloose/syntastic'
+
+" The ultimate snippet solution
+Plugin 'SirVer/ultisnips'
+
 " Allow to run stuff asynchronously with normal vim
 Plugin 'tpope/vim-dispatch.git'
 
-" Interesting color scheme
-Plugin 'sjl/badwolf'
+" Git wrapper
+Plugin 'tpope/vim-fugitive'
 
 " Allow to increment/decremt dates, roman numerals, ordinals, letters
 Plugin 'tpope/vim-speeddating'
 
-" Does not change in noweb chunks, might be fixable
-"Plugin 'comments.vim'
+" Add the surround physics. Repeat allows to repeat those
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
+
+" Syntax file for form
+Plugin 'tueda/form.vim'
+
+" Nice fuzzy autocompletion with supertab support
+" Ubuntu libs:  build-essential cmake python-dev
+" Build with:   cd ~/.vim/bundle/YouCompleteMe && ./install.sh
+Plugin 'Valloric/YouCompleteMe'
+
+"==========="
+"  testing  "
+"==========="
+" Interesting color scheme
+Plugin 'sjl/badwolf'
 
 " Reasonably good. Not perfect. Also doesn't change in noweb.
 Plugin 'scrooloose/nerdcommenter'
+
+" Does not change in noweb chunks, might be fixable
+"Plugin 'comments.vim'
 
 " Good support for Markdown
 Plugin 'vim-pandoc/vim-pandoc'
 
 " Work together - apart. Only works with neovim
 Plugin 'floobits/floobits-neovim'
-
-"Asynchronous make. Asynchronous part only works with neovim
-Plugin 'benekastah/neomake'
-
-" Does not work with neovim. deoplete will and will use asynchronous completion
-"Plugin 'Shougo/neocomplete.vim'
-
-" 'awesome Python autocompletion library' - works with neocomplete
-" This is mostly part of YCM
-"Plugin 'davidhalter/jedi-vim'
-
-" Complete C, C++ using clang
-" Plugin 'osyo-manga/vim-marching'
-
-" Nice fuzzy search on files, buffers and more
-"Plugin 'Shougo/unite.vim'
-" Can be used by unite for more efficient search
-" Hase to be build with `make`
-"Plugin 'Shougo/vimproc.vim'
-" Powerful file explorer that needs unite
-"Plugin 'Shougo/vimfiler.vim'
-
-" Fuzzy search on files, buffers and more
-Plugin 'kien/ctrlp.vim'
-
-" Add the surround physics. Repeat allows to repeat those
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
 
 " Add support for emacs org-mode
 Plugin 'jceb/vim-orgmode'
@@ -137,6 +116,26 @@ Plugin 'dhruvasagar/vim-table-mode'
 
 " Compute sums of columns
 Plugin 'visSum.vim'
+
+"Asynchronous make. Asynchronous part only works with neovim
+"Plugin 'benekastah/neomake'
+
+" Does not work with neovim. deoplete will and will use asynchronous completion
+"Plugin 'Shougo/neocomplete.vim'
+
+" 'awesome Python autocompletion library' - works with neocomplete
+" This is mostly part of YCM
+"Plugin 'davidhalter/jedi-vim'
+
+" Nice fuzzy search on files, buffers and more
+"Plugin 'Shougo/unite.vim'
+" Can be used by unite for more efficient search. Has to be build with `make`
+"Plugin 'Shougo/vimproc.vim'
+" Powerful file explorer that needs unite
+"Plugin 'Shougo/vimfiler.vim'
+
+" Complete C, C++ using clang
+"Plugin 'osyo-manga/vim-marching'
 
 call vundle#end()
 
@@ -160,7 +159,7 @@ if exists('+colorcolumn')
   set colorcolumn=81
 else
   " Mark as Error if no consistent line is available
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>81v.\+', -1)
+  autocmd BufWinEnter * let w:m2 = matchadd('ErrorMsg', '\%>81v.\+', -1)
 endif
 set cursorline          " Highlight current line
 
@@ -231,7 +230,7 @@ set printoptions=paper:A4,syntax:y,wrap:y,number:y " Printing options
 
 let python_highlight_all = 1
 
-let g:Tex_flavor='latex'  " Defaulting to latex and not plain tex
+let g:Tex_flavor = 'latex'  " Defaulting to latex and not plain tex
 
 " Pretty vsplit and fold symbols
 set fillchars=vert:│,fold:─
@@ -253,7 +252,7 @@ set gdefault
 "syntax sync minlines=2048
 "autocmd BufEnter * :syntax sync fromstart
 set ttyfast
-set lazyredraw
+"set lazyredraw
 
 "if has ("conceal")
   "" Enable concealing, i.e. greek letters are shown as unicode
@@ -304,7 +303,7 @@ map te :tabedit <c-r>=expand("%:p:h")<cr>/
 map be :e <c-r>=expand("%:p:h")<cr>/
 
 " Use less shift key
-let mapleader=";"
+let mapleader = ";"
 
 " Easy window navigation
 map <C-h> <C-w>h
@@ -343,13 +342,10 @@ nmap bl :ls<CR>
 map <Leader>j mz:join<CR>`z
 
 " Change working directory to current file
-map <Leader>d :cd %:p:h<CR>:pwd<CR>
+map <Leader>cd :cd %:p:h<CR>:pwd<CR>
 
 " Move working directory one level higher
 map <Leader>.. :cd ..<CR>:pwd<CR>
-
-" Filetype specific make commands are in ~/.vim/after/ftplugin/<lang>.vim
-nmap <silent> <Leader>m :w<CR>:make<CR><CR>:!update_mupdf.sh<CR><CR>
 
 " Update biber file
 nmap <Leader>bi :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
@@ -423,29 +419,18 @@ if !exists('W_defined')
   command WQ :Wq
 endif
 
-" Put spaces around operators
-"map <Leader>so :%s/\(\w\|)\)\(=\|+\|-\|*\|/\|<\|>\)\(\w\|(\)/\1 \2 \3/<CR>
-map <Leader>so :%s/\(\w\)\(=\|+\|-\|*\|/\|<\|>\)\(\w\)/\1 \2 \3/c<CR>
-
 " Strip Trailing spaces in document
-map <Leader>st :%s/\s\+$/<CR>
+noremap <Leader>st :%s/\s\+$/<CR>
 
 " Remove ^M chars
-map <Leader>rm :%s/\r//g<CR>
+noremap <Leader>rm :%s/\r//g<CR>
 
 " Reload .vimrc
-nmap <silent> <Leader>so :so ~/.vimrc<CR>
-
-" Automatically reload .vimrc upon saving it
-augroup reload_vimrc " {
-    autocmd!
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
-augroup END " }
+"nmap <silent> <Leader>so :so ~/.vimrc<CR>
 
 " Edit vimrc
-nmap <silent> <Leader>rc :e ~/.vimrc<CR>
+nnoremap <silent> <Leader>rc :e ~/.vimrc<CR>
 
-"map <Leader>j :call setline('.', join(sort(split(getline('.'), ' ')), " "))<CR>
 " Sort words in visual
 vnoremap <Leader>o d:execute 'normal a' . join(sort(split(getreg('"'))), ' ')<CR>
 
@@ -472,44 +457,56 @@ map <Leader>v :call OpenPDF()<CR>
 "=============================================================================="
 "                                   AUTOCMD                                    "
 "=============================================================================="
-" Poor mans .less support. There are proper addons for this.
-autocmd BufNewFile,BufRead *.less set filetype=css
+augroup load_filetypes
+  autocmd!
+  " Poor mans .less support. There are proper addons for this.
+  autocmd BufNewFile,BufRead *.less set filetype=css
 
-" Enable omni completion. Complete things with CTRL-X O.
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
+  " Enable omni completion
+  autocmd FileType python set omnifunc=pythoncomplete#Complete
+  autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+  autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+  autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+  autocmd FileType c set omnifunc=ccomplete#Complete
+augroup END
 
-" Automatically save and load views for files
-" TODO: (bcn 2015-02-09) This screws up viewing the same file with a split
-"autocmd BufWinLeave *.* mkview
-"autocmd BufWinEnter *.* silent loadview
+" Automatically reload .vimrc upon saving it
+augroup reload_vimrc
+  autocmd!
+  autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
 
-" Load indentexpr from fortran and switch back to noweb for syntax hl
-autocmd BufWinEnter *.nw setlocal filetype=fortran | setlocal filetype=noweb
+augroup reload_other
+  autocmd!
+  " Automatically save and load views for files
+  " TODO: (bcn 2015-02-09) This screws up viewing the same file with a split
+  "autocmd BufWinLeave *.* mkview
+  "autocmd BufWinEnter *.* silent loadview
 
-" Don't screw up folds when inserting text that might affect them, until
-" leaving insert mode. Foldmethod is local to the window. Protect against
-" screwing up folding when switching between windows.
-" http://vim.wikia.com/wiki/Keep_folds_closed_while_inserting_text
-autocmd InsertEnter * if !exists('w:last_fdm')
-                      \ | let w:last_fdm=&foldmethod
-                      \ | setlocal foldmethod=manual
-                      \ | endif
-autocmd InsertLeave,WinLeave * if exists('w:last_fdm')
-                               \ | let &l:foldmethod=w:last_fdm
-                               \ | unlet w:last_fdm
-                               \ | endif
+  " Load indentexpr from fortran and switch back to noweb for syntax hl
+  autocmd BufWinEnter *.nw setlocal filetype=fortran | setlocal filetype=noweb
 
-" Automatically save when losing focus
-autocmd FocusLost *.* :wa
+  " Don't screw up folds when inserting text that might affect them, until
+  " leaving insert mode. Foldmethod is local to the window. Protect against
+  " screwing up folding when switching between windows.
+  " http://vim.wikia.com/wiki/Keep_folds_closed_while_inserting_text
+  autocmd InsertEnter * if !exists('w:last_fdm')
+                        \ | let w:last_fdm=&foldmethod
+                        \ | setlocal foldmethod=manual
+                        \ | endif
+  autocmd InsertLeave,WinLeave * if exists('w:last_fdm')
+                                 \ | let &l:foldmethod=w:last_fdm
+                                 \ | unlet w:last_fdm
+                                 \ | endif
 
-" This would update when saving
-"autocmd BufWritePost * silent !update_mupdf.sh
+  " Automatically save when losing focus
+  autocmd FocusLost *.* :wa
+
+  " This would update when saving
+  "autocmd BufWritePost * silent !update_mupdf.sh
+augroup END
 
 "=============================================================================="
 "                                    NEOVIM                                    "
@@ -570,7 +567,9 @@ let g:fortran_extra_continuation_indent=3
 "=============================================================================="
 "                                   AIR-LINE                                   "
 "=============================================================================="
+" Important for powerline fonts
 set encoding=utf-8
+
 " Good looking powerline
 let g:airline_powerline_fonts = 1
 
@@ -582,7 +581,21 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#bufferline#enabled = 1
 "let g:airline#extensions#bufferline#overwrite_variables = 1
-"let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+" Only show tail of filename if unique
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+" default: (fileencoding, fileformat)
+let g:airline_section_y = ''
+
+" Control at what with the sections are truncated
+let g:airline#extensions#default#section_truncate_width = {
+    \ 'b': 79,
+    \ 'x': 60,
+    \ 'y': 88,
+    \ 'z': 45,
+    \ }
+
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 
@@ -609,6 +622,7 @@ let g:ctrlp_map = '<c-p>'
 " CtrlP : only files, CtrlPBuffer : only buffer, CtrlPMRU : only recent files
 " CtrlPMixed : all
 let g:ctrlp_cmd = 'CtrlPMixed'
+
 if exists("g:ctrl_user_command")
   unlet g:ctrlp_user_command
 endif
@@ -629,10 +643,51 @@ let g:ctrlp_working_path_mode = 'ra'
 "=============================================================================="
 "                                   FUGITIVE                                   "
 "=============================================================================="
-nmap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gpu :Dispatch! git push<CR>:redraw!<CR>
 nnoremap <Leader>gpl :Dispatch! git pull<CR>:redraw!<CR>
-nnoremap <Leader>gl :silent! Glog<CR>:bot copen<CR>
+
+"=============================================================================="
+"                                   DISPATCH                                   "
+"=============================================================================="
+" Filetype specific make commands are in ~/.vim/after/ftplugin/<lang>.vim
+nnoremap <Leader>m :w<CR>:Make<CR>
+nnoremap <Leader>co :Copen<CR>
+
+"=============================================================================="
+"                                QUICKFIXTOGGLE                                "
+"=============================================================================="
+nnoremap <Leader>q :call QuickfixToggle()<cr>
+let g:quickfix_is_open = 0
+
+function! QuickfixToggle()
+  if g:quickfix_is_open
+    cclose
+    let g:quickfix_is_open = 0
+    execute g:quickfix_return_to_window . "wincmd w"
+  else
+    let g:quickfix_return_to_window = winnr()
+    copen
+    let g:quickfix_is_open = 1
+  endif
+endfunction
+
+"=============================================================================="
+"                                DIFFOPTTOGGLE                                 "
+"=============================================================================="
+nnoremap <Leader>d :call DiffoptToggle()<CR>
+set diffopt+=iwhite       " Ignore whitespace when diffing
+let g:diffignore_whitespace = 1
+
+function! DiffoptToggle()
+  if g:diffignore_whitespace
+    set diffopt-=iwhite
+    let g:diffignore_whitespace = 0
+  else
+    set diffopt+=iwhite
+    let g:diffignore_whitespace = 1
+  endif
+endfunction
 
 "=============================================================================="
 "                                    UNITE                                     "
