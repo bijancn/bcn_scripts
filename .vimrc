@@ -480,6 +480,8 @@ augroup END
 
 augroup reload_other
   autocmd!
+  " Auto load quick fix ?
+  autocmd QuickFixCmdPost * copen
   " Automatically save and load views for files
   " TODO: (bcn 2015-02-09) This screws up viewing the same file with a split
   "autocmd BufWinLeave *.* mkview
@@ -644,20 +646,20 @@ let g:ctrlp_working_path_mode = 'ra'
 "                                   FUGITIVE                                   "
 "=============================================================================="
 nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gp :Dispatch! git push<CR>:redraw!<CR>
-nnoremap <Leader>gl :Dispatch! git pull<CR>:redraw!<CR>
+nnoremap <Leader>gp :Gpush<CR>:redraw!<CR>
+nnoremap <Leader>gl :Git pull<CR>:redraw!<CR>
 
 "=============================================================================="
 "                                   DISPATCH                                   "
 "=============================================================================="
 " Filetype specific make commands are in ~/.vim/after/ftplugin/<lang>.vim
 nnoremap <Leader>m :w<CR>:Make<CR>
-nnoremap <Leader>co :Copen<CR>
+nnoremap <Leader>co :call CopenToggle()<CR>
 
 "=============================================================================="
 "                                QUICKFIXTOGGLE                                "
 "=============================================================================="
-nnoremap <Leader>q :call QuickfixToggle()<cr>
+nnoremap <Leader>q :call QuickfixToggle()<CR>
 let g:quickfix_is_open = 0
 
 function! QuickfixToggle()
@@ -670,6 +672,12 @@ function! QuickfixToggle()
     copen
     let g:quickfix_is_open = 1
   endif
+endfunction
+
+function! CopenToggle()
+  let g:quickfix_return_to_window = winnr()
+  Copen!
+  let g:quickfix_is_open = 1
 endfunction
 
 "=============================================================================="
