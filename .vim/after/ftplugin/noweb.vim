@@ -21,14 +21,7 @@ set textwidth=72
 
 set foldmethod=indent
 
-" Checks if Makefile or SConstruct exists. If not we run pdflatex to produce pdf.
-if !filereadable(expand("%:p:h")."/SConstruct")
-  if !filereadable(expand("%:p:h")."/Makefile")
-    "setlocal makeprg=noweave\ %\ |\ pdflatex\ 
-  endif
-else
-  setlocal makeprg=scons\ .\ 
-endif
+set makeprg=make\ -C\ $whiz_soft/../_build/develop\ -j\ 2>&1\ \\|\ colorit
 
 " Highlight consistent line
 if exists('+colorcolumn')

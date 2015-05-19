@@ -36,6 +36,9 @@ Plugin 'bling/vim-airline'
 " The ultimate snippet solution
 Plugin 'SirVer/ultisnips'
 
+" Git wrapper
+Plugin 'tpope/vim-fugitive'
+
 " Nice fuzzy autocompletion with supertab support
 " Ubuntu libs:  build-essential cmake python-dev
 " Build with:   cd ~/.vim/bundle/YouCompleteMe && ./install.sh
@@ -73,11 +76,11 @@ Plugin 'bijancn/vim-lucius'
 "==========="
 "  testing  "
 "==========="
+" Allow to run stuff asynchronously with normal vim
+Plugin 'tpope/vim-dispatch.git'
+
 " Interesting color scheme
 Plugin 'sjl/badwolf'
-
-" Git wrapper, shows branch in airline
-Plugin 'tpope/vim-fugitive'
 
 " Allow to increment/decremt dates, roman numerals, ordinals, letters
 Plugin 'tpope/vim-speeddating'
@@ -185,6 +188,7 @@ set foldnestmax=3         " Create 3 levels of folds overall
 set wildmenu              " Mode of wildmenu is set by wildmode
 " Complete only as far as possible then give list of possibilities
 set wildmode=longest,list
+" Files and folders to ignore
 set wildignore+=*.so,*.swp,*.zip,*/.git/*,*/.hg/*,*/.svn/*
 set wildignore+=*/_build/*,*/_install/*,*/_test/*
 
@@ -348,7 +352,7 @@ map <Leader>.. :cd ..<CR>:pwd<CR>
 nmap <silent> <Leader>m :w<CR>:make<CR><CR>:!update_mupdf.sh<CR><CR>
 
 " Update biber file
-nmap <Leader>b :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
+nmap <Leader>bi :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
 
 " Linediff two ranges
 vmap <Leader>l :Linediff<CR>
@@ -429,8 +433,14 @@ map <Leader>st :%s/\s\+$/<CR>
 " Remove ^M chars
 map <Leader>rm :%s/\r//g<CR>
 
-" Reload vimrc
+" Reload .vimrc
 nmap <silent> <Leader>so :so ~/.vimrc<CR>
+
+" Automatically reload .vimrc upon saving it
+augroup reload_vimrc " {
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END " }
 
 " Edit vimrc
 nmap <silent> <Leader>rc :e ~/.vimrc<CR>
@@ -590,7 +600,12 @@ let g:airline#extensions#whitespace#enabled = 1
 "=============================================================================="
 "                                    CTRLP                                     "
 "=============================================================================="
+" Set no max file limit
+let g:ctrlp_max_files = 0
+
+" Mapping
 let g:ctrlp_map = '<c-p>'
+
 " CtrlP : only files, CtrlPBuffer : only buffer, CtrlPMRU : only recent files
 " CtrlPMixed : all
 let g:ctrlp_cmd = 'CtrlPMixed'
@@ -610,6 +625,14 @@ let g:ctrlp_working_path_mode = 'ra'
 "  \ 'file': '\v\.(exe|so|dll)$',
 "  \ 'link': 'some_bad_symbolic_links',
 "  \ }
+
+"=============================================================================="
+"                                   FUGITIVE                                   "
+"=============================================================================="
+nmap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gpu :Dispatch! git push<CR>:redraw!<CR>
+nnoremap <Leader>gpl :Dispatch! git pull<CR>:redraw!<CR>
+nnoremap <Leader>gl :silent! Glog<CR>:bot copen<CR>
 
 "=============================================================================="
 "                                    UNITE                                     "

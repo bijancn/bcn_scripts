@@ -98,7 +98,8 @@ if [ -d $whiz_dir1 ]; then
 elif [ -d $whiz_dir2 ]; then
   export whiz_soft=$whiz_dir2
 fi
-trunk() { cd $whiz_soft/.. ; }
+trnk() { cd $whiz_soft/.. ; }
+bui() { cd $whiz_soft/../_build/develop ; }
 
 tmp1=$HOME/hep/GoSam/local
 tmp2=/data/bcho/gosam/local
