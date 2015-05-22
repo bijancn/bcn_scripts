@@ -77,12 +77,13 @@ if spawn.find_executable('fastjet-config'):
 if spawn.find_executable('gosam-config.py'):
   args.configureflags += ['--enable-gosam']
 
-fmcfio = '/afs/desy.de/group/theorie/software/ELF64/lib/libFmcfio.a'
-if os.path.isfile(fmcfio):
-  args.configureflags += ['FMCFIO=' + fmcfio]
-stdhep = '/afs/desy.de/group/theorie/software/ELF64/lib/libstdhep.a'
-if os.path.isfile(stdhep):
-  args.configureflags += ['STDHEP=' + stdhep]
+# Need to build my own
+#fmcfio = '/afs/desy.de/group/theorie/software/ELF64/lib/libFmcfio.a'
+#if os.path.isfile(fmcfio):
+  #args.configureflags += ['FMCFIO=' + fmcfio]
+#stdhep = '/afs/desy.de/group/theorie/software/ELF64/lib/libstdhep.a'
+#if os.path.isfile(stdhep):
+  #args.configureflags += ['STDHEP=' + stdhep]
 
 ol_path = None
 for path in os.environ["LD_LIBRARY_PATH"].split(':'):
@@ -162,7 +163,7 @@ for item in tasks + options + variants:
 
 def _call_verbose(cmd):
   lines_to_show = ['Package name:', 'Version:', 'Date:', 'Status:', 'version',
-                   ' path.', ' path ']
+                   ' path.', ' path ', 'checking for ']
   call_verbose(cmd, filter_strgs=lines_to_show, show_errors=args.errors)
 
 # autoreconf if desired

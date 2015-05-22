@@ -1,13 +1,13 @@
 #! /usr/bin/env bash
 
-test -z "$BUILD_PREFIX" && BUILD_PREFIX="/data/bcho"
-test -z "$INSTALL_PREFIX" && INSTALL_PREFIX="$HOME/install"
+test -z "$BUILD_PREFIX" && BUILD_PREFIX="/data/bcho/build"
+test -z "$INSTALL_PREFIX" && INSTALL_PREFIX="/data/bcho/install"
 test -z "$MAKE" && MAKE="make -j12"
 
-test -z "$INSTALL_GSL" && INSTALL_GSL="0"
-test -z "$INSTALL_BOOST" && INSTALL_BOOST="0"
+test -z "$INSTALL_GSL" && INSTALL_GSL="1"
+test -z "$INSTALL_BOOST" && INSTALL_BOOST="1"
 test -z "$INSTALL_HEPMC" && INSTALL_HEPMC="0"
-test -z "$INSTALL_FASTJET" && INSTALL_FASTJET="0"
+test -z "$INSTALL_FASTJET" && INSTALL_FASTJET="1"
 test -z "$INSTALL_YODA" && INSTALL_YODA="1"
 test -z "$INSTALL_RIVET" && INSTALL_RIVET="1"
 
@@ -22,10 +22,10 @@ test -z "$GSL_VERSION" && GSL_VERSION="1.16"
 
 ## Paths for the case of existing installations
 test -z "$GSLPATH" && GSLPATH="/usr"
-test -z "$BOOSTPATH" && BOOSTPATH="$desy_soft"
-test -z "$HEPMCPATH" && HEPMCPATH="$desy_soft"
-test -z "$FASTJETPATH" && FASTJETPATH="$desy_soft"
-test -z "$YODAPATH" && YODAPATH="$HOME/install"
+test -z "$BOOSTPATH" && BOOSTPATH=""
+test -z "$HEPMCPATH" && HEPMCPATH=""
+test -z "$FASTJETPATH" && FASTJETPATH=""
+test -z "$YODAPATH" && YODAPATH=""
 
 test -z "$RIVET_CONFFLAGS" && RIVET_CONFFLAGS="" #--enable-unvalidated
 test -z "$YODA_CONFFLAGS" && YODA_CONFFLAGS=""

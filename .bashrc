@@ -110,7 +110,7 @@ elif [ -d $tmp2 ]; then
 fi
 
 tmp1=$HOME/hep/OpenLoops
-tmp2=/scratch/bcho/OpenLoops
+tmp2=/data/bcho/OpenLoops
 if [ -d $tmp1 ]; then
   export openloops_soft=$tmp1
 elif [ -d $tmp2 ]; then
@@ -136,12 +136,21 @@ add-pythonpath () {
   export PYTHONPATH=$PYTHONPATH:$HOME/$1
 }
 
+tmp1=/data/bcho/install
+tmp2=/afs/desy.de/group/theorie/software/ELF64
+tmp3=/afs/desy.de/group/theorie/software/ELF32
+if [ -d $tmp1 ]; then
+  export desy_soft=$tmp1
+elif test $arch = 64; then
+  export desy_soft=$tmp2
+else
+  export desy_soft=$tmp3
+fi
+
 if test $arch = 64; then
-  export desy_soft=/afs/desy.de/group/theorie/software/ELF64
   export desy_tex=/afs/desy.de/products/texlive/2012/bin/x86_64-linux
   prepend-all-paths $install
 else
-  export desy_soft=/afs/desy.de/group/theorie/software/ELF32
   export desy_tex=/afs/desy.de/products/texlive/2012/bin/i386-linux
 fi
 
@@ -170,9 +179,9 @@ export CPATH=$desy_soft/include:$CPATH
 export CC=gcc
 
 # hep
-if test -f $install/rivetenv.sh -a $arch = 64; then
-  source $install/rivetenv.sh
-fi
+#if test -f $install/rivetenv.sh -a $arch = 64; then
+  #source $install/rivetenv.sh
+#fi
 prepend-all-paths $gosam_soft
 export HEPMC_DIR=$install
 export LHAPDF_DIR=$install
