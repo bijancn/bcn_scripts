@@ -21,7 +21,14 @@ set textwidth=72
 
 set foldmethod=indent
 
-set makeprg=make\ -C\ $whiz_soft/../_build/develop\ -j\ 2>&1\ \\|\ colorit
+set makeprg=make\ V=0=\ -C\ $whiz_soft/../_build/develop\ -j\ 2>&1
+
+" Gfortran + GNU make
+set efm=%D%*\\a[%*\\d]:\ Entering\ directory\ `%f',
+  \%X%*\\a[%*\\d]:\ Leaving\ directory\ `%f',
+  \%D%*\\a:\ Entering\ directory\ `%f',
+  \%X%*\\a:\ Leaving\ directory\ `%f',
+  \%E%f:%l.%c:,%E%f:%l:,%C,%C%p%*[0123456789^],%ZError:\ %m,%C%.%#
 
 " Highlight consistent line
 if exists('+colorcolumn')

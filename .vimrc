@@ -117,6 +117,9 @@ Plugin 'dhruvasagar/vim-table-mode'
 " Compute sums of columns
 Plugin 'visSum.vim'
 
+" Close all buffers but the current one
+Plugin 'BufOnly.vim'
+
 "Asynchronous make. Asynchronous part only works with neovim
 "Plugin 'benekastah/neomake'
 
@@ -189,7 +192,7 @@ set wildmenu              " Mode of wildmenu is set by wildmode
 set wildmode=longest,list
 " Files and folders to ignore
 set wildignore+=*.so,*.swp,*.zip,*/.git/*,*/.hg/*,*/.svn/*
-set wildignore+=*/_build/*,*/_install/*,*/_test/*
+" set wildignore+=*/_build/*,*/_install/*,*/_test/*
 
 set nobackup              " do not keep a backup file
 set directory=/tmp/       " Don't put swap files in local directories
@@ -335,6 +338,8 @@ map J :bprevious<CR>
 nmap bq :bp <BAR> bd #<CR>
 nmap bc :bp <BAR> bd #<CR>
 
+nmap bo :BufOnly<CR>
+
 " Show all open buffers and their status
 nmap bl :ls<CR>
 
@@ -434,8 +439,23 @@ nnoremap <silent> <Leader>rc :e ~/.vimrc<CR>
 " Sort words in visual
 vnoremap <Leader>o d:execute 'normal a' . join(sort(split(getreg('"'))), ' ')<CR>
 
+" Search for selected text, forwards or backwards.
+vmap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+vmap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+
 " Yank selected text and paste it in search
-vnoremap // y/<C-R>"<CR>
+" vnoremap // y/<C-R>"<CR>
+
+" Visually select a line
+nnoremap vv 0v$h
 
 nnoremap <silent> <Leader>ff :grep -r 'public :: <cword>$' %:p:h/../*<CR><CR>
 nnoremap <silent> <Leader>fm :grep -r 'module <cword>$' %:p:h/../*<CR><CR>
@@ -653,7 +673,7 @@ nnoremap <Leader>gl :Git pull<CR>:redraw!<CR>
 "                                   DISPATCH                                   "
 "=============================================================================="
 " Filetype specific make commands are in ~/.vim/after/ftplugin/<lang>.vim
-nnoremap <Leader>m :w<CR>:Make<CR>
+nnoremap <Leader>m :w<CR>:Make!<CR>
 nnoremap <Leader>co :call CopenToggle()<CR>
 
 "=============================================================================="
