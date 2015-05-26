@@ -667,6 +667,7 @@ let g:ctrlp_working_path_mode = 'ra'
 "=============================================================================="
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gp :Gpush<CR>:redraw!<CR>
+" TODO: (bcn 2015-05-19) Gpull doesnt work with 1.7.1...
 nnoremap <Leader>gl :Git pull<CR>:redraw!<CR>
 
 "=============================================================================="
