@@ -564,7 +564,7 @@ function use-this-as-ref-ext () {
 
 function update-variable-refs () {
   use-this-as-ref show_4
-  cp process_log_1_p1.log ~/trunk/share/tests/ref-output/process_log.ref
+  cp process_log_1_p1.log ../../../share/tests/ref-output/process_log.ref
   use-this-as-ref vars
   use-as-ref rt_data_1
   use-as-ref rt_data_2

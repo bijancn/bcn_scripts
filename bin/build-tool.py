@@ -205,4 +205,3 @@ if args.make:
 # check if desired
 if args.makecheck:
   _call_verbose(['make', '-j' + str(args.jobs), 'check'])
-  show_file(os.path.join('tests', 'test-suite.log'))
