@@ -523,15 +523,15 @@ function show-parallel-jobs () {
 }
 
 function show-diff () {
-  $difftool err-output/$1.out ../../../share/tests/ref-output/$1.ref
+  $difftool err-output/$1.out ../../../../share/tests/ref-output/$1.ref
 }
 
 function show-diff-double () {
-  $difftool err-output/$1.out ../../../share/tests/ref-output-double/$1.ref
+  $difftool err-output/$1.out ../../../../share/tests/ref-output-double/$1.ref
 }
 
 function show-diff-ext () {
-  $difftool err-output/$1.out ../../../share/tests/ref-output-ext/$1.ref
+  $difftool err-output/$1.out ../../../../share/tests/ref-output-ext/$1.ref
 }
 
 function use-as-ref () {
@@ -539,32 +539,32 @@ function use-as-ref () {
 }
 
 function show-this-diff () {
-  $difftool $1.log ../../../share/tests/ref-output/$1.ref
+  $difftool $1.log ../../../../share/tests/ref-output/$1.ref
 }
 
 function use-this-as-ref () {
-  cp $1.log ../../../share/tests/ref-output/$1.ref
+  cp $1.log ../../../../share/tests/ref-output/$1.ref
 }
 
 function show-this-diff-double () {
-  $difftool $1.log ../../../share/tests/ref-output-double/$1.ref
+  $difftool $1.log ../../../../share/tests/ref-output-double/$1.ref
 }
 
 function use-this-as-ref-double () {
-  cp $1.log ../../../share/tests/ref-output-double/$1.ref
+  cp $1.log ../../../../share/tests/ref-output-double/$1.ref
 }
 
 function show-this-diff-ext () {
-  $difftool $1.log ../../../share/tests/ref-output-ext/$1.ref
+  $difftool $1.log ../../../../share/tests/ref-output-ext/$1.ref
 }
 
 function use-this-as-ref-ext () {
-  cp $1.log ../../../share/tests/ref-output-ext/$1.ref
+  cp $1.log ../../../../share/tests/ref-output-ext/$1.ref
 }
 
 function update-variable-refs () {
   use-this-as-ref show_4
-  cp process_log_1_p1.log ../../../share/tests/ref-output/process_log.ref
+  cp process_log_1_p1.log ../../../../share/tests/ref-output/process_log.ref
   use-this-as-ref vars
   use-as-ref rt_data_1
   use-as-ref rt_data_2
