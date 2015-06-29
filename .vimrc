@@ -275,6 +275,8 @@ set pastetoggle=<F2>
 
 map ]p ]cdp
 map [p [cdp
+nmap \dp :%diffput<CR>
+nmap \do :%diffget<CR>
 
 " Unfolding and folding with space
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>

@@ -523,43 +523,33 @@ function show-parallel-jobs () {
 }
 
 function show-diff () {
-  $difftool err-output/$1.out ../../../../share/tests/ref-output/$1.ref
-}
-
-function show-diff-double () {
-  $difftool err-output/$1.out ../../../../share/tests/ref-output-double/$1.ref
-}
-
-function show-diff-ext () {
-  $difftool err-output/$1.out ../../../../share/tests/ref-output-ext/$1.ref
-}
-
-function use-as-ref () {
-  cp err-output/$1.out ../../../share/tests/ref-output/$1.ref
+  pwd=`pwd`
+  ref_dir=../../../../share/tests/$(basename $pwd)
+  grep 'FC_EXT_OR_SINGLE = single' Makefile
+  if test "$?" = "0" -a -f $ref_dir/ref-output-double/$1.ref; then
+    $difftool err-output/$1.out $ref_dir/ref-output-double/$1.ref
+  elif test "$?" = "1" -a -f $ref_dir/ref-output-ext/$1.ref; then
+    $difftool err-output/$1.out $ref_dir/ref-output-ext/$1.ref
+  elif test -f $ref_dir/ref-output/$1.ref; then
+    $difftool err-output/$1.out $ref_dir/ref-output/$1.ref
+  else
+    echo "File not found in normal, double or extended!"
+  fi
 }
 
 function show-this-diff () {
-  $difftool $1.log ../../../../share/tests/ref-output/$1.ref
-}
-
-function use-this-as-ref () {
-  cp $1.log ../../../../share/tests/ref-output/$1.ref
-}
-
-function show-this-diff-double () {
-  $difftool $1.log ../../../../share/tests/ref-output-double/$1.ref
-}
-
-function use-this-as-ref-double () {
-  cp $1.log ../../../../share/tests/ref-output-double/$1.ref
-}
-
-function show-this-diff-ext () {
-  $difftool $1.log ../../../../share/tests/ref-output-ext/$1.ref
-}
-
-function use-this-as-ref-ext () {
-  cp $1.log ../../../../share/tests/ref-output-ext/$1.ref
+  pwd=`pwd`
+  ref_dir=../../../../share/tests/$(basename $pwd)
+  grep 'FC_EXT_OR_SINGLE = single' Makefile
+  if test "$?" = "0" -a -f $ref_dir/ref-output-double/$1.ref; then
+    $difftool $1.log $ref_dir/ref-output-double/$1.ref
+  elif test "$?" = "1" -a -f $ref_dir/ref-output-ext/$1.ref; then
+    $difftool $1.log $ref_dir/ref-output-ext/$1.ref
+  elif test -f $ref_dir/ref-output/$1.ref; then
+    $difftool $1.log $ref_dir/ref-output/$1.ref
+  else
+    echo "File not found in normal, double or extended!"
+  fi
 }
 
 function update-variable-refs () {
