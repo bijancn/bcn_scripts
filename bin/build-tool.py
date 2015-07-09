@@ -55,18 +55,20 @@ base_path = get_base_path()
 
 # -fbounds-check is included in fcheck=all. Does not play well with the gosam
 # interface however
-warnings = '-fmax-errors=1 -Wall -Wuninitialized -Wextra -fno-whole-program '
+gf_warnings = '-fmax-errors=1 -Wall -Wuninitialized -Wextra -fno-whole-program '
 # gcc doesn't recognize our test function construction as use of a function
-warnings += '-Wno-unused-function -Wno-unused-parameter -Wno-unused-dummy-argument '
-warnings += '-fimplicit-none -pedantic -fbacktrace '
-debug_warnings = warnings + '-fcheck=all -ggdb ' + \
+gf_warnings += '-Wno-unused-function -Wno-unused-parameter -Wno-unused-dummy-argument '
+gf_warnings += '-fimplicit-none -pedantic -fbacktrace '
+gf_debug_warnings = gf_warnings + '-fcheck=all -ggdb ' + \
     '-ffpe-trap=invalid,zero,overflow,underflow,denormal '
 if not args.compiler:
   args.compiler = 'gfortran'
 if not args.optimization:
   args.optimization = '2'
+else:
+  args.optimization = ' '.join(args.optimization)
 if not args.fcflags:
-  args.fcflags = warnings
+  args.fcflags = gf_warnings
 if not args.configureflags:
   args.configureflags = []
 
@@ -136,15 +138,30 @@ if 'develop' in args.build:
   args.fcflags += '-fcheck=all '
   args.configureflags += ['--disable-static']
 
+if 'nagfor' in args.build:
+  args.compiler = 'nagfor'
+  args.optimization = '1'
+  # -gline         Compile code to produce a traceback if an error occurs.
+  # -C=all         Maximum runtime checking.
+  # => doesnt work with LHAPDF6 somehow due to q2max
+  # -mtrace=all    Enable all memory allocation options.
+  # -nan           Set unSAVEd local variables etc. to signalling NaN.
+  args.fcflags = '-colour'
+
 if 'debug' in args.build:
   args.optimization = '0'
-  args.fcflags = debug_warnings
+  if args.compiler == 'nagfor':
+    args.fcflags = '-g -gline -mtrace=all -colour '
+  elif args.compiler == 'gfortran':
+    args.fcflags = gf_debug_warnings
   args.configureflags += ['--enable-fc-profiling']
 
-if 'debugnan' in args.build:
+if 'NaN' in args.build:
   args.optimization = '0'
-  args.fcflags = debug_warnings + '-finit-real=nan '
-  args.configureflags += ['--enable-fc-profiling']
+  if args.compiler == 'nagfor':
+    args.fcflags += '-nan '
+  elif args.compiler == 'gfortran':
+    args.fcflags += '-finit-real=nan '
 
 if args.all:
   args.remove = True
