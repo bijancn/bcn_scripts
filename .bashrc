@@ -185,8 +185,8 @@ export CC=gcc
 prepend-all-paths $gosam_soft
 export HEPMC_DIR=$install
 export LHAPDF_DIR=$install
-export LATEXINPUTS=${HOME}/texmf:${LATEXINPUTS}
-export TEXINPUTS=${HOME}/texmf:${TEXINPUTS}
+export LATEXINPUTS=${HOME}/texmf:$desy_soft/share/texmf/tex/latex/misc:$LATEXINPUTS
+export TEXINPUTS=${HOME}/texmf:$desy_soft/share/texmf/tex/latex/misc:$TEXINPUTS
 export TEXMFCNF=${HOME}/texmf:${TEXMFCNF}
 export HOMETEXMF=${HOME}/texmf:${HOMETEXMF}
 export TEXMFHOME=${HOME}/texmf:${TEXMFHOME}
@@ -509,6 +509,10 @@ function show-wlan-channels () {
   sudo iwlist wlan0 scan | grep Frequency | sort | uniq -c | sort -n
 }
 
+function show-distro () {
+  lsb_release -a
+}
+
 parallel_jobs=
 if test -r /proc/cpuinfo; then
   n=`grep -c '^processor' /proc/cpuinfo`
@@ -731,8 +735,8 @@ else
   alias mc='make check $parallel_jobs V=0'
   alias mcl='make clean $parallel_jobs V=0'
 fi
-alias s='scons'
-alias scl='scons --clean'
+alias s='scons $parallel_jobs'
+alias scl='scons --clean $parallel_jobs'
 alias ac='autoreconf'
 alias bp='bitpocket'
 

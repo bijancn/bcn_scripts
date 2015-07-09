@@ -294,6 +294,10 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 " Using left and right for adjusting comments
 no <left> <<
 no <right> >>
+inoremap <Up> <NOP>
+inoremap <Down> <NOP>
+inoremap <Left> <NOP>
+inoremap <Right> <NOP>
 
 " Create new tab
 map tn :tabnew <CR>
@@ -315,9 +319,6 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-
-" Tab opened buffers. No good command!
-"map ta :tab all <CR>
 
 " Yank from current position to end
 nnoremap Y y$
