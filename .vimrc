@@ -503,7 +503,7 @@ augroup END
 
 augroup reload_other
   autocmd!
-  " Auto load quick fix ?
+  " Auto loading quick fix is quite annoying
   "autocmd QuickFixCmdPost * copen
   " Automatically save and load views for files
   " TODO: (bcn 2015-02-09) This screws up viewing the same file with a split

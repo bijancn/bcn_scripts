@@ -53,9 +53,10 @@
     scrollback_infinite = True
   [[black]]
     background_image = None
+    background_color = "#ffffff"
     foreground_color = "#000000"
     show_titlebar = False
-    background_color = "#ffffff"
+    word_chars = "-A-Za-z0-9,./?%&#:_+"
     cursor_blink = False
     scrollback_infinite = True
 [layouts]
