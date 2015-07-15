@@ -910,7 +910,7 @@ alias giti='git interactive'
 alias gits='git status'
 
 # Pull from the remote
-alias gitl='git pull'
+alias gitl='git pull --rebase'
 
 # Pull from the remote and overwrite all local changes (CUSTOM ALIAS)
 alias gitlh='git pullhard'
