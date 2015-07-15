@@ -955,8 +955,8 @@ alias gitb='git branch'
 # Rename your current branch (followed by newbranchname)
 alias gitbm='git branch -m'
 
-# Switch to master and get updates from svn
-alias gsu='gite master ; svnu ; gits'
+# Switch to svn and get updates from svn
+alias gsu='gite svn ; svnu ; gits'
 
 #=================#
 #  VISUALIZATION  #
