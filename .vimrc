@@ -672,6 +672,11 @@ nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gp :Gpush<CR>:redraw!<CR>
 " TODO: (bcn 2015-05-19) Gpull doesnt work with 1.7.1...
 nnoremap <Leader>gl :Git pull<CR>:redraw!<CR>
+if !exists('G_defined')
+  let G_defined = "True"
+  command Greview :Git! diff --staged
+endif
+nnoremap <leader>gr :Greview<cr>
 
 "=============================================================================="
 "                                   DISPATCH                                   "

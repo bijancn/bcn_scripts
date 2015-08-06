@@ -56,12 +56,14 @@ export OCAMLRUNPARAM=b
 
 # Max out machine limits
 ulimit -t unlimited              # cputime
-ulimit -f unlimited              # filesize
 ulimit -d unlimited              # datasize
-ulimit -c unlimited              # coredumpsize
 ulimit -m unlimited              # memoryuse
-ulimit -v unlimited              # vmemoryuse
+
 # These are usually not permitted
+#ulimit -f unlimited              # filesize
+#ulimit -c unlimited              # coredumpsize
+#ulimit -v unlimited              # vmemoryuse
+
 #ulimit -s unlimited              # stacksize
 #ulimit -n unlimited              # descriptors
 #ulimit -l unlimited              # memorylocked
@@ -83,6 +85,9 @@ if test -r /proc/cpuinfo; then
   n=`grep -c '^processor' /proc/cpuinfo`
   parallel_jobs="-j $n"
 fi
+
+# Path for FORM temp files
+export FORMTMP=/scratch/bcho/formtmp/
 
 #===========#
 #  folders  #
@@ -106,14 +111,18 @@ bui() { cd $whiz_soft/../_build/develop ; }
 
 tmp1=$HOME/hep
 tmp2=/data/bcho
+tmp3=/nfs/theoc/data/bcho
 if [ -d $tmp1 ]; then
   export hep=$tmp1
 elif [ -d $tmp2 ]; then
   export hep=$tmp2
+elif [ -d $tmp3 ]; then
+  export hep=$tmp3
 fi
 
 export openloops_soft=$hep/OpenLoops
 export gosam_soft=$hep/gosam/local
+export std_install=$hep/install
 
 #=========#
 #  paths  #
@@ -135,8 +144,6 @@ add-pythonpath () {
   export PYTHONPATH=$PYTHONPATH:$HOME/$1
 }
 
-desy_soft=/data/bcho/install
-
 if test $arch = 64; then
   export desy_tex=/afs/desy.de/products/texlive/2012/bin/x86_64-linux
   prepend-all-paths $install
@@ -145,7 +152,7 @@ else
 fi
 
 prepend-pure-path $desy_tex
-prepend-all-paths $desy_soft
+prepend-all-paths $std_install
 prepend-all-paths $whiz_soft/develop
 
 if [ -d $install2 ]; then
@@ -165,18 +172,19 @@ add-pythonpath pydflatex
 export C_INCLUDE_PATH=$install/include
 export CPLUS_INCLUDE_PATH=$install/include
 export PYTHONUSERBASE=$HOME/install
-export CPATH=$desy_soft/include:$CPATH
+export CPATH=$std_install/include:$CPATH
 export CC=gcc
 
 # hep
 #if test -f $install/rivetenv.sh -a $arch = 64; then
   #source $install/rivetenv.sh
 #fi
+source $std_install/rivetenv.sh
 prepend-all-paths $gosam_soft
 #export HEPMC_DIR=$install
 #export LHAPDF_DIR=$install
-export LATEXINPUTS=${HOME}/texmf:$desy_soft/share/texmf/tex/latex/misc:$LATEXINPUTS
-export TEXINPUTS=${HOME}/texmf:$desy_soft/share/texmf/tex/latex/misc:$TEXINPUTS
+export LATEXINPUTS=${HOME}/texmf:$std_install/share/texmf/tex/latex/misc:$LATEXINPUTS
+export TEXINPUTS=${HOME}/texmf:$std_install/share/texmf/tex/latex/misc:$TEXINPUTS
 export TEXMFCNF=${HOME}/texmf:${TEXMFCNF}
 export HOMETEXMF=${HOME}/texmf:${HOMETEXMF}
 export TEXMFHOME=${HOME}/texmf:${TEXMFHOME}
@@ -185,7 +193,7 @@ pythia-configure(){
   ./configure --prefix=$install $packages
 }
 pythia-configure-desy(){
-  packages='--with-hepmc2=$desy_soft --with-lhapdf6=$desy_soft --with-fastjet3=$desy_soft'
+  packages='--with-hepmc2=$std_install --with-lhapdf6=$std_install --with-fastjet3=$std_install'
   ./configure --prefix=$install $packages
 }
 checkout-openloops(){
@@ -447,6 +455,16 @@ function kill-tty () {
   kill -9 $pid
 }
 
+function kill-myjobs () {
+  #echo `ps x | grep -v ssh`
+  pids=`ps x | grep -v ssh | grep -v bash | tail -n +2 | awk '{print $1}'`
+  echo "PIDS: $pids"
+  for pid in $pids; do
+    echo "Killing now `ps -p $pid -o comm -p 27598 -o comm=`"
+    kill -9 $pid
+  done
+}
+
 function mkdircd () {
   mkdir -p "$@" && eval cd "\"\$$#\"";
 }
@@ -471,7 +489,6 @@ function cit () {
 function mm () {
   $difftool $1/$3 $2/$3
 }
-
 
 #======================#
 #  surpressing output  #
@@ -611,9 +628,13 @@ function make-test () {
 }
 alias mt=make-test
 
+function diff-processlog {
+  vimdiff process_log_1_p1.log ../../../../share/tests/functional_tests/ref-output/process_log.ref
+}
+
 function update-variable-refs () {
   use-this-as-ref show_4
-  cp process_log_1_p1.log ../../../../share/tests/ref-output/process_log.ref
+  diff-processlog
   use-this-as-ref vars
   use-as-ref rt_data_1
   use-as-ref rt_data_2
@@ -653,6 +674,8 @@ alias briss="java -jar $syncd/scripts/briss-0.9/briss-0.9.jar"
 alias yt-mp3='youtube-dl -t --extract-audio --audio-format=mp3'
 alias reset-file-perms='find . -type f -exec chmod 644 {} +'
 alias reset-dir-perms='find . -type d -exec chmod 755 {} +'
+
+alias save-RES="grep RES whizard.log | sed 's/RES //' > /data/bcho/whizard_ttbar_threshold_project/Data/validation/$(basename `pwd`).dat"
 
 #==============================================================================#
 #                                SHOW-COMMANDS                                 #
