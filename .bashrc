@@ -11,6 +11,8 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+date +%S.%N
+
 #==========#
 #  prelim  #
 #==========#
@@ -116,6 +118,9 @@ if [ -d $tmp1 ]; then
 elif [ -d $tmp2 ]; then
   export openloops_soft=$tmp2
 fi
+
+date +%S.%N
+
 #=========#
 #  paths  #
 #=========#
@@ -334,6 +339,8 @@ export USER_ACR=bcn
 function set-title() {
   echo -en "\e]0;$1\a"
 }
+
+date +%S.%N
 
 #==============================================================================#
 #                                    COLORS                                    #
@@ -1279,3 +1286,5 @@ if [[ "$TERM" == screen* ]]; then
   $PROMPT_COMMAND"
 fi
 export TERM='xterm-256color'
+
+date +%S.%N
