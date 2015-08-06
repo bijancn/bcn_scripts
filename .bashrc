@@ -11,16 +11,11 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-date +%S.%N
-
 #==========#
 #  prelim  #
 #==========#
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
-
-# Airline as prompt
-source ~/.shell_prompt.sh
 
 export arch=`getconf LONG_BIT`
 
@@ -83,6 +78,12 @@ export KMP_AFFINITY='compact'
 export OMP_NUM_THREADS=12
 export GOMP_CPU_AFFINITY="0 2 4 6 8 10 1 3 5 7 9 11"
 
+parallel_jobs=
+if test -r /proc/cpuinfo; then
+  n=`grep -c '^processor' /proc/cpuinfo`
+  parallel_jobs="-j $n"
+fi
+
 #===========#
 #  folders  #
 #===========#
@@ -103,23 +104,16 @@ fi
 trnk() { cd $whiz_soft/.. ; }
 bui() { cd $whiz_soft/../_build/develop ; }
 
-tmp1=$HOME/hep/GoSam/local
-tmp2=/data/bcho/gosam/local
+tmp1=$HOME/hep
+tmp2=/data/bcho
 if [ -d $tmp1 ]; then
-  export gosam_soft=$tmp1
+  export hep=$tmp1
 elif [ -d $tmp2 ]; then
-  export gosam_soft=$tmp2
+  export hep=$tmp2
 fi
 
-tmp1=$HOME/hep/OpenLoops
-tmp2=/data/bcho/OpenLoops
-if [ -d $tmp1 ]; then
-  export openloops_soft=$tmp1
-elif [ -d $tmp2 ]; then
-  export openloops_soft=$tmp2
-fi
-
-date +%S.%N
+export openloops_soft=$hep/OpenLoops
+export gosam_soft=$hep/gosam/local
 
 #=========#
 #  paths  #
@@ -141,16 +135,7 @@ add-pythonpath () {
   export PYTHONPATH=$PYTHONPATH:$HOME/$1
 }
 
-tmp1=/data/bcho/install
-tmp2=/afs/desy.de/group/theorie/software/ELF64
-tmp3=/afs/desy.de/group/theorie/software/ELF32
-if [ -d $tmp1 ]; then
-  export desy_soft=$tmp1
-elif test $arch = 64; then
-  export desy_soft=$tmp2
-else
-  export desy_soft=$tmp3
-fi
+desy_soft=/data/bcho/install
 
 if test $arch = 64; then
   export desy_tex=/afs/desy.de/products/texlive/2012/bin/x86_64-linux
@@ -188,8 +173,8 @@ export CC=gcc
   #source $install/rivetenv.sh
 #fi
 prepend-all-paths $gosam_soft
-export HEPMC_DIR=$install
-export LHAPDF_DIR=$install
+#export HEPMC_DIR=$install
+#export LHAPDF_DIR=$install
 export LATEXINPUTS=${HOME}/texmf:$desy_soft/share/texmf/tex/latex/misc:$LATEXINPUTS
 export TEXINPUTS=${HOME}/texmf:$desy_soft/share/texmf/tex/latex/misc:$TEXINPUTS
 export TEXMFCNF=${HOME}/texmf:${TEXMFCNF}
@@ -225,38 +210,30 @@ prepend-libpath $openloops_soft
 export PERL5LIB=$install/lib/perl5
 
 # spideroak
-spider_dir=/scratch/bcho/SpiderOak/tmp
-if [ -d $spider_dir ]; then
-  export SPIDEROAKDATADIR=$spider_dir
-fi
+#spider_dir=/scratch/bcho/SpiderOak/tmp
+#if [ -d $spider_dir ]; then
+  #export SPIDEROAKDATADIR=$spider_dir
+#fi
 
 command-exists () {
       type "$1" &> /dev/null ;
 }
+
 # opam
-if command-exists opam; then
-  eval `opam config env`
-fi
+#if command-exists opam; then
+  #eval `opam config env`
+#fi
 
 # pydflatex
 if command-exists pydflatex; then
   export pdftool=pydflatex
 fi
 
-# java
-java_path=$syncd/codes/java
-am_tp=$java_path/Amazon-MWS/third-party
-am_bu=$java_path/Amazon-MWS/build/classes/com/amazonservices/mws
-am_pro=$am_bu/products
-export CLASSPATH=$CLASSPATH:$am_tp/*:$am_pro/*:$am_pro/samples/*
-export CLASSPATH=$CLASSPATH:$am_pro/model:$am_pro/mock/*
-
 # ifort
 intel_dir=/opt/intel
 if test -f $intel_dir/bin/compilervars.sh -a $arch = 64; then
   source $intel_dir/bin/compilervars.sh intel64
-fi
-if test -f $intel_dir/2013/bin/compilervars.sh -a $arch = 64; then
+elif test -f $intel_dir/2013/bin/compilervars.sh -a $arch = 64; then
   source $intel_dir/2013/bin/compilervars.sh intel64
   #source $intel_dir/2011/vtune_amplifier_xe/amplxe-vars.sh
 fi
@@ -279,11 +256,7 @@ fi
 #==================#
 #  compiler flags  #
 #==================#
-export DEBUG="-O0 -Wall -fbounds-check -fbacktrace -finit-real=nan -g"
-export DEBUG="$DEBUG -fcheck=all -fmax-errors=1 -ffpe-trap=invalid,zero,overflow,underflow,denormal"
 export FCFLAGS="-fmax-errors=1 -O2"
-# Simply append this this to your configure command with a space in front
-export DEBUG_FCFLAGS="FCFLAGS=\"$DEBUG\""
 export CFLAGS="-fPIC"
 
 #====================#
@@ -339,8 +312,6 @@ export USER_ACR=bcn
 function set-title() {
   echo -en "\e]0;$1\a"
 }
-
-date +%S.%N
 
 #==============================================================================#
 #                                    COLORS                                    #
@@ -471,14 +442,6 @@ function backup-settings () {
   sudo cp ~/.local/share/keyrings ~/decrypted/scripts/backup/ -r
 }
 
-#function backup-root () {
-  #sudo rsync -avz /!(data|home|proc|sys) /data/root-backup/
-#}
-
-function backup-home () {
-  rsync -avz $HOME /data/home-backup/
-}
-
 function kill-tty () {
   pid=$(ps -t $1 | grep 'bash' | head -c 6)
   kill -9 $pid
@@ -509,181 +472,27 @@ function mm () {
   $difftool $1/$3 $2/$3
 }
 
-#============================#
-#  Show certain information  #
-#============================#
-function show-wlan-channels () {
-  sudo iwlist wlan0 scan | grep Frequency | sort | uniq -c | sort -n
-}
 
-function show-distro () {
-  lsb_release -a
-}
-
-parallel_jobs=
-if test -r /proc/cpuinfo; then
-  n=`grep -c '^processor' /proc/cpuinfo`
-  #if test $n -gt 1; then
-  #  parallel_jobs="-j `expr \( 1 \* $n \) / 3`"
-  #fi
-  parallel_jobs="-j $n"
-fi
-
-function show-parallel-jobs () {
-  echo $parallel_jobs
-}
-
-function show-diff () {
-  pwd=`pwd`
-  ref_dir=../../../../share/tests/$(basename $pwd)
-  grep 'FC_EXT_OR_SINGLE = single' Makefile
-  if test "$?" = "0" -a -f $ref_dir/ref-output-double/$1.ref; then
-    $difftool err-output/$1.out $ref_dir/ref-output-double/$1.ref
-  elif test "$?" = "1" -a -f $ref_dir/ref-output-ext/$1.ref; then
-    $difftool err-output/$1.out $ref_dir/ref-output-ext/$1.ref
-  elif test -f $ref_dir/ref-output/$1.ref; then
-    $difftool err-output/$1.out $ref_dir/ref-output/$1.ref
-  else
-    echo "File not found in normal, double or extended!"
-  fi
-}
-
-function show-this-diff () {
-  pwd=`pwd`
-  ref_dir=../../../../share/tests/$(basename $pwd)
-  grep 'FC_EXT_OR_SINGLE = single' Makefile
-  if test "$?" = "0" -a -f $ref_dir/ref-output-double/$1.ref; then
-    $difftool $1.log $ref_dir/ref-output-double/$1.ref
-  elif test "$?" = "1" -a -f $ref_dir/ref-output-ext/$1.ref; then
-    $difftool $1.log $ref_dir/ref-output-ext/$1.ref
-  elif test -f $ref_dir/ref-output/$1.ref; then
-    $difftool $1.log $ref_dir/ref-output/$1.ref
-  else
-    echo "File not found in normal, double or extended!"
-  fi
-}
-
-function update-variable-refs () {
-  use-this-as-ref show_4
-  cp process_log_1_p1.log ../../../../share/tests/ref-output/process_log.ref
-  use-this-as-ref vars
-  use-as-ref rt_data_1
-  use-as-ref rt_data_2
-  use-as-ref rt_data_3
-}
-
-function show-path () {
-  tr ':' '\n' <<< "$PATH"
-}
-
-function show-lib-path () {
-  tr ':' '\n' <<< "$LD_LIBRARY_PATH"
-}
-
-function show-failed-tests () {
-  find -name 'test-suite.log' | xargs grep -v 'XFAIL' | grep -v ' 0' | grep 'FAIL'
-}
-
-function show-our-lines-of-code () {
-  wc -l */*.nw | sort -n
-}
-
-function show-nr-of-own-threads () {
-  ps -eLF | grep ^$USER | wc -l
-}
-
-function show-process () {
-  ps -ef | grep $1
-}
-
-function kill-all () {
-  pkill -f $1
-}
-
-function show-how-often-used-here () {
-  rgrep "$1" * | wc -l
-}
-
-function fmo () {
-  rgrep "module $1" --exclude-dir=_build -- *
-}
-
-function fsu () {
-  rgrep "subroutine $1" --exclude-dir=_build -- *
-}
-
-# Get current host related info.
-function show-host-information () {
-  echo -e "\nYou are logged on ${BRed}$HOST"
-  echo -e "\n${BRed}Additional information:$NC " ; uname -a
-  echo -e "\n${BRed}Users logged on:$NC " ; w -hs |
-           cut -d " " -f1 | sort | uniq
-  echo -e "\n${BRed}Current date :$NC " ; date
-  echo -e "\n${BRed}Machine stats :$NC " ; uptime
-  echo -e "\n${BRed}Memory stats (in MB):$NC " ; free -m
-  echo -e "\n${BRed}Diskspace :$NC " ; df -h / $HOME
-  echo -e "\n${BRed}Local IP Address :$NC" ; my-ip
-  #echo -e "\n${BRed}Open connections :$NC "; netstat -pan --inet;
-  echo
-}
-
-alias show-cpu-info='lscpu; grep -i "model name" /proc/cpuinfo | uniq'
-
-function show-disk-speed () {
-  dd if=/dev/zero of=$1/output conv=fdatasync bs=100k count=1k; rm -f $1/output
-}
-
-function show-big-files () {
-  find . -type f -size +20000k -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
-}
-
-function show-pylint-scores () {
-  for i in ./*.py; do
-  score=`pylint $i | grep "rated at" | awk '{print $7}'`
-  echo "$i : $score"
-done
-}
 #======================#
 #  surpressing output  #
 #======================#
-function ev () {
-  evince "$1" &> /dev/null &
-}
-
 function go () {
   gnome-open "$1" &> /dev/null &
-}
-
-function start () {
-  $1 &> /dev/null &
-}
-
-function apv () {
-  start "apvlv $1"
-}
-
-function mu () {
-  start "mupdf-x11 $1"
 }
 
 #===========#
 #  finding  #
 #===========#
-function ff () {
-  find -iname "$1"
-}
-
-function sff () {
-  sudo find -iname "$1"
-}
-
 function fa () {
   find -iname "*$1*"
 }
-
-function sfa () {
-  sudo find -iname "*$1*"
-}
+alias rgrep='grep -r'
+alias hgrep='history | grep '
+# Narrowing greps search realms
+if version-bigger grep 2.6.3; then
+  a='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude-dir=_build '
+  export GREP_OPTIONS="$a--exclude=*.swp --exclude=Makefile.in --exclude-dir=_install"
+fi
 
 #========#
 #  htop  #
@@ -790,7 +599,6 @@ alias AGU='agu; agg; agd'
 #===========#
 #  whizard  #
 #===========#
-alias wh='whizard test.sin'
 alias wsrc='go '$whiz_soft/dist/share/doc/whizard/whizard.pdf
 alias vsrc='go '$whiz_soft/dist/share/doc/vamp/vamp.pdf
 alias osrc='go '$whiz_soft/dist/share/doc/omega/omega.pdf
@@ -801,13 +609,16 @@ export WHIZARD_BIN=$whiz_soft/develop/bin/whizard
 function make-test () {
   make check TESTS=$1.run
 }
-function enable-debug () {
-  sed -i "s/DEBUG_$1 = \.false\./DEBUG_$1 = .true./" -- src/*/*.nw
-}
-function disable-debug () {
-  sed -i "s/DEBUG_$1 = \.true\./DEBUG_$1 = .false./" -- src/*/*.nw
-}
 alias mt=make-test
+
+function update-variable-refs () {
+  use-this-as-ref show_4
+  cp process_log_1_p1.log ../../../../share/tests/ref-output/process_log.ref
+  use-this-as-ref vars
+  use-as-ref rt_data_1
+  use-as-ref rt_data_2
+  use-as-ref rt_data_3
+}
 
 #=========#
 #  games  #
@@ -821,7 +632,6 @@ alias dk2='wine '$wingames'/DungeonKeeper2/DKII.exe'
 #  other  #
 #=========#
 alias regain_afs='kinit && aklog'
-alias py='ipython notebook --pylab inline &'
 alias le='less'
 if command-exists trash-put; then
   alias rm='trash-put -v'
@@ -834,26 +644,115 @@ fi
 alias mv='mv -v'
 alias md='mkdir'
 alias mdc='mkdircd'
-alias mti='t --format "Realtime \t%E , Mean Memory Size: \t%K , Max Memory Size: \t%M"'
 alias sd='sudo shutdown now -P'
 alias rb='sudo reboot'
-alias rs='rem-show'
-alias ca='cit ant'
 alias re='export DISPLAY=:0; cinnamon &'
-alias nhr='nohup ./run_all.sh 2>&1 &'
-alias rgrep='grep -r'
-alias hgrep='history | grep '
 alias du-dirs='du -sh -- * | sort -h'
 alias du-subdirs='du -h | sort -h'
 alias briss="java -jar $syncd/scripts/briss-0.9/briss-0.9.jar"
-alias primrun='vblank_mode=0 primusrun'
-alias todo='rgrep --binary-files=without-match -n todo: *'
 alias yt-mp3='youtube-dl -t --extract-audio --audio-format=mp3'
-# dubious
-alias ddiff='diff -x *.swp -q' #?
 alias reset-file-perms='find . -type f -exec chmod 644 {} +'
 alias reset-dir-perms='find . -type d -exec chmod 755 {} +'
 
+#==============================================================================#
+#                                SHOW-COMMANDS                                 #
+#==============================================================================#
+function show-wlan-channels () {
+  sudo iwlist wlan0 scan | grep Frequency | sort | uniq -c | sort -n
+}
+
+alias show-distro="lsb_release -a"
+
+alias show-parallel-jobs="echo $parallel_jobs"
+
+function show-diff () {
+  pwd=`pwd`
+  ref_dir=../../../../share/tests/$(basename $pwd)
+  grep 'FC_EXT_OR_SINGLE = single' Makefile
+  if test "$?" = "0" -a -f $ref_dir/ref-output-double/$1.ref; then
+    $difftool err-output/$1.out $ref_dir/ref-output-double/$1.ref
+  elif test "$?" = "1" -a -f $ref_dir/ref-output-ext/$1.ref; then
+    $difftool err-output/$1.out $ref_dir/ref-output-ext/$1.ref
+  elif test -f $ref_dir/ref-output/$1.ref; then
+    $difftool err-output/$1.out $ref_dir/ref-output/$1.ref
+  else
+    echo "File not found in normal, double or extended!"
+  fi
+}
+
+function show-this-diff () {
+  pwd=`pwd`
+  ref_dir=../../../../share/tests/$(basename $pwd)
+  grep 'FC_EXT_OR_SINGLE = single' Makefile
+  if test "$?" = "0" -a -f $ref_dir/ref-output-double/$1.ref; then
+    $difftool $1.log $ref_dir/ref-output-double/$1.ref
+  elif test "$?" = "1" -a -f $ref_dir/ref-output-ext/$1.ref; then
+    $difftool $1.log $ref_dir/ref-output-ext/$1.ref
+  elif test -f $ref_dir/ref-output/$1.ref; then
+    $difftool $1.log $ref_dir/ref-output/$1.ref
+  else
+    echo "File not found in normal, double or extended!"
+  fi
+}
+
+function show-path () {
+  tr ':' '\n' <<< "$PATH"
+}
+
+function show-lib-path () {
+  tr ':' '\n' <<< "$LD_LIBRARY_PATH"
+}
+
+function show-failed-tests () {
+  find -name 'test-suite.log' | xargs grep -v 'XFAIL' | grep -v ' 0' | grep 'FAIL'
+}
+
+function show-our-lines-of-code () {
+  wc -l */*.nw | sort -n
+}
+
+function show-nr-of-own-threads () {
+  ps -eLF | grep ^$USER | wc -l
+}
+
+function show-process () {
+  ps -ef | grep $1
+}
+
+function show-how-often-used-here () {
+  rgrep "$1" * | wc -l
+}
+
+# Get current host related info.
+function show-host-information () {
+  echo -e "\nYou are logged on ${BRed}$HOST"
+  echo -e "\n${BRed}Additional information:$NC " ; uname -a
+  echo -e "\n${BRed}Users logged on:$NC " ; w -hs |
+           cut -d " " -f1 | sort | uniq
+  echo -e "\n${BRed}Current date :$NC " ; date
+  echo -e "\n${BRed}Machine stats :$NC " ; uptime
+  echo -e "\n${BRed}Memory stats (in MB):$NC " ; free -m
+  echo -e "\n${BRed}Diskspace :$NC " ; df -h / $HOME
+  echo -e "\n${BRed}Local IP Address :$NC" ; my-ip
+  echo
+}
+
+alias show-cpu-info='lscpu; grep -i "model name" /proc/cpuinfo | uniq'
+
+function show-disk-speed () {
+  dd if=/dev/zero of=$1/output conv=fdatasync bs=100k count=1k; rm -f $1/output
+}
+
+function show-big-files () {
+  find . -type f -size +20000k -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
+}
+
+function show-pylint-scores () {
+  for i in ./*.py; do
+  score=`pylint $i | grep "rated at" | awk '{print $7}'`
+  echo "$i : $score"
+done
+}
 #==============================================================================#
 #                                     GIT                                      #
 #==============================================================================#
@@ -867,7 +766,7 @@ alias gituinu='git update-index --no-assume-unchanged'
 #==================#
 #  initialization  #
 #==================#
-# Adding everything. Useful for initialisation but not much more.
+# Adding everything. Useful for initialisation and svn updates
 function gitA () {
   git status
   echo "Are you really sure you want to commit EVERYTHING?? Have u pulled before?"
@@ -892,11 +791,6 @@ alias gitpm='git push --mirror'
 #==========#
 # Add a single file or directory
 alias gita='git add'
-
-# Add and commit a single file or directory
-function gitf () {
-  gita "$1"; git commit -m "$2"
-}
 
 # Move a file with meta information
 alias gitmv='git mv'
@@ -999,7 +893,7 @@ function bitbucket-hg {
 #==============================================================================#
 #                                     SVN                                      #
 #==============================================================================#
-if test -n "`svn-color --version 2> /dev/null`"; then
+if command-exists svn-color; then
   alias svn=svn-color
 fi
 alias svna='svn add'
@@ -1053,7 +947,9 @@ function get-branch {
 export GIT_PS1_SHOWDIRTYSTATE=yes
 
 # Set up prompt
-if [ -f ~/.git-prompt.sh ] ; then
+if [ -f ~/.shell_prompt.sh ] ; then
+  source ~/.shell_prompt.sh
+elif [ -f ~/.git-prompt.sh ] ; then
   source ~/.git-prompt.sh
   PS1='\[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]\n $ '
   export PS1="\$(get-branch "$2")${PS1}";
@@ -1062,14 +958,8 @@ else
 fi
 
 #==============================================================================#
-#                                More Settings                                 #
+#                                    COLORS                                    #
 #==============================================================================#
-# Narrowing greps search realms
-if version-bigger grep 2.6.3; then
-  a='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude-dir=_build '
-  export GREP_OPTIONS=$a'--exclude=*.swp --exclude=Makefile.in --exclude-dir=_install'
-fi
-
 # Colored man pages
 man() {
   env \
@@ -1089,187 +979,8 @@ if version-bigger dircolors 8; then
 fi
 
 #==============================================================================#
-#                       PROGRAMMABLE COMPLETION SECTION                        #
+#                                    SCREEN                                    #
 #==============================================================================#
-# Most are taken from the bash 2.05 documentation and from Ian McDonald's
-# 'Bash completion' package (http://www.caliban.org/bash/#completion)
-# You will in fact need bash more recent then 3.0 for some features.
-#
-# Note that most linux distributions now provide many completions
-# 'out of the box' - however, you might need to make your own one day.
-#==============================================================================#
-shopt -s extglob        # Necessary.
-
-complete -A hostname   rsh rcp telnet rlogin ftp ping disk
-complete -A export     printenv
-complete -A variable   export local readonly unset
-complete -A enabled    builtin
-complete -A alias      alias unalias
-complete -A function   function
-complete -A user       su mail finger
-
-complete -A helptopic  help     # Currently same as builtins.
-complete -A shopt      shopt
-complete -A stopped -P '%' bg
-complete -A job -P '%'     fg jobs disown
-
-complete -A directory  mkdir rmdir
-complete -A directory   -o default cd
-
-# Compression
-complete -f -o default -X '*.+(zip|ZIP)'  zip
-complete -f -o default -X '!*.+(zip|ZIP)' unzip
-complete -f -o default -X '*.+(z|Z)'      compress
-complete -f -o default -X '!*.+(z|Z)'     uncompress
-complete -f -o default -X '*.+(gz|GZ)'    gzip
-complete -f -o default -X '!*.+(gz|GZ)'   gunzip
-complete -f -o default -X '*.+(bz2|BZ2)'  bzip2
-complete -f -o default -X '!*.+(bz2|BZ2)' bunzip2
-complete -f -o default -X '!*.+(zip|ZIP|z|Z|gz|GZ|bz2|BZ2)' extract
-
-
-# Documents - Postscript,pdf,dvi.....
-complete -f -o default -X '!*.+(ps|PS)'  gs ghostview ps2pdf ps2ascii
-complete -f -o default -X \
-'!*.+(dvi|DVI)' dvips dvipdf xdvi dviselect dvitype
-complete -f -o default -X '!*.+(pdf|PDF)' acroread pdf2ps
-complete -f -o default -X '!*.@(@(?(e)ps|?(E)PS|pdf|PDF)?\
-(.gz|.GZ|.bz2|.BZ2|.Z))' gv ggv
-complete -f -o default -X '!*.texi*' makeinfo texi2dvi texi2html texi2pdf
-complete -f -o default -X '!*.tex' tex latex slitex
-complete -f -o default -X '!*.lyx' lyx
-complete -f -o default -X '!*.+(htm*|HTM*)' lynx html2ps
-complete -f -o default -X \
-'!*.+(doc|DOC|xls|XLS|ppt|PPT|sx?|SX?|csv|CSV|od?|OD?|ott|OTT)' soffice
-
-# Multimedia
-complete -f -o default -X \
-'!*.+(gif|GIF|jp*g|JP*G|bmp|BMP|xpm|XPM|png|PNG)' xv gimp ee gqview
-complete -f -o default -X '!*.+(mp3|MP3)' mpg123 mpg321
-complete -f -o default -X '!*.+(ogg|OGG)' ogg123
-complete -f -o default -X \
-'!*.@(mp[23]|MP[23]|ogg|OGG|wav|WAV|pls|\
-m3u|xm|mod|s[3t]m|it|mtm|ult|flac)' xmms
-complete -f -o default -X '!*.@(mp?(e)g|MP?(E)G|wma|avi|AVI|\
-asf|vob|VOB|bin|dat|vcd|ps|pes|fli|viv|rm|ram|yuv|mov|MOV|qt|\
-QT|wmv|mp3|MP3|ogg|OGG|ogm|OGM|mp4|MP4|wav|WAV|asx|ASX)' xine
-
-complete -f -o default -X '!*.pl'  perl perl5
-
-# This is a 'universal' completion function - it works when commands have
-# a so-called 'long options' mode , i.e., 'ls --all' instead of 'ls -a'
-
-# First, remove '=' from completion word separators
-# (this will allow completions like 'ls --color=auto' to work correctly).
-
-COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
-
-_get_longopts() {
-  #$1 --help | sed  -e '/--/!d' -e 's/.*--\([^[:space:].,]*\).*/--\1/'| \
-  #grep ^"$2" |sort -u ;
-    $1 --help | grep -o -e "--[^[:space:].,]*" | grep -e "$2" |sort -u
-}
-
-_longopts() {
-    local cur
-    cur=${COMP_WORDS[COMP_CWORD]}
-
-    case "${cur:-*}" in
-       -*)      ;;
-        *)      return ;;
-    esac
-
-    case "$1" in
-       \~*)     eval cmd="$1" ;;
-         *)     cmd="$1" ;;
-    esac
-    COMPREPLY=( $(_get_longopts ${1} ${cur} ) )
-}
-complete  -o default -F _longopts configure bash
-complete  -o default -F _longopts wget id info a2ps ls recode
-
-_make() {
-    local mdef makef makef_dir="." makef_inc gcmd cur prev i;
-    COMPREPLY=();
-    cur=${COMP_WORDS[COMP_CWORD]};
-    prev=${COMP_WORDS[COMP_CWORD-1]};
-    case "$prev" in
-        -*f)
-            COMPREPLY=($(compgen -f $cur ));
-            return 0
-            ;;
-    esac;
-    case "$cur" in
-        -*)
-            COMPREPLY=($(_get_longopts $1 $cur ));
-            return 0
-            ;;
-    esac;
-
-    # ... make reads
-    #          GNUmakefile,
-    #     then makefile
-    #     then Makefile ...
-    if [ -f ${makef_dir}/GNUmakefile ]; then
-        makef=${makef_dir}/GNUmakefile
-    elif [ -f ${makef_dir}/makefile ]; then
-        makef=${makef_dir}/makefile
-    elif [ -f ${makef_dir}/Makefile ]; then
-        makef=${makef_dir}/Makefile
-    else
-       makef=${makef_dir}/*.mk         # Local convention.
-    fi
-
-    #  Before we scan for targets, see if a Makefile name was
-    #+ specified with -f.
-    for (( i=0; i < ${#COMP_WORDS[@]}; i++ )); do
-        if [[ ${COMP_WORDS[i]} == -f ]]; then
-            # eval for tilde expansion
-            eval makef=${COMP_WORDS[i+1]}
-            break
-        fi
-    done
-    [ ! -f $makef ] && return 0
-
-    # Deal with included Makefiles.
-    makef_inc=$( grep -E '^-?include' $makef |
-                 sed -e "s,^.* ,"$makef_dir"/," )
-    for file in $makef_inc; do
-        [ -f $file ] && makef="$makef $file"
-    done
-
-    #  If we have a partial word to complete, restrict completions
-    #+ to matches of that word.
-    if [ -n "$cur" ]; then gcmd='grep "^$cur"' ; else gcmd=cat ; fi
-
-    COMPREPLY=( $( awk -F':' '/^[a-zA-Z0-9][^$#\/\t=]*:([^=]|$)/ \
-                               {split($1,A,/ /);for(i in A)print A[i]}' \
-                                $makef 2>/dev/null | eval $gcmd  ))
-}
-
-complete -F _make -X '+($*|*.[cho])' make gmake pmake
-
-_killall() {
-    local cur prev
-    COMPREPLY=()
-    cur=${COMP_WORDS[COMP_CWORD]}
-
-    # Get a list of processes
-    # (the first sed evaluation
-    # takes care of swapped out processes, the second
-    # takes care of getting the basename of the process).
-    COMPREPLY=( $( ps -u $USER -o comm  | \
-        sed -e '1,1d' -e 's#[]\[]##g' -e 's#^.*/##'| \
-        awk '{if ($0 ~ /^'$cur'/) print $0}' ))
-
-    return 0
-}
-
-complete -F _killall killall killps
-
-#================#
-#  screen title  #
-#================#
 if [[ "$TERM" == screen* ]]; then
   screen_set_window_title () {
   local HPWD="$PWD"
@@ -1285,6 +996,5 @@ if [[ "$TERM" == screen* ]]; then
   PROMPT_COMMAND="screen_set_window_title;
   $PROMPT_COMMAND"
 fi
-export TERM='xterm-256color'
 
-date +%S.%N
+export TERM='xterm-256color'
