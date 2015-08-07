@@ -47,7 +47,7 @@ set -o noclobber
 set -o ignoreeof
 
 # Enabling backtracing in OCaml
-export OCAMLRUNPARAM=b
+#export OCAMLRUNPARAM=b
 
 #============#
 #  hardware  #
@@ -70,7 +70,7 @@ ulimit -m unlimited              # memoryuse
 #ulimit -u unlimited              # maxproc
 
 # Number of cores for the CUBA library
-export CUBACORES=1
+#export CUBACORES=1
 
 # This is for processes spawned by CPUs within !OMP PARALLEL DO
 export KMP_STACKSIZE=500000000
@@ -87,7 +87,7 @@ if test -r /proc/cpuinfo; then
 fi
 
 # Path for FORM temp files
-export FORMTMP=/scratch/bcho/formtmp/
+export FORMTMP=/tmp
 
 #===========#
 #  folders  #
@@ -97,7 +97,6 @@ export lingames=/data/lnx_games
 export syncd=$HOME/safe
 export hive=$HOME/hive
 export install=$HOME/install
-export install2=/scratch/bcho/install
 
 whiz_dir1=/scratch/bcho/trunk/_install
 whiz_dir2=$HOME/trunk/_install
@@ -105,13 +104,15 @@ if [ -d $whiz_dir1 ]; then
   export whiz_soft=$whiz_dir1
 elif [ -d $whiz_dir2 ]; then
   export whiz_soft=$whiz_dir2
+else
+  export whiz_soft="NONE"
 fi
 trnk() { cd $whiz_soft/.. ; }
 bui() { cd $whiz_soft/../_build/develop ; }
 
 tmp1=$HOME/hep
-tmp2=/data/bcho
-tmp3=/nfs/theoc/data/bcho
+tmp2=/nfs/theoc/data/bcho
+tmp3=/data/bcho
 if [ -d $tmp1 ]; then
   export hep=$tmp1
 elif [ -d $tmp2 ]; then
@@ -153,10 +154,8 @@ fi
 
 prepend-pure-path $desy_tex
 prepend-all-paths $std_install
-prepend-all-paths $whiz_soft/develop
-
-if [ -d $install2 ]; then
-  prepend-all-paths $install2
+if test $whiz_soft != "NONE"; then
+  prepend-all-paths $whiz_soft/develop
 fi
 
 prepend-path $HOME/bcn_scripts
@@ -176,10 +175,8 @@ export CPATH=$std_install/include:$CPATH
 export CC=gcc
 
 # hep
-#if test -f $install/rivetenv.sh -a $arch = 64; then
-  #source $install/rivetenv.sh
-#fi
-source $std_install/rivetenv.sh
+# DONT USE THIS! Check what is needed and do it your self
+#source $std_install/rivetenv.sh
 prepend-all-paths $gosam_soft
 #export HEPMC_DIR=$install
 #export LHAPDF_DIR=$install
@@ -238,13 +235,13 @@ if command-exists pydflatex; then
 fi
 
 # ifort
-intel_dir=/opt/intel
-if test -f $intel_dir/bin/compilervars.sh -a $arch = 64; then
-  source $intel_dir/bin/compilervars.sh intel64
-elif test -f $intel_dir/2013/bin/compilervars.sh -a $arch = 64; then
-  source $intel_dir/2013/bin/compilervars.sh intel64
-  #source $intel_dir/2011/vtune_amplifier_xe/amplxe-vars.sh
-fi
+#intel_dir=/opt/intel
+#if test -f $intel_dir/bin/compilervars.sh -a $arch = 64; then
+  #source $intel_dir/bin/compilervars.sh intel64
+#elif test -f $intel_dir/2013/bin/compilervars.sh -a $arch = 64; then
+  #source $intel_dir/2013/bin/compilervars.sh intel64
+  ##source $intel_dir/2011/vtune_amplifier_xe/amplxe-vars.sh
+#fi
 
 # vim
 if [ -f /usr/local/bin/nvim ]; then
