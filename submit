@@ -10,10 +10,11 @@
 # On our big birds memory limits are extended to h_vmem=8G+
 
 # Max run time
-#$ -l h_rt=24:00:00
+#$ -l h_rt=02:59:00
 
 # Max available memory (default 1G)
-#$ -l h_vmem=5000M
+##$ -l h_vmem=1900M
+#$ -l h_vmem=7900M
 
 # Max available disk space (default 3G)
 #$ -l h_fsize=3000M
@@ -28,7 +29,7 @@
 #$ -S /bin/sh
 
 # Send mail after the end(e), begin(b), abort(a) or suspend(s) of the batch jobs
-#$ -m ebas
+#$ -m eas
 
 # Mail for notifications
 #$ -M bijan.chokoufe@desy.de
@@ -40,7 +41,6 @@
 #$ -j y
 
 echo "Got $NSLOTS processors."
-echo "Machines:"
-cat $PE_HOSTFILE
+echo "This is job: $JOB_ID and runs in `pwd`"
 
 make
