@@ -37,3 +37,6 @@ screen bash
 # bindings
 bindkey "^[Od" prev             # change window with ctrl-left
 bindkey "^[Oc" next             # change window with ctrl-right
+
+bind ^x
+bind ^x stuff "screen -X chdir \$PWD;screen^M"

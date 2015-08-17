@@ -72,7 +72,10 @@ def show_variable(var_name, var):
       text2 = perr(smb)
   else:
     varlist = textwrap.wrap(str(var))
-    text2 = plog(varlist[0])
+    if len(varlist) > 0:
+      text2 = plog(varlist[0])
+    else:
+      text2 = ''
   text1 = pcmd(var_name.ljust(17))
   print(text1 + '  =  ' + text2)
   if varlist:

@@ -96,11 +96,6 @@ if ol_path:
                           '--with-openloops=' + ol_path[0:-3]]
 
 # Convenience magic
-if 'ifort' in args.build:
-  args.compiler = 'ifort'
-  args.optimization = '3'
-  args.fcflags = ''
-
 if 'pgf' in args.build:
   args.compiler = 'pgf90_2015'
 
@@ -113,6 +108,7 @@ if 'omp' in args.build:
 if 'autoparallel' in args.build:
   graphite_enabled = False
   cores = 8
+  args.fcflags = ''
   args.fcflags += '-ftree-parallelize-loops=' + str(cores) + ' '
   if graphite_enabled:
     args.fcflags += '-floop-parallelize-all '
@@ -137,6 +133,11 @@ if 'extended' in args.build:
 if 'develop' in args.build:
   args.fcflags += '-fcheck=all '
   args.configureflags += ['--disable-static']
+
+if 'ifort' in args.build:
+  args.compiler = 'ifort'
+  args.optimization = '3'
+  args.fcflags = ' '
 
 if 'nagfor' in args.build:
   args.compiler = 'nagfor'

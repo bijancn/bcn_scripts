@@ -10,11 +10,12 @@
 # On our big birds memory limits are extended to h_vmem=8G+
 
 # Max run time
-#$ -l h_rt=02:59:00
+##$ -l h_rt=02:59:00
+#$ -l h_rt=23:59:00
 
 # Max available memory (default 1G)
-##$ -l h_vmem=1900M
-#$ -l h_vmem=7900M
+#$ -l h_vmem=1900M
+##$ -l h_vmem=7900M
 
 # Max available disk space (default 3G)
 #$ -l h_fsize=3000M
@@ -43,4 +44,5 @@
 echo "Got $NSLOTS processors."
 echo "This is job: $JOB_ID and runs in `pwd`"
 
-make
+#make
+whizard -r run.sin
