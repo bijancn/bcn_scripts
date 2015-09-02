@@ -30,7 +30,7 @@
 #$ -S /bin/sh
 
 # Send mail after the end(e), begin(b), abort(a) or suspend(s) of the batch jobs
-#$ -m eas
+#$ -m as
 
 # Mail for notifications
 #$ -M bijan.chokoufe@desy.de
@@ -45,4 +45,9 @@ echo "Got $NSLOTS processors."
 echo "This is job: $JOB_ID and runs in `pwd`"
 
 #make
-whizard -r run.sin
+#whizard -r run.sin
+#./instant-whizard.sh
+mkfifo fifo.hepmc
+source $HOME/.bashrc
+whizard -r *.sin &
+rivet -a DELPHI_1996_S3430090 fifo.hepmc

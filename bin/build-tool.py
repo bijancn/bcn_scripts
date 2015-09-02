@@ -149,6 +149,17 @@ if 'nagfor' in args.build:
   # -nan           Set unSAVEd local variables etc. to signalling NaN.
   args.fcflags = '-colour'
 
+if 'nagfor-jenkins' in args.build:
+  args.compiler = 'nagfor'
+  args.optimization = '0'
+  # -gline         Compile code to produce a traceback if an error occurs.
+  # -C=all         Maximum runtime checking.
+  # => doesnt work with LHAPDF6 somehow due to q2max
+  # -mtrace=all    Enable all memory allocation options.
+  # -nan           Set unSAVEd local variables etc. to signalling NaN.
+  # -maxcontin=512 Increase max number of continuation lines to 512
+  args.fcflags = '-C=all -nan -w -f2003 -gline -maxcontin=512'
+
 if 'debug' in args.build:
   args.optimization = '0'
   if args.compiler == 'nagfor':

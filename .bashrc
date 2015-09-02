@@ -83,7 +83,11 @@ export GOMP_CPU_AFFINITY="0 2 4 6 8 10 1 3 5 7 9 11"
 parallel_jobs=
 if test -r /proc/cpuinfo; then
   n=`grep -c '^processor' /proc/cpuinfo`
-  parallel_jobs="-j $n"
+  if test $n -gt 1; then
+    parallel_jobs="-j `expr \( 2 \* $n \) / 3`"
+  else
+    parallel_jobs="-j $n"
+  fi 
 fi
 
 # Path for FORM temp files
@@ -100,7 +104,7 @@ export install=$HOME/install
 
 whiz_dir1=/scratch/bcho/trunk/_install/develop
 whiz_dir2=$HOME/trunk/_install/develop
-#whiz_dir3=/nfs/theoc/data/bcho/whizard_install
+whiz_dir3=/nfs/theoc/data/bcho/whizard_install
 if [ -d $whiz_dir1 ]; then
   export whiz_soft=$whiz_dir1
 elif [ -d $whiz_dir2 ]; then
@@ -114,7 +118,7 @@ trnk() { cd $whiz_soft/../.. ; }
 bui() { cd $whiz_soft/../../_build/develop ; }
 
 tmp1=$HOME/hep
-tmp2=/nfs/theoc/data/bcho
+tmp2=/nfs/theoc/data/bcho/bird
 tmp3=/data/bcho
 if [ -d $tmp1 ]; then
   export hep=$tmp1
@@ -568,6 +572,7 @@ else
   alias mc='make check $parallel_jobs V=0'
   alias mcl='make clean $parallel_jobs V=0'
 fi
+alias wm='make $parallel_jobs && make -C src/ check $parallel_jobs'
 alias s='scons $parallel_jobs'
 alias scl='scons --clean $parallel_jobs'
 alias ac='autoreconf'
@@ -616,6 +621,7 @@ alias AGU='agu; agg; agd'
 #===========#
 #  whizard  #
 #===========#
+alias resubmit-failed-jobs='for i in `cat /data/bcho/BitPocketMaster/jobs`; do file=TuningEEqqMSTJ11eq*/Professor*/mc/*-*/compile.o$i; cd `dirname $file`; qsub -V ~/bcn_scripts/submit; cd -; done'
 alias wsrc='go '$whiz_soft/dist/share/doc/whizard/whizard.pdf
 alias vsrc='go '$whiz_soft/dist/share/doc/vamp/vamp.pdf
 alias osrc='go '$whiz_soft/dist/share/doc/omega/omega.pdf
