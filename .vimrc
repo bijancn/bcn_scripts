@@ -170,8 +170,8 @@ set cursorline          " Highlight current line
 set expandtab           " Always uses spaces instead of tab characters
 set tabstop=2           " Size of insterted spaces if tab is pressed
 set list                " Highlight tab characters in files
-" disabled highlighting of trailing spaces: trail:., eol:¬,
-set listchars=tab:▸\ ,extends:#,nbsp:.
+" eol:¬, tab:--
+set listchars=tab:▸\ ,extends:#,nbsp:.,trail:⋅
 
 " This allows backspacing over everything in insert mode. Don't insert spaces.
 set backspace=indent,eol,start

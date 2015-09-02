@@ -48,6 +48,7 @@ set! mousewheel.withnokey.sysnumlines=false
 "  qmarks  "
 "=========="
 silent qmark a http://amazon.de
+silent qmark A http://asana.com
 silent qmark b http://bitbucket.org
 silent qmark c http://google.com/calendar
 silent qmark C https://kunde.comdirect.de/lp/wt/login

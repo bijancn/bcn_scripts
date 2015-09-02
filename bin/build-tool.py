@@ -58,7 +58,8 @@ base_path = get_base_path()
 gf_warnings = '-fmax-errors=1 -Wall -Wuninitialized -Wextra -fno-whole-program '
 # gcc doesn't recognize our test function construction as use of a function
 gf_warnings += '-Wno-unused-function -Wno-unused-parameter -Wno-unused-dummy-argument '
-gf_warnings += '-fimplicit-none -pedantic -fbacktrace '
+# -fimplicit-none does not work with the PDFs
+gf_warnings += '-pedantic -fbacktrace '
 gf_debug_warnings = gf_warnings + '-fcheck=all -ggdb ' + \
     '-ffpe-trap=invalid,zero,overflow,underflow,denormal '
 if not args.compiler:

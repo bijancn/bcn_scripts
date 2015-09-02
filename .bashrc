@@ -11,6 +11,10 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+
 #==========#
 #  prelim  #
 #==========#
@@ -414,6 +418,10 @@ function shrink-pdf () {
   gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
      -dCompatibilityLevel=1.5 -dPDFSETTINGS=/ebook \
      -sOutputFile=$fbname-small.pdf $1
+}
+
+function convert-pdf-to-jpg {
+  for i in $1; do convert -quality 100 -density 300 $i ${i}_c.jpg; done
 }
 
 function bisect () {
