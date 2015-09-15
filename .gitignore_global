@@ -89,6 +89,7 @@ Makefile.in
 *.log
 *.sql
 *.sqlite
+.sconsign.dblite
 
 #=========#
 #  other  #

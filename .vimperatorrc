@@ -52,12 +52,13 @@ silent qmark A http://asana.com
 silent qmark b http://bitbucket.org
 silent qmark c http://google.com/calendar
 silent qmark C https://kunde.comdirect.de/lp/wt/login
+silent qmark d https://mail.desy.de
 silent qmark f http://facebook.com
 silent qmark F http://feedly.com
 silent qmark g https://github.com
 silent qmark j http://localhost:8080/job/whizard-trunk-dist
-silent qmark m https://maps.google.com
-silent qmark M https://mail.google.com
+silent qmark m https://mail.google.com
+silent qmark M https://maps.google.com
 silent qmark q http://quora.com
 silent qmark p http://phdcomics.com
 silent qmark s http://soundcloud.com

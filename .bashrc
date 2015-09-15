@@ -391,6 +391,10 @@ function swap() {
     mv $TMPFILE "$2"
 }
 
+function all () {
+  for i in *$2*; do $1 "$i" & done
+}
+
 function extract() {
   if [ -f $1 ] ; then
     case $1 in

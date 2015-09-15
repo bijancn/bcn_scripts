@@ -53,6 +53,9 @@ Plugin 'edkolev/promptline.vim'
 " Allows to focus completely
 Plugin 'junegunn/goyo.vim'
 
+" Dim out other paragraphs for even more focus
+Plugin 'junegunn/limelight.vim'
+
 " Fuzzy search on files, buffers and more
 Plugin 'kien/ctrlp.vim'
 
@@ -91,6 +94,9 @@ Plugin 'Valloric/YouCompleteMe'
 "==========="
 " Interesting color scheme
 Plugin 'sjl/badwolf'
+
+" Improve language style
+Plugin 'reedes/vim-wordy'
 
 " Reasonably good. Not perfect. Also doesn't change in noweb.
 Plugin 'scrooloose/nerdcommenter'
@@ -790,11 +796,26 @@ nnoremap <Leader>t :YcmCompleter GoTo<CR>
 "=============================================================================="
 "                                     GOYO                                     "
 "=============================================================================="
-let g:goyo_width=120
+let g:goyo_width=80
 let g:goyo_margin_top=3
 let g:goyo_margin_bottom=3
 let g:goyo_linenr=0
 nmap <Leader>g :Goyo<CR>
+
+"=============================================================================="
+"                                  LIMELIGHT                                   "
+"=============================================================================="
+" Automatically enable and disable Limelight with Goyo
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+" Default 0.5. 1.0 blends out to white. 0.0 blends nothing.
+let g:limelight_default_coefficient = 0.7
+
+" Number of preceding/following paragraphs to include (default: 0)
+let g:limelight_paragraph_span = 1
+
+nmap <Leader>l :Limelight!!<CR>
 
 "=============================================================================="
 "                                 VIM-ORGMODE                                  "
