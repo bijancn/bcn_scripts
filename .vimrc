@@ -142,6 +142,8 @@ Plugin 'BufOnly.vim'
 "Plugin 'Shougo/vimproc.vim'
 " Powerful file explorer that needs unite
 "Plugin 'Shougo/vimfiler.vim'
+" Less intrusive than z=
+"Plugin 'kopischke/unite-spell-suggest'
 
 " Complete C, C++ using clang
 "Plugin 'osyo-manga/vim-marching'
@@ -886,5 +888,5 @@ function! ToggleSpell(lang)
   return l:newMode
 endfunction
 
-nmap <silent> <F7> :echo ToggleSpell("en")<CR>\        " Toggle English spell.
+nmap <silent> <F7> :echo ToggleSpell("en_us")<CR>\        " Toggle English spell.
 nmap <silent> <F8> :echo ToggleSpell("de_de")<CR>\     " Toggle German spell.
