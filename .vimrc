@@ -86,8 +86,14 @@ Plugin 'tueda/form.vim'
 
 " Nice fuzzy autocompletion with supertab support
 " Ubuntu libs:  build-essential cmake python-dev
-" Build with:   cd ~/.vim/bundle/YouCompleteMe && ./install.sh
+" Build with:   cd ~/.vim/bundle/YouCompleteMe && ./install.py
 Plugin 'Valloric/YouCompleteMe'
+
+" Compute sums of columns
+Plugin 'visSum.vim'
+
+" Close all buffers but the current one
+Plugin 'BufOnly.vim'
 
 "==========="
 "  testing  "
@@ -120,11 +126,9 @@ Plugin 'vim-voom/VOoM'
 " Create tables automatically and allow spreadsheet computations
 Plugin 'dhruvasagar/vim-table-mode'
 
-" Compute sums of columns
-Plugin 'visSum.vim'
-
-" Close all buffers but the current one
-Plugin 'BufOnly.vim'
+Plugin 'rykka/trans.vim'
+" For no python support in vim
+Plugin 'mattn/webapi-vim'
 
 "Asynchronous make. Asynchronous part only works with neovim
 "Plugin 'benekastah/neomake'
@@ -161,7 +165,9 @@ syntax on                 " Switch syntax highlighting on
 " Reuse the indentation of the previous line if no filetype indent is available
 set autoindent
 set shiftwidth=2        " Size of indentation
-set textwidth=80        " Vim will break after 80 characters
+set textwidth=80        " Where to brake text to new line
+set formatoptions=qrn   " Add t to activate automatic wrapping
+set wrap
 set linebreak           " Vim will not break words. See :help breakat
 set showbreak=-->\      " Prefix soft-wrapped lines with these characters
 
@@ -172,6 +178,7 @@ else
   " Mark as Error if no consistent line is available
   autocmd BufWinEnter * let w:m2 = matchadd('ErrorMsg', '\%>81v.\+', -1)
 endif
+au BufRead,BufNewFile *.txt,*.tex,*.md set wrap linebreak nolist textwidth=80 wrapmargin=0
 set cursorline          " Highlight current line
 
 " Tabs. Note: Use :retab to clean up mixed indentation
@@ -192,7 +199,7 @@ set hlsearch              " Switch on highlighting the last used search pattern
 
 " Folds
 set foldmethod=syntax     " Fold per default according to syntax
-setlocal foldlevel=99     " Open all folds per default
+set foldlevel=99          " Open all folds per default
 set foldnestmax=3         " Create 3 levels of folds overall
 
 set wildmenu              " Mode of wildmenu is set by wildmode
@@ -210,6 +217,7 @@ set showcmd               " display incomplete commands
 set number                " Activate line numbers on the left side
 set diffopt+=iwhite       " Ignore whitespace when diffing
 
+set thesaurus=/usr/share/dict/words
 set shell=/bin/bash
 
 " Colors
@@ -218,6 +226,15 @@ colorscheme lucius
 LuciusWhite
 "LuciusDarkLowContrast
 " colorscheme bcn_light
+" == Spelling ==
+" word not recognized
+hi SpellBad                                 ctermbg=209         cterm=undercurl
+" word not capitalized
+hi SpellCap                                 ctermbg=209         cterm=undercurl
+" rare word
+hi SpellRare                                ctermbg=209         cterm=undercurl
+" wrong spelling for selected region
+hi SpellLocal                               ctermbg=209         cterm=undercurl
 
 " Mouse
 if has('mouse')         " Activate mouse
@@ -259,6 +276,10 @@ set splitright
 " adding g
 set gdefault
 
+" Lines to load syntax for
+syn sync maxlines=2000   " default 200
+syn sync minlines=500    " default 50
+
 " Performance (?)
 "syntax sync minlines=2048
 "autocmd BufEnter * :syntax sync fromstart
@@ -281,10 +302,10 @@ set pastetoggle=<F2>
 " vmap, vnoremap, vunmap          Visual and Select mode
 " <CR> sends Enter
 
-map ]p ]cdp
-map [p [cdp
-nmap \dp :%diffput<CR>
-nmap \do :%diffget<CR>
+noremap ]p ]cdp
+noremap [p [cdp
+nnoremap \dp :%diffput<CR>
+nnoremap \do :%diffget<CR>
 
 " Unfolding and folding with space
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
@@ -297,36 +318,49 @@ nnoremap <Leader>f :VimFilerExplorer <c-r>=expand("%:p:h")<cr>/
 nnoremap <Leader>o :set cursorline! cursorcolumn!<CR>
 
 " Clearing highlighted search
-nmap <silent> <leader>/ :nohlsearch<CR>
+nnoremap <silent> <leader>/ :nohlsearch<CR>
 
 " Using left and right for adjusting comments
-no <left> <<
-no <right> >>
-inoremap <Up> <NOP>
-inoremap <Down> <NOP>
-inoremap <Left> <NOP>
-inoremap <Right> <NOP>
+noremap <left> <<
+noremap <right> >>
+noremap <up> ddkP
+noremap <down> ddp
+inoremap <up> <NOP>
+inoremap <down> <NOP>
+inoremap <left> <NOP>
+inoremap <right> <NOP>
+
+" Exit
+inoremap sd <esc>
+inoremap <esc> <NOP>
+
+" Delete
+noremap <del> <NOP>
+noremap <insert> <NOP>
+
+" Centering
+noremap <space> zz
 
 " Create new tab
-map tn :tabnew <CR>
-"
+noremap tn :tabnew <CR>
+
 " Create a new empty buffer
-map bn :enew <CR>
+noremap bn :enew <CR>
 
 " Open new tab with directory of current file
-map te :tabedit <c-r>=expand("%:p:h")<cr>/
+noremap te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 " Open new buffer with directory of current file
-map be :e <c-r>=expand("%:p:h")<cr>/
+noremap be :e <c-r>=expand("%:p:h")<cr>/
 
 " Use less shift key
 let mapleader = ";"
 
 " Easy window navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
 
 " Yank from current position to end
 nnoremap Y y$
@@ -340,58 +374,58 @@ nnoremap j gj
 nnoremap k gk
 
 " Go to the next buffer
-map K :bnext<CR>
+noremap K :bnext<CR>
 
 " Go to the last buffer
-map J :bprevious<CR>
+noremap J :bprevious<CR>
 
 " Close the current buffer and move to the previous one
-nmap bq :bp <BAR> bd #<CR>
-nmap bc :bp <BAR> bd #<CR>
+nnoremap bq :bp <BAR> bd #<CR>
+nnoremap bc :bp <BAR> bd #<CR>
 
-nmap bo :BufOnly<CR>
+nnoremap bo :BufOnly<CR>
 
 " Show all open buffers and their status
-nmap bl :ls<CR>
+nnoremap bl :ls<CR>
 
 " Join lines and stay at the same position
-map <Leader>j mz:join<CR>`z
+noremap <Leader>j mz:join<CR>`z
 
 " Change working directory to current file
-map <Leader>cd :cd %:p:h<CR>:pwd<CR>
+noremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
 
 " Move working directory one level higher
-map <Leader>.. :cd ..<CR>:pwd<CR>
+noremap <Leader>.. :cd ..<CR>:pwd<CR>
 
 " Update biber file
-nmap <Leader>bi :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
+nnoremap <Leader>bi :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
 
 " Linediff two ranges
 vmap <Leader>l :Linediff<CR>
 
 " Printing
-map <Leader>p :hardcopy <CR>
+noremap <Leader>p :hardcopy <CR>
 
 " Put in yanked and keep it yanked
 xnoremap P pgvy
 
 " Allow full screen in GVIM
-map <silent> <F11>
+noremap <silent> <F11>
 \    :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
 
 " Don't use Ex-mode, use Q for formatting the current line (or selection)
-map Q gq
+noremap Q gq
 
 "=============="
 "  deprecated  "
 "=============="
 " key-mappings for comment line in normal mode
-"nmap <C-C> :call CommentLine()<CR>
+"nnoremap <C-C> :call CommentLine()<CR>
 " key-mappings for range comment lines in visual <Shift-V> mode
 "vnoremap <C-C> :call RangeCommentLine()<CR>
 
 " key-mappings for un-comment line in normal mode
-"nmap <silent> <C-X> :call UnCommentLine()<CR>
+"nnoremap <silent> <C-X> :call UnCommentLine()<CR>
 " key-mappings for range un-comment lines in visual <Shift-V> mode
 "vnoremap <silent> <C-X> :call RangeUnCommentLine()<CR>
 
@@ -425,7 +459,7 @@ set scrolloff=2
 
 " Show to which higroup a certain word belongs to. Indispensable for creating
 " color schemes and syntax files
-map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
+noremap <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
 
 " Save with su rights without having started with them
 if !exists('W_defined')
@@ -442,10 +476,10 @@ noremap <Leader>st :%s/\s\+$/<CR>
 noremap <Leader>rm :%s/\r//g<CR>
 
 " Reload .vimrc
-"nmap <silent> <Leader>so :so ~/.vimrc<CR>
+nnoremap <silent> <Leader>so :source $MYVIMRC<CR>
 
 " Edit vimrc
-nnoremap <silent> <Leader>rc :e ~/.vimrc<CR>
+nnoremap <silent> <Leader>rc :e $MYVIMRC<CR>
 
 " Sort words in visual
 vnoremap <Leader>o d:execute 'normal a' . join(sort(split(getreg('"'))), ' ')<CR>
@@ -483,7 +517,7 @@ function! OpenPDF()
   let file_stripped = expand("%:r")
   echo system('gnome-open '.file_stripped.'.pdf')
 endfunction
-map <Leader>v :call OpenPDF()<CR>
+noremap <Leader>v :call OpenPDF()<CR>
 
 "=============================================================================="
 "                                   AUTOCMD                                    "
@@ -802,7 +836,7 @@ let g:goyo_width=80
 let g:goyo_margin_top=3
 let g:goyo_margin_bottom=3
 let g:goyo_linenr=0
-nmap <Leader>g :Goyo<CR>
+nnoremap <Leader>g :Goyo<CR>
 
 "=============================================================================="
 "                                  LIMELIGHT                                   "
@@ -815,9 +849,9 @@ autocmd! User GoyoLeave Limelight!
 let g:limelight_default_coefficient = 0.7
 
 " Number of preceding/following paragraphs to include (default: 0)
-let g:limelight_paragraph_span = 1
+let g:limelight_paragraph_span = 0
 
-nmap <Leader>l :Limelight!!<CR>
+nnoremap <Leader>l :Limelight!!<CR>
 
 "=============================================================================="
 "                                 VIM-ORGMODE                                  "
@@ -836,7 +870,7 @@ let g:org_todo_keywords=['TODO', 'GETFEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATE
 "                                   RAINBOW                                    "
 "=============================================================================="
 let g:rainbow_active = 0
-map <Leader>rt :RainbowToggle<CR>
+noremap <Leader>rt :RainbowToggle<CR>
 let g:rainbow_conf = {
     \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
     \   'ctermfgs': ['black', '21', 'darkmagenta', '160', '172'],
@@ -888,5 +922,51 @@ function! ToggleSpell(lang)
   return l:newMode
 endfunction
 
-nmap <silent> <F7> :echo ToggleSpell("en_us")<CR>\        " Toggle English spell.
-nmap <silent> <F8> :echo ToggleSpell("de_de")<CR>\     " Toggle German spell.
+nnoremap <silent> <F7> :echo ToggleSpell("en_us")<CR>\        " Toggle English spell.
+nnoremap <silent> <F8> :echo ToggleSpell("de_de")<CR>\     " Toggle German spell.
+nnoremap <C-S> i<C-X>s
+nnoremap <C-T> i<C-X><C-T>
+
+"=============================================================================="
+"                                    WORDY                                     "
+"=============================================================================="
+let g:wordy#ring = [
+  \ 'weak',
+  \ ['being', 'passive-voice', ],
+  \ 'business-jargon',
+  \ 'weasel',
+  \ 'puffery',
+  \ ['problematic', 'redundant', ],
+  \ ['colloquial', 'idiomatic', 'similies', ],
+  \ 'art-jargon',
+  \ ['contractions', 'opinion', 'vague-time', 'said-synonyms', ],
+  \ ]
+
+nnoremap <silent> <leader>w :NextWordy<cr>
+
+"=============================================================================="
+"                                    TRANS                                     "
+"=============================================================================="
+let g:trans_default_api='google'
+let g:trans_default_lang='en_US'
+
+" init default apis
+call trans#data#init()
+
+fun! API_PARSER_FUNC(content)
+    return a:content
+endfun
+
+let g:trans_api.YOUR_API = {
+    \'type': 'get',
+    \'url': 'http://www.dict.cc/?s=',
+    \'params' : {
+            \"client" : 'firefox-a',
+            \"ie" : 'UTF-8',
+            \"oe" : 'UTF-8',
+            \},
+    \'query_str': 'text=%TEXT',
+    \'parser': 'API_PARSER_FUNC'
+    \}
+    "\'query_str': 'langpair=%FROM%7C%TO&text=%TEXT',
+    "\'query_str': 'text=%TEXT&from=%FROM&to=%TO',

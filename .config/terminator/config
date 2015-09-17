@@ -53,6 +53,7 @@
     cursor_blink = False
     scrollback_infinite = True
   [[black]]
+    scrollbar_position = hidden
     background_image = None
     background_color = "#ffffff"
     active_encodings = ANSI_X3.4-1968, UTF-8, ISO-8859-1
