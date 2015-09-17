@@ -108,7 +108,7 @@ export install=$HOME/install
 
 whiz_dir1=/scratch/bcho/trunk/_install/develop
 whiz_dir2=$HOME/trunk/_install/develop
-whiz_dir3=/nfs/theoc/data/bcho/whizard_install
+whiz_dir3=
 if [ -d $whiz_dir1 ]; then
   export whiz_soft=$whiz_dir1
 elif [ -d $whiz_dir2 ]; then
@@ -153,7 +153,7 @@ prepend-all-paths () {
   prepend-libpath $1
 }
 add-pythonpath () {
-  export PYTHONPATH=$PYTHONPATH:$HOME/$1
+  export PYTHONPATH=$PYTHONPATH:$1
 }
 
 if test $arch = 64; then
@@ -174,11 +174,12 @@ prepend-path $HOME/bcn_scripts
 prepend-pure-path $HOME/jrfonseca.gprof2dot
 
 # python
-add-pythonpath bcn_scripts/include
-add-pythonpath Python-GoogleCalendarParser
-add-pythonpath eZchat
-add-pythonpath termstyle
-add-pythonpath pydflatex
+add-pythonpath $HOME/bcn_scripts/include
+add-pythonpath $HOME/Python-GoogleCalendarParser
+add-pythonpath $HOME/eZchat
+add-pythonpath $HOME/termstyle
+add-pythonpath $HOME/pydflatex
+add-pythonpath $std_install/lib/python
 export C_INCLUDE_PATH=$install/include
 export CPLUS_INCLUDE_PATH=$install/include
 export PYTHONUSERBASE=$HOME/install
@@ -591,6 +592,11 @@ alias ac='autoreconf'
 alias bp='bitpocket'
 
 #===========#
+#  cluster  #
+#===========#
+alias qst='cit qstat'
+
+#===========#
 #  configs  #
 #===========#
 alias so='source ~/.bashrc'
@@ -645,6 +651,13 @@ function make-test () {
   make check TESTS=$1.run
 }
 alias mt=make-test
+function get-RES () {
+  grep RES $1-*/whizard.log | sed 's/^.*RES //'
+}
+function save-RES () {
+  file=/data/bcho/whizard_ttbar_threshold_project/Data/validation/$(basename $1)$2.dat
+  get-RES $1 > $file && echo "Saved to $file"
+}
 
 function diff-processlog {
   vimdiff process_log_1_p1.log ../../../../share/tests/functional_tests/ref-output/process_log.ref
@@ -692,8 +705,6 @@ alias briss="java -jar $syncd/scripts/briss-0.9/briss-0.9.jar"
 alias yt-mp3='youtube-dl -t --extract-audio --audio-format=mp3'
 alias reset-file-perms='find . -type f -exec chmod 644 {} +'
 alias reset-dir-perms='find . -type d -exec chmod 755 {} +'
-
-alias save-RES="grep RES whizard.log | sed 's/RES //' > /data/bcho/whizard_ttbar_threshold_project/Data/validation/$(basename `pwd`).dat"
 
 #==============================================================================#
 #                                SHOW-COMMANDS                                 #
