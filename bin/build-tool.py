@@ -129,7 +129,7 @@ if 'dist' in args.build:
   args.configureflags += ['--enable-distribution']
 
 if 'extended' in args.build:
-  args.configureflags += ['--enable-fc-extended']
+  args.configureflags += ['--enable-fc-extended', '--with-precision=extended']
 
 if 'develop' in args.build:
   args.fcflags += '-fcheck=all '
