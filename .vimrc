@@ -329,6 +329,10 @@ inoremap <up> <NOP>
 inoremap <down> <NOP>
 inoremap <left> <NOP>
 inoremap <right> <NOP>
+noremap hhh <NOP>
+noremap jjj <NOP>
+noremap kkk <NOP>
+noremap lll <NOP>
 
 " Exit
 inoremap sd <esc>
