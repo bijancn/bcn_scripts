@@ -2,7 +2,7 @@
 "
 " bcn .vimrc - vim configuration file. Maintained since 2011.
 "
-" Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+" Copyright (C) 2015         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
 " Recent versions:  https://github.com/bijancn/bcn_scripts
 "
 " This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
@@ -11,148 +11,148 @@
 "
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-"=============================================================================="
-"                                    VUNDLE                                    "
-"=============================================================================="
 " Use Vim settings, rather than Vi settings.
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
-" Vundle can be invoked by :PluginInstall. Updates with :PluginUpdate!
-" Quickstart:
-" git clone https://github.com/gmarik/Vundle.vim.git  ~/.vim/bundle/Vundle.vim
-
-filetype off                   " required for Vundle!
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/vundle'
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+endif
+let g:plug_threads=8
+let g:plug_timeout=100
+call plug#begin()
 
 "=========="
 "  stable  "
 "=========="
 " Diffing parts of one or two files
-Plugin 'AndrewRadev/linediff.vim'
+Plug 'AndrewRadev/linediff.vim'
 
 " A very decent color scheme. Forked for minor color changes.
-Plugin 'bijancn/vim-lucius'
+Plug 'bijancn/vim-lucius'
 
 " Faster syntax and indent for free-form Fortran
-Plugin 'bijancn/free-fortran.vim'
+Plug 'bijancn/free-fortran.vim'
 
 " Syntax file for sindarin
-Plugin 'bijancn/whizard.vim'
+Plug 'bijancn/whizard.vim'
 
 " Pure epicness, the one and only statusbar
-Plugin 'bling/vim-airline'
+Plug 'bling/vim-airline'
 
 " Generate a fast shell prompt with powerline symbols and airline colors
 " in vim:     :PromptlineSnapshot ~/.shell_prompt.sh airline
 " in bashrc:  source ~/.shell_prompt.sh
-Plugin 'edkolev/promptline.vim'
+Plug 'edkolev/promptline.vim'
 
 " Allows to focus completely
-Plugin 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim'
 
 " Dim out other paragraphs for even more focus
-Plugin 'junegunn/limelight.vim'
+Plug 'junegunn/limelight.vim'
 
 " Fuzzy search on files, buffers and more
-Plugin 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPMixed'] }
 
 " Rainbow parentheses
-Bundle 'luochen1990/rainbow'
+Plug 'luochen1990/rainbow'
 
 " Show errors and warnings of compilers and checkers
-Plugin 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic', { 'on' : [] }
 
 " The ultimate snippet solution
-Plugin 'SirVer/ultisnips'
-
-" Allow to run stuff asynchronously with normal vim
-Plugin 'tpope/vim-dispatch.git'
-
-" Git wrapper
-Plugin 'tpope/vim-fugitive'
-
-" Allow to increment/decremt dates, roman numerals, ordinals, letters
-Plugin 'tpope/vim-speeddating'
-
-" Add the surround physics. Repeat allows to repeat those
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-
-" Syntax file for form
-Plugin 'tueda/form.vim'
+Plug 'SirVer/ultisnips', { 'on' : [] }
 
 " Nice fuzzy autocompletion with supertab support
 " Ubuntu libs:  build-essential cmake python-dev
 " Build with:   cd ~/.vim/bundle/YouCompleteMe && ./install.py
-Plugin 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'on' : [] } " , { 'do': 'export YCM_CORES=4 ; ./install.py' }
+
+" Allow to run stuff asynchronously with normal vim
+Plug 'tpope/vim-dispatch'
+
+" Git wrapper
+Plug 'tpope/vim-fugitive'
+
+" Allow to increment/decremt dates, roman numerals, ordinals, letters
+Plug 'tpope/vim-speeddating'
+
+" Add the surround physics. Repeat allows to repeat those
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+
+" Syntax file for form
+Plug 'tueda/form.vim'
 
 " Compute sums of columns
-Plugin 'visSum.vim'
+Plug 'visSum.vim', {'on': ['VisSum', '<Plug>SumNum']}
 
 " Close all buffers but the current one
-Plugin 'BufOnly.vim'
+Plug 'BufOnly.vim'
 
 "==========="
 "  testing  "
 "==========="
 " Interesting color scheme
-Plugin 'sjl/badwolf'
+Plug 'sjl/badwolf'
 
 " Improve language style
-Plugin 'reedes/vim-wordy'
+Plug 'reedes/vim-wordy'
 
 " Reasonably good. Not perfect. Also doesn't change in noweb.
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 
 " Does not change in noweb chunks, might be fixable
-"Plugin 'comments.vim'
+"Plug 'comments.vim'
 
 " Good support for Markdown
-Plugin 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc'
 
 " Work together - apart. Only works with neovim
-Plugin 'floobits/floobits-neovim'
+Plug 'floobits/floobits-neovim'
 
 " Add support for emacs org-mode
-Plugin 'jceb/vim-orgmode'
+Plug 'jceb/vim-orgmode'
 
 " Show an outline / table of content of org or tex file and move things around
 " Seems to conflict with vim-orgmodes <CR> and <TAB> behavior
-Plugin 'vim-voom/VOoM'
+Plug 'vim-voom/VOoM'
 
 " Create tables automatically and allow spreadsheet computations
-Plugin 'dhruvasagar/vim-table-mode'
+Plug 'dhruvasagar/vim-table-mode'
 
-Plugin 'rykka/trans.vim'
+Plug 'rykka/trans.vim'
 " For no python support in vim
-Plugin 'mattn/webapi-vim'
+Plug 'mattn/webapi-vim'
+
+Plug 'terryma/vim-multiple-cursors'
+
+Plug 'easymotion/vim-easymotion'
 
 "Asynchronous make. Asynchronous part only works with neovim
-"Plugin 'benekastah/neomake'
-
-" Does not work with neovim. deoplete will and will use asynchronous completion
-"Plugin 'Shougo/neocomplete.vim'
+"Plug 'benekastah/neomake'
 
 " 'awesome Python autocompletion library' - works with neocomplete
 " This is mostly part of YCM
-"Plugin 'davidhalter/jedi-vim'
+"Plug 'davidhalter/jedi-vim'
 
+"           <<< shougo's eco system >>>
 " Nice fuzzy search on files, buffers and more
-"Plugin 'Shougo/unite.vim'
+"Plug 'Shougo/unite.vim'
+" Does not work with neovim. deoplete will and will use asynchronous completion
+"Plug 'Shougo/neocomplete.vim'
 " Can be used by unite for more efficient search. Has to be build with `make`
-"Plugin 'Shougo/vimproc.vim'
+"Plug 'Shougo/vimproc.vim'
 " Powerful file explorer that needs unite
-"Plugin 'Shougo/vimfiler.vim'
+"Plug 'Shougo/vimfiler.vim'
 " Less intrusive than z=
-"Plugin 'kopischke/unite-spell-suggest'
-
+"Plug 'kopischke/unite-spell-suggest'
 " Complete C, C++ using clang
-"Plugin 'osyo-manga/vim-marching'
+"Plug 'osyo-manga/vim-marching'
 
-call vundle#end()
+call plug#end()
 
 "=============================================================================="
 "                                   SETTINGS                                   "
@@ -219,6 +219,10 @@ set diffopt+=iwhite       " Ignore whitespace when diffing
 
 set thesaurus=/usr/share/dict/words
 set shell=/bin/bash
+
+" Hybrid relative absolute number mode
+set relativenumber
+set number
 
 " Colors
 set background=light
@@ -302,6 +306,9 @@ set pastetoggle=<F2>
 " vmap, vnoremap, vunmap          Visual and Select mode
 " <CR> sends Enter
 
+" Use less shift key
+let mapleader = ";"
+
 noremap ]p ]cdp
 noremap [p [cdp
 nnoremap \dp :%diffput<CR>
@@ -311,8 +318,6 @@ nnoremap \do :%diffget<CR>
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 nnoremap <silent> <C-Space> @=(foldlevel('.')?'zA':"\<Space>")<CR>
 vnoremap <Space> zf
-
-nnoremap <Leader>f :VimFilerExplorer <c-r>=expand("%:p:h")<cr>/
 
 " Toggle between highlighting line or column
 nnoremap <Leader>o :set cursorline! cursorcolumn!<CR>
@@ -329,10 +334,10 @@ inoremap <up> <NOP>
 inoremap <down> <NOP>
 inoremap <left> <NOP>
 inoremap <right> <NOP>
-noremap hhh <NOP>
-noremap jjj <NOP>
-noremap kkk <NOP>
-noremap lll <NOP>
+"noremap hh <NOP>
+"noremap jj <NOP>
+"noremap kk <NOP>
+"noremap ll <NOP>
 
 " Exit
 inoremap sd <esc>
@@ -346,19 +351,25 @@ noremap <insert> <NOP>
 noremap <space> zz
 
 " Create new tab
-noremap tn :tabnew <CR>
+noremap <leader>tn :tabnew <CR>
 
 " Create a new empty buffer
-noremap bn :enew <CR>
+noremap <leader>bn :enew <CR>
 
 " Open new tab with directory of current file
-noremap te :tabedit <c-r>=expand("%:p:h")<cr>/
+noremap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 " Open new buffer with directory of current file
-noremap be :e <c-r>=expand("%:p:h")<cr>/
+noremap <leader>be :e <c-r>=expand("%:p:h")<cr>/
 
-" Use less shift key
-let mapleader = ";"
+" Close the current buffer and move to the previous one
+nnoremap <leader>bq :bp <BAR> bd #<CR>
+nnoremap <leader>bc :bp <BAR> bd #<CR>
+
+nnoremap <leader>bo :BufOnly<CR>
+
+" Show all open buffers and their status
+nnoremap <leader>bl :ls<CR>
 
 " Easy window navigation
 noremap <C-h> <C-w>h
@@ -370,7 +381,7 @@ noremap <C-l> <C-w>l
 nnoremap Y y$
 
 " Center to new location after movement
-nnoremap n nzz
+"nnoremap n nzz
 nnoremap } }zz
 
 " Don't skip rows when long lines are wrapped
@@ -382,15 +393,6 @@ noremap K :bnext<CR>
 
 " Go to the last buffer
 noremap J :bprevious<CR>
-
-" Close the current buffer and move to the previous one
-nnoremap bq :bp <BAR> bd #<CR>
-nnoremap bc :bp <BAR> bd #<CR>
-
-nnoremap bo :BufOnly<CR>
-
-" Show all open buffers and their status
-nnoremap bl :ls<CR>
 
 " Join lines and stay at the same position
 noremap <Leader>j mz:join<CR>`z
@@ -456,6 +458,7 @@ iabbrev generalisation generalization
 " Set the number of lines you want to stay off of bottom and top. This induces
 " vim to scroll automatically when the cursor comes close.
 set scrolloff=2
+set scroll=10  " number of lines for <C-D> and <C-U>
 
 "=============================================================================="
 "                               Functionalities                                "
@@ -687,12 +690,8 @@ let g:airline#extensions#whitespace#enabled = 1
 " Set no max file limit
 let g:ctrlp_max_files = 0
 
-" Mapping
-let g:ctrlp_map = '<c-p>'
-
 " CtrlP : only files, CtrlPBuffer : only buffer, CtrlPMRU : only recent files
-" CtrlPMixed : all
-let g:ctrlp_cmd = 'CtrlPMixed'
+nnoremap <C-P> :CtrlPMixed<CR>
 
 if exists("g:ctrl_user_command")
   unlet g:ctrlp_user_command
@@ -812,6 +811,8 @@ endfunction
 "      \ 'safe' : 0,
 "      \ })
 
+"nnoremap <Leader>f :VimFilerExplorer <c-r>=expand("%:p:h")<cr>/
+
 "=============================================================================="
 "                                   ULTISNIP                                   "
 "=============================================================================="
@@ -832,6 +833,12 @@ let g:ycm_disable_for_files_larger_than_kb = 2000
 let g:ycm_use_ultisnips_completer = 1
 
 nnoremap <Leader>t :YcmCompleter GoTo<CR>
+
+augroup load_us_ycm
+  autocmd!
+  autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe', 'syntastic')
+        \| call youcompleteme#Enable() | autocmd! load_us_ycm
+augroup END
 
 "=============================================================================="
 "                                     GOYO                                     "
@@ -974,3 +981,94 @@ let g:trans_api.YOUR_API = {
     \}
     "\'query_str': 'langpair=%FROM%7C%TO&text=%TEXT',
     "\'query_str': 'text=%TEXT&from=%FROM&to=%TO',
+
+"=============================================================================="
+"                            DISABLE HJKL MOVEMENTS                            "
+"=============================================================================="
+" https://gist.github.com/jeetsukumaran/96474ebbd00b874f0865
+function! DisableIfNonCounted(move) range
+    if v:count
+        return a:move
+    else
+        " You can make this do something annoying like:
+           " echoerr "Count required!"
+           " sleep 2
+        return ""
+    endif
+endfunction
+
+function! SetDisablingOfBasicMotionsIfNonCounted(on)
+    let keys_to_disable = get(g:, "keys_to_disable_if_not_preceded_by_count", ["j", "k", "l", "h"])
+    if a:on
+        for key in keys_to_disable
+            execute "noremap <expr> <silent> " . key . " DisableIfNonCounted('" . key . "')"
+        endfor
+        let g:keys_to_disable_if_not_preceded_by_count = keys_to_disable
+        let g:is_non_counted_basic_motions_disabled = 1
+    else
+        for key in keys_to_disable
+            try
+                execute "unmap " . key
+            catch /E31:/
+            endtry
+        endfor
+        let g:is_non_counted_basic_motions_disabled = 0
+    endif
+endfunction
+
+function! ToggleDisablingOfBasicMotionsIfNonCounted()
+    let is_disabled = get(g:, "is_non_counted_basic_motions_disabled", 0)
+    if is_disabled
+        call SetDisablingOfBasicMotionsIfNonCounted(0)
+    else
+        call SetDisablingOfBasicMotionsIfNonCounted(1)
+    endif
+endfunction
+
+"command! ToggleDisablingOfNonCountedBasicMotions :call ToggleDisablingOfBasicMotionsIfNonCounted()
+"command! DisableNonCountedBasicMotions :call SetDisablingOfBasicMotionsIfNonCounted(1)
+"command! EnableNonCountedBasicMotions :call SetDisablingOfBasicMotionsIfNonCounted(0)
+
+"DisableNonCountedBasicMotions
+
+"=============================================================================="
+"                                  EASYMOTION                                  "
+"=============================================================================="
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" Use uppercase target labels and type as a lower case
+let g:EasyMotion_use_upper = 1
+
+" Highlight incrementally
+let g:EasyMotion_inc_highlight = 1
+
+" Bi-directional find motion
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+"nmap s <Plug>(easymotion-s)
+" or need one more keystroke, but on average, it may be more comfortable.
+map s <Plug>(easymotion-s2)
+
+" JK motions: Line motions
+"map <leader>l <Plug>(easymotion-lineforward)
+"map <leader>j <Plug>(easymotion-j)
+"map <leader>k <Plug>(easymotion-k)
+"map <leader>h <Plug>(easymotion-linebackward)
+
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+
+" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
+" Without these mappings, `n` & `N` works fine. (These mappings just provide
+" different highlight method and have some other features )
+"map  n <Plug>(easymotion-next)
+"map  N <Plug>(easymotion-prev)
+hi EasyMotionTarget ctermbg=none ctermfg=red cterm=Bold
+hi EasyMotionShade  ctermbg=none ctermfg=darkgrey
+
+hi EasyMotionTarget2First ctermbg=none ctermfg=red
+hi EasyMotionTarget2Second ctermbg=none ctermfg=lightred
+
+hi EasyMotionMoveHL ctermbg=none ctermfg=red cterm=Bold
