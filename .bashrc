@@ -659,19 +659,6 @@ function save-RES () {
   get-RES $1 > $file && echo "Saved to $file"
 }
 
-function diff-processlog {
-  vimdiff process_log_1_p1.log ../../../../share/tests/functional_tests/ref-output/process_log.ref
-}
-
-function update-variable-refs () {
-  use-this-as-ref show_4
-  diff-processlog
-  use-this-as-ref vars
-  use-as-ref rt_data_1
-  use-as-ref rt_data_2
-  use-as-ref rt_data_3
-}
-
 #=========#
 #  games  #
 #=========#
@@ -717,35 +704,58 @@ alias show-distro="lsb_release -a"
 
 alias show-parallel-jobs="echo $parallel_jobs"
 
-function show-diff () {
+function find-ref-dir () {
   pwd=`pwd`
   ref_dir=../../../../share/tests/$(basename $pwd)
   grep 'FC_EXT_OR_SINGLE = single' Makefile
   if test "$?" = "0" -a -f $ref_dir/ref-output-double/$1.ref; then
-    $difftool err-output/$1.out $ref_dir/ref-output-double/$1.ref
+    echo "$ref_dir/ref-output-double"
   elif test "$?" = "1" -a -f $ref_dir/ref-output-ext/$1.ref; then
-    $difftool err-output/$1.out $ref_dir/ref-output-ext/$1.ref
+    echo "$ref_dir/ref-output-ext"
   elif test -f $ref_dir/ref-output/$1.ref; then
-    $difftool err-output/$1.out $ref_dir/ref-output/$1.ref
+    echo "$ref_dir/ref-output"
   else
     echo "File not found in normal, double or extended!"
+    echo "ref dir $ref_dir"
   fi
 }
 
 function show-this-diff () {
-  pwd=`pwd`
-  ref_dir=../../../../share/tests/$(basename $pwd)
-  grep 'FC_EXT_OR_SINGLE = single' Makefile
-  if test "$?" = "0" -a -f $ref_dir/ref-output-double/$1.ref; then
-    $difftool $1.log $ref_dir/ref-output-double/$1.ref
-  elif test "$?" = "1" -a -f $ref_dir/ref-output-ext/$1.ref; then
-    $difftool $1.log $ref_dir/ref-output-ext/$1.ref
-  elif test -f $ref_dir/ref-output/$1.ref; then
-    $difftool $1.log $ref_dir/ref-output/$1.ref
-  else
-    echo "File not found in normal, double or extended!"
-  fi
+  $difftool $1.log `find-ref-dir $1`/$1.ref
 }
+
+function use-this-as-ref () {
+  cp $1.log `find-ref-dir $1`/$1.ref
+}
+
+function show-diff () {
+  $difftool err-output/$1.out `find-ref-dir $1`/$1.ref
+}
+
+function use-as-ref () {
+  cp err-output/$1.out `find-ref-dir $1`/$1.ref
+}
+
+function show-diff-processlog {
+  vimdiff process_log_1_p1.log ../../../../share/tests/functional_tests/ref-output/process_log.ref
+}
+
+function use-as-ref-processlog {
+  cp process_log_1_p1.log ../../../../share/tests/functional_tests/ref-output/process_log.ref
+}
+
+function update-variable-refs () {
+  cd tests/unit_tests
+  use-as-ref rt_data_1
+  use-as-ref rt_data_2
+  use-as-ref rt_data_3
+  cd ../functional_tests
+  use-this-as-ref show_4
+  use-as-ref-processlog
+  use-this-as-ref vars
+  cd ../..
+}
+
 
 function show-path () {
   tr ':' '\n' <<< "$PATH"
