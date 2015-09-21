@@ -20,8 +20,10 @@ if empty(glob('~/.vim/autoload/plug.vim'))
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall
 endif
+
 let g:plug_threads=8
 let g:plug_timeout=100
+
 call plug#begin()
 
 "=========="
@@ -90,7 +92,7 @@ Plug 'tueda/form.vim'
 Plug 'visSum.vim', {'on': ['VisSum', '<Plug>SumNum']}
 
 " Close all buffers but the current one
-Plug 'BufOnly.vim'
+Plug 'BufOnly.vim', {'on': 'BufOnly'}
 
 "==========="
 "  testing  "
@@ -101,11 +103,11 @@ Plug 'sjl/badwolf'
 " Improve language style
 Plug 'reedes/vim-wordy'
 
+" Add the s motion
+Plug 'justinmk/vim-sneak'
+
 " Reasonably good. Not perfect. Also doesn't change in noweb.
 Plug 'scrooloose/nerdcommenter'
-
-" Does not change in noweb chunks, might be fixable
-"Plug 'comments.vim'
 
 " Good support for Markdown
 Plug 'vim-pandoc/vim-pandoc'
@@ -118,20 +120,29 @@ Plug 'jceb/vim-orgmode'
 
 " Show an outline / table of content of org or tex file and move things around
 " Seems to conflict with vim-orgmodes <CR> and <TAB> behavior
-Plug 'vim-voom/VOoM'
+Plug 'vim-voom/VOoM', {'on': ['Voom', 'VoomToggle']}
 
 " Create tables automatically and allow spreadsheet computations
 Plug 'dhruvasagar/vim-table-mode'
 
+" Translation plugin. Need to add dict.cc API
 Plug 'rykka/trans.vim'
 " For no python support in vim
 Plug 'mattn/webapi-vim'
 
+" Edit multiple locations at once
 Plug 'terryma/vim-multiple-cursors'
 
+" eZchatting while vimming
 Plug 'JNicL/vim-eZchat'
 
-Plug 'easymotion/vim-easymotion'
+call plug#end()
+
+" Does not change in noweb chunks, might be fixable
+"Plug 'comments.vim'
+
+" A bit too slow
+"Plug 'easymotion/vim-easymotion'
 
 "Asynchronous make. Asynchronous part only works with neovim
 "Plug 'benekastah/neomake'
@@ -153,8 +164,6 @@ Plug 'easymotion/vim-easymotion'
 "Plug 'kopischke/unite-spell-suggest'
 " Complete C, C++ using clang
 "Plug 'osyo-manga/vim-marching'
-
-call plug#end()
 
 "=============================================================================="
 "                                   SETTINGS                                   "
@@ -1060,41 +1069,51 @@ endfunction
 "=============================================================================="
 "                                  EASYMOTION                                  "
 "=============================================================================="
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
+function! PluginSettings()
+  if exists(':EasyMotion')
+    let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
-" Turn on case insensitive feature
-let g:EasyMotion_smartcase = 1
+    " Turn on case insensitive feature
+    let g:EasyMotion_smartcase = 1
 
-" Use uppercase target labels and type as a lower case
-let g:EasyMotion_use_upper = 1
+    " Use uppercase target labels and type as a lower case
+    let g:EasyMotion_use_upper = 1
 
-" Highlight incrementally
-let g:EasyMotion_inc_highlight = 1
+    " Highlight incrementally
+    let g:EasyMotion_inc_highlight = 1
 
-" Bi-directional find motion
-" Jump to anywhere you want with minimal keystrokes, with just one key binding.
-"nmap s <Plug>(easymotion-s)
-" or need one more keystroke, but on average, it may be more comfortable.
-map s <Plug>(easymotion-s2)
+    " Bi-directional find motion
+    " Jump to anywhere you want with minimal keystrokes, with just one key binding.
+    "nmap s <Plug>(easymotion-s)
+    " or need one more keystroke, but on average, it may be more comfortable.
+    map s <Plug>(easymotion-s2)
 
-" JK motions: Line motions
-"map <leader>l <Plug>(easymotion-lineforward)
-"map <leader>j <Plug>(easymotion-j)
-"map <leader>k <Plug>(easymotion-k)
-"map <leader>h <Plug>(easymotion-linebackward)
+    " JK motions: Line motions
+    "map <leader>l <Plug>(easymotion-lineforward)
+    "map <leader>j <Plug>(easymotion-j)
+    "map <leader>k <Plug>(easymotion-k)
+    "map <leader>h <Plug>(easymotion-linebackward)
 
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
+    map  / <Plug>(easymotion-sn)
+    omap / <Plug>(easymotion-tn)
 
-" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
-" Without these mappings, `n` & `N` works fine. (These mappings just provide
-" different highlight method and have some other features )
-"map  n <Plug>(easymotion-next)
-"map  N <Plug>(easymotion-prev)
-hi EasyMotionTarget ctermbg=none ctermfg=red cterm=Bold
-hi EasyMotionShade  ctermbg=none ctermfg=darkgrey
+    " These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
+    " Without these mappings, `n` & `N` works fine. (These mappings just provide
+    " different highlight method and have some other features )
+    "map  n <Plug>(easymotion-next)
+    "map  N <Plug>(easymotion-prev)
+    hi EasyMotionTarget ctermbg=none ctermfg=red cterm=Bold
+    hi EasyMotionShade  ctermbg=none ctermfg=darkgrey
 
-hi EasyMotionTarget2First ctermbg=none ctermfg=red
-hi EasyMotionTarget2Second ctermbg=none ctermfg=lightred
+    hi EasyMotionTarget2First ctermbg=none ctermfg=red
+    hi EasyMotionTarget2Second ctermbg=none ctermfg=lightred
 
-hi EasyMotionMoveHL ctermbg=none ctermfg=red cterm=Bold
+    hi EasyMotionMoveHL ctermbg=none ctermfg=red cterm=Bold
+  endif
+  echom 'Setting plugin settings'
+
+endfunction
+
+autocmd VimEnter * :call PluginSettings()
+let g:sneak#streak = 1
+let g:sneak#s_next = 1

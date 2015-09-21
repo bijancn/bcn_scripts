@@ -91,7 +91,7 @@ parallel_jobs=
 if test -r /proc/cpuinfo; then
   n=`grep -c '^processor' /proc/cpuinfo`
   if test $n -gt 1; then
-    parallel_jobs="-j `expr \( 2 \* $n \) / 3`"
+    parallel_jobs="-j `expr \( 1 \* $n \) / 3`"
   else
     parallel_jobs="-j $n"
   fi 
