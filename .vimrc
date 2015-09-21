@@ -129,6 +129,8 @@ Plug 'mattn/webapi-vim'
 
 Plug 'terryma/vim-multiple-cursors'
 
+Plug 'JNicL/vim-eZchat'
+
 Plug 'easymotion/vim-easymotion'
 
 "Asynchronous make. Asynchronous part only works with neovim
@@ -159,17 +161,22 @@ call plug#end()
 "=============================================================================="
 " Use the default filetype settings. Also load indent files,
 " to automatically do language-dependent indenting.
-filetype plugin indent on
-syntax on                 " Switch syntax highlighting on
+if has('autocmd')
+  filetype plugin indent on
+endif
+if has('syntax') && !exists('g:syntax_on')
+  syntax enable
+endif
 
 " Reuse the indentation of the previous line if no filetype indent is available
 set autoindent
 set shiftwidth=2        " Size of indentation
 set textwidth=80        " Where to brake text to new line
-set formatoptions=qrn   " Add t to activate automatic wrapping
+set formatoptions=qrnj  " Add t to activate automatic wrapping
 set wrap
 set linebreak           " Vim will not break words. See :help breakat
 set showbreak=-->\      " Prefix soft-wrapped lines with these characters
+set autoread            " Automatically reload file when changed only outside
 
 " Highlight consistent line
 if exists('+colorcolumn')
@@ -187,6 +194,15 @@ set tabstop=2           " Size of insterted spaces if tab is pressed
 set list                " Highlight tab characters in files
 " eol:¬, tab:--
 set listchars=tab:▸\ ,extends:#,nbsp:.,trail:⋅
+
+" Do not search in all included files for completions
+set complete-=i
+
+" Don't consider numbers starting with 0 as octal for in/decreasing
+set nrformats-=octal
+
+" Always show a status line
+set laststatus=2
 
 " This allows backspacing over everything in insert mode. Don't insert spaces.
 set backspace=indent,eol,start
@@ -216,6 +232,16 @@ set ssop-=options         " Do not store global and local values in a session
 set showcmd               " display incomplete commands
 set number                " Activate line numbers on the left side
 set diffopt+=iwhite       " Ignore whitespace when diffing
+
+" Allow color schemes to do bright colors without forcing bold.
+if &t_Co == 8 && $TERM !~# '^linux'
+  set t_Co=16
+endif
+
+" Load matchit.vim, but only if the user hasn't installed a newer version.
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim
+endif
 
 set thesaurus=/usr/share/dict/words
 set shell=/bin/bash
@@ -306,7 +332,6 @@ set pastetoggle=<F2>
 " vmap, vnoremap, vunmap          Visual and Select mode
 " <CR> sends Enter
 
-" Use less shift key
 let mapleader = ";"
 
 noremap ]p ]cdp
@@ -457,8 +482,12 @@ iabbrev generalisation generalization
 "=============================================================================="
 " Set the number of lines you want to stay off of bottom and top. This induces
 " vim to scroll automatically when the cursor comes close.
-set scrolloff=2
-set scroll=10  " number of lines for <C-D> and <C-U>
+if !&scrolloff
+  set scrolloff=2
+endif
+
+" number of lines for <C-D> and <C-U>
+set scroll=10
 
 "=============================================================================="
 "                               Functionalities                                "
@@ -646,9 +675,6 @@ set encoding=utf-8
 
 " Good looking powerline
 let g:airline_powerline_fonts = 1
-
-" Ensure that airline shows up
-set laststatus=2
 
 " Super fancy tabline for tabs and buffers
 let g:airline#extensions#tabline#enabled = 1

@@ -15,6 +15,9 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
+export ez_host='95.143.172.252'
+export ez_port=64835
+
 #==========#
 #  prelim  #
 #==========#
@@ -177,6 +180,7 @@ prepend-pure-path $HOME/jrfonseca.gprof2dot
 add-pythonpath $HOME/bcn_scripts/include
 add-pythonpath $HOME/Python-GoogleCalendarParser
 add-pythonpath $HOME/eZchat
+add-pythonpath $HOME/.vim/plugged/vim-eZchat/autoload
 add-pythonpath $HOME/termstyle
 add-pythonpath $HOME/pydflatex
 add-pythonpath $std_install/lib/python
