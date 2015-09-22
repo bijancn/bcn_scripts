@@ -1117,3 +1117,7 @@ endfunction
 autocmd VimEnter * :call PluginSettings()
 let g:sneak#streak = 1
 let g:sneak#s_next = 1
+"hi link SneakPluginTarget Error
+"hi link SneakPluginScope Error
+hi link SneakStreakTarget Error
+hi link SneakStreakMask Comment
