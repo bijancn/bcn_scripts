@@ -262,8 +262,8 @@ set number
 " Colors
 set background=light
 colorscheme lucius
-LuciusWhite
-"LuciusDarkLowContrast
+"LuciusWhite
+LuciusDarkLowContrast
 " colorscheme bcn_light
 " == Spelling ==
 " word not recognized
