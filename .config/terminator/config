@@ -54,11 +54,13 @@
     scrollback_infinite = True
   [[black]]
     scrollbar_position = hidden
+    use_system_font = False
     background_image = None
-    background_color = "#ffffff"
+    background_color = "#262626"
     active_encodings = ANSI_X3.4-1968, UTF-8, ISO-8859-1
-    foreground_color = "#000000"
+    foreground_color = "#cccccc"
     show_titlebar = False
+    font = Monospace 10.5
     word_chars = "-A-Za-z0-9,./?%&#:_+"
     cursor_blink = False
     scrollback_infinite = True
