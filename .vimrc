@@ -136,6 +136,9 @@ Plug 'terryma/vim-multiple-cursors'
 " eZchatting while vimming
 Plug 'JNicL/vim-eZchat'
 
+" Trac highlighting
+Plug 'vim-scripts/tracwiki'
+
 call plug#end()
 
 " Does not change in noweb chunks, might be fixable
@@ -1033,7 +1036,7 @@ function! DisableIfNonCounted(move) range
 endfunction
 
 function! SetDisablingOfBasicMotionsIfNonCounted(on)
-    let keys_to_disable = get(g:, "keys_to_disable_if_not_preceded_by_count", ["j", "k", "l", "h"])
+    let keys_to_disable = get(g:, "keys_to_disable_if_not_preceded_by_count", ["j", "k"])
     if a:on
         for key in keys_to_disable
             execute "noremap <expr> <silent> " . key . " DisableIfNonCounted('" . key . "')"
@@ -1060,11 +1063,11 @@ function! ToggleDisablingOfBasicMotionsIfNonCounted()
     endif
 endfunction
 
-"command! ToggleDisablingOfNonCountedBasicMotions :call ToggleDisablingOfBasicMotionsIfNonCounted()
-"command! DisableNonCountedBasicMotions :call SetDisablingOfBasicMotionsIfNonCounted(1)
-"command! EnableNonCountedBasicMotions :call SetDisablingOfBasicMotionsIfNonCounted(0)
+command! ToggleDisablingOfNonCountedBasicMotions :call ToggleDisablingOfBasicMotionsIfNonCounted()
+command! DisableNonCountedBasicMotions :call SetDisablingOfBasicMotionsIfNonCounted(1)
+command! EnableNonCountedBasicMotions :call SetDisablingOfBasicMotionsIfNonCounted(0)
 
-"DisableNonCountedBasicMotions
+DisableNonCountedBasicMotions
 
 "=============================================================================="
 "                                  EASYMOTION                                  "
