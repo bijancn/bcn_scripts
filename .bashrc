@@ -215,13 +215,10 @@ checkout-openloops(){
   printf '[OpenLoops]\nprocess_repositories=public, whizard' >> OpenLoops/openloops.cfg
   cd OpenLoops
   ./scons
-  ./openloops libinstall ppzj ppzjj
+  ./openloops libinstall ppzj ppzjj ppll ppllj eett eevvjj
   cd examples
   scons
   ./OL_fortran
-}
-openloops-getlibs(){
-  ./openloops libinstall ppll eevvjj eett
 }
 
 export OpenLoopsPath=$openloops_soft

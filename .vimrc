@@ -81,6 +81,9 @@ Plug 'tpope/vim-fugitive'
 " Allow to increment/decremt dates, roman numerals, ordinals, letters
 Plug 'tpope/vim-speeddating'
 
+" Vim sugar for UNIX shell commands
+Plug 'tpope/vim-eunuch'
+
 " Add the surround physics. Repeat allows to repeat those
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
