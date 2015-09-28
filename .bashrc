@@ -452,6 +452,11 @@ function rem-show () {
   ssh -X $ip "evince ~/temp.pdf"
 }
 
+function sshow () {
+  scp $1:$2 .
+  go $(basename $2)
+}
+
 function find-type () {
   rgrep "public :: ${1}_t\$" -B1
 }
