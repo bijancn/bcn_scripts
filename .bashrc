@@ -977,6 +977,10 @@ alias svnp='svn propedit svn:ignore .'
 # Revert all changes made recursively
 alias svnR='svn revert -R .'
 
+function get-link-svn {
+  svn info $1 | sed -ne 's/^URL: //p' | sed 's/\/desy/\/public/'
+}
+
 #==============================================================================#
 #                                    PROMPT                                    #
 #==============================================================================#
