@@ -31,6 +31,7 @@ files+=".fonts/PowerlineSymbols.otf .fonts/Ubuntu.ttf "
 files+=".local/share/applications/mimeapps.list "
 files+=".bash_profile .profile "
 files+=".ssh/config .ssh/known_hosts "
+files+=".tmux.conf "
 # Pattern matching only works when the files are locally present
 s=".sylpheed-2.0"
 files+="$s/accountrc $s/colorlabelrc $s/menurc $s/sylpheedrc "
