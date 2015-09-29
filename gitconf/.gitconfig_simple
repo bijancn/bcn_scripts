@@ -17,6 +17,7 @@
   mylog = !echo && git log --graph --format=format:'%C(black)%h%C(reset) - %C(red)(%ar)%C(reset) %C(blue)%cn%C(reset)%n        %C(green)%s%C(reset)' --abbrev-commit --date=relative | head -n 20 && echo
   morelog = log --graph --decorate --pretty=medium --abbrev-commit --date=relative --all
   contributions = !git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr
+  show-files = diff-tree --no-commit-id --name-only -r
 [color]
   branch = auto
   diff = auto
