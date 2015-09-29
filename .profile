@@ -2,7 +2,7 @@
 #
 # bcn .profile - executed by the command interpreter for login shells
 #
-# Copyright (C) 2014         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+# Copyright (C)              Bijan Chokoufe Nejad         <bijan@chokoufe.com>
 # Recent versions:  https://github.com/bijancn/bcn_scripts
 #
 # This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
@@ -23,13 +23,8 @@
 if [ -n "$BASH_VERSION" ]; then
   # include .bashrc if it exists
   if [ -f "$HOME/.bashrc" ]; then
-    . "$HOME/.bashrc"
+    source "$HOME/.bashrc"
   fi
-fi
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-  PATH="$HOME/bin:$PATH"
 fi
 
 CDPATH=.:$HOME:

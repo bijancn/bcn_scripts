@@ -11,20 +11,19 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+#==========#
+#  prelim  #
+#==========#
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+export arch=`getconf LONG_BIT`
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 export ez_host='95.143.172.252'
 export ez_port=64835
-
-#==========#
-#  prelim  #
-#==========#
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
-
-export arch=`getconf LONG_BIT`
 
 #============#
 #  settings  #

@@ -266,10 +266,24 @@ set relativenumber
 set number
 
 " Colors
-set background=light
+"set background=light
 colorscheme lucius
-"LuciusWhite
-LuciusDarkLowContrast
+nnoremap <leader>u :call LuciusToggle()<cr>
+let g:lucius_white = 1
+LuciusWhite
+function! LuciusToggle()
+  if g:lucius_white == 1
+    LuciusDarkLowContrast
+    let g:lucius_white = 2
+  elseif g:lucius_white == 2
+    LuciusBlack
+    let g:lucius_white = 0
+  elseif g:lucius_white == 0
+    LuciusWhite
+    let g:lucius_white = 1
+  endif
+endfunction
+
 " colorscheme bcn_light
 " == Spelling ==
 " word not recognized

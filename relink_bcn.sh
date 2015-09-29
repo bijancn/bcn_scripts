@@ -29,7 +29,7 @@ files+=".config/terminator/config "
 files+=".fonts/AvantGarde_LT_Medium.ttf .fonts/GE_Inspira.ttf "
 files+=".fonts/PowerlineSymbols.otf .fonts/Ubuntu.ttf "
 files+=".local/share/applications/mimeapps.list "
-files+=".profile "
+files+=".bash_profile .profile "
 files+=".ssh/config .ssh/known_hosts "
 # Pattern matching only works when the files are locally present
 s=".sylpheed-2.0"
