@@ -2,7 +2,7 @@
 "
 " bcn .vimrc - vim configuration file. Maintained since 2011.
 "
-" Copyright (C) 2015         Bijan Chokoufe Nejad         <bijan@chokoufe.com>
+" Copyright (C)              Bijan Chokoufe Nejad         <bijan@chokoufe.com>
 " Recent versions:  https://github.com/bijancn/bcn_scripts
 "
 " This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
@@ -65,7 +65,7 @@ Plug 'luochen1990/rainbow'
 Plug 'scrooloose/syntastic', { 'on' : [] }
 
 " The ultimate snippet solution
-Plug 'SirVer/ultisnips', { 'on' : [] }
+Plug 'SirVer/ultisnips' " , { 'on' : [] }
 
 " Nice fuzzy autocompletion with supertab support
 " Ubuntu libs:  build-essential cmake python-dev
@@ -771,7 +771,8 @@ let g:ctrlp_working_path_mode = 'ra'
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gp :Gpush<CR>:redraw!<CR>
 " TODO: (bcn 2015-05-19) Gpull doesnt work with 1.7.1...
-nnoremap <Leader>gl :Git pull<CR>:redraw!<CR>
+command! -bar -nargs=* Gpurr execute 'Git pull --rebase' fugitive#head()
+nnoremap <Leader>gl :Gpurr<CR>:redraw!<CR>
 if !exists('G_defined')
   let G_defined = "True"
   command Greview :Git! diff --staged
@@ -891,7 +892,8 @@ nnoremap <Leader>t :YcmCompleter GoTo<CR>
 
 augroup load_us_ycm
   autocmd!
-  autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe', 'syntastic')
+  " 'ultisnips', , 'syntastic'
+  autocmd InsertEnter * call plug#load('YouCompleteMe')
         \| call youcompleteme#Enable() | autocmd! load_us_ycm
 augroup END
 

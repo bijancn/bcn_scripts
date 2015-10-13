@@ -211,10 +211,10 @@ pythia-configure-desy(){
 checkout-openloops(){
   #svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public_beta ./OpenLoops
   svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public ./OpenLoops
-  printf '[OpenLoops]\nprocess_repositories=public, whizard' >> OpenLoops/openloops.cfg
+  printf '[OpenLoops]\nprocess_repositories=public, whizard\ncompile_extra=1' >> OpenLoops/openloops.cfg
   cd OpenLoops
   ./scons
-  ./openloops libinstall ppzj ppzjj ppll ppllj eett eevvjj
+  ./openloops libinstall ppzj ppzjj ppll ppllj eett eehtt eevvjj
   cd examples
   scons
   ./OL_fortran
