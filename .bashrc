@@ -1052,20 +1052,21 @@ fi
 #==============================================================================#
 #                                    SCREEN                                    #
 #==============================================================================#
-if [[ "$TERM" == screen* ]]; then
-  screen_set_window_title () {
-  local HPWD="$PWD"
-  # replace $HOME with ~
-  case $HPWD in
-    $HOME) HPWD="~";;
-    $HOME/*) HPWD="~${HPWD#$HOME}";;
-  esac
-  # Only use current directory name (without path)
-  HPWD=${HPWD##*/}
-  printf '\ek%s\e\\' "$HPWD"
-  }
-  PROMPT_COMMAND="screen_set_window_title;
-  $PROMPT_COMMAND"
-fi
+#if [[ "$TERM" == screen* ]]; then
+  #screen_set_window_title () {
+  #local HPWD="$PWD"
+  ## replace $HOME with ~
+  #case $HPWD in
+    #$HOME) HPWD="~";;
+    #$HOME/*) HPWD="~${HPWD#$HOME}";;
+  #esac
+  ## Only use current directory name (without path)
+  #HPWD=${HPWD##*/}
+  #printf '\ek%s\e\\' "$HPWD"
+  #}
+  #PROMPT_COMMAND="screen_set_window_title;
+  #$PROMPT_COMMAND"
+#fi
 
 export TERM='xterm-256color'
+export BASHRC_SET='set'

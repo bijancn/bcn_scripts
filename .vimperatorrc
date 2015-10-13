@@ -56,8 +56,9 @@ silent qmark d https://mail.desy.de
 silent qmark f http://facebook.com
 silent qmark F http://feedly.com
 silent qmark g https://github.com
+silent qmark h https://hipchat.com
 silent qmark j http://localhost:8080/job/whizard-trunk-dist
-silent qmark m https://mail.google.com
+silent qmark m https://inbox.google.com
 silent qmark M https://maps.google.com
 silent qmark q http://quora.com
 silent qmark p http://phdcomics.com
@@ -65,6 +66,7 @@ silent qmark s http://soundcloud.com
 silent qmark S https://calendar.sunrise.am
 silent qmark t http://todoist.com
 silent qmark w https://whizard.hepforge.org/trac/timeline
+silent qmark y https://youtube.com
 silent qmark x http://xkcd.com
 
 " BMarks {{{1
