@@ -9,15 +9,14 @@ sudo apt-get install \
   python-unidecode scons subversion \
   terminator unetbootin extlinux vim-gtk xsel
 gsettings set org.cinnamon.desktop.default-applications.terminal exec /usr/bin/terminator
-mkdir -p ~/install/bin
+mkdir -p ~/install
 git clone https://github.com/bijancn/bcn_scripts.git ~/bcn_scripts
 git clone https://github.com/gmarik/Vundle.vim.git  ~/.vim/bundle/Vundle.vim
-vim -c 'PluginInstall' -c qa
-cd ~/.vim/bundle/vimproc.vim && make
+vim -c 'PlugInstall' -c qa
 echo "Do you want to build YouCompleteMe?"
 select yn in "Yes" "No"; do
   case $yn in
-    Yes ) cd ~/.vim/bundle/YouCompleteMe && ./install.sh \
+    Yes ) cd ~/.vim/plugged/YouCompleteMe && ./install.sh \
       ; break;;
     No ) break;;
   esac

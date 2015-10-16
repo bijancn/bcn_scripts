@@ -117,8 +117,6 @@ elif [ -d $whiz_dir2 ]; then
   export whiz_soft=$whiz_dir2
 elif [ -d $whiz_dir3 ]; then
   export whiz_soft=$whiz_dir3
-else
-  export whiz_soft="NONE"
 fi
 trnk() { cd $whiz_soft/../.. ; }
 bui() { cd $whiz_soft/../../_build/develop ; }
@@ -134,9 +132,11 @@ elif [ -d $tmp3 ]; then
   export hep=$tmp3
 fi
 
-export openloops_soft=$hep/OpenLoops
-export gosam_soft=$hep/gosam/local
-export std_install=$hep/install
+if [ -n "$hep" ]; then
+  export openloops_soft=$hep/OpenLoops
+  export gosam_soft=$hep/gosam/local
+  export std_install=$hep/install
+fi
 
 #=========#
 #  paths  #
@@ -167,7 +167,7 @@ fi
 
 prepend-pure-path $desy_tex
 prepend-all-paths $std_install
-if test $whiz_soft != "NONE"; then
+if [ -n "$whiz_soft" ]; then
   prepend-all-paths $whiz_soft
 fi
 
