@@ -64,10 +64,6 @@ gf_debug_warnings = gf_warnings + '-fcheck=all -ggdb ' + \
     '-ffpe-trap=invalid,zero,overflow,underflow,denormal '
 if not args.compiler:
   args.compiler = 'gfortran'
-if not args.optimization:
-  args.optimization = '2'
-else:
-  args.optimization = ' '.join(args.optimization)
 if not args.fcflags:
   args.fcflags = gf_warnings
 if not args.configureflags:
@@ -88,6 +84,9 @@ if spawn.find_executable('gosam-config.py'):
 #if os.path.isfile(stdhep):
   #args.configureflags += ['STDHEP=' + stdhep]
 
+if spawn.find_executable('simjob'):
+  args.configureflags += ['--enable-lcio']
+
 ol_path = None
 for path in os.environ["LD_LIBRARY_PATH"].split(':'):
   if 'OpenLoops' in path:
@@ -95,6 +94,7 @@ for path in os.environ["LD_LIBRARY_PATH"].split(':'):
 if ol_path:
   args.configureflags += ['--enable-openloops',
                           '--with-openloops=' + ol_path[0:-3]]
+
 
 # Convenience magic
 if 'pgf' in args.build:
@@ -142,23 +142,19 @@ if 'ifort' in args.build:
 
 if 'nagfor' in args.build:
   args.compiler = 'nagfor'
-  args.optimization = '1'
-  # -gline         Compile code to produce a traceback if an error occurs.
-  # -C=all         Maximum runtime checking.
-  # => doesnt work with LHAPDF6 somehow due to q2max
-  # -mtrace=all    Enable all memory allocation options.
-  # -nan           Set unSAVEd local variables etc. to signalling NaN.
-  args.fcflags = '-colour'
-
-if 'nagfor-jenkins' in args.build:
-  args.compiler = 'nagfor'
-  args.optimization = '0'
+  if args.optimization is None:
+    args.optimization = '1'
   # -gline         Compile code to produce a traceback if an error occurs.
   # -C=all         Maximum runtime checking.
   # => doesnt work with LHAPDF6 somehow due to q2max
   # -mtrace=all    Enable all memory allocation options.
   # -nan           Set unSAVEd local variables etc. to signalling NaN.
   # -maxcontin=512 Increase max number of continuation lines to 512
+  args.fcflags = '-colour'
+
+if 'nagfor-jenkins' in args.build:
+  args.compiler = 'nagfor'
+  args.optimization = '0'
   args.fcflags = '-C=all -nan -w -f2003 -gline -maxcontin=512'
 
 if 'debug' in args.build:
@@ -175,6 +171,11 @@ if 'NaN' in args.build:
     args.fcflags += '-nan '
   elif args.compiler == 'gfortran':
     args.fcflags += '-finit-real=nan '
+
+if not args.optimization:
+  args.optimization = '2'
+else:
+  args.optimization = ' '.join(args.optimization)
 
 if args.all:
   args.remove = True

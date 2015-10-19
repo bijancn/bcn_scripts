@@ -49,6 +49,8 @@ Plug 'bling/vim-airline'
 " in bashrc:  source ~/.shell_prompt.sh
 Plug 'edkolev/promptline.vim'
 
+Plug 'edkolev/tmuxline.vim'
+
 " Allows to focus completely
 Plug 'junegunn/goyo.vim'
 
@@ -141,6 +143,9 @@ Plug 'JNicL/vim-eZchat'
 
 " Trac highlighting
 Plug 'vim-scripts/tracwiki'
+
+" fugitive extension
+Plug 'idanarye/vim-merginal'
 
 call plug#end()
 
@@ -1143,3 +1148,17 @@ let g:sneak#s_next = 1
 "hi link SneakPluginScope Error
 hi link SneakStreakTarget Error
 hi link SneakStreakMask Comment
+
+let g:tmuxline_preset = {
+      \'a'    : '#H',
+      \'c'    : '',
+      \'b'    : '#(tmux-mem-cpu-load --interval 3 --graph-lines 5)',
+      \'win'  : ['#W'],
+      \'cwin' : ['#I', '#W'],
+      \'x'    : '',
+      \'y'    : ['%a %d', '%b', '%Y'],
+      \'z'    : '%R'}
+
+let g:promptline_preset = {
+        \'a' : [ promptline#slices#cwd() ],
+        \'c' : [ promptline#slices#vcs_branch()]}

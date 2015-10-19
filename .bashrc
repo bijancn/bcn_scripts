@@ -108,6 +108,15 @@ export syncd=$HOME/safe
 export hive=$HOME/hive
 export install=$HOME/install
 
+# ifort
+intel_dir=/opt/intel
+if test -f $intel_dir/bin/compilervars.sh -a $arch = 64; then
+  source $intel_dir/bin/compilervars.sh intel64
+elif test -f $intel_dir/2016/bin/compilervars.sh -a $arch = 64; then
+  source $intel_dir/2016/bin/compilervars.sh intel64
+  #source $intel_dir/2011/vtune_amplifier_xe/amplxe-vars.sh
+fi
+
 whiz_dir1=/scratch/bcho/trunk/_install/develop
 whiz_dir2=$HOME/trunk/_install/develop
 whiz_dir3=
@@ -194,8 +203,6 @@ export CC=gcc
 # DONT USE THIS! Check what is needed and do it your self
 #source $std_install/rivetenv.sh
 prepend-all-paths $gosam_soft
-#export HEPMC_DIR=$install
-#export LHAPDF_DIR=$install
 export LATEXINPUTS=${HOME}/texmf:$std_install/share/texmf/tex/latex/misc:$LATEXINPUTS
 export TEXINPUTS=${HOME}/texmf:$std_install/share/texmf/tex/latex/misc:$TEXINPUTS
 export TEXMFCNF=${HOME}/texmf:${TEXMFCNF}
@@ -245,15 +252,6 @@ command-exists () {
 # pydflatex
 if command-exists pydflatex; then
   export pdftool=pydflatex
-fi
-
-# ifort
-intel_dir=/opt/intel
-if test -f $intel_dir/bin/compilervars.sh -a $arch = 64; then
-  source $intel_dir/bin/compilervars.sh intel64
-elif test -f $intel_dir/2016/bin/compilervars.sh -a $arch = 64; then
-  source $intel_dir/2016/bin/compilervars.sh intel64
-  #source $intel_dir/2011/vtune_amplifier_xe/amplxe-vars.sh
 fi
 
 # vim
