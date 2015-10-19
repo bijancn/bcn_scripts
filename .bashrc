@@ -166,6 +166,7 @@ else
 fi
 
 prepend-pure-path $desy_tex
+prepend-path $HOME/.gem/ruby/1.9.1
 prepend-all-paths $std_install
 if [ -n "$whiz_soft" ]; then
   prepend-all-paths $whiz_soft
