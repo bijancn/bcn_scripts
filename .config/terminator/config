@@ -54,6 +54,7 @@
   [[black]]
     scrollbar_position = hidden
     use_system_font = False
+    login_shell = True
     background_image = None
     background_color = "#ffffff"
     active_encodings = ANSI_X3.4-1968, UTF-8, ISO-8859-1
