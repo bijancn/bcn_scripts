@@ -45,6 +45,7 @@ l="texmf/tex/latex"
 files+="$l/bcn_beamer@(.sty|_example.pdf|_example.tex) "
 files+="$l/bcn_@(color|commands|koma).sty "
 files+="$l/bcn_letter@(.lco|_example.pdf|_example.tex) "
+files+="theoc.yaml"
 
 for f in $files; do
   mkdir ~/$(dirname $f) -p

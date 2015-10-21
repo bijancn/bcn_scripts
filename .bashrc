@@ -981,6 +981,15 @@ function get-link-svn {
 }
 
 #==============================================================================#
+#                                     TCON                                     #
+#==============================================================================#
+alias tcstart='tcon start ~/theoc.yaml --session-name=theoc'
+function tcsend {
+  tcon send theoc "$1"
+}
+alias tcdel='tcon delete --all'
+
+#==============================================================================#
 #                                    PROMPT                                    #
 #==============================================================================#
 ## Print nickname for git/hg/bzr/svn version control in CWD

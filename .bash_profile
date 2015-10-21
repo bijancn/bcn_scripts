@@ -13,7 +13,9 @@
 
 export TERM=xterm-256color
 source .bashrc
-source ~/bashrc-tmux/bashrc-tmux
+if [ -d ~/bashrc-tmux ]; then
+  source ~/bashrc-tmux/bashrc-tmux
+fi
 
 # old screen variant
 #if test "$TERM" != "screen" -a "$SSH_CONNECTION" != "" -a `getconf LONG_BIT` = 64; then
