@@ -1,0 +1,4 @@
+regex: !ruby-regexp '^(\w+)(\d+)$'
+regex-parts-to:
+    group-by: [0]
+    sort-by: [1]
