@@ -167,7 +167,7 @@ add-pythonpath () {
   export PYTHONPATH=$PYTHONPATH:$1
 }
 
-if test $arch = 64; then
+if [[ $arch == *64* ]]; then
   export desy_tex=/afs/desy.de/products/texlive/2012/bin/x86_64-linux
   prepend-all-paths $install
 else

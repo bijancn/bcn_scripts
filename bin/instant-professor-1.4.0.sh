@@ -21,6 +21,9 @@ url_pip=https://bootstrap.pypa.io/get-pip.py
 url_pyminuit=https://github.com/jpivarski/pyminuit.git
 url_minuit=seal.web.cern.ch/seal/minuit/releases/Minuit-1_7_9.tar.gz
 
+# python
+url_python=https://www.python.org/ftp/python/2.7.10/Python-2.7.10.tgz
+
 ########################################################################
 # Heuristics for the optimal number of jobs
 ########################################################################
@@ -45,7 +48,7 @@ download () {
 strip_tgz () {
   name=$1
   case $name in
-    *.tgz) basename $name .tgz;;
+    .tgz) basename $name .tgz;;
     *.tar.gz) basename $name .tar.gz;;
     *.tar.bz2) basename $name .tar.bz2;;
     *.zip) basename $name .zip;;
@@ -65,7 +68,14 @@ untar () {
 }
 
 build_python () {
-  echo "dummy: could be added for older systems"
+  python_tar=`basename $url_python`
+  download $url_python
+  untar $python_tar
+  cd $build_dir/$(strip_tgz $python_tar)
+  ./configure --prefix=$install_dir
+  make $parallel_jobs
+  make install $parallel_jobs
+  cd ..
 }
 
 build_pip () {
@@ -146,7 +156,7 @@ export LD_LIBRARY_PATH=$install_dir/lib:$LD_LIBRARY_PATH
 export PYTHONPATH=$install_dir/lib/python:$PYTHONPATH
 echo ">> with install_dir=$install_dir "
 
-
+#build_python
 build_pip
 build_python_packages
 #build_minuit
