@@ -27,25 +27,22 @@ function get_logilab {
 }
 
 cd $HOME
-github bijancn bcn_scripts
 github gfxmonk termstyle # is needed by pydflatex
-github gsec eZchat
-github gsec glowing-mustache
-github JNicL Durak
+#github gsec eZchat
+#github gsec glowing-mustache
+#github JNicL Durak
 github MikePearce Git-Status
-github oblique63 Python-GoogleCalendarParser
+#github oblique63 Python-GoogleCalendarParser
 github olivierverdier pydflatex
 github philchristensen svn-color
-github sickill git-dude
+#github sickill git-dude
 github sickill bitpocket
 
-bitbucket bijancn vm_paper
-
-if [ hg 2> /dev/null ]; then
-  bitbucket_hg logilab pylint
-  bitbucket_hg logilab astroid
-  get_logilab
-fi
+#if [ hg 2> /dev/null ]; then
+  #bitbucket_hg logilab pylint
+  #bitbucket_hg logilab astroid
+  #get_logilab
+#fi
 
 ln -s $HOME/pydflatex/bin/pydflatex $HOME/install/bin/pydflatex
 ln -s $HOME/bitpocket/bin/bitpocket $HOME/install/bin/bitpocket
