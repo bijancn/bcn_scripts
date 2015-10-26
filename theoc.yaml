@@ -1,4 +1,69 @@
-regex: !ruby-regexp '^(\w+)(\d+)$'
+regex: !ruby-regexp '^(\w+)c(\d+)$'
 regex-parts-to:
     group-by: [0]
     sort-by: [1]
+hostless:
+  ctrl: 2
+#multiple-hosts:
+    #regexes:
+        #- !ruby-regexp 'theoc25'
+    #counts: [2]
+layout:
+    default:
+        custom:
+          max-horizontal: 2
+          max-vertical: 6
+          max-panes: 12
+#minimal:
+  #input: &input-min
+    #regex: !ruby-regexp '^dev\.(\w+)([\w-]*)-(\d+)$'
+    #regex-parts-to:
+      #group-by: [0]
+      #sort-by: [2]
+  #expected: &expected-min
+    #regex: !ruby-regexp '^dev\.(\w+)([\w-]*)-(\d+)$'
+    #regex-parts-to:
+      #group-by: [0]
+      #sort-by: [2]
+    #layout:
+      #default:
+        #tmux:
+          #layout: tiled
+          #max-panes: 9
+#layout-default:
+  #input:
+    #<<: *input-min
+    #layout:
+      #default:
+        #tmux:
+          #layout: 'main-vertical'
+  #expected:
+    #<<: *expected-min
+    #layout:
+      #default:
+        #tmux:
+          #layout: 'main-vertical'
+          #max-panes: 9
+
+#layout-group:
+  #input:
+    #<<: *input-min
+    #layout:
+      #group-layouts:
+        #lxc:
+          #custom:
+            #max-horizontal: 3
+            #max-vertical: 3
+  #expected:
+    #<<: *expected-min
+    #layout:
+      #default:
+        #tmux:
+          #layout: tiled
+          #max-panes: 9
+      #group-layouts:
+        #lxc:
+          #custom:
+            #max-horizontal: 3
+            #max-vertical: 3
+            #panes-flow: horizontal
