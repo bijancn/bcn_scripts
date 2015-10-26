@@ -12,7 +12,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export TERM=xterm-256color
-source .bashrc
+source $HOME/.bashrc
 if [ -d ~/bashrc-tmux ]; then
   source ~/bashrc-tmux/bashrc-tmux
 fi
