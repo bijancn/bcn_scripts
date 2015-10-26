@@ -539,6 +539,8 @@ if ! command-exists htop ; then
   alias htop=top
 fi
 
+alias show-top-processes="top -b -n 1 | grep -v ' root ' | head -n 12  | tail -n 8"
+
 #=============#
 #  callgrind  #
 #=============#
