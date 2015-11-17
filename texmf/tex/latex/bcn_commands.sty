@@ -24,6 +24,7 @@
 \newcommand{\lectureof}[1]
   {\begin{center}\textbf{\color{red}Lecture on #1 starts here.}\end{center}}
 
+\newcommand{\of}[1]{\left[{#1}\right]}
 \newcommand{\mathnote}[1]{\ems{\mbox{\smaller[1] $#1$}}}
 
 %========%
@@ -232,7 +233,7 @@
     \immediate\closeout\@outfmf{}
   \fi
   \ifnum\pdfshellescape=\@ne{}
-    \immediate\write18{cd Feynmp;mpost \thefmffile}%
+    \immediate\write18{mpost \thefmffile}%
   \fi}
 \makeatother
 
