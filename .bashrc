@@ -222,7 +222,7 @@ checkout-openloops(){
   printf '[OpenLoops]\nprocess_repositories=public, whizard\ncompile_extra=1' >> OpenLoops/openloops.cfg
   cd OpenLoops
   ./scons
-  ./openloops libinstall ppzj ppzjj ppll ppllj eett eehtt eevvjj
+  ./openloops libinstall ppzj ppzjj ppll ppllj eett eehtt eevvjj ee_tt_wwjj
   cd examples
   scons
   ./OL_fortran
@@ -666,6 +666,10 @@ function get-RES () {
 function save-RES () {
   file=/data/bcho/whizard_ttbar_threshold_project/Data/validation/$(basename $1)$2.dat
   get-RES $1 > $file && echo "Saved to $file"
+}
+
+function gosam-helicities () {
+  for i in $(eval echo "helicity{$1..$2}") ; do echo $i ; cd $i ; make ; cd .. ; done
 }
 
 #=========#

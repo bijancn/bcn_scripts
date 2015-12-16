@@ -59,8 +59,8 @@ gf_warnings = '-fmax-errors=1 -Wall -Wuninitialized -Wextra -fno-whole-program '
 # gcc doesn't recognize our test function construction as use of a function
 gf_warnings += '-Wno-unused-function -Wno-unused-parameter -Wno-unused-dummy-argument '
 # -fimplicit-none does not work with the PDFs
-gf_warnings += '-pedantic -fbacktrace '
-gf_debug_warnings = gf_warnings + '-fcheck=all -ggdb ' + \
+gf_warnings += '-pedantic -fbacktrace -ggdb '
+gf_debug_warnings = gf_warnings + '-fcheck=all ' + \
     '-ffpe-trap=invalid,zero,overflow,underflow,denormal '
 if not args.compiler:
   args.compiler = 'gfortran'
@@ -137,8 +137,15 @@ if 'develop' in args.build:
 
 if 'ifort' in args.build:
   args.compiler = 'ifort'
-  args.optimization = '3'
-  args.fcflags = ' '
+  args.optimization = '0'
+  args.fcflags = '-g -traceback -check uninit -check pointer -fp-stack-check '
+
+if 'stdsemantics' in args.build:
+  args.fcflags += '-standard-semantics '
+
+if 'ifort-noflags' in args.build:
+  args.optimization = '2'
+  args.fcflags = '-g -traceback '
 
 if 'nagfor' in args.build:
   args.compiler = 'nagfor'
