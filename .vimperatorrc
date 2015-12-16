@@ -68,6 +68,7 @@ silent qmark t http://todoist.com
 silent qmark w https://whizard.hepforge.org/trac/timeline
 silent qmark y https://youtube.com
 silent qmark x http://xkcd.com
+silent qmark X http://arxiv.org/list/hep-ph/pastweek?show=25
 
 " BMarks {{{1
 "javascript <<EOM

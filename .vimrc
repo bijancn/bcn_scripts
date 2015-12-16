@@ -1162,3 +1162,20 @@ let g:tmuxline_preset = {
 let g:promptline_preset = {
         \'a' : [ promptline#slices#cwd() ],
         \'c' : [ promptline#slices#vcs_branch()]}
+
+" Need to hand over visual range
+function! DebugLines () range
+  let mycount = 0
+  for linenum in range(a:firstline, a:lastline)
+    let mycount += 1
+    let curr_line = getline(linenum)
+    call setline(linenum, curr_line . DebugLine(mycount))
+    call DebugLine (count)
+  endfor
+endfunction
+
+function! DebugLine (count)
+  return "  ;   print *, '" . a:count . "' !!! Debugging"
+endfunction
+
+vnoremap <Leader>d :call DebugLines ()<CR>
