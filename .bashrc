@@ -222,7 +222,7 @@ checkout-openloops(){
   printf '[OpenLoops]\nprocess_repositories=public, whizard\ncompile_extra=1' >> OpenLoops/openloops.cfg
   cd OpenLoops
   ./scons
-  ./openloops libinstall ppzj ppzjj ppll ppllj eett eehtt eevvjj ee_tt_wwjj
+  ./openloops libinstall ppzj ppzjj ppll ppllj eett eehtt eevvjj ee_tt_wwjj tbw
   cd examples
   scons
   ./OL_fortran
@@ -720,7 +720,7 @@ alias show-parallel-jobs="echo $parallel_jobs"
 function find-ref-dir () {
   pwd=`pwd`
   ref_dir=../../../../share/tests/$(basename $pwd)
-  grep 'FC_EXT_OR_SINGLE = single' Makefile
+  grep --quiet 'FC_PRECISION = double' Makefile
   if test "$?" = "0" -a -f $ref_dir/ref-output-double/$1.ref; then
     echo "$ref_dir/ref-output-double"
   elif test "$?" = "1" -a -f $ref_dir/ref-output-ext/$1.ref; then

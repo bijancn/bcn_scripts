@@ -379,7 +379,7 @@ nnoremap <silent> <C-Space> @=(foldlevel('.')?'zA':"\<Space>")<CR>
 vnoremap <Space> zf
 
 " Toggle between highlighting line or column
-nnoremap <Leader>o :set cursorline! cursorcolumn!<CR>
+nnoremap <leader>o :set cursorline! cursorcolumn!<CR>
 
 " Clearing highlighted search
 nnoremap <silent> <leader>/ :nohlsearch<CR>
@@ -400,6 +400,8 @@ inoremap <right> <NOP>
 
 " Exit
 inoremap sd <esc>
+inoremap Sd <esc>
+inoremap SD <esc>
 inoremap <esc> <NOP>
 
 " Delete
@@ -454,22 +456,22 @@ noremap K :bnext<CR>
 noremap J :bprevious<CR>
 
 " Join lines and stay at the same position
-noremap <Leader>j mz:join<CR>`z
+noremap <leader>j mz:join<CR>`z
 
 " Change working directory to current file
-noremap <Leader>cd :cd %:p:h<CR>:pwd<CR>
+noremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 
 " Move working directory one level higher
-noremap <Leader>.. :cd ..<CR>:pwd<CR>
+noremap <leader>.. :cd ..<CR>:pwd<CR>
 
 " Update biber file
-nnoremap <Leader>bi :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
+nnoremap <leader>bi :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
 
 " Linediff two ranges
-vmap <Leader>l :Linediff<CR>
+vmap <leader>l :Linediff<CR>
 
 " Printing
-noremap <Leader>p :hardcopy <CR>
+noremap <leader>p :hardcopy <CR>
 
 " Put in yanked and keep it yanked
 xnoremap P pgvy
@@ -540,19 +542,19 @@ if !exists('W_defined')
 endif
 
 " Strip Trailing spaces in document
-noremap <Leader>st :%s/\s\+$/<CR>
+noremap <leader>st :%s/\s\+$/<CR>
 
 " Remove ^M chars
-noremap <Leader>rm :%s/\r//g<CR>
+noremap <leader>rm :%s/\r//g<CR>
 
 " Reload .vimrc
-nnoremap <silent> <Leader>so :source $MYVIMRC<CR>
+nnoremap <silent> <leader>so :source $MYVIMRC<CR>
 
 " Edit vimrc
-nnoremap <silent> <Leader>rc :e $MYVIMRC<CR>
+nnoremap <silent> <leader>rc :e $MYVIMRC<CR>
 
 " Sort words in visual
-vnoremap <Leader>o d:execute 'normal a' . join(sort(split(getreg('"'))), ' ')<CR>
+vnoremap <leader>o d:execute 'normal a' . join(sort(split(getreg('"'))), ' ')<CR>
 
 " Search for selected text, forwards or backwards.
 vmap <silent> * :<C-U>
@@ -572,22 +574,22 @@ vmap <silent> # :<C-U>
 " Visually select a line
 nnoremap vv 0v$h
 
-nnoremap <silent> <Leader>ff :grep -r 'public :: <cword>$' %:p:h/../*<CR><CR>
-nnoremap <silent> <Leader>fm :grep -r 'module <cword>$' %:p:h/../*<CR><CR>
-nnoremap <silent> <Leader>fa :grep -r '<cword>' %:p:h/../*<CR><CR>
+nnoremap <silent> <leader>ff :grep -r 'public :: <cword>$' %:p:h/../*<CR><CR>
+nnoremap <silent> <leader>fm :grep -r 'module <cword>$' %:p:h/../*<CR><CR>
+nnoremap <silent> <leader>fa :grep -r '<cword>' %:p:h/../*<CR><CR>
 
 " Number of lines for command line
 set cmdheight=2
 
 " Show registers
-nnoremap <Leader>re :registers<CR>
+nnoremap <leader>re :registers<CR>
 
 " Show the corresponding PDF file
 function! OpenPDF()
   let file_stripped = expand("%:r")
   echo system('gnome-open '.file_stripped.'.pdf')
 endfunction
-noremap <Leader>v :call OpenPDF()<CR>
+noremap <leader>v :call OpenPDF()<CR>
 
 "=============================================================================="
 "                                   AUTOCMD                                    "
@@ -773,11 +775,11 @@ let g:ctrlp_working_path_mode = 'ra'
 "=============================================================================="
 "                                   FUGITIVE                                   "
 "=============================================================================="
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gp :Gpush<CR>:redraw!<CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gp :Gpush<CR>:redraw!<CR>
 " TODO: (bcn 2015-05-19) Gpull doesnt work with 1.7.1...
 command! -bar -nargs=* Gpurr execute 'Git pull --rebase' fugitive#head()
-nnoremap <Leader>gl :Gpurr<CR>:redraw!<CR>
+nnoremap <leader>gl :Gpurr<CR>:redraw!<CR>
 if !exists('G_defined')
   let G_defined = "True"
   command Greview :Git! diff --staged
@@ -788,13 +790,14 @@ nnoremap <leader>gr :Greview<cr>
 "                                   DISPATCH                                   "
 "=============================================================================="
 " Filetype specific make commands are in ~/.vim/after/ftplugin/<lang>.vim
-nnoremap <Leader>m :w<CR>:Make!<CR>
-nnoremap <Leader>co :call CopenToggle()<CR>
+nnoremap <leader>m :w<CR>:Make!<CR>
+"nnoremap <leader>co :call CopenToggle()<CR>
+nnoremap <leader>co :copen<CR>
 
 "=============================================================================="
 "                                QUICKFIXTOGGLE                                "
 "=============================================================================="
-nnoremap <Leader>q :call QuickfixToggle()<CR>
+nnoremap <leader>q :call QuickfixToggle()<CR>
 let g:quickfix_is_open = 0
 
 function! QuickfixToggle()
@@ -818,7 +821,7 @@ endfunction
 "=============================================================================="
 "                                DIFFOPTTOGGLE                                 "
 "=============================================================================="
-nnoremap <Leader>d :call DiffoptToggle()<CR>
+nnoremap <leader>d :call DiffoptToggle()<CR>
 set diffopt+=iwhite       " Ignore whitespace when diffing
 let g:diffignore_whitespace = 1
 
@@ -872,7 +875,7 @@ endfunction
 "      \ 'safe' : 0,
 "      \ })
 
-"nnoremap <Leader>f :VimFilerExplorer <c-r>=expand("%:p:h")<cr>/
+"nnoremap <leader>f :VimFilerExplorer <c-r>=expand("%:p:h")<cr>/
 
 "=============================================================================="
 "                                   ULTISNIP                                   "
@@ -893,7 +896,7 @@ let g:ycm_disable_for_files_larger_than_kb = 2000
 " Query the UltiSnips plugin for possible completions of snippet triggers
 let g:ycm_use_ultisnips_completer = 1
 
-nnoremap <Leader>t :YcmCompleter GoTo<CR>
+nnoremap <leader>t :YcmCompleter GoTo<CR>
 
 augroup load_us_ycm
   autocmd!
@@ -909,7 +912,7 @@ let g:goyo_width=80
 let g:goyo_margin_top=3
 let g:goyo_margin_bottom=3
 let g:goyo_linenr=0
-nnoremap <Leader>g :Goyo<CR>
+nnoremap <leader>g :Goyo<CR>
 
 "=============================================================================="
 "                                  LIMELIGHT                                   "
@@ -924,7 +927,7 @@ let g:limelight_default_coefficient = 0.7
 " Number of preceding/following paragraphs to include (default: 0)
 let g:limelight_paragraph_span = 0
 
-nnoremap <Leader>l :Limelight!!<CR>
+nnoremap <leader>l :Limelight!!<CR>
 
 "=============================================================================="
 "                                 VIM-ORGMODE                                  "
@@ -943,7 +946,7 @@ let g:org_todo_keywords=['TODO', 'GETFEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATE
 "                                   RAINBOW                                    "
 "=============================================================================="
 let g:rainbow_active = 0
-noremap <Leader>rt :RainbowToggle<CR>
+noremap <leader>rt :RainbowToggle<CR>
 let g:rainbow_conf = {
     \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
     \   'ctermfgs': ['black', '21', 'darkmagenta', '160', '172'],
@@ -1178,4 +1181,6 @@ function! DebugLine (count)
   return "  ;   print *, '" . a:count . "' !!! Debugging"
 endfunction
 
-vnoremap <Leader>d :call DebugLines ()<CR>
+vnoremap <leader>d :call DebugLines ()<CR>
+
+nnoremap <leader><leader> :execute " grep -srnw --binary-files=without-match --exclude-dir=.git . -e " . expand("<cword>") . " "<CR>
