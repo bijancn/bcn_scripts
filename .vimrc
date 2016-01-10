@@ -64,7 +64,7 @@ Plug 'kien/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPMixed'] }
 Plug 'luochen1990/rainbow'
 
 " Show errors and warnings of compilers and checkers
-Plug 'scrooloose/syntastic', { 'on' : [] }
+Plug 'scrooloose/syntastic' " , { 'on' : [] }
 
 " The ultimate snippet solution
 Plug 'SirVer/ultisnips' " , { 'on' : [] }
@@ -599,6 +599,8 @@ augroup load_filetypes
   " Poor mans .less support. There are proper addons for this.
   autocmd BufNewFile,BufRead *.less set filetype=css
 
+  autocmd BufNewFile,BufRead *.ejs set filetype=html
+
   " Enable omni completion
   autocmd FileType python set omnifunc=pythoncomplete#Complete
   autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
@@ -667,6 +669,7 @@ let g:loaded_python3_provider = 0
 " Checkers
 let g:syntastic_ocaml_checkers = ['merlin']
 let g:syntastic_fortran_checkers = [""]
+let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
 
 " Regexs for files to ignore

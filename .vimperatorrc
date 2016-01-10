@@ -62,7 +62,7 @@ silent qmark m https://inbox.google.com
 silent qmark M https://maps.google.com
 silent qmark q http://quora.com
 silent qmark p http://phdcomics.com
-silent qmark s http://soundcloud.com
+silent qmark s http://play.spotify.com
 silent qmark S https://calendar.sunrise.am
 silent qmark t http://todoist.com
 silent qmark w https://whizard.hepforge.org/trac/timeline
