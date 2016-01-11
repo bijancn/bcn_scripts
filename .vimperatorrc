@@ -57,6 +57,7 @@ silent qmark f http://facebook.com
 silent qmark F http://feedly.com
 silent qmark g https://github.com
 silent qmark h https://hipchat.com
+silent qmark i https://itcher.com
 silent qmark j http://localhost:8080/job/whizard-trunk-dist
 silent qmark m https://inbox.google.com
 silent qmark M https://maps.google.com
