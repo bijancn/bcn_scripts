@@ -1087,3 +1087,8 @@ fi
 
 export TERM='xterm-256color'
 export BASHRC_SET='set'
+
+# Notify
+if [ -x /usr/bin/notify-send ]; then
+  alias alert='notify-send -t 0 -i gnome-terminal "[$?] $(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/;\s*alert$//'\'')"'
+fi
