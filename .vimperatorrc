@@ -48,7 +48,7 @@ set! mousewheel.withnokey.sysnumlines=false
 "  qmarks  "
 "=========="
 silent qmark a http://amazon.de
-silent qmark A http://asana.com
+silent qmark A http://arxiv.org/list/hep-ph/pastweek?show=25
 silent qmark b http://bitbucket.org
 silent qmark c http://google.com/calendar
 silent qmark C https://kunde.comdirect.de/lp/wt/login
@@ -70,13 +70,3 @@ silent qmark w https://whizard.hepforge.org/trac/timeline
 silent qmark y https://youtube.com
 silent qmark x http://xkcd.com
 silent qmark X http://arxiv.org/list/hep-ph/pastweek?show=25
-
-" BMarks {{{1
-"javascript <<EOM
-"function bmark(title, url, keyword) {
-  "if (!bookmarks.isBookmarked(url)) {
-    "bookmarks.add(false, title, url, keyword, ['keyword'], false);
-  "}
-"}
-"bmark('Google Search' , 'http://www.google.com/search?q=%s' , 'g');
-"EOM
