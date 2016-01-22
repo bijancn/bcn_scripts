@@ -1,13 +1,21 @@
 map <C-u> scrollPageUp
 map <C-d> scrollPageDown
 map d closeTab
-map ee createEditHint
+map <C-e> createEditHint
+unmap b
 map b openQuickMark
+unmap B
 map B openQuickMarkTabbed
+unmap <C-b>
 map <C-b> scrollFullPageUp
+unmap <C-f>
 map <C-f> scrollFullPageDown
+unmap u
 map u :restore<Space>
+
+let blacklists = ["*://mail.google.com/*", "*://inbox.google.com/*"]
 
 let searchalias w = "wikipedia"
 let searchengine gm = "https://www.google.com/maps/search/"
 let searchengine a = "http://arxiv.org/find/all/1/all:+"
+let searchengine i = "http://inspirehep.net/search?ln=en&p="
