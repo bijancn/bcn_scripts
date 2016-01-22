@@ -1,8 +1,13 @@
-<C-u> scrollPageUp
-<C-d> scrollPageDown
-d closeTab
-u " undo
-unmap b
+map <C-u> scrollPageUp
+map <C-d> scrollPageDown
+map d closeTab
+map ee createEditHint
 map b openQuickMark
-unmap B
 map B openQuickMarkTabbed
+map <C-b> scrollFullPageUp
+map <C-f> scrollFullPageDown
+map u :restore<Space>
+
+let searchalias w = "wikipedia"
+let searchengine gm = "https://www.google.com/maps/search/"
+let searchengine a = "http://arxiv.org/find/all/1/all:+"
