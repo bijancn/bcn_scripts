@@ -13,9 +13,32 @@ map <C-f> scrollFullPageDown
 unmap u
 map u :restore<Space>
 
-let blacklists = ["*://mail.google.com/*", "*://inbox.google.com/*"]
-
+let blacklists = ["*://mail.google.com/*","*://inbox.google.com/*"]
 let searchalias w = "wikipedia"
 let searchengine gm = "https://www.google.com/maps/search/"
 let searchengine a = "http://arxiv.org/find/all/1/all:+"
 let searchengine i = "http://inspirehep.net/search?ln=en&p="
+
+let qmark a = ["http://amazon.de"]
+let qmark A = ["http://arxiv.org/list/hep-ph/pastweek?show=25"]
+let qmark b = ["http://bitbucket.org"]
+let qmark c = ["http://google.com/calendar"]
+let qmark C = ["https://kunde.comdirect.de/lp/wt/login"]
+let qmark d = ["https://mail.desy.de"]
+let qmark f = ["http://facebook.com"]
+let qmark F = ["http://feedly.com"]
+let qmark g = ["https://github.com"]
+let qmark h = ["https://hipchat.com"]
+let qmark i = ["https://itcher.com"]
+let qmark j = ["http://localhost:8080/job/whizard-trunk-dist"]
+let qmark m = ["https://inbox.google.com"]
+let qmark M = ["https://maps.google.com"]
+let qmark q = ["http://quora.com"]
+let qmark p = ["http://phdcomics.com"]
+let qmark s = ["http://play.spotify.com"]
+let qmark S = ["https://calendar.sunrise.am"]
+let qmark t = ["http://trello.com"]
+let qmark w = ["https://whizard.hepforge.org/trac/timeline"]
+let qmark y = ["https://youtube.com"]
+let qmark x = ["http://xkcd.com"]
+let qmark X = ["http://arxiv.org/list/hep-ph/pastweek?show=25"]
