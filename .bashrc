@@ -602,8 +602,8 @@ alias bp='bitpocket'
 #===========#
 alias qst='cit qstat'
 
-alias men='mendeleydesktop-1.15-linux-x86_64/bin/mendeleydesktop &'
-alias spi='SpiderOak/SpiderOakONE &'
+alias men='$HOME/mendeleydesktop-1.15-linux-x86_64/bin/mendeleydesktop &'
+alias spi='$HOME/SpiderOak/SpiderOakONE &'
 
 #===========#
 #  configs  #

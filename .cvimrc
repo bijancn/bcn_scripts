@@ -1,0 +1,8 @@
+<C-u> scrollPageUp
+<C-d> scrollPageDown
+d closeTab
+u " undo
+unmap b
+map b openQuickMark
+unmap B
+map B openQuickMarkTabbed
