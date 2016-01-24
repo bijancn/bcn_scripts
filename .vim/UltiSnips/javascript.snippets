@@ -1,0 +1,38 @@
+snippet if "normal if"
+if ($1) {
+  $2
+}
+$0
+endsnippet
+
+snippet ifer "if error throw"
+if (${1:err}) {
+  throw $1
+}
+$0
+endsnippet
+
+snippet func "function"
+function ($1) {
+	$2
+}
+$0
+endsnippet
+
+snippet vdbg "visual debug"
+console.log("$1 = " + $1)$0; // Debugging
+endsnippet
+
+snippet dbg "debug"
+console.log("!!! $1 !!!")$0; // Debugging
+endsnippet
+
+snippet ife "if/else"
+if ($1) {
+  $2
+}
+else {
+	$3
+}
+$0
+endsnippet
