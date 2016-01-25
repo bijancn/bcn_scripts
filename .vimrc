@@ -130,11 +130,6 @@ Plug 'vim-voom/VOoM', {'on': ['Voom', 'VoomToggle']}
 " Create tables automatically and allow spreadsheet computations
 Plug 'dhruvasagar/vim-table-mode'
 
-" Translation plugin. Need to add dict.cc API
-Plug 'rykka/trans.vim'
-" For no python support in vim
-Plug 'mattn/webapi-vim'
-
 " Edit multiple locations at once
 Plug 'terryma/vim-multiple-cursors'
 
@@ -446,8 +441,9 @@ nnoremap Y y$
 nnoremap } }zz
 
 " Don't skip rows when long lines are wrapped
-nnoremap j gj
-nnoremap k gk
+" Problem: This disallows the use of Nj or Nk
+"nnoremap j gj
+"nnoremap k gk
 
 " Go to the next buffer
 noremap K :bnext<CR>
@@ -1024,33 +1020,6 @@ let g:wordy#ring = [
 nnoremap <silent> <leader>w :NextWordy<cr>
 
 "=============================================================================="
-"                                    TRANS                                     "
-"=============================================================================="
-let g:trans_default_api='google'
-let g:trans_default_lang='en_US'
-
-" init default apis
-call trans#data#init()
-
-fun! API_PARSER_FUNC(content)
-    return a:content
-endfun
-
-let g:trans_api.YOUR_API = {
-    \'type': 'get',
-    \'url': 'http://www.dict.cc/?s=',
-    \'params' : {
-            \"client" : 'firefox-a',
-            \"ie" : 'UTF-8',
-            \"oe" : 'UTF-8',
-            \},
-    \'query_str': 'text=%TEXT',
-    \'parser': 'API_PARSER_FUNC'
-    \}
-    "\'query_str': 'langpair=%FROM%7C%TO&text=%TEXT',
-    "\'query_str': 'text=%TEXT&from=%FROM&to=%TO',
-
-"=============================================================================="
 "                            DISABLE HJKL MOVEMENTS                            "
 "=============================================================================="
 " https://gist.github.com/jeetsukumaran/96474ebbd00b874f0865
@@ -1097,7 +1066,7 @@ command! ToggleDisablingOfNonCountedBasicMotions :call ToggleDisablingOfBasicMot
 command! DisableNonCountedBasicMotions :call SetDisablingOfBasicMotionsIfNonCounted(1)
 command! EnableNonCountedBasicMotions :call SetDisablingOfBasicMotionsIfNonCounted(0)
 
-DisableNonCountedBasicMotions
+"DisableNonCountedBasicMotions
 
 "=============================================================================="
 "                                  EASYMOTION                                  "
