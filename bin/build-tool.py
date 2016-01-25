@@ -131,6 +131,9 @@ if 'dist' in args.build:
 if 'extended' in args.build:
   args.configureflags += ['--enable-fc-extended', '--with-precision=extended']
 
+if 'quad' in args.build:
+  args.configureflags += ['--with-precision=quad']
+
 if 'develop' in args.build:
   args.fcflags += '-fcheck=all '
   args.configureflags += ['--disable-static']

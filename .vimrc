@@ -207,8 +207,8 @@ set cursorline          " Highlight current line
 set expandtab           " Always uses spaces instead of tab characters
 set tabstop=2           " Size of insterted spaces if tab is pressed
 set list                " Highlight tab characters in files
-" eol:¬, tab:--
 set listchars=tab:▸\ ,extends:#,nbsp:.,trail:⋅
+" eol:¬, tab:--
 
 " Do not search in all included files for completions
 set complete-=i
@@ -246,7 +246,7 @@ set history=500           " keep 500 lines of command line history
 set ssop-=options         " Do not store global and local values in a session
 set showcmd               " display incomplete commands
 set number                " Activate line numbers on the left side
-set diffopt+=iwhite       " Ignore whitespace when diffing
+"set diffopt+=iwhite       " Ignore whitespace when diffing
 
 " Allow color schemes to do bright colors without forcing bold.
 if &t_Co == 8 && $TERM !~# '^linux'
@@ -369,9 +369,9 @@ nnoremap \dp :%diffput<CR>
 nnoremap \do :%diffget<CR>
 
 " Unfolding and folding with space
-nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-nnoremap <silent> <C-Space> @=(foldlevel('.')?'zA':"\<Space>")<CR>
-vnoremap <Space> zf
+"nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+"nnoremap <silent> <C-Space> @=(foldlevel('.')?'zA':"\<Space>")<CR>
+"vnoremap <Space> zf
 
 " Toggle between highlighting line or column
 nnoremap <leader>o :set cursorline! cursorcolumn!<CR>
