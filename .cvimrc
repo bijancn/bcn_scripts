@@ -18,6 +18,7 @@ let searchalias w = "wikipedia"
 let searchengine gm = "https://www.google.com/maps/search/"
 let searchengine a = "http://arxiv.org/find/all/1/all:+"
 let searchengine i = "http://inspirehep.net/search?ln=en&p="
+let searchengine d = "http://dict.cc/?s="
 
 let qmark a = ["http://amazon.de"]
 let qmark A = ["http://arxiv.org/list/hep-ph/pastweek?show=25"]
