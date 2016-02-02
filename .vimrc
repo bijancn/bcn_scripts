@@ -365,8 +365,8 @@ let mapleader = ";"
 
 noremap ]p ]cdp
 noremap [p [cdp
-nnoremap \dp :%diffput<CR>
-nnoremap \do :%diffget<CR>
+nnoremap <Leader>dp :%diffput<CR>
+nnoremap <Leader>do :%diffget<CR>
 
 " Unfolding and folding with space
 "nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
@@ -570,9 +570,9 @@ vmap <silent> # :<C-U>
 " Visually select a line
 nnoremap vv 0v$h
 
-nnoremap <silent> <leader>ff :grep -r 'public :: <cword>$' %:p:h/../*<CR><CR>
-nnoremap <silent> <leader>fm :grep -r 'module <cword>$' %:p:h/../*<CR><CR>
-nnoremap <silent> <leader>fa :grep -r '<cword>' %:p:h/../*<CR><CR>
+nnoremap <silent> <leader>ff :grep -r 'public :: <cword>$' %:p:h/../../*<CR><CR>
+nnoremap <silent> <leader>fm :grep -r 'module <cword>$' %:p:h/../../*<CR><CR>
+nnoremap <silent> <leader>fa :grep -r '<cword>' %:p:h/../../*<CR><CR>
 
 " Number of lines for command line
 set cmdheight=2
