@@ -528,8 +528,10 @@ alias rgrep='grep -r'
 alias hgrep='history | grep '
 # Narrowing greps search realms
 if version-bigger grep 2.6.3; then
-  a='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude-dir=_build '
-  export GREP_OPTIONS="$a--exclude=*.swp --exclude=Makefile.in --exclude-dir=_install"
+  a='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude-dir=_build'
+  b="$a --exclude=*.swp --exclude=Makefile.in --exclude-dir=_install"
+  alias rgrep="grep -r $b"
+  alias grep="grep $b"
 fi
 
 #========#

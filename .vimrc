@@ -49,6 +49,7 @@ Plug 'bling/vim-airline'
 " in bashrc:  source ~/.shell_prompt.sh
 Plug 'edkolev/promptline.vim'
 
+" in vim:     :Tmuxline airline         :TmuxlineSnapshot ~/.tmux.statusline
 Plug 'edkolev/tmuxline.vim'
 
 " Allows to focus completely
