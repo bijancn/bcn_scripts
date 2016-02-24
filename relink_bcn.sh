@@ -17,7 +17,7 @@ bcn=~/bcn_scripts
 safe=~/hive/keys
 cd $bcn
 
-files=".@(bash|colorit|dir_colors|pylint|screen|vim|vimperator)rc .gitignore_global "
+files=".@(bash|colorit|common|dir_colors|pylint|screen|vim|vimperator)rc .gitignore_global "
 files+=".config/dwb/default/@(bookmarks|quickmarks) "
 files+=".config/dwb/@(keys|mimetypes|searchengines|settings) "
 files+=".config/dwb/userscripts/@(autostart_player.js|extension_loader.js|start_streamer) "

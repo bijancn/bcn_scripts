@@ -143,6 +143,9 @@ Plug 'vim-scripts/tracwiki'
 " fugitive extension
 Plug 'idanarye/vim-merginal'
 
+" Show indentation by gray scales
+Plug 'nathanaelkane/vim-indent-guides'
+
 call plug#end()
 
 " Does not change in noweb chunks, might be fixable
@@ -1157,3 +1160,21 @@ endfunction
 vnoremap <leader>d :call DebugLines ()<CR>
 
 nnoremap <leader><leader> :execute " grep -srnw --binary-files=without-match --exclude-dir=.git . -e " . expand("<cword>") . " "<CR>
+
+"=============================================================================="
+"                                INDENT-GUIDES                                 "
+"=============================================================================="
+" Size of the indent guide. 0 will set it to shiftwidth
+let g:indent_guides_guide_size = 1
+
+" Default: 1
+let g:indent_guides_start_level = 2
+
+" should the plugin consider spaces as indention. Default: 1
+let g:indent_guides_space_guides = 1
+
+let g:indent_guides_enable_on_vim_startup = 1
+
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=231
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=255
