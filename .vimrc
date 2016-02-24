@@ -483,6 +483,8 @@ noremap <silent> <F11>
 " Don't use Ex-mode, use Q for formatting the current line (or selection)
 noremap Q gq
 
+noremap <leader>ch a✓<ESC>
+
 "=============="
 "  deprecated  "
 "=============="
