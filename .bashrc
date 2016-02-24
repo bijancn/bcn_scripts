@@ -792,6 +792,10 @@ function show-nr-of-own-threads () {
   ps -eLF | grep ^$USER | wc -l
 }
 
+function show-nr-of-files () {
+  for i in */ ; do echo "$i : `find $i  -type f | wc -l`" ; done
+}
+
 function show-process () {
   ps -ef | grep $1
 }
