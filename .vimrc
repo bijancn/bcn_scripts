@@ -267,7 +267,6 @@ set shell=/bin/bash
 
 " Hybrid relative absolute number mode
 set relativenumber
-set number
 
 " Colors
 "set background=light
@@ -424,7 +423,6 @@ noremap <leader>be :e <c-r>=expand("%:p:h")<cr>/
 
 " Close the current buffer and move to the previous one
 nnoremap <leader>bq :bp <BAR> bd #<CR>
-nnoremap <leader>bc :bp <BAR> bd #<CR>
 
 nnoremap <leader>bo :BufOnly<CR>
 

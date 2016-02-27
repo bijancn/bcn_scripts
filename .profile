@@ -19,11 +19,8 @@
 # logins, install and configure the libpam-umask package.
 #umask 022
 
-echo "in profile"
-sleep 2
-if (-x /bin/zsh) then
-  exec /bin/zsh -l
-endif
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
