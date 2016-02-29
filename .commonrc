@@ -796,6 +796,10 @@ alias gituiu='git update-index --assume-unchanged'
 # Remove the above flag again to be able to commit changes of that file
 alias gituinu='git update-index --no-assume-unchanged'
 
+function gitignore () {
+  echo "$1" >> .gitignore
+}
+
 #==================#
 #  initialization  #
 #==================#
