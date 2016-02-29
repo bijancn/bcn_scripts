@@ -397,10 +397,10 @@ inoremap <right> <NOP>
 "noremap ll <NOP>
 
 " Exit
-inoremap sd <esc>
-inoremap Sd <esc>
-inoremap SD <esc>
-inoremap <esc> <NOP>
+"inoremap sd <esc>
+"inoremap Sd <esc>
+"inoremap SD <esc>
+"inoremap <esc> <NOP>
 
 " Delete
 noremap <del> <NOP>

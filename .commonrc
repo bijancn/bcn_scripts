@@ -184,7 +184,7 @@ checkout-openloops(){
   printf '[OpenLoops]\nprocess_repositories=public, whizard\ncompile_extra=1' >> OpenLoops/openloops.cfg
   cd OpenLoops
   ./scons
-  ./openloops libinstall ppzj ppzjj ppll ppllj eett eehtt eevvjj ee_tt_wwjj tbw
+  ./openloops libinstall ppzj ppzjj ppll ppllj pplljj pplljjj eett eehtt eevvjj ee_tt_wwjj tbw
   cd examples
   scons
   ./OL_fortran
