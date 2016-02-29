@@ -781,6 +781,11 @@ function show-pylint-scores () {
   echo "$i : $score"
 done
 }
+
+function create-svn-commit-msg () {
+  git log --pretty=format:'%s,%b' origin/master..HEAD > ~/trunk/svn_commit
+}
+
 #==============================================================================#
 #                                     GIT                                      #
 #==============================================================================#
