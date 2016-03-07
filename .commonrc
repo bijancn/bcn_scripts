@@ -329,7 +329,7 @@ NC="\e[m"               # Color Reset
 version-bigger () {
   version=`$1 --version | head -n1 | sed 's/[^0-9.]*\([0-9.]*\).*/\1/'`
   bigger=`version_compare.py $version $2`
-  [ $bigger == 'first' ] || [ $bigger == 'equal' ]
+  test "$bigger" = 'first' -o "$bigger" = 'equal'
 }
 
 # Swap 2 files, if they exist
