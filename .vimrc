@@ -74,7 +74,7 @@ Plug 'SirVer/ultisnips' " , { 'on' : [] }
 
 " Nice fuzzy autocompletion with supertab support
 " Ubuntu libs:  build-essential cmake python-dev
-" Build with:   cd ~/.vim/bundle/YouCompleteMe && ./install.py
+" Build with:   cd ~/.vim/bundle/YouCompleteMe && ./install.py --clang-completer --tern-completer
 Plug 'Valloric/YouCompleteMe', { 'on' : [] } " , { 'do': 'export YCM_CORES=4 ; ./install.py' }
 
 " Allow to run stuff asynchronously with normal vim
