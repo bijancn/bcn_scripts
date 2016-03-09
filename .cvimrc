@@ -23,7 +23,7 @@ let searchengine d = "http://dict.cc/?s="
 let qmark a = ["https://amazon.de"]
 let qmark A = ["https://arxiv.org/list/hep-ph/pastweek?show=25"]
 let qmark b = ["https://bitbucket.org"]
-let qmark c = ["https://google.com/calendar"]
+let qmark c = ["https://cloud.bijancn.de/index.php/apps/calendar/"]
 let qmark C = ["https://kunde.comdirect.de/lp/wt/login"]
 let qmark d = ["https://mail.desy.de"]
 let qmark f = ["https://facebook.com"]

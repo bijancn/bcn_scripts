@@ -42,7 +42,9 @@ Plug 'bijancn/free-fortran.vim'
 Plug 'bijancn/whizard.vim'
 
 " Pure epicness, the one and only statusbar
-Plug 'bling/vim-airline'
+"Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Generate a fast shell prompt with powerline symbols and airline colors
 " in vim:     :PromptlineSnapshot ~/.shell_prompt.sh airline
@@ -748,6 +750,8 @@ let g:airline_symbols.space = "\ua0"
 
 " Shows trailing whitespace
 let g:airline#extensions#whitespace#enabled = 1
+
+let g:airline#extensions#tmuxline#enabled = 0
 
 "=============================================================================="
 "                                    CTRLP                                     "
