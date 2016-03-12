@@ -148,6 +148,11 @@ Plug 'idanarye/vim-merginal'
 " Show indentation by gray scales
 Plug 'nathanaelkane/vim-indent-guides'
 
+" Mail interface
+Plug 'felipec/notmuch-vim'
+
+Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
+
 call plug#end()
 
 " Does not change in noweb chunks, might be fixable
@@ -911,6 +916,12 @@ augroup load_us_ycm
   autocmd InsertEnter * call plug#load('YouCompleteMe')
         \| call youcompleteme#Enable() | autocmd! load_us_ycm
 augroup END
+
+"  YCM's identifier completer will seed its database with keywords of language
+let g:ycm_seed_identifiers_with_syntax = 1
+
+" Load every .ycm_extra_conf.py that you find
+let g:ycm_confirm_extra_conf = 0
 
 "=============================================================================="
 "                                     GOYO                                     "

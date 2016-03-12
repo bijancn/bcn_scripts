@@ -14,8 +14,14 @@
 shopt -s extglob
 mpwd=`pwd`
 bcn=~/bcn_scripts
-safe=~/hive/keys
+safe=${HOME}/cloud/keys
 cd $bcn
+force="false"
+if [ $# -eq 1 ]; then
+  if test "$1" = "-f"; then
+    force="true"
+  fi
+fi
 
 files=".@(bash|colorit|common|dir_colors|pylint|screen|vim|vimperator)rc .gitignore_global "
 files+=".config/dwb/default/@(bookmarks|quickmarks) "
@@ -49,7 +55,7 @@ files+="theoc.yaml"
 
 for f in $files; do
   mkdir ~/$(dirname $f) -p
-  if [ -f ~/$f ]; then
+  if test -f ~/$f -a $force = "false"; then
     echo "--- $f   already exists, doing nothing"
   else
     # Try to use public file. If not there use private.
