@@ -149,7 +149,7 @@ Plug 'idanarye/vim-merginal'
 Plug 'nathanaelkane/vim-indent-guides'
 
 " Mail interface
-Plug 'felipec/notmuch-vim'
+Plug 'imain/notmuch-vim'
 
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
 
