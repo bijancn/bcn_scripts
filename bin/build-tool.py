@@ -22,6 +22,8 @@ parser.add_argument("-m", '--make', action='store_true',
     help='Perform make')
 parser.add_argument("-k", '--makecheck', action='store_true',
     help='Perform make check')
+parser.add_argument("-d", '--makedistcheck', action='store_true',
+    help='Perform make distcheck')
 parser.add_argument("-r", '--remove', action='store_true',
     help='Remove build dir before building')
 parser.add_argument("-A", '--all', action='store_true',
@@ -146,7 +148,7 @@ if 'ifort' in args.build:
   args.compiler = 'ifort'
   args.optimization = '0'
   # -fpe0 exit on floating point exception
-  args.fcflags = '-g -traceback -check uninit -check pointer -fp-stack-check -debug inline-debug-info -fpe0'
+  args.fcflags = '-g -traceback -check uninit -check pointer -fp-stack-check -debug inline-debug-info '
   args.f77flags = args.fcflags
 
 if 'stdsemantics' in args.build:
@@ -203,7 +205,7 @@ if args.all:
   args.makecheck = True
 
 # show set options for builder
-tasks = ['autoreconf', 'remove', 'configure', 'make', 'makecheck', 'all']
+tasks = ['autoreconf', 'remove', 'configure', 'make', 'makecheck', 'makedistcheck', 'all']
 options = ['jobs', 'errors']
 variants = ['configureflags', 'compiler', 'optimization', 'fcflags', 'build', 'tag']
 arg_dict = vars(args)
@@ -257,3 +259,5 @@ if args.make:
 # check if desired
 if args.makecheck:
   _call_verbose(['make', '-j' + str(args.jobs), 'check'])
+if args.makedistcheck:
+  _call_verbose(['make', '-j' + str(args.jobs), 'distcheck'])
