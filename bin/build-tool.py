@@ -43,6 +43,9 @@ parser.add_argument("-O", '--optimization', action='append', metavar='X',
 parser.add_argument("-f", '--fcflags', action='append',
     help="Add this flag to the compiler(s) (optimization see above). Default:" +
          " -FCFLAGS=['-fmax-errors=1 -O2 -fbounds-check']")
+parser.add_argument("-f77", '--f77flags', action='append',
+    help="Add this flag to the compiler(s) (optimization see above). Default:" +
+         " -FCFLAGS=['']")
 parser.add_argument("-p", '--openmp', action='store_true',
     help='Activate OpenMP')
 parser.add_argument('--only_omega', action='store_true',
@@ -66,6 +69,8 @@ if not args.compiler:
   args.compiler = 'gfortran'
 if not args.fcflags:
   args.fcflags = gf_warnings
+if not args.f77flags:
+  args.f77flags = ''
 if not args.configureflags:
   args.configureflags = []
 
@@ -109,8 +114,7 @@ if 'omp' in args.build:
 if 'autoparallel' in args.build:
   graphite_enabled = False
   cores = 8
-  args.fcflags = ''
-  args.fcflags += '-ftree-parallelize-loops=' + str(cores) + ' '
+  args.fcflags = '-ftree-parallelize-loops=' + str(cores) + ' '
   if graphite_enabled:
     args.fcflags += '-floop-parallelize-all '
 
@@ -141,7 +145,9 @@ if 'develop' in args.build:
 if 'ifort' in args.build:
   args.compiler = 'ifort'
   args.optimization = '0'
-  args.fcflags = '-g -traceback -check uninit -check pointer -fp-stack-check '
+  # -fpe0 exit on floating point exception
+  args.fcflags = '-g -traceback -check uninit -check pointer -fp-stack-check -debug inline-debug-info -fpe0'
+  args.f77flags = args.fcflags
 
 if 'stdsemantics' in args.build:
   args.fcflags += '-standard-semantics '
@@ -166,6 +172,7 @@ if 'nagfor-jenkins' in args.build:
   args.compiler = 'nagfor'
   args.optimization = '0'
   args.fcflags = '-C=all -nan -w -f2003 -gline -maxcontin=512'
+  args.f77flags = '-C=all -nan -w -gline '
 
 if 'debug' in args.build:
   args.optimization = '0'
@@ -181,6 +188,8 @@ if 'NaN' in args.build:
     args.fcflags += '-nan '
   elif args.compiler == 'gfortran':
     args.fcflags += '-finit-real=nan '
+  elif args.compiler == 'ifort':
+    args.fcflags += '-init=snan '
 
 if not args.optimization:
   args.optimization = '2'
@@ -227,12 +236,14 @@ os.chdir(build_path)
 compiler = args.compiler
 optimization = args.optimization
 fcflags = args.fcflags
+f77flags = args.f77flags
 configureflags = args.configureflags
 
 prefix = '--prefix=' + os.path.join(base_path, '_install', build_name)
 fortran_compiler = 'FC=' + compiler
 fortran_flags = "FCFLAGS=-O" + optimization + " " + fcflags
-configure_options = [prefix, fortran_compiler, fortran_flags] + configureflags
+f_flags = "FFLAGS=" + f77flags
+configure_options = [prefix, fortran_compiler, fortran_flags, f_flags] + configureflags
 if args.configure:
   if args.only_omega: package = os.path.join(base_path, 'omega')
   else:               package = base_path

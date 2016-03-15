@@ -673,13 +673,18 @@ function find-ref-dir () {
   grep --quiet 'FC_PRECISION = double' Makefile
   if test "$?" = "0" -a -f $ref_dir/ref-output-double/$1.ref; then
     echo "$ref_dir/ref-output-double"
-  elif test "$?" = "1" -a -f $ref_dir/ref-output-ext/$1.ref; then
+  fi
+  grep --quiet 'FC_PRECISION = extended' Makefile
+  if test "$?" = "0" -a -f $ref_dir/ref-output-ext/$1.ref; then
     echo "$ref_dir/ref-output-ext"
+  fi
+  grep --quiet 'FC_PRECISION = quadruple' Makefile
+  if test "$?" = "0" -a -f $ref_dir/ref-output-quad/$1.ref; then
+    echo "$ref_dir/ref-output-quad"
+  elif test -f $ref_dir/ref-output-prec/$1.ref; then
+    echo "$ref_dir/ref-output-prec"
   elif test -f $ref_dir/ref-output/$1.ref; then
     echo "$ref_dir/ref-output"
-  else
-    echo "File not found in normal, double or extended!"
-    echo "ref dir $ref_dir"
   fi
 }
 
