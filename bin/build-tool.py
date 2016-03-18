@@ -58,23 +58,17 @@ args = parser.parse_args()
 # Select a base path
 base_path = get_base_path()
 
-# -fbounds-check is included in fcheck=all. Does not play well with the gosam
-# interface however
-gf_warnings = '-fmax-errors=1 -Wall -Wuninitialized -Wextra -fno-whole-program '
-# gcc doesn't recognize our test function construction as use of a function
-gf_warnings += '-Wno-unused-function -Wno-unused-parameter -Wno-unused-dummy-argument '
-# -fimplicit-none does not work with the PDFs
-gf_warnings += '-pedantic -fbacktrace -ggdb '
-gf_debug_warnings = gf_warnings + '-fcheck=all ' + \
-    '-ffpe-trap=invalid,zero,overflow,underflow,denormal '
 if not args.compiler:
   args.compiler = 'gfortran'
 if not args.fcflags:
-  args.fcflags = gf_warnings
+  args.fcflags = ' '
 if not args.f77flags:
-  args.f77flags = ''
+  args.f77flags = ' '
 if not args.configureflags:
   args.configureflags = []
+
+if not args.optimization:
+  args.optimization = '2'
 
 # Plugins
 if spawn.find_executable('fastjet-config'):
@@ -82,14 +76,6 @@ if spawn.find_executable('fastjet-config'):
 
 if spawn.find_executable('gosam-config.py'):
   args.configureflags += ['--enable-gosam']
-
-# Need to build my own
-#fmcfio = '/afs/desy.de/group/theorie/software/ELF64/lib/libFmcfio.a'
-#if os.path.isfile(fmcfio):
-  #args.configureflags += ['FMCFIO=' + fmcfio]
-#stdhep = '/afs/desy.de/group/theorie/software/ELF64/lib/libstdhep.a'
-#if os.path.isfile(stdhep):
-  #args.configureflags += ['STDHEP=' + stdhep]
 
 if spawn.find_executable('simjob'):
   args.configureflags += ['--enable-lcio']
@@ -104,6 +90,9 @@ if ol_path:
 
 
 # Convenience magic
+#==============================================================================#
+#                                   SPECIALS                                   #
+#==============================================================================#
 if 'pgf' in args.build:
   args.compiler = 'pgf90_2015'
 
@@ -113,20 +102,8 @@ if 'omega' in args.build:
 if 'omp' in args.build:
   args.configureflags += ['--enable-fc-openmp']
 
-if 'autoparallel' in args.build:
-  graphite_enabled = False
-  cores = 8
-  args.fcflags = '-ftree-parallelize-loops=' + str(cores) + ' '
-  if graphite_enabled:
-    args.fcflags += '-floop-parallelize-all '
-
-if 'vectorize' in args.build:
-  args.optimization = '3'
-  args.fcflags += '-ftree-vectorizer-verbose=2 '
-
 if 'disabled' in args.build:
-  args.configureflags += ['--disable-pythia6', '--disable-static',
-                          '--disable-omega']
+  args.configureflags += ['--disable-pythia6', '--disable-omega']
 
 if 'profile' in args.build:
   args.configureflags += ['--enable-fc-profiling', '--enable-static']
@@ -135,68 +112,98 @@ if 'dist' in args.build:
   args.configureflags += ['--enable-distribution']
 
 if 'extended' in args.build:
-  args.configureflags += ['--enable-fc-extended', '--with-precision=extended']
+  args.configureflags += ['--with-precision=extended']
 
 if 'quad' in args.build:
   args.configureflags += ['--with-precision=quadruple']
 
-if 'develop' in args.build:
-  args.fcflags += '-fcheck=all '
+if 'nostatic' in args.build:
   args.configureflags += ['--disable-static']
 
+#==============================================================================#
+#                                    IFORT                                     #
+#==============================================================================#
+# -fpe0 exit on floating point exception
 if 'ifort' in args.build:
   args.compiler = 'ifort'
-  args.optimization = '0'
-  # -fpe0 exit on floating point exception
-  args.fcflags = '-g -traceback -check uninit -check pointer -fp-stack-check -debug inline-debug-info '
+  args.optimization = '2'
+  args.fcflags = '-g -traceback '
   args.f77flags = args.fcflags
 
 if 'stdsemantics' in args.build:
   args.fcflags += '-standard-semantics '
 
-if 'ifort-noflags' in args.build:
-  args.optimization = '2'
-  args.fcflags = '-g -traceback '
+if 'autoparallel' in args.build:
+  graphite_enabled = False
+  cores = 8
+  args.fcflags += '-ftree-parallelize-loops=' + str(cores) + ' '
+  if graphite_enabled:
+    args.fcflags += '-floop-parallelize-all '
+
+if 'vectorize' in args.build:
+  args.optimization = '3'
+  args.fcflags += '-ftree-vectorizer-verbose=2 '
+
+#==============================================================================#
+#                                   GFORTRAN                                   #
+#==============================================================================#
+# -fbounds-check is included in fcheck=all. Does not play well with the gosam
+# interface however
+gf_warnings = '-fmax-errors=1 -Wall -Wuninitialized -Wextra -fno-whole-program '
+# gcc doesn't recognize our test function construction as use of a function
+gf_warnings += '-Wno-unused-function -Wno-unused-parameter -Wno-unused-dummy-argument '
+# -fimplicit-none does not work with the PDFs
+gf_warnings += '-pedantic -fbacktrace -ggdb -fcheck=all '
+gf_debug_warnings = gf_warnings  + \
+    '-ffpe-trap=invalid,zero,overflow,underflow,denormal '
+
+if 'develop' in args.build:
+  args.fcflags = gf_warnings
+  args.configureflags += ['--disable-static']
+
+#==============================================================================#
+#                                    NAGFOR                                    #
+#==============================================================================#
+# -gline         Compile code to produce a traceback if an error occurs.
+# -C=all         Maximum runtime checking.
+# -mtrace=all    Enable all memory allocation options.
+# -nan           Set unSAVEd local variables etc. to signalling NaN.
+# -maxcontin=512 Increase max number of continuation lines to 512
 
 if 'nagfor' in args.build:
   args.compiler = 'nagfor'
   if args.optimization is None:
     args.optimization = '1'
-  # -gline         Compile code to produce a traceback if an error occurs.
-  # -C=all         Maximum runtime checking.
-  # => doesnt work with LHAPDF6 somehow due to q2max
-  # -mtrace=all    Enable all memory allocation options.
-  # -nan           Set unSAVEd local variables etc. to signalling NaN.
-  # -maxcontin=512 Increase max number of continuation lines to 512
   args.fcflags = '-colour'
 
-if 'nagfor-jenkins' in args.build:
-  args.compiler = 'nagfor'
+if 'jenkins' in args.build:
   args.optimization = '0'
-  args.fcflags = '-C=all -nan -w -f2003 -gline -maxcontin=512'
-  args.f77flags = '-C=all -nan -w -gline '
+  # -C=all => doesnt work with LHAPDF6 somehow due to q2max
+  args.fcflags = '-colour -C=all -nan -w -f2003 -gline -maxcontin=512'
+  # errors in pythia pdf
+  # args.f77flags = '-C=all -nan -w -gline '
 
+#==============================================================================#
+#                                   GENERIC                                    #
+#==============================================================================#
 if 'debug' in args.build:
   args.optimization = '0'
   if args.compiler == 'nagfor':
     args.fcflags = '-g -gline -mtrace=all -colour '
   elif args.compiler == 'gfortran':
     args.fcflags = gf_debug_warnings
+  elif args.compiler == 'ifort':
+    args.fcflags = '-g -traceback -check uninit -check pointer -fp-stack-check -debug inline-debug-info -fpe0 '
+  args.f77flags = args.fcflags
   args.configureflags += ['--enable-fc-profiling']
 
 if 'NaN' in args.build:
-  args.optimization = '0'
   if args.compiler == 'nagfor':
     args.fcflags += '-nan '
   elif args.compiler == 'gfortran':
     args.fcflags += '-finit-real=nan '
   elif args.compiler == 'ifort':
     args.fcflags += '-init=snan '
-
-if not args.optimization:
-  args.optimization = '2'
-else:
-  args.optimization = ' '.join(args.optimization)
 
 if args.all:
   args.remove = True
@@ -245,7 +252,10 @@ prefix = '--prefix=' + os.path.join(base_path, '_install', build_name)
 fortran_compiler = 'FC=' + compiler
 fortran_flags = "FCFLAGS=-O" + optimization + " " + fcflags
 f_flags = "FFLAGS=" + f77flags
-configure_options = [prefix, fortran_compiler, fortran_flags, f_flags] + configureflags
+if f77flags != " ":
+  configure_options = [prefix, fortran_compiler, fortran_flags, f_flags] + configureflags
+else:
+  configure_options = [prefix, fortran_compiler, fortran_flags] + configureflags
 if args.configure:
   if args.only_omega: package = os.path.join(base_path, 'omega')
   else:               package = base_path
