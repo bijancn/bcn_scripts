@@ -23,54 +23,6 @@ if [ -f ~/.git-completion.sh ]; then
   source ~/.git-completion.sh
 fi
 
-#==========#
-#  github  #
-#==========#
-function github {
-  git clone git@github.com:$1/$2.git
-}
-
-function bitbucket {
-  git clone ssh://git@bitbucket.org/$1/$2.git
-}
-
-function bitbucket-hg {
-  hg clone ssh://hg@bitbucket.org/$1/$2
-}
-
-#==============================================================================#
-#                                     SVN                                      #
-#==============================================================================#
-if command-exists svn-color; then
-  alias svn=svn-color
-fi
-alias svna='svn add'
-alias svnu='svn update'
-alias svns='svn status'
-alias svnc='svn commit'
-
-# Show the changes that will be commited
-alias svnd='svn diff'
-
-# Edit which files are ignored in the current directory
-alias svnp='svn propedit svn:ignore .'
-
-# Revert all changes made recursively
-alias svnR='svn revert -R .'
-
-function get-link-svn {
-  svn info $1 | sed -ne 's/^URL: //p' | sed 's/\/desy/\/public/'
-}
-
-#==============================================================================#
-#                                     TCON                                     #
-#==============================================================================#
-alias tcstart='tcon start ~/theoc.yaml --session-name=theoc'
-function tcsend {
-  tcon send theoc "$1"
-}
-alias tcdel='tcon delete --all'
-
 #==============================================================================#
 #                                    PROMPT                                    #
 #==============================================================================#
