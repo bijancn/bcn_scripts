@@ -32,7 +32,7 @@ for i in range(36,0,-1):
   elif load15 / real_cores < 0.05:
     color = 'green'
   else:
-    color = 'blue'
+    color = 'yellow'
 
   top_processes = filter(lambda line: float(line.split(' ')[0]) > 10, lines[-40:])
   top_usage = {}
@@ -53,4 +53,4 @@ for i in range(36,0,-1):
   print colored(string, color)
 print "="*80
 print "total number of cores:" + str(total_cores) + " loaded with " + \
-    str(total_load) + " (%4.1f%)" % (total_load / total_cores * 100)
+    str(total_load) + " (%4.1f" % (total_load / total_cores * 100) + " %)"
