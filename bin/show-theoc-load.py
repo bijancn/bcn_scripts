@@ -2,7 +2,7 @@
 import subprocess, re, collections
 from termcolor import colored
 
-re_l = re.compile("([0-9]+\.[0-9]+)$")
+re_l = re.compile("([0-9]+\.[0-9]+), ([0-9]+\.[0-9]+)$")
 total_cores = 0
 total_load = 0.0
 for i in range(36,0,-1):
@@ -14,11 +14,11 @@ for i in range(36,0,-1):
     "echo $(($(grep \"^physical id\" /proc/cpuinfo | awk \'{print $4}\' | sort -un | tail -1)+1))"]);
   lines = ret.split('\n')
   if lines.pop() != '':
-    print "ALERT THIS SHOULD HAVE BEEN EMPTY"
+    print "show-theoc-load.py: ALERT THIS SHOULD HAVE BEEN EMPTY"
   real_cores = int(lines.pop()) * int(lines.pop())
   total_cores += real_cores
-  load15 = float(re_l.search(lines.pop(0)).group(1))
-  total_load += min(load15, real_cores)
+  load5 = float(re_l.search(lines.pop(0)).group(1))
+  total_load += min(load5, real_cores)
   users = []
   for line in lines[:-40]:
     users += [line.split(' ')[0]]
@@ -27,14 +27,14 @@ for i in range(36,0,-1):
   else:
     users_strg = '[]'
 
-  if load15 / real_cores > 0.5:
+  if load5 / real_cores > 0.5:
     color = 'red'
-  elif load15 / real_cores < 0.05:
+  elif load5 / real_cores < 0.05:
     color = 'green'
   else:
     color = 'yellow'
 
-  top_processes = filter(lambda line: float(line.split(' ')[0]) > 10, lines[-40:])
+  top_processes = filter(lambda line: float(line.split(' ')[0]) > 5, lines[-40:])
   top_usage = {}
   for line in top_processes:
     usage = float(line.split(' ')[0])
@@ -48,7 +48,7 @@ for i in range(36,0,-1):
   for user in top_usage:
     usage_strg += user + ':%3.1f' % (top_usage[user]/100) + ' '
 
-  string = machine + " load15: %4.1f" % load15 + '  cores: %2i' % real_cores + \
+  string = machine + " load5: %4.1f" % load5 + '  cores: %2i' % real_cores + \
       "  loggedin:%20s" % users_strg + '  usage: ' + usage_strg
   print colored(string, color)
 print "="*80
