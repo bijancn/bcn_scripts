@@ -58,7 +58,7 @@ def call_verbose(action, filter_strgs=None, show_errors=False):
       fout.write(log)
   except (subprocess.CalledProcessError, OSError) as e:
     print(pcmd("Execution of ") + plog(string) + pcmd(" failed:\n") +\
-        perr(str(e)) + '\n' + e.output)
+        perr(str(e)))
   print(pcmd('\n... done!'))
 
 def show_variable(var_name, var):

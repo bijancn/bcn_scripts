@@ -27,21 +27,37 @@ args = parser.parse_args()
 base_path = get_base_path()
 
 nostatic_builds = ['develop', 'extended', 'quadruple', 'ifort-stdsemantics',
-                   'ifort-quadruple', 'ifort', 'nagfor-jenkins', 'disabled']
-builds = ['ifort-dist'] + [b + '-nostatic' for b in nostatic_builds]
+                   'ifort-quadruple', 'ifort', 'nagfor-jenkins', 'dist']
+builds = ['nagfor-dist-disabled'] + [b + '-nostatic' for b in nostatic_builds]
 # builds = ['nagfor-jenkins-develop']
 
 print 'builds to consider:', builds
+
+def run(cmd, log_filename):
+  logfilen = log_filename.replace(' ', '_')
+  with open(logfilen, 'wb', 0) as logfile:
+    return subprocess.Popen(cmd, stdout=logfile)
 
 if args.clean:
   flag = '-A'
 else:
   flag = '-mk'
+cmds = []
 for b in builds:
   if 'dist' in b:
     this_flag = flag + 'd'
   else:
     this_flag = flag
   cmd = ['time', 'build-tool.py', b, '-j' + str(args.jobs), this_flag]
-  print 'calling ', cmd
-  subprocess.Popen(cmd)
+  cmds.append(cmd)
+
+for c in cmds:
+  print ('c =    ', c) ### Debugging
+
+processes = {run(c, 'subprocess.%s.log' % c) for c in cmds}
+while processes:
+    for p in processes:
+        if p.poll() is not None:
+           processes.remove(p)
+           print('{} done, status {}'.format(p.args, p.returncode))
+           break

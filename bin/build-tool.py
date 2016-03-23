@@ -248,7 +248,12 @@ fcflags = args.fcflags
 f77flags = args.f77flags
 configureflags = args.configureflags
 
-prefix = '--prefix=' + os.path.join(base_path, '_install', build_name)
+global_install_path = '/data/bcho/whizard_install'
+if build_name != 'ifort-nostatic':
+  prefix = '--prefix=' + os.path.join(base_path, '_install', build_name)
+else:
+  prefix = '--prefix=' + global_install_path
+
 fortran_compiler = 'FC=' + compiler
 fortran_flags = "FCFLAGS=-O" + optimization + " " + fcflags
 f_flags = "FFLAGS=" + f77flags
@@ -271,3 +276,4 @@ if args.makecheck:
   _call_verbose(['make', '-j' + str(args.jobs), 'check'])
 if args.makedistcheck:
   _call_verbose(['make', '-j' + str(args.jobs), 'distcheck'])
+  _call_verbose(['make', '-j' + str(args.jobs), 'extra-distcheck'])
