@@ -17,7 +17,7 @@ parser.add_argument("-c", '--clean', action='store_true',
     help='Perform clean rebuilds')
 
 # options how to behave
-parser.add_argument("-j", '--jobs', default=2,
+parser.add_argument("-j", '--jobs', default=1,
     help='Set number of jobs for make and make check')
 parser.add_argument("-n", '--noerrors', action='store_true',
     help='Hide STDERR during all executed commands')

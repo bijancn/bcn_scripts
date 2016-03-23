@@ -69,13 +69,15 @@ for i in range(36,0,-1):
   for user in top_usage:
     usage_strg += user + ':%3.1f' % (top_usage[user]/100) + ' '
 
-  string = machine + " load5: %4.1f" % load5 + '  cores: %2i' % real_cores + \
-      "  loggedin:%20s" % users_strg + '  usage: ' + usage_strg
-  print colored(string, color)
   use_cores = max(int(math.floor(real_cores - load5 - args.safety)), 0)
   if use_cores > args.min_cores:
     f.write(machine + ':' + str(use_cores) + '\n')
     total_use_cores += use_cores
+
+  string = machine + " load5: %4.1f" % load5 + '  cores: %2i' % real_cores + \
+      "  would-use: %2i" % use_cores + \
+      "  loggedin:%20s" % users_strg + '  usage: ' + usage_strg 
+  print colored(string, color)
 f.close()
 print "="*80
 print "total number of cores:" + str(total_cores) + " loaded with " + \

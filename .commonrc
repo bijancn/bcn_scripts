@@ -748,12 +748,15 @@ function show-test-results () {
         printf "$BBlue %40s%20s:\tMissing$NC\n" "$i" "$j"
       fi
     done
+    case "$i" in
+    *dist*)
+      if test -f $i/whizard*.tar.gz; then
+        printf "$BGreen %40s%20s:\tCHECK$NC\n" "dist" "tarball"
+      else
+        printf "$BPurple %40s%20s:\tMissing$NC\n" "dist" "tarball"
+      fi ;;
+    esac
   done
-  if test -f dist/whizard*.tar.gz; then
-    printf "$BGreen %40s%20s:\tCHECK$NC\n" "dist" "tarball"
-  else
-    printf "$BPurple %40s%20s:\tMissing$NC\n" "dist" "tarball"
-  fi
 }
 
 function show-our-lines-of-code () {
