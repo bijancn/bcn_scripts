@@ -56,7 +56,8 @@ for i in range(36,0,-1):
       "  loggedin:%20s" % users_strg + '  usage: ' + usage_strg
   print colored(string, color)
   use_cores = max(int(math.floor(real_cores - load5 - safety)), 0)
-  f.write(machine + ':' + str(use_cores) + '\n')
+  if use_cores > 0:
+    f.write(machine + ':' + str(use_cores) + '\n')
   total_use_cores += use_cores
 f.close()
 print "="*80
