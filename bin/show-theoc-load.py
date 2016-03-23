@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 import subprocess, re, collections
 from termcolor import colored
+import math
 
+safety = 1
 re_l = re.compile("([0-9]+\.[0-9]+), ([0-9]+\.[0-9]+)$")
 total_cores = 0
+total_use_cores = 0
 total_load = 0.0
+f = open ('host_file', 'w')
 for i in range(36,0,-1):
   machine = "theoc%02d" % (i)
   node = "bcho@" + machine
@@ -51,6 +55,11 @@ for i in range(36,0,-1):
   string = machine + " load5: %4.1f" % load5 + '  cores: %2i' % real_cores + \
       "  loggedin:%20s" % users_strg + '  usage: ' + usage_strg
   print colored(string, color)
+  use_cores = max(int(math.floor(real_cores - load5 - safety)), 0)
+  f.write(machine + ':' + str(use_cores) + '\n')
+  total_use_cores += use_cores
+f.close()
 print "="*80
 print "total number of cores:" + str(total_cores) + " loaded with " + \
     str(total_load) + " (%4.1f" % (total_load / total_cores * 100) + " %)"
+print "going to use " + str(total_use_cores) + " cores with the produced host_file"
