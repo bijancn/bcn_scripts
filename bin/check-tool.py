@@ -9,7 +9,8 @@ from distutils import spawn
 from bcn_tools import *
 
 # Parse command line options
-parser = argparse.ArgumentParser(description='Check the Whizard')
+parser = argparse.ArgumentParser(description='Check the Whizard',
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
 # optional tasks that will be performed
 parser.add_argument("-c", '--clean', action='store_true',
@@ -36,7 +37,7 @@ print 'builds to consider:', builds
 def run(cmd, log_filename):
   logfilen = log_filename.replace(' ', '_')
   with open(logfilen, 'wb', 0) as logfile:
-    return subprocess.Popen(cmd, stdout=logfile)
+    return (cmd, subprocess.Popen(cmd, stdout=logfile))
 
 if args.clean:
   flag = '-A'
@@ -56,8 +57,8 @@ for c in cmds:
 
 processes = {run(c, 'subprocess.%s.log' % c) for c in cmds}
 while processes:
-    for p in processes:
-        if p.poll() is not None:
-           processes.remove(p)
-           print('{} done, status {}'.format(p.args, p.returncode))
-           break
+  for p in processes:
+    if p[1].poll() is not None:
+      processes.remove(p)
+      print "Done with " + p[0] + "return code is " + p[1].returncode
+      break

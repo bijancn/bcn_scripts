@@ -8,7 +8,8 @@ from distutils import spawn
 from bcn_tools import *
 
 # Parse command line options
-parser = argparse.ArgumentParser(description='Build the Whizard')
+parser = argparse.ArgumentParser(description='Build the Whizard',
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('build', help='The name of the build')
 parser.add_argument('tag', nargs='?',
     help='Optional tag, if given, add to buildname: build-tag')

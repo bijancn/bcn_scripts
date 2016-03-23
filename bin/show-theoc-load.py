@@ -1,9 +1,26 @@
 #!/usr/bin/env python
 import subprocess, re, collections
+import argparse
 from termcolor import colored
 import math
 
-safety = 1
+# Parse command line options
+parser = argparse.ArgumentParser(description=\
+    'Show theoc load and potentially produce host_file',
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+# optional tasks that will be performed
+parser.add_argument("-f", '--host_file', action='store_true',
+    help='Create host_file')
+
+# options how to behave
+parser.add_argument("-s", '--safety', default=2,
+    help='Number of cores to leave at least free')
+parser.add_argument("-m", '--min_cores', default=4,
+    help='Only use machines that can allocate at least MIN_CORES')
+
+args = parser.parse_args()
+
 re_l = re.compile("([0-9]+\.[0-9]+), ([0-9]+\.[0-9]+)$")
 total_cores = 0
 total_use_cores = 0
@@ -55,12 +72,12 @@ for i in range(36,0,-1):
   string = machine + " load5: %4.1f" % load5 + '  cores: %2i' % real_cores + \
       "  loggedin:%20s" % users_strg + '  usage: ' + usage_strg
   print colored(string, color)
-  use_cores = max(int(math.floor(real_cores - load5 - safety)), 0)
-  if use_cores > 0:
+  use_cores = max(int(math.floor(real_cores - load5 - args.safety)), 0)
+  if use_cores > args.min_cores:
     f.write(machine + ':' + str(use_cores) + '\n')
-  total_use_cores += use_cores
+    total_use_cores += use_cores
 f.close()
 print "="*80
 print "total number of cores:" + str(total_cores) + " loaded with " + \
     str(total_load) + " (%4.1f" % (total_load / total_cores * 100) + " %)"
-print "going to use " + str(total_use_cores) + " cores with the produced host_file"
+print "would use " + str(total_use_cores) + " cores"
