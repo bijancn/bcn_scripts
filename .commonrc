@@ -82,7 +82,6 @@ export FORMTMP=/tmp
 export wingames=/data/win_games
 export lingames=/data/lnx_games
 export syncd=$HOME/safe
-export hive=$HOME/hive
 export install=$HOME/install
 
 # ifort
@@ -232,8 +231,8 @@ alias prnt_1s='lp -d t00ps1 -o sides=one-sided'
 #=======#
 #  IPs  #
 #=======#
-if [ -f $hive/keys/IPs.sh ]; then
-  source $hive/keys/IPs.sh
+if [ -f $HOME/cloud/keys/IPs.sh ]; then
+  source $HOME/cloud/keys/IPs.sh
 fi
 
 function my-ip() # Get IP adress on ethernet.
