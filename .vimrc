@@ -111,6 +111,8 @@ Plug 'sjl/badwolf'
 " Improve language style
 Plug 'reedes/vim-wordy'
 
+Plug 'rking/ag.vim'
+
 " Add the s motion
 Plug 'justinmk/vim-sneak'
 
@@ -581,9 +583,20 @@ vmap <silent> # :<C-U>
 " Visually select a line
 nnoremap vv 0v$h
 
-nnoremap <silent> <leader>ff :grep -r 'public :: <cword>$' %:p:h/../../*<CR><CR>
-nnoremap <silent> <leader>fm :grep -r 'module <cword>$' %:p:h/../../*<CR><CR>
-nnoremap <silent> <leader>fa :grep -r '<cword>' %:p:h/../../*<CR><CR>
+" %:p:h/../../* this was two steps up of the current dir
+" TODO: (bcn 2016-03-24) also match modules
+function! FindFortranObject()
+  let path = system("git rev-parse --show-toplevel")
+  let pattern = "'(public\|type\|function\|subroutine).* :: " . expand("<cword>") . "$'"
+  execute ":Ag " . pattern . " " . path
+endfunction
+function! FindAnyObject()
+  let path = system("git rev-parse --show-toplevel")
+  let pattern = expand("<cword>")
+  execute ":Ag " . pattern . " " . path
+endfunction
+nnoremap <silent> <leader>ff :call FindFortranObject()<CR>
+nnoremap <silent> <leader>fa :call FindAnyObject()<CR>
 
 " Number of lines for command line
 set cmdheight=2
@@ -597,6 +610,11 @@ function! OpenPDF()
   echo system('gnome-open '.file_stripped.'.pdf')
 endfunction
 noremap <leader>v :call OpenPDF()<CR>
+
+"=============================================================================="
+"                                      AG                                      "
+"=============================================================================="
+let g:ag_qhandler=""
 
 "=============================================================================="
 "                                   AUTOCMD                                    "
@@ -761,8 +779,8 @@ let g:airline#extensions#tmuxline#enabled = 0
 "=============================================================================="
 "                                    CTRLP                                     "
 "=============================================================================="
-" Set no max file limit
-let g:ctrlp_max_files = 0
+" Set max file limit
+let g:ctrlp_max_files = 1000
 
 " CtrlP : only files, CtrlPBuffer : only buffer, CtrlPMRU : only recent files
 nnoremap <C-P> :CtrlPMixed<CR>
@@ -779,10 +797,22 @@ endif
 let g:ctrlp_working_path_mode = 'ra'
 
 "let g:ctrlp_custom_ignore = {
-"  \ 'dir':  '\v[\/]\.(git|hg|svn|_build|_install|_test)$',
-"  \ 'file': '\v\.(exe|so|dll)$',
-"  \ 'link': 'some_bad_symbolic_links',
-"  \ }
+  "\ 'dir':  '\v[\/](_(build|install|test))|(\.(swp|ico|git|svn))|(-\d\+\.*\d*)$',
+  "\ 'file': '\v(\.(exe|so|dll|hepmc|yoda|mod|vg|so.0.0.0|phs|o|lo|la|f90\.in|dat))' .
+  "\         '|(done|configure)$',
+  "\ }
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep in vim as grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
 
 "=============================================================================="
 "                                   FUGITIVE                                   "
@@ -1173,8 +1203,6 @@ function! DebugLine (count)
 endfunction
 
 vnoremap <leader>d :call DebugLines ()<CR>
-
-nnoremap <leader><leader> :execute " grep -srnw --binary-files=without-match --exclude-dir=.git . -e " . expand("<cword>") . " "<CR>
 
 "=============================================================================="
 "                                INDENT-GUIDES                                 "
