@@ -108,9 +108,6 @@ Plug 'BufOnly.vim', {'on': 'BufOnly'}
 " Interesting color scheme
 Plug 'sjl/badwolf'
 
-" Improve language style
-Plug 'reedes/vim-wordy'
-
 Plug 'rking/ag.vim'
 
 " Add the s motion
@@ -149,6 +146,9 @@ Plug 'idanarye/vim-merginal'
 
 " Show indentation by gray scales
 Plug 'nathanaelkane/vim-indent-guides'
+
+" Test runner
+Plug 'janko-m/vim-test'
 
 " Mail interface
 Plug 'imain/notmuch-vim'
@@ -379,6 +379,8 @@ noremap ]p ]cdp
 noremap [p [cdp
 nnoremap <Leader>dp :%diffput<CR>
 nnoremap <Leader>do :%diffget<CR>
+
+noremap <leader>w :w<CR>
 
 " Unfolding and folding with space
 "nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
@@ -696,20 +698,20 @@ let g:syntastic_ocaml_checkers = ['merlin']
 let g:syntastic_fortran_checkers = [""]
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
-
-" Regexs for files to ignore
-let g:syntastic_ignore_files = ['\m^/usr/include/', '\m^/home/bijancn/vm_paper/codes/ovm']
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exec = 'eslint'
+"let g:syntastic_javascript_eslint_exec = 'eslint_d'
 
 let g:syntastic_enable_signs = 1
 "
-" Jump to the first error
-let g:syntastic_auto_jump = 2
+" 0: dont jump, 1: always jump to first issue, 2: jump to first error
+let g:syntastic_auto_jump = 0
 " Close the error window but don't open it automatically
 let g:syntastic_auto_loc_list = 2
 " Height of the location lists
 let g:syntastic_loc_list_height = 5
 
-" Pretty 2 character signs for the left border
+" Pretty character signs for the left border
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_style_error_symbol = 'S✗'
 let g:syntastic_warning_symbol = "⚠"
@@ -805,7 +807,8 @@ let g:ctrlp_working_path_mode = 'ra'
 " The Silver Searcher
 if executable('ag')
   " Use ag over grep in vim as grep
-  set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
+  set grepformat=%f:%l:%c%m
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
@@ -1052,23 +1055,6 @@ nnoremap <C-S> i<C-X>s
 nnoremap <C-T> i<C-X><C-T>
 
 "=============================================================================="
-"                                    WORDY                                     "
-"=============================================================================="
-let g:wordy#ring = [
-  \ 'weak',
-  \ ['being', 'passive-voice', ],
-  \ 'business-jargon',
-  \ 'weasel',
-  \ 'puffery',
-  \ ['problematic', 'redundant', ],
-  \ ['colloquial', 'idiomatic', 'similies', ],
-  \ 'art-jargon',
-  \ ['contractions', 'opinion', 'vague-time', 'said-synonyms', ],
-  \ ]
-
-nnoremap <silent> <leader>w :NextWordy<cr>
-
-"=============================================================================="
 "                            DISABLE HJKL MOVEMENTS                            "
 "=============================================================================="
 " https://gist.github.com/jeetsukumaran/96474ebbd00b874f0865
@@ -1221,3 +1207,12 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=231
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=255
+
+"=============================================================================="
+"                                     TEST                                     "
+"=============================================================================="
+nmap <silent> <leader>tt :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>tl :TestLast<CR>
+nmap <silent> <leader>tg :TestVisit<CR>
