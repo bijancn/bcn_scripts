@@ -698,6 +698,8 @@ let g:syntastic_ocaml_checkers = ['merlin']
 let g:syntastic_fortran_checkers = [""]
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
+let g:syntastic_python_checkers = ['pep8', 'pyflakes']
+let g:syntastic_python_pep8_args='--max-line-length=89'
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exec = 'eslint'
 "let g:syntastic_javascript_eslint_exec = 'eslint_d'

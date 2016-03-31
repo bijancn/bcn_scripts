@@ -249,6 +249,9 @@ nosetests_cover_cmd="nosetests --with-coverage --cover-erase --cover-tests --cov
 alias -- nosetests-cover="$nosetests_cover_cmd"
 alias -- nosetests-cover-sort="$nosetests_cover_cmd 2>&1 | fgrep '%' | sort -nr -k 4"
 
+#  --cover-min-percentage=60 this doesnt show output of failing tests
+alias nt='nosetests --with-coverage --with-timer --rednose --cover-erase'
+
 #=========#
 #  cmake  #
 #=========#
@@ -521,7 +524,7 @@ else
   alias m='make -s V=0 $parallel_jobs'
   alias mV='make V=1 $parallel_jobs'
 fi
-alias nt='nosetests --with-coverage --with-timer --rednose'
+
 alias mi='make -s V=0 install > /dev/null'
 alias mc='make -s V=0 check $parallel_jobs'
 alias mcl='make -s V=0 clean $parallel_jobs'
