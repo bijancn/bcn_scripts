@@ -503,6 +503,7 @@ alias p='python'
 alias t='/usr/bin/time'
 alias c='./configure'
 alias b="cd $HOME/trunk/_build"
+alias i="impressive.py -s -ff -g 1200x1820+1200+0 --cache persistent"
 
 #========#
 #  make  #
