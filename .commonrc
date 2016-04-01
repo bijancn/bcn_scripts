@@ -321,7 +321,7 @@ NC="\e[m"               # Color Reset
 # Check if a command has a version larger or equal than demanded
 version-bigger () {
   version=`$1 --version | head -n1 | sed 's/[^0-9.]*\([0-9.]*\).*/\1/'`
-  bigger=`version_compare.py $version $2`
+  bigger=`version-compare.py $version $2`
   test "$bigger" = 'first' -o "$bigger" = 'equal'
 }
 
@@ -419,16 +419,6 @@ function backup-settings () {
 function kill-tty () {
   pid=$(ps -t $1 | grep 'bash' | head -c 6)
   kill -9 $pid
-}
-
-function kill-myjobs () {
-  #echo `ps x | grep -v ssh`
-  pids=`ps x | grep -v ssh | grep -v bash | tail -n +2 | awk '{print $1}'`
-  echo "PIDS: $pids"
-  for pid in $pids; do
-    echo "Killing now `ps -p $pid -o comm -p 27598 -o comm=`"
-    kill -9 $pid
-  done
 }
 
 function mkdircd () {
