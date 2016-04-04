@@ -14,13 +14,14 @@ parser.add_argument("-f", '--host_file', action='store_true',
     help='Create host_file')
 
 # options how to behave
-parser.add_argument("-s", '--safety', default=1,
+parser.add_argument("-s", '--safety', default=0, type=int,
     help='Number of cores to leave at least free')
-parser.add_argument("-m", '--min_cores', default=5,
+parser.add_argument("-m", '--min_cores', default=5, type=int,
     help='Only use machines that can allocate at least MIN_CORES')
+parser.add_argument("-n", '--num_cores', default=300, type=int,
+    help='Try to use NUM_CORES if available and respecting SAFETY and MIN_CORES')
 
 args = parser.parse_args()
-
 re_l = re.compile("([0-9]+\.[0-9]+), ([0-9]+\.[0-9]+)$")
 total_cores = 0
 total_use_cores = 0
@@ -68,10 +69,13 @@ for i in range(36,4,-1):
   for user in top_usage:
     usage_strg += user + ':%3.1f' % (top_usage[user]/100) + ' '
 
-  use_cores = max(int(math.floor(real_cores - load5 - args.safety)), 0)
-  if use_cores > args.min_cores:
+  use_cores = max(int(round(real_cores - load5 - args.safety)), 0)
+  not_too_many = (total_use_cores + use_cores) < (args.num_cores)
+  if use_cores > args.min_cores and not_too_many:
     f.write(machine + ':' + str(use_cores) + '\n')
     total_use_cores += use_cores
+  else:
+    use_cores = 0
 
   string = machine + " load5: %4.1f" % load5 + '  cores: %2i' % real_cores + \
       "  would-use: %2i" % use_cores + \
