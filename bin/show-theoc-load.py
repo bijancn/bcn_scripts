@@ -14,9 +14,9 @@ parser.add_argument("-f", '--host_file', action='store_true',
     help='Create host_file')
 
 # options how to behave
-parser.add_argument("-s", '--safety', default=2,
+parser.add_argument("-s", '--safety', default=1,
     help='Number of cores to leave at least free')
-parser.add_argument("-m", '--min_cores', default=4,
+parser.add_argument("-m", '--min_cores', default=5,
     help='Only use machines that can allocate at least MIN_CORES')
 
 args = parser.parse_args()
@@ -26,10 +26,9 @@ total_cores = 0
 total_use_cores = 0
 total_load = 0.0
 f = open ('host_file', 'w')
-for i in range(36,0,-1):
+for i in range(36,4,-1):
   machine = "theoc%02d" % (i)
-  node = "bcho@" + machine
-  ret = subprocess.check_output(["ssh", node, "uptime &&", "who &&",
+  ret = subprocess.check_output(["ssh", machine, "uptime &&", "who &&",
     "ps -eo pcpu,user | sed -e 's/^[[:space:]]*//' | sort -k1 -r | head -41 |tail -40 &&",
     "grep '^core id' /proc/cpuinfo | sort -u | wc -l &&",
     "echo $(($(grep \"^physical id\" /proc/cpuinfo | awk \'{print $4}\' | sort -un | tail -1)+1))"]);
