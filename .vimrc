@@ -1,14 +1,11 @@
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" .vimrc - vim configuration file. Maintained since 2011.
 "
-" bcn .vimrc - vim configuration file. Maintained since 2011.
-"
-" Copyright (C)              Bijan Chokoufe Nejad         <bijan@chokoufe.com>
-" Recent versions:  https://github.com/bijancn/bcn_scripts
+" Copyright ©          Bijan Chokoufe Nejad          <bijan@chokoufe.com>
 "
 " This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
 " can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
 " http://www.gnu.org/licenses/gpl-2.0-standalone.html
-"
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 " Use Vim settings, rather than Vi settings.
