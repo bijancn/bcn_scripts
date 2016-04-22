@@ -1,9 +1,14 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# .commonrc - configurations for bash/zsh. Migrated from .bashrc in 2016.
+#
+# Copyright ©          Bijan Chokoufe Nejad          <bijan@chokoufe.com>
+#
+# This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
+# can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
+# http://www.gnu.org/licenses/gpl-2.0-standalone.html
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # vim: set filetype=sh
-#==========#
-#  prelim  #
-#==========#
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+
 export arch=`getconf LONG_BIT`
 
 export LC_ALL=en_US.UTF-8
@@ -535,11 +540,11 @@ alias spi='$HOME/SpiderOak/SpiderOakONE &'
 #===========#
 #  configs  #
 #===========#
-alias so='source ~/.bashrc'
 alias brc='vim ~/.bashrc'
 alias crc='vim ~/.commonrc'
 alias src='vim ~/.ssh/config'
 alias vrc='vim ~/.vimrc'
+alias zrc='vim ~/.zshrc'
 
 #====================#
 #  change directory  #

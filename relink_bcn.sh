@@ -23,7 +23,7 @@ if [ $# -eq 1 ]; then
   fi
 fi
 
-files=".@(bash|colorit|common|dir_colors|pylint|screen|vim|vimperator)rc .gitignore_global "
+files=".@(bash|colorit|common|dir_colors|pylint|screen|vim|vimperator|zsh)rc .gitignore_global "
 files+=".config/dwb/default/@(bookmarks|quickmarks) "
 files+=".config/dwb/@(keys|mimetypes|searchengines|settings) "
 files+=".config/dwb/userscripts/@(autostart_player.js|extension_loader.js|start_streamer) "
@@ -72,7 +72,7 @@ for f in $files; do
 done
 
 gitversion=`git --version | awk '{print $3}'`
-bigger=`version_compare.py $gitversion 1.7.11`
+bigger=`./bin/version-compare.py $gitversion 1.7.11`
 if [ $bigger == 'first' ] || [ $bigger == 'equal' ]; then
   app=""
   echo "Found git version ($giversion) more recent or equal to 1.7.11"
@@ -82,7 +82,6 @@ else
 fi
 rm ~/.gitconfig
 ln -sf $bcn/gitconf/.gitconfig$app      ~/.gitconfig
-#sudo ln -sf $bcn/metacity-theme-1.xml /usr/share/themes/Mint-X/metacity-1/metacity-theme-1.xml
 cd $mpwd
 
 ln -sf ~/.vim ~/.nvim
