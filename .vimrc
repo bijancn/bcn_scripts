@@ -154,33 +154,6 @@ Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
 
 call plug#end()
 
-" Does not change in noweb chunks, might be fixable
-"Plug 'comments.vim'
-
-" A bit too slow
-"Plug 'easymotion/vim-easymotion'
-
-"Asynchronous make. Asynchronous part only works with neovim
-"Plug 'benekastah/neomake'
-
-" 'awesome Python autocompletion library' - works with neocomplete
-" This is mostly part of YCM
-"Plug 'davidhalter/jedi-vim'
-
-"           <<< shougo's eco system >>>
-" Nice fuzzy search on files, buffers and more
-"Plug 'Shougo/unite.vim'
-" Does not work with neovim. deoplete will and will use asynchronous completion
-"Plug 'Shougo/neocomplete.vim'
-" Can be used by unite for more efficient search. Has to be build with `make`
-"Plug 'Shougo/vimproc.vim'
-" Powerful file explorer that needs unite
-"Plug 'Shougo/vimfiler.vim'
-" Less intrusive than z=
-"Plug 'kopischke/unite-spell-suggest'
-" Complete C, C++ using clang
-"Plug 'osyo-manga/vim-marching'
-
 "=============================================================================="
 "                                   SETTINGS                                   "
 "=============================================================================="
