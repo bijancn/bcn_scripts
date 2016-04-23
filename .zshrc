@@ -19,17 +19,27 @@ fi
 source ${HOME}/.zgen/zgen.zsh
 
 if ! zgen saved; then
-  zgen oh-my-zsh
-  zgen oh-my-zsh plugins/extract
-  zgen oh-my-zsh plugins/git
-  zgen oh-my-zsh plugins/node
-  zgen oh-my-zsh plugins/npm
-  zgen oh-my-zsh plugins/sudo
-  zgen oh-my-zsh plugins/command-not-found
-  zgen oh-my-zsh plugins/tmuxinator
-  zgen oh-my-zsh plugins/z
-  #python
-  #pip
+  #zgen oh-my-zsh plugins/z
+
+  zgen prezto syntax-highlighting color 'yes'
+  zgen prezto syntax-highlighting highlighters 'main' \
+    'brackets' \
+    'pattern' \
+    'cursor' \
+    'root'
+
+  zgen prezto
+  zgen prezto git
+  zgen prezto node
+  zgen prezto python
+  zgen prezto tmux
+  zgen prezto command-not-found
+  zgen prezto history
+  zgen prezto fasd
+  # dont change the order of these
+  zgen prezto syntax-highlighting
+  zgen prezto history-substring-search
+  zgen prezto prompt
 
   # generate the init script from plugins above
   zgen save
@@ -72,6 +82,13 @@ zle -N accept-line auto-ls
 zle -N other-widget auto-ls
 
 #==============================================================================#
+#                                SUDO ON ALT-S                                 #
+#==============================================================================#
+insert_sudo () { zle beginning-of-line; zle -U "sudo " }
+zle -N insert-sudo insert_sudo
+bindkey "^[s" insert-sudo
+
+#==============================================================================#
 #                                  EMPTY TAB                                   #
 #==============================================================================#
 # Allows to use tab on empty line to list files
@@ -90,7 +107,7 @@ zle -N expand-or-complete-or-list-files
 bindkey '^I' expand-or-complete-or-list-files
 
 #==============================================================================#
-#                                 ZSH SETTINGS                                 #
+#                                   SETTINGS                                   #
 #==============================================================================#
 # 10 second wait if you do something that will delete everything
 setopt RM_STAR_WAIT
@@ -98,6 +115,17 @@ setopt RM_STAR_WAIT
 setopt VI
 
 setopt EXTENDED_GLOB
+
+export TERM=xterm-256color
+
+#==============================================================================#
+#                                   BINDINGS                                   #
+#==============================================================================#
+# Meta-u to chdir to the parent directory
+bindkey -s '\eu' '^Ucd ..^M'
+
+bindkey '\e[A' history-substring-search-up
+bindkey '\e[B' history-substring-search-down
 
 #==============================================================================#
 #                                    PROMPT                                    #
