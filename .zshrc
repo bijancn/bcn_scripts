@@ -13,12 +13,12 @@
 
 alias so='source ~/.zshrc'
 
+if [ ! -f ${HOME}/.zgen/zgen.zsh ] ; then
+  git clone https://github.com/tarjoilija/zgen.git .zgen
+fi
 source ${HOME}/.zgen/zgen.zsh
 
-# if the init scipt doesn't exist
 if ! zgen saved; then
-
-  # specify plugins here
   zgen oh-my-zsh
   zgen oh-my-zsh plugins/extract
   zgen oh-my-zsh plugins/git
@@ -26,10 +26,6 @@ if ! zgen saved; then
   zgen oh-my-zsh plugins/npm
   zgen oh-my-zsh plugins/sudo
   zgen oh-my-zsh plugins/command-not-found
-  #zgen jdavis/zsh-files themes/jdavis
-  #zgen oh-my-zsh themes/frisk
-  #zgen oh-my-zsh themes/sunrise
-  #zgen oh-my-zsh themes/agnoster
   zgen oh-my-zsh plugins/tmuxinator
   zgen oh-my-zsh plugins/z
   #python
@@ -40,12 +36,68 @@ if ! zgen saved; then
 fi
 
 source ${HOME}/.commonrc
+#==============================================================================#
+#                                GLOBAL ALIASES                                #
+#==============================================================================#
 alias -g ...=../..
 alias -g .2=../..
 alias -g ....=../../../
 alias -g .3=../../../
 alias -g .....=../../../../
 alias -g .4=../../../../
+alias -g H='| head'
+alias -g L='| less'
+alias -g S='| sort'
+alias -g T='| tail'
+
+#==============================================================================#
+#                                SUFFIX ALIASES                                #
+#==============================================================================#
+alias -s tex=vim
+
+#==============================================================================#
+#                                   AUTO-LS                                    #
+#==============================================================================#
+# Allows to use enter on empty line for ls
+auto-ls () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    echo ""
+    ls
+    zle redisplay
+  else
+    zle .$WIDGET
+  fi
+}
+zle -N accept-line auto-ls
+zle -N other-widget auto-ls
+
+#==============================================================================#
+#                                  EMPTY TAB                                   #
+#==============================================================================#
+# Allows to use tab on empty line to list files
+function expand-or-complete-or-list-files() {
+    if [[ $#BUFFER == 0 ]]; then
+        BUFFER="ls "
+        CURSOR=3
+        zle list-choices
+        zle backward-kill-word
+    else
+        zle expand-or-complete
+    fi
+}
+zle -N expand-or-complete-or-list-files
+# bind to tab
+bindkey '^I' expand-or-complete-or-list-files
+
+#==============================================================================#
+#                                 ZSH SETTINGS                                 #
+#==============================================================================#
+# 10 second wait if you do something that will delete everything
+setopt RM_STAR_WAIT
+
+setopt VI
+
+setopt EXTENDED_GLOB
 
 #==============================================================================#
 #                                    PROMPT                                    #
