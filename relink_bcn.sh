@@ -21,7 +21,9 @@ if [ $# -eq 1 ]; then
   fi
 fi
 
-files=".@(bash|colorit|common|dir_colors|pylint|screen|vim|vimperator|zsh)rc .gitignore_global "
+files=".@(bash|colorit|common|dir_colors|msmtp|mutt|offlineimap)rc "
+files+=".@(pylint|screen|vim|vimperator|zsh)rc "
+files+=".bash_profile "
 files+=".config/dwb/default/@(bookmarks|quickmarks) "
 files+=".config/dwb/@(keys|mimetypes|searchengines|settings) "
 files+=".config/dwb/userscripts/@(autostart_player.js|extension_loader.js|start_streamer) "
@@ -32,24 +34,23 @@ files+=".config/matplotlib/matplotlibrc "
 files+=".config/terminator/config "
 files+=".fonts/AvantGarde_LT_Medium.ttf .fonts/GE_Inspira.ttf "
 files+=".fonts/PowerlineSymbols.otf .fonts/Ubuntu.ttf "
+files+=".gitignore_global "
 files+=".local/share/applications/mimeapps.list "
-files+=".bash_profile .profile "
+files+=".mutt.desy .mutt.gmail "
+files+=".notmuch-config "
 files+=".ssh/config .ssh/known_hosts "
+l="texmf/tex/latex"
+files+="$l/bcn_beamer@(.sty|_example.pdf|_example.tex) "
+files+="$l/bcn_@(color|commands|koma).sty "
+files+="$l/bcn_letter@(.lco|_example.pdf|_example.tex) "
+files+="theoc.yaml "
 files+=".tmux.conf "
-# Pattern matching only works when the files are locally present
-s=".sylpheed-2.0"
-files+="$s/accountrc $s/colorlabelrc $s/menurc $s/sylpheedrc "
 files+=".vim/@(bcn_color_demo|filetype).vim "
 files+=".vim/colors/@(bcn_dark|bcn_light|print_bw).vim "
 files+=".vim/after/ftplugin/@(c|markdown|noweb|ocaml|python|sindarin|tex).vim "
 files+=".vim/spell/en.utf-8.add "
 files+=".vim/syntax/noweb.vim "
 files+=".vim/UltiSnips/@(all|fortran|javascript|noweb|ocaml|pandoc|python|sh|tex).snippets "
-l="texmf/tex/latex"
-files+="$l/bcn_beamer@(.sty|_example.pdf|_example.tex) "
-files+="$l/bcn_@(color|commands|koma).sty "
-files+="$l/bcn_letter@(.lco|_example.pdf|_example.tex) "
-files+="theoc.yaml"
 
 for f in $files; do
   mkdir ~/$(dirname $f) -p
@@ -84,3 +85,5 @@ cd $mpwd
 
 ln -sf ~/.vim ~/.nvim
 ln -sf ~/.vimrc ~/.nvimrc
+
+chmod 600 ~/.msmtprc

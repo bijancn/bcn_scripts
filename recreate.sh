@@ -2,16 +2,15 @@ sudo apt-get install \
   autoconf automake autotools-dev build-essential \
   cmake curl dict diffpdf g++ \
   gfortran git graphviz htop inkscape ipython \
-  keepassx libtool meld mercurial \
+  keepassx libtool meld mercurial msmtp mutt \
   noweb libfindlib-ocaml-dev ocaml pandoc \
   pdftk python-dev python-matplotlib \
-  python-numpy python-pip python-scipy \
+  python-numpy python-scipy \
   python-unidecode scons subversion \
-  terminator unetbootin extlinux vim-gtk xsel
-gsettings set org.cinnamon.desktop.default-applications.terminal exec /usr/bin/terminator
+  vim-gtk xsel
 mkdir -p ~/install
 git clone https://github.com/bijancn/bcn_scripts.git ~/bcn_scripts
-git clone https://github.com/gmarik/Vundle.vim.git  ~/.vim/bundle/Vundle.vim
+git clone https://github.com/altercation/mutt-colors-solarized.git ~/mutt-colors-solarized
 vim -c 'PlugInstall' -c qa
 echo "Do you want to build YouCompleteMe?"
 select yn in "Yes" "No"; do
@@ -24,8 +23,7 @@ done
 
 # TODO: (bcn 2014-11-16) Powerline Symbol font is installed but symbols dont work
 vim -c 'PromptlineSnapshot ~/.shell_prompt.sh airline' -c quit
-# TODO: (bcn 2014-11-16) Keyboard shortcuts, window title font size? Compose key
-# for umlaute
+# TODO: (bcn 2014-11-16) Keyboard shortcuts, Compose key for umlaute
 ~/bcn_scripts/relink_bcn.sh
 source ~/.bashrc
 fc-cache -vf ~/.fonts/
@@ -68,8 +66,7 @@ select yn in "Yes" "No"; do
   esac
 done
 
-sudo pip install wgetter
+pip install wgetter # used in hep-setup.py
 
 firefox \
-  -new-tab http://www.mendeley.com/download-mendeley-desktop/ubuntu/instructions/ \
-  -new-tab https://spideroak.com/opendownload/ &>/dev/null &
+  -new-tab http://www.mendeley.com/download-mendeley-desktop/ubuntu/instructions/

@@ -11,6 +11,15 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# It is important that we don't overwrite screen-256color which is set by tmux
+case "$TERM" in
+screen*)
+  ;;
+*)
+  export TERM=xterm-256color
+  ;;
+esac
+
 alias so='source ~/.zshrc'
 
 if [ ! -f ${HOME}/.zgen/zgen.zsh ] ; then
@@ -115,8 +124,6 @@ setopt RM_STAR_WAIT
 setopt VI
 
 setopt EXTENDED_GLOB
-
-export TERM=xterm-256color
 
 #==============================================================================#
 #                                   BINDINGS                                   #

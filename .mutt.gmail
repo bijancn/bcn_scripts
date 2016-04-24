@@ -1,0 +1,14 @@
+set from      = "bijan.chokoufe@gmail.com"
+set sendmail  = "/usr/bin/msmtp -a gmail"
+set mbox      = "+gmail/Archives"
+set postponed = "+gmail/Drafts"
+
+color status green default
+
+macro index D \
+    "<save-message>+gmail/Trash<enter>" \
+    "move message to the trash"
+
+macro index A \
+    "<save-message>+gmail/Archives<enter>" \
+    "move message to the Archives"

@@ -1,0 +1,14 @@
+set from      = "bijan.chokoufe@desy.de"
+set sendmail  = "/usr/bin/msmtp -a desy"
+set mbox      = "+desy/Archives.done"
+set postponed = "+desy/Drafts"
+
+color status green default
+
+macro index D \
+    "<save-message>+desy/Trash<enter>" \
+    "move message to the trash"
+
+macro index A \
+    "<save-message>+desy/Archives.done<enter>" \
+    "move message to the Archives"
