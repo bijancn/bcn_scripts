@@ -81,6 +81,7 @@ if spawn.find_executable('gosam-config.py'):
 if spawn.find_executable('simjob'):
   args.configureflags += ['--enable-lcio']
 
+# TODO: (bcn 2016-04-07) use two openloop paths for gfortran and ifort
 ol_path = None
 for path in os.environ["LD_LIBRARY_PATH"].split(':'):
   if 'OpenLoops' in path:
@@ -158,9 +159,8 @@ gf_warnings += '-pedantic -fbacktrace -ggdb -fcheck=all '
 gf_debug_warnings = gf_warnings  + \
     '-ffpe-trap=invalid,zero,overflow,underflow,denormal '
 
-if 'develop' in args.build:
+if 'gfortran' in args.build:
   args.fcflags = gf_warnings
-  args.configureflags += ['--disable-static']
 
 #==============================================================================#
 #                                    NAGFOR                                    #
@@ -250,10 +250,13 @@ f77flags = args.f77flags
 configureflags = args.configureflags
 
 global_install_path = '/data/bcho/whizard_install'
-if build_name != 'ifort-nostatic':
-  prefix = '--prefix=' + os.path.join(base_path, '_install', build_name)
-else:
+global_gfortran_install_path = '/data/bcho/whizard_gfortran_install'
+if build_name == 'ifort-nostatic':
   prefix = '--prefix=' + global_install_path
+elif build_name == 'gfortran-nostatic':
+  prefix = '--prefix=' + global_gfortran_install_path
+else:
+  prefix = '--prefix=' + os.path.join(base_path, '_install', build_name)
 
 fortran_compiler = 'FC=' + compiler
 fortran_flags = "FCFLAGS=-O" + optimization + " " + fcflags
@@ -263,8 +266,10 @@ if f77flags != " ":
 else:
   configure_options = [prefix, fortran_compiler, fortran_flags] + configureflags
 if args.configure:
-  if args.only_omega: package = os.path.join(base_path, 'omega')
-  else:               package = base_path
+  if args.only_omega:
+    package = os.path.join(base_path, 'omega')
+  else:
+    package = base_path
   _call_verbose([os.path.join(package, 'configure')] + configure_options)
 
 # build if desired
