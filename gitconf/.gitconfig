@@ -18,6 +18,9 @@
   morelog = log --graph --decorate --pretty=medium --abbrev-commit --date=relative --all
   contributions = !git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr
   show-files = diff-tree --no-commit-id --name-only -r
+  branches = branch -a
+  tags = tag
+  stashes = stash list
 [color]
   branch = auto
   diff = auto

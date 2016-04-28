@@ -41,6 +41,7 @@ github philchristensen svn-color
 github sickill bitpocket
 github bijancn bcn_scripts
 github altercation mutt-colors-solarized
+github honza mutt-notmuch-py
 
 #if [ hg 2> /dev/null ]; then
   #bitbucket_hg logilab pylint
@@ -52,3 +53,4 @@ ln -s $HOME/pydflatex/bin/pydflatex $HOME/install/bin/pydflatex
 ln -s $HOME/bitpocket/bin/bitpocket $HOME/install/bin/bitpocket
 ln -s $HOME/svn-color/svn-color.py $HOME/install/bin/svn-color
 ln -s $HOME/Git-Status/show_status $HOME/install/bin/show_status
+ln -s $HOME/mutt-notmuch-py/mutt-notmuch-py $HOME/install/bin/mutt-notmuch-py

@@ -1,3 +1,5 @@
+bind editor <space> noop
+
 #==============================================================================#
 #                                     PATH                                     #
 #==============================================================================#
@@ -36,7 +38,7 @@ alternative_order text/html text/plain
 macro attach 'V' "<pipe-entry>cat >~/.cache/mutt/mail.html && $BROWSER ~/.cache/mutt/mail.html && rm ~/.cache/mutt/mail.html<enter>"
 
 # Index View Options ---------------------------------
-set date_format = "%m-%d"
+set date_format = "%y-%m-%d"
 set index_format = "[%Z]  %D  %-20.20F  %s"
 set sort = threads                         # enable threaded conversations
 set sort_aux = reverse-last-date-received  # like gmail
@@ -57,18 +59,6 @@ hdr_order from: to: cc: date: subject:  # and in this order
 # Default inbox.
 # You can use '=' or '+' as a substitution for full folder path configured above
 set spoolfile = "+desy/INBOX"
-
-# Mailboxes to show in the sidebar.
-mailboxes +desy/INBOX \
-          +desy/Drafts \
-          +desy/archive \
-          +desy/Sent \
-          +desy/Trash \
-          +gmail/INBOX \
-          +gmail/Drafts \
-          +gmail/[Google\ Mail].Alle\ Nachrichten \
-          +gmail/Sent \
-          +gmail/Trash
 
 # Index Key Bindings ---------------------------------
 bind index gg       first-entry
@@ -92,6 +82,9 @@ macro index,pager C "<copy-message>?<toggle-mailboxes>" "copy a message to a mai
 macro index,pager M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
 
 macro index,pager y "<save-message>=desy/Archives.done<enter><enter>" "Archive"
+
+macro index,pager gi "<change-folder>+gmail/[Google Mail].Alle Nachrichten<enter>" "Go to inbox"
+macro index,pager gd "<change-folder>+desy/INBOX<enter>" "Go to sent mail"
 
 # Pager View Options ---------------------------------
 set pager_index_lines = 10 # number of index lines to show
@@ -175,3 +168,21 @@ bind index,pager <down>   sidebar-next
 bind index,pager <up>     sidebar-prev
 bind index,pager <right>  sidebar-open
 macro index,pager <left>  '<enter-command>toggle sidebar_visible<enter>'
+
+# Mailboxes to show in the sidebar.
+mailboxes +desy/INBOX \
+          +desy/Drafts \
+          +desy/archive \
+          +desy/Sent \
+          +desy/Trash \
+          +gmail/INBOX \
+          +gmail/Drafts \
+          +gmail/[Google\ Mail].Alle\ Nachrichten \
+          +gmail/Sent \
+          +gmail/Trash \
+          +temporary/search
+
+#==============================================================================#
+#                                   NOTMUCH                                    #
+#==============================================================================#
+macro index,pager S "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch-py ~/.mail/temporary/search<enter><change-folder-readonly>+temporary/search<enter>" "search mail (using notmuch)"
