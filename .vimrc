@@ -32,6 +32,9 @@ Plug 'AndrewRadev/linediff.vim'
 " A very decent color scheme. Forked for minor color changes.
 Plug 'bijancn/vim-lucius'
 
+" The infamous solarized
+Plug 'altercation/vim-colors-solarized'
+
 " Faster syntax and indent for free-form Fortran
 Plug 'bijancn/free-fortran.vim'
 
@@ -248,11 +251,11 @@ set shell=/bin/bash
 set relativenumber
 
 " Colors
-"set background=light
+set background=dark
 colorscheme lucius
 nnoremap <leader>u :call LuciusToggle()<cr>
 let g:lucius_white = 1
-LuciusWhite
+" LuciusWhite
 function! LuciusToggle()
   if g:lucius_white == 1
     LuciusDarkLowContrast
@@ -265,6 +268,8 @@ function! LuciusToggle()
     let g:lucius_white = 1
   endif
 endfunction
+
+colorscheme solarized
 
 " colorscheme bcn_light
 " == Spelling ==
@@ -597,6 +602,8 @@ augroup load_filetypes
   autocmd BufNewFile,BufRead *.less set filetype=css
 
   autocmd BufNewFile,BufRead *.ejs set filetype=html
+
+  autocmd BufRead /tmp/mutt-* set tw=72
 
   " Enable omni completion
   autocmd FileType python set omnifunc=pythoncomplete#Complete

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function github {
   git clone git@github.com:$1/$2.git
 }
@@ -37,6 +39,8 @@ github olivierverdier pydflatex
 github philchristensen svn-color
 #github sickill git-dude
 github sickill bitpocket
+github bijancn bcn_scripts
+github altercation mutt-colors-solarized
 
 #if [ hg 2> /dev/null ]; then
   #bitbucket_hg logilab pylint

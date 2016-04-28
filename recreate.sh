@@ -9,8 +9,6 @@ sudo apt-get install \
   python-unidecode scons subversion \
   vim-gtk xsel
 mkdir -p ~/install
-git clone https://github.com/bijancn/bcn_scripts.git ~/bcn_scripts
-git clone https://github.com/altercation/mutt-colors-solarized.git ~/mutt-colors-solarized
 vim -c 'PlugInstall' -c qa
 echo "Do you want to build YouCompleteMe?"
 select yn in "Yes" "No"; do

@@ -36,6 +36,7 @@ if ! zgen saved; then
     'pattern' \
     'cursor' \
     'root'
+  zgen prezto autosuggestions color 'yes'
 
   zgen prezto
   zgen prezto git
@@ -48,6 +49,7 @@ if ! zgen saved; then
   # dont change the order of these
   zgen prezto syntax-highlighting
   zgen prezto history-substring-search
+  zgen prezto autosuggestions
   zgen prezto prompt
 
   # generate the init script from plugins above
@@ -124,6 +126,8 @@ setopt RM_STAR_WAIT
 setopt VI
 
 setopt EXTENDED_GLOB
+
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 
 #==============================================================================#
 #                                   BINDINGS                                   #
