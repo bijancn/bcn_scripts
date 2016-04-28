@@ -83,7 +83,7 @@ macro index,pager M "<save-message>?<toggle-mailboxes>" "move a message to a mai
 
 macro index,pager y "<save-message>=desy/Archives.done<enter><enter>" "Archive"
 
-macro index,pager gi "<change-folder>+gmail/[Google Mail].Alle Nachrichten<enter>" "Go to inbox"
+macro index,pager gi "<change-folder>+gmail/INBOX<enter>" "Go to inbox"
 macro index,pager gd "<change-folder>+desy/INBOX<enter>" "Go to sent mail"
 
 # Pager View Options ---------------------------------

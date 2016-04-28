@@ -10,15 +10,23 @@
 [mergetool "mymeld"]
   cmd = meld --output "$MERGED" "$LOCAL" "$BASE" "$REMOTE"
 [alias]
-  interactive = !git add -p
-  pullhard = !git fetch --all && git reset --hard origin/master
-  whatsnew = !sh -c 'git log $1@{1}..$1@{0} "$@"'
   makedot = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
   mylog = !echo && git log --graph --format=format:'%C(black)%h%C(reset) - %C(red)(%ar)%C(reset) %C(blue)%cn%C(reset)%n        %C(green)%s%C(reset)' --abbrev-commit --date=relative | head -n 20 && echo
   morelog = log --graph --decorate --pretty=medium --abbrev-commit --date=relative --all
+[alias]
+  interactive = add -p
+  pullhard = !git fetch --all && git reset --hard origin/master
+  whatsnew = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+  unstage = reset -q HEAD --
+  discard = checkout --
+  uncommit = reset --mixed HEAD~
+  amend = commit --amend
+  unmerged = diff --name-only --diff-filter=U
+[alias]
   contributions = !git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr
   show-files = diff-tree --no-commit-id --name-only -r
   branches = branch -a
+  remotes = remote -v
   tags = tag
   stashes = stash list
 [color]
