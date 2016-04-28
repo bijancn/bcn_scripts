@@ -11,6 +11,16 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# It is important that we don't overwrite screen-256color which is set by tmux
+case "$TERM" in
+screen*)
+  ;;
+*)
+  export TERM=xterm-256color
+  ;;
+esac
+
+
 source $HOME/.commonrc
 alias so='source ~/.bashrc'
 
@@ -42,9 +52,6 @@ if version-bigger dircolors 8; then
   eval `dircolors $HOME/.dir_colorsrc`
 fi
 
-
-export TERM='xterm-256color'
-export BASHRC_SET='set'
 
 # Notify
 if [ -x /usr/bin/notify-send ]; then
