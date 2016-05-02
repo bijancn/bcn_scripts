@@ -3,6 +3,7 @@ set sendmail  = "/usr/bin/msmtp -a desy"
 set mbox      = "+desy/archive"
 set postponed = "+desy/Drafts"
 set record    = "+desy/Sent"
+set trash     = "+desy/Trash"
 
 color status green default
 

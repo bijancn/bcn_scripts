@@ -1,10 +1,11 @@
+# procmail is to get formail which can reformat mails used to add labels in mutt
 sudo apt-get install \
   autoconf automake autotools-dev build-essential \
   cmake curl dict diffpdf g++ \
   gfortran git graphviz htop inkscape ipython \
   keepassx libtool meld mercurial msmtp mutt \
   noweb libfindlib-ocaml-dev ocaml pandoc \
-  pdftk python-dev python-matplotlib \
+  pdftk procmail python-dev python-matplotlib \
   python-numpy python-scipy \
   python-unidecode scons subversion \
   vim-gtk xsel
