@@ -39,7 +39,7 @@ export VISUAL=$vim
 #alias vim=$vim
 
 # Use vim for my diffing functions
-export difftool='vim -d'
+export difftool='vimdiff'
 
 #============#
 #  hardware  #
@@ -148,6 +148,10 @@ fi
 prepend-pure-path $desy_tex
 prepend-path $HOME/.gem/ruby/1.9.1
 prepend-all-paths $std_install
+export whizard_install=/data/bcho/whizard_install_gfortran
+if [ -d "$whizard_install" ]; then
+  prepend-all-paths $whizard_install
+fi
 export whizard_install=/data/bcho/whizard_install
 if [ -d "$whizard_install" ]; then
   prepend-all-paths $whizard_install
@@ -188,9 +192,9 @@ pythia-configure-desy(){
   packages='--with-hepmc2=$std_install --with-lhapdf6=$std_install --with-fastjet3=$std_install'
   ./configure --prefix=$install $packages
 }
-checkout-openloops(){
+checkout-openloops-gfortran(){
   #svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public_beta ./OpenLoops
-  svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public ./OpenLoops
+  svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public ./OpenLoops_gfortran
   printf '[OpenLoops]\nprocess_repositories=public, whizard\ncompile_extra=1' >> OpenLoops/openloops.cfg
   cd OpenLoops
   ./scons
@@ -515,11 +519,11 @@ function callgrind () {
 #============#
 #  shortest  #
 #============#
-alias k='kill -9'
-alias x='exit'
-alias p='python'
-alias t='/usr/bin/time'
-alias c='./configure'
+alias k="kill -9"
+alias x="exit"
+alias p="python"
+alias t="/usr/bin/time"
+alias c="./configure"
 alias b="cd $HOME/trunk/_build"
 alias i="impressive.py -s -ff -g 1200x1820+1200+0 --cache persistent"
 
@@ -527,44 +531,44 @@ alias i="impressive.py -s -ff -g 1200x1820+1200+0 --cache persistent"
 #  make  #
 #========#
 if command-exists colorit; then
-  alias m='cit "make -s V=0 $parallel_jobs"'
-  alias mV='cit "make V=1 $parallel_jobs"'
+  alias m="make -s V=0 $parallel_jobs | colorit"
+  alias mV="make V=1 $parallel_jobs | colorit"
 else
-  alias m='make -s V=0 $parallel_jobs'
-  alias mV='make V=1 $parallel_jobs'
+  alias m="make -s V=0 $parallel_jobs"
+  alias mV="make V=1 $parallel_jobs"
 fi
 
-alias mi='make -s V=0 install > /dev/null'
-alias mc='make -s V=0 check $parallel_jobs'
-alias mcl='make -s V=0 clean $parallel_jobs'
-alias wm='make -s V=0 $parallel_jobs && make -s V=0 -C src/ check $parallel_jobs'
-alias s='scons $parallel_jobs'
-alias scl='scons --clean $parallel_jobs'
-alias ac='autoreconf'
-alias bp='bitpocket'
+alias mi="make -s V=0 install > /dev/null"
+alias mc="make -s V=0 check $parallel_jobs"
+alias mcl="make -s V=0 clean $parallel_jobs"
+alias wm="make -s V=0 $parallel_jobs && make -s V=0 -C src/ check $parallel_jobs"
+alias s="scons $parallel_jobs"
+alias scl="scons --clean $parallel_jobs"
+alias ac="autoreconf"
+alias bp="bitpocket"
 
 #===========#
 #  cluster  #
 #===========#
-alias qst='cit qstat'
-alias men='$HOME/mendeleydesktop-1.15-linux-x86_64/bin/mendeleydesktop &'
-alias spi='$HOME/SpiderOak/SpiderOakONE &'
+alias qst="cit qstat"
+alias men="$HOME/mendeleydesktop-1.15-linux-x86_64/bin/mendeleydesktop &"
+alias spi="$HOME/SpiderOak/SpiderOakONE &"
 
 #===========#
 #  configs  #
 #===========#
-alias brc='vim ~/.bashrc'
-alias crc='vim ~/.commonrc'
-alias src='vim ~/.ssh/config'
-alias vrc='vim ~/.vimrc'
-alias zrc='vim ~/.zshrc'
+alias brc="vim ~/.bashrc"
+alias crc="vim ~/.commonrc"
+alias src="vim ~/.ssh/config"
+alias vrc="vim ~/.vimrc"
+alias zrc="vim ~/.zshrc"
 
 #====================#
 #  change directory  #
 #====================#
-alias cd-='cd -'
-alias cd..='cd ..'
-alias ..='cd ..'
+alias cd-="cd -"
+alias cd..="cd .."
+alias ..="cd .."
 alias ..2="cd ../.."
 alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
