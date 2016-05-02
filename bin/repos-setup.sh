@@ -42,6 +42,11 @@ github sickill bitpocket
 github bijancn bcn_scripts
 github altercation mutt-colors-solarized
 github honza mutt-notmuch-py
+github Anthony25 gnome-terminal-colors-solarized
+github seebi dircolors-solarized
+
+./gnome-terminal-colors-solarized/install.sh -s dark -p Default
+ln -s $HOME/dircolors-solarized/dircolors.ansi-universal $HOME/.dircolors
 
 #if [ hg 2> /dev/null ]; then
   #bitbucket_hg logilab pylint
