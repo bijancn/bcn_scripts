@@ -1,14 +1,21 @@
-# Paths ----------------------------------------------
+bind editor <space> noop
+
+#==============================================================================#
+#                                     PATH                                     #
+#==============================================================================#
 set folder           = ~/.mail               # mailbox location
 set alias_file       = ~/.mutt/alias         # where to store aliases
 set header_cache     = ~/.mutt/cache/headers # where to store headers
 set message_cachedir = ~/.mutt/cache/bodies  # where to store bodies
 set certificate_file = ~/.mutt/certificates  # where to store certs
-set mailcap_path     = ~/.mutt/mailcap       # entries for filetypes
+set mailcap_path     = ~/.mutt.mailcap       # entries for filetypes
 set tmpdir           = ~/.mutt/temp          # where to keep temp files
 set signature        = ~/.mutt/sig           # my signature file
-set trash            = ~/.mail/trash
-source ~/mutt-colors-solarized/mutt-colors-solarized-light-16.muttrc
+source ~/mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
+
+source ~/.mutt.desy
+folder-hook desy/*  source ~/.mutt.desy
+folder-hook gmail/* source ~/.mutt.gmail
 
 # Basic Options --------------------------------------
 set wait_key = no        # shut up, mutt
@@ -24,21 +31,14 @@ set beep_new             # bell on new mails
 set pipe_decode          # strip headers and eval mimes when piping
 set thorough_search      # strip headers and eval mimes before searching
 
-# Sidebar Patch --------------------------------------
-set sidebar_delim   = '|'
-set sidebar_visible = yes
-set sidebar_width   = 16
-
-# Sidebar Navigation ---------------------------------
-bind index,pager <down>   sidebar-next
-bind index,pager <up>     sidebar-prev
-bind index,pager <right>  sidebar-open
-macro index,pager <left>  '<enter-command>toggle sidebar_visible<enter>'
+# HTML content --------------------------------------
+auto_view text/html
+alternative_order text/html text/plain
+macro attach 'V' "<pipe-entry>cat >~/.cache/mutt/mail.html && $BROWSER ~/.cache/mutt/mail.html && rm ~/.cache/mutt/mail.html<enter>"
 
 # Index View Options ---------------------------------
-set date_format = "%m-%d"
-set index_format = "[%Z]  %D  %-20.20F  %s"
-set sort = threads                         # like gmail
+set date_format = "%y-%m-%d"
+set sort = threads                         # enable threaded conversations
 set sort_aux = reverse-last-date-received  # like gmail
 set uncollapse_jump                        # don't collapse on an unread message
 set sort_re                                # thread based on regex
@@ -54,25 +54,9 @@ unignore from: to: cc: date: subject:   # show only these
 unhdr_order *                           # some distros order things by default
 hdr_order from: to: cc: date: subject:  # and in this order
 
-# Account Settings -----------------------------------
-
 # Default inbox.
 # You can use '=' or '+' as a substitution for full folder path configured above
 set spoolfile = "+desy/INBOX"
-
-source ~/.mutt.desy
-
-folder-hook desy/*  source ~/.mutt.desy
-folder-hook gmail/* source ~/.mutt.gmail
-
-# Mailboxes to show in the sidebar.
-mailboxes +desy/INBOX \
-          +desy/Drafts \
-          +desy/Archives.done \
-          +desy/Trash \
-          +gmail/INBOX \
-          +gmail/Drafts \
-          +gmail/Trash
 
 # Index Key Bindings ---------------------------------
 bind index gg       first-entry
@@ -88,14 +72,17 @@ bind index \Cd half-down
 macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
 
 # Sync email
-macro index O "<shell-escape>offlineimap<enter>"           "run offlineimap to sync all mail"
-macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
+macro index,pager O "<shell-escape>offlineimap<enter>"           "run offlineimap to sync all mail"
+macro index,pager o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
 
 # Saner copy/move dialogs
-macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
-macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
+macro index,pager C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
+macro index,pager M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
 
 macro index,pager y "<save-message>=desy/Archives.done<enter><enter>" "Archive"
+
+macro index,pager gi "<change-folder>+gmail/INBOX<enter>" "Go to inbox"
+macro index,pager gd "<change-folder>+desy/INBOX<enter>" "Go to sent mail"
 
 # Pager View Options ---------------------------------
 set pager_index_lines = 10 # number of index lines to show
@@ -120,9 +107,16 @@ bind pager \Cd half-down
 # View attachments properly.
 bind attach <return> view-mailcap
 
-# Compose View Options -------------------------------
+# Postponing and recalling
+bind compose p postpone-message
+bind index p recall-message
+
+
+#==============================================================================#
+#                                   COMPOSE                                    #
+#==============================================================================#
 set realname = "Bijan Chokoufe Nejad"
-set envelope_from           # ?
+set envelope_from                    # ?
 set sig_dashes                       # dashes before sig
 set edit_headers                     # show headers when composing
 set fast_reply                       # skip to compose when replying
@@ -140,5 +134,71 @@ set sendmail="/usr/bin/msmtp"
 
 set editor = "vim"        # Use terminal Vim to compose email.
 
-bind compose p postpone-message
-bind index p recall-message
+#macro pager \cu |lynx\n
+
+#==============================================================================#
+#                             GOOBOOK INTEGRATION                              #
+#==============================================================================#
+set query_command="goobook query %s"
+macro index,pager ac "<pipe-message>goobook add<return>" "add sender to google contacts"
+bind editor <Tab> complete-query
+
+
+#==============================================================================#
+#                                    LAYOUT                                    #
+#==============================================================================#
+## From field gets 30% of remaining space, Subject gets 70%.
+## Remaining space is the total width minus the other fields (35), minus the sidebar (24)
+set my_index_format_pre='set my_col_from = `echo $((30 * ($(tput cols)-35-24) / 100))`; set my_col_subject = `echo $((70 * ($(tput cols)-35-24) / 100))`; set index_format="%2C | %Z [%d] %-$my_col_from.${my_col_from}'
+set my_index_format_post=' (%-4.4c) %?M?<%M> ?%-$my_col_subject.${my_col_subject}s"'
+
+folder-hook .*[sS]ent.* "$my_index_format_pre"t"$my_index_format_post"
+folder-hook ! .*[sS]ent.* "$my_index_format_pre"F"$my_index_format_post"
+
+#==============================================================================#
+#                                   SIDEBAR                                    #
+#==============================================================================#
+set sidebar_delim   = ' | '
+set sidebar_visible = yes
+set sidebar_width   = 24
+
+bind index,pager <down>   sidebar-next
+bind index,pager <up>     sidebar-prev
+bind index,pager <right>  sidebar-open
+macro index,pager <left>  '<enter-command>toggle sidebar_visible<enter>'
+
+# Mailboxes to show in the sidebar.
+mailboxes +desy/INBOX \
+          +desy/Drafts \
+          +desy/archive \
+          +desy/Sent \
+          +desy/Trash \
+          +gmail/INBOX \
+          +gmail/Drafts \
+          +gmail/[Google\ Mail].Alle\ Nachrichten \
+          +gmail/Sent \
+          +gmail/Trash \
+          +temporary/search
+
+#==============================================================================#
+#                                   NOTMUCH                                    #
+#==============================================================================#
+macro index,pager S "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch-py ~/.mail/temporary/search<enter><change-folder-readonly>+temporary/search<enter>" "search mail (using notmuch)"
+
+
+#==============================================================================#
+#                                    LABELS                                    #
+#==============================================================================#
+macro index y "<enter-command>set editor=\"editlabel append\"\n\
+<edit><sync-mailbox><next-undeleted>\
+<enter-command>set editor=vim\n" "Append label"
+macro pager y "<enter-command>set editor=\"editlabel append\"\n\
+<edit><sync-mailbox><next-undeleted>\
+<enter-command>set editor=vim\n" "Append label"
+macro index Y "<enter-command>set editor=\"editlabel menu\"\n\
+<edit><sync-mailbox><next-undeleted>\
+<enter-command>set editor=vim\n" "Edit labels"
+macro pager Y "<enter-command>set editor=\"editlabel menu\"\n\
+<edit><sync-mailbox><next-undeleted>\
+<enter-command>set editor=vim\n" "Edit labels"
+macro index \Cy "<limit>~y " "Limit view to label"

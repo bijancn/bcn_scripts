@@ -1,16 +1,15 @@
+# procmail is to get formail which can reformat mails used to add labels in mutt
 sudo apt-get install \
   autoconf automake autotools-dev build-essential \
   cmake curl dict diffpdf g++ \
   gfortran git graphviz htop inkscape ipython \
   keepassx libtool meld mercurial msmtp mutt \
   noweb libfindlib-ocaml-dev ocaml pandoc \
-  pdftk python-dev python-matplotlib \
+  pdftk procmail python-dev python-matplotlib \
   python-numpy python-scipy \
   python-unidecode scons subversion \
   vim-gtk xsel
 mkdir -p ~/install
-git clone https://github.com/bijancn/bcn_scripts.git ~/bcn_scripts
-git clone https://github.com/altercation/mutt-colors-solarized.git ~/mutt-colors-solarized
 vim -c 'PlugInstall' -c qa
 echo "Do you want to build YouCompleteMe?"
 select yn in "Yes" "No"; do
