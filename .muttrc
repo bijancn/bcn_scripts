@@ -176,7 +176,7 @@ mailboxes +desy/INBOX \
           +gmail/INBOX \
           +gmail/Drafts \
           +gmail/[Google\ Mail].Alle\ Nachrichten \
-          +gmail/Sent \
+          +gmail/[Google\ Mail].Gesendet \
           +gmail/Trash \
           +temporary/search
 

@@ -2,7 +2,7 @@ set from      = "bijan.chokoufe@gmail.com"
 set sendmail  = "/usr/bin/msmtp -a gmail"
 set mbox      = "+gmail/Alle Nachrichten"
 set postponed = "+gmail/Drafts"
-set record    = "+gmail/Sent"
+set record    = "+gmail/[Google Mail].Gesendet"
 set trash     = "+gmail/Trash"
 
 color status green default
