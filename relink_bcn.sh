@@ -87,3 +87,4 @@ ln -sf ~/.vim ~/.nvim
 ln -sf ~/.vimrc ~/.nvimrc
 
 chmod 600 ~/.msmtprc
+mkdir -p .mutt/temp

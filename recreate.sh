@@ -3,12 +3,13 @@ sudo apt-get install \
   autoconf automake autotools-dev build-essential \
   cmake curl dict diffpdf g++ \
   gfortran git graphviz htop inkscape ipython \
-  keepassx libtool meld mercurial msmtp mutt \
+  keepassx libtool meld mercurial msmtp mutt notmuch \
   noweb libfindlib-ocaml-dev ocaml pandoc \
   pdftk procmail python-dev python-matplotlib \
   python-numpy python-scipy \
   python-unidecode scons subversion \
   vim-gtk xsel
+# libxapian-dev libgmime-2.6-dev libtalloc-dev zlib1g-dev # notmuch dependencies
 mkdir -p ~/install
 vim -c 'PlugInstall' -c qa
 echo "Do you want to build YouCompleteMe?"
