@@ -77,6 +77,12 @@ alias -g T='| tail'
 alias -s tex=vim
 
 #==============================================================================#
+#                                  COMPLETION                                  #
+#==============================================================================#
+# Don't try to prepend commands with underscore
+zstyle ':completion:*:*:-command-:*:*' ignored-patterns '_*'
+
+#==============================================================================#
 #                                   AUTO-LS                                    #
 #==============================================================================#
 # Allows to use enter on empty line for ls
@@ -153,3 +159,6 @@ fi
 #                                 LAST COMMAND                                 #
 #==============================================================================#
 bindkey '\e.' insert-last-word
+
+# Override the -i set by prezto/init
+alias cp="nocorrect cp"

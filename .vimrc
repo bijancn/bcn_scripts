@@ -119,6 +119,8 @@ Plug 'scrooloose/nerdcommenter'
 " Good support for Markdown
 Plug 'vim-pandoc/vim-pandoc'
 
+Plug 'AndrewRadev/switch.vim'
+
 " Work together - apart. Only works with neovim
 Plug 'floobits/floobits-neovim'
 
@@ -1222,8 +1224,11 @@ let g:indent_guides_space_guides = 1
 let g:indent_guides_enable_on_vim_startup = 1
 
 let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=231
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=255
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=237
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=10
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
 
 "=============================================================================="
 "                                     TEST                                     "

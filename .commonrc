@@ -98,23 +98,6 @@ elif test -f $intel_dir/2016/bin/compilervars.sh -a $arch = 64; then
   #source $intel_dir/2011/vtune_amplifier_xe/amplxe-vars.sh
 fi
 
-tmp1=$HOME/hep
-tmp2=/nfs/theoc/data/bcho/bird
-tmp3=/data/bcho
-if [ -d $tmp1 ]; then
-  export hep=$tmp1
-elif [ -d $tmp2 ]; then
-  export hep=$tmp2
-elif [ -d $tmp3 ]; then
-  export hep=$tmp3
-fi
-
-if [ -n "$hep" ]; then
-  export openloops_soft=$hep/OpenLoops
-  export gosam_soft=$hep/gosam/local
-  export std_install=$hep/install
-fi
-
 #=========#
 #  paths  #
 #=========#
@@ -147,7 +130,6 @@ fi
 
 prepend-pure-path $desy_tex
 prepend-path $HOME/.gem/ruby/1.9.1
-prepend-all-paths $std_install
 export whizard_install=/data/bcho/whizard_install_gfortran
 if [ -d "$whizard_install" ]; then
   prepend-all-paths $whizard_install
@@ -168,22 +150,39 @@ add-pythonpath $HOME/eZchat
 add-pythonpath $HOME/.vim/plugged/vim-eZchat/autoload
 add-pythonpath $HOME/termstyle
 add-pythonpath $HOME/pydflatex
-add-pythonpath $std_install/lib/python
 export C_INCLUDE_PATH=$install/include
 export CPLUS_INCLUDE_PATH=$install/include
 export PYTHONUSERBASE=$HOME/install
-export CPATH=$std_install/include:$CPATH
 export CC=gcc
 
-# hep
-# DONT USE THIS! Check what is needed and do it your self
-#source $std_install/rivetenv.sh
-prepend-all-paths $gosam_soft
-export LATEXINPUTS=${HOME}/texmf:$std_install/share/texmf/tex/latex/misc:$LATEXINPUTS
-export TEXINPUTS=${HOME}/texmf:$std_install/share/texmf/tex/latex/misc:$TEXINPUTS
+
+tmp1=$HOME/hep
+tmp2=/nfs/theoc/data/bcho/bird
+tmp3=/data/bcho
+if [ -d $tmp1 ]; then
+  export hep=$tmp1
+elif [ -d $tmp2 ]; then
+  export hep=$tmp2
+elif [ -d $tmp3 ]; then
+  export hep=$tmp3
+fi
+
+if [ -n "$hep" ]; then
+  export std_install=$hep/install
+  #export OpenLoopsPath=$hep/OpenLoops
+  prepend-libpath $hep/OpenLoops
+  #prepend-libpath $hep/OpenLoops_gfortran
+  prepend-all-paths $hep/gosam/local
+  prepend-all-paths $std_install
+  add-pythonpath $std_install/lib/python
+  export CPATH=$std_install/include:$CPATH
+  export LATEXINPUTS=${HOME}/texmf:$std_install/share/texmf/tex/latex/misc:$LATEXINPUTS
+  export TEXINPUTS=${HOME}/texmf:$std_install/share/texmf/tex/latex/misc:$TEXINPUTS
+fi
 export TEXMFCNF=${HOME}/texmf:${TEXMFCNF}
 export HOMETEXMF=${HOME}/texmf:${HOMETEXMF}
 export TEXMFHOME=${HOME}/texmf:${TEXMFHOME}
+
 pythia-configure(){
   packages='--with-hepmc2=$install --with-lhapdf6=$install --with-fastjet3=$install'
   ./configure --prefix=$install $packages
@@ -203,9 +202,6 @@ checkout-openloops-gfortran(){
   scons
   ./OL_fortran
 }
-
-export OpenLoopsPath=$openloops_soft
-prepend-libpath $openloops_soft
 
 # perl
 export PERL5LIB=$install/lib/perl5
@@ -406,7 +402,7 @@ function rem-show () {
 
 function sshow () {
   scp $1:$2 .
-  go $(basename $2)
+  op $(basename $2)
 }
 
 function find-type () {
@@ -461,7 +457,7 @@ function mm () {
 #======================#
 #  surpressing output  #
 #======================#
-function go () {
+function op () {
   gnome-open "$1" &> /dev/null &
 }
 
@@ -602,12 +598,12 @@ trnk() { cd $whiz_soft/ ; }
 bui() { cd $whiz_soft/_build ; }
 
 alias resubmit-failed-jobs='for i in `cat /data/bcho/BitPocketMaster/jobs`; do file=TuningEEqqMSTJ11eq*/Professor*/mc/*-*/compile.o$i; cd `dirname $file`; qsub -V ~/bcn_scripts/submit; cd -; done'
-alias wsrc='go '$whiz_soft/_install/dist/share/doc/whizard/whizard.pdf
-alias vsrc='go '$whiz_soft/_install/dist/share/doc/vamp/vamp.pdf
-alias osrc='go '$whiz_soft/_install/dist/share/doc/omega/omega.pdf
-alias csrc='go '$whiz_soft/_install/dist/share/doc/circe2/circe2.pdf
-alias wman='go '$whiz_soft/_install/dist/share/doc/whizard/manual.pdf
-alias gman='go '$whiz_soft/_install/dist/share/doc/whizard/gamelan_manual.pdf
+alias wsrc='op '$whiz_soft/_install/dist/share/doc/whizard/whizard.pdf
+alias vsrc='op '$whiz_soft/_install/dist/share/doc/vamp/vamp.pdf
+alias osrc='op '$whiz_soft/_install/dist/share/doc/omega/omega.pdf
+alias csrc='op '$whiz_soft/_install/dist/share/doc/circe2/circe2.pdf
+alias wman='op '$whiz_soft/_install/dist/share/doc/whizard/manual.pdf
+alias gman='op '$whiz_soft/_install/dist/share/doc/whizard/gamelan_manual.pdf
 function make-test () {
   make check TESTS=$1.run
 }

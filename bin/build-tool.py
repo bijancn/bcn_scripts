@@ -203,6 +203,25 @@ if args.all:
   args.make = True
   args.makecheck = True
 
+global_install_path = '/data/bcho/whizard_install'
+global_gfortran_install_path = '/data/bcho/whizard_install_gfortran'
+ol_search = 'OpenLoops'
+if args.build == 'ifort-nostatic':
+  prefix = '--prefix=' + global_install_path
+elif args.build == 'gfortran-nostatic':
+  prefix = '--prefix=' + global_gfortran_install_path
+  ol_search = 'OpenLoops_gfortran'
+else:
+  prefix = '--prefix=' + os.path.join(base_path, '_install', args.build)
+
+ol_path = None
+for path in os.environ["LD_LIBRARY_PATH"].split(':'):
+  if ol_search in path:
+    ol_path = path[0:-3]
+if ol_path is not None:
+  args.configureflags += ['--enable-openloops',
+                          '--with-openloops=' + ol_path]
+
 # show set options for builder
 tasks = ['autoreconf', 'remove', 'configure', 'make', 'makecheck', 'makedistcheck', 'all']
 options = ['jobs', 'errors']
@@ -211,6 +230,7 @@ arg_dict = vars(args)
 show_variable('base_path', base_path)
 for item in tasks + options + variants:
   show_variable(item, arg_dict[item])
+show_variable('prefix', prefix)
 
 def _call_verbose(cmd):
   lines_to_show = ['Package name:', 'Version:', 'Date:', 'Status:', 'version',
@@ -233,26 +253,6 @@ if args.remove:
 mkdirs(build_path)
 os.chdir(build_path)
 
-
-ol_path = None
-
-global_install_path = '/data/bcho/whizard_install'
-global_gfortran_install_path = '/data/bcho/whizard_install_gfortran'
-if build_name == 'ifort-nostatic':
-  prefix = '--prefix=' + global_install_path
-elif build_name == 'gfortran-nostatic':
-  prefix = '--prefix=' + global_gfortran_install_path
-  ol_path = 'OpenLoops_gfortran'
-else:
-  prefix = '--prefix=' + os.path.join(base_path, '_install', build_name)
-
-if ol_path is None:
-  for path in os.environ["LD_LIBRARY_PATH"].split(':'):
-    if 'OpenLoops' in path:
-      ol_path = path
-if ol_path is not None:
-  args.configureflags += ['--enable-openloops',
-                          '--with-openloops=' + ol_path[0:-3]]
 
 # configure if desired
 compiler = args.compiler
