@@ -3,7 +3,7 @@ sudo apt-get install \
   autoconf automake autotools-dev build-essential \
   cmake curl dict diffpdf g++ \
   gfortran git graphviz htop inkscape ipython \
-  keepassx libtool meld mercurial msmtp mutt notmuch \
+  keepassx libtool lynx meld mercurial msmtp mutt notmuch \
   noweb libfindlib-ocaml-dev ocaml pandoc \
   pdftk procmail python-dev python-matplotlib \
   python-numpy python-scipy \
@@ -67,6 +67,7 @@ select yn in "Yes" "No"; do
 done
 
 pip install wgetter # used in hep-setup.py
+pip install unidecode # used in Ultisnips
 
 firefox \
   -new-tab http://www.mendeley.com/download-mendeley-desktop/ubuntu/instructions/

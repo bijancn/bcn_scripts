@@ -15,7 +15,6 @@
 "  prelim  "
 "=========="
 " First remove all existing highlighting.
-set background=light
 hi clear
 if exists("syntax_on")
   syntax reset

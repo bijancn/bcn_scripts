@@ -250,28 +250,6 @@ set shell=/bin/bash
 " Hybrid relative absolute number mode
 set relativenumber
 
-" Colors
-set background=dark
-colorscheme lucius
-nnoremap <leader>u :call LuciusToggle()<cr>
-let g:lucius_white = 1
-" LuciusWhite
-function! LuciusToggle()
-  if g:lucius_white == 1
-    LuciusDarkLowContrast
-    let g:lucius_white = 2
-  elseif g:lucius_white == 2
-    LuciusBlack
-    let g:lucius_white = 0
-  elseif g:lucius_white == 0
-    LuciusWhite
-    let g:lucius_white = 1
-  endif
-endfunction
-
-colorscheme solarized
-
-" colorscheme bcn_light
 " == Spelling ==
 " word not recognized
 hi SpellBad                                 ctermbg=209         cterm=undercurl
@@ -349,6 +327,39 @@ set pastetoggle=<F2>
 " <CR> sends Enter
 
 let mapleader = ";"
+
+nnoremap <leader>ts :call ColorSchemeToggle()<cr>
+let g:color_toggle = 1
+colorscheme lucius
+function! ColorSchemeToggle()
+  if g:color_toggle == 1
+    colorscheme solarized
+    let g:color_toggle = 2
+  elseif g:color_toggle == 2
+    colorscheme bcn_light
+    let g:color_toggle = 3
+  elseif g:color_toggle == 3
+    colorscheme bcn_dark
+    let g:color_toggle = 4
+  elseif g:color_toggle == 4
+    colorscheme lucius
+    let g:color_toggle = 1
+    echo "solarized"
+  endif
+endfunction
+
+nnoremap <leader>tb :call BackgroundToggle()<cr>
+let g:background_toggle = 1
+set background=dark
+function! BackgroundToggle()
+  if g:background_toggle == 1
+    set background=light
+    let g:background_toggle = 2
+  elseif g:background_toggle == 2
+    set background=dark
+    let g:background_toggle = 1
+  endif
+endfunction
 
 noremap ]p ]cdp
 noremap [p [cdp

@@ -121,7 +121,8 @@ bindkey '^I' expand-or-complete-or-list-files
 #                                   SETTINGS                                   #
 #==============================================================================#
 # 10 second wait if you do something that will delete everything
-setopt RM_STAR_WAIT
+# setopt RM_STAR_WAIT
+# 10 seconds are just too long
 
 setopt VI
 

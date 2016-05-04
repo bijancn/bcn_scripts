@@ -88,3 +88,7 @@ ln -sf ~/.vimrc ~/.nvimrc
 
 chmod 600 ~/.msmtprc
 mkdir -p .mutt/temp
+if type goobook &> /dev/null ; then
+  pip install goobook
+  goobook authenticate
+fi
