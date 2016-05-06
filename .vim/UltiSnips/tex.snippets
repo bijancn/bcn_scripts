@@ -109,14 +109,16 @@ endsnippet
 #========#
 snippet align "Align environment" b
 \begin{align}
-	${1:${VISUAL}}
+	${2:${VISUAL}}
+\label{eq:${1:${VISUAL}}}
 \end{align}
 $0
 endsnippet
 
 snippet eq "Equation environment" b
 \begin{equation}
-	${1:${VISUAL}}
+	${2:${VISUAL}}
+\label{eq:${1:${VISUAL}}}
 \end{equation}
 $0
 endsnippet
