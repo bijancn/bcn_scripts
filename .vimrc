@@ -67,10 +67,10 @@ Plug 'kien/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPMixed'] }
 Plug 'luochen1990/rainbow'
 
 " Show errors and warnings of compilers and checkers
-Plug 'scrooloose/syntastic' " , { 'on' : [] }
+Plug 'scrooloose/syntastic'
 
 " The ultimate snippet solution
-Plug 'SirVer/ultisnips' " , { 'on' : [] }
+Plug 'SirVer/ultisnips'
 
 " Nice fuzzy autocompletion with supertab support
 " Ubuntu libs:  build-essential cmake python-dev
@@ -109,6 +109,9 @@ Plug 'BufOnly.vim', {'on': 'BufOnly'}
 Plug 'sjl/badwolf'
 
 Plug 'rking/ag.vim'
+
+" Adds git status next to the line numbers
+Plug 'airblade/vim-gitgutter'
 
 " Add the s motion
 Plug 'justinmk/vim-sneak'
@@ -319,6 +322,10 @@ set ttyfast
 
 " Toggle if vim should take paste from clipboard literally or try to reformat
 set pastetoggle=<F2>
+
+" If this many milliseconds nothing is typed the swap file will be written
+" Also used for CursorHold and gitgutter
+set updatetime=250
 
 "=============================================================================="
 "                              KEYBOARD MAPPINGS                               "
@@ -683,19 +690,26 @@ let g:loaded_python3_provider = 0
 "=============================================================================="
 "                                  SYNTASTIC                                   "
 "=============================================================================="
-" Checkers
-let g:syntastic_ocaml_checkers = ['merlin']
+" checkers
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_auto_refresh_includes = 1
 let g:syntastic_fortran_checkers = [""]
-let g:syntastic_javascript_checkers = ['jshint']
-let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
+let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_javascript_eslint_exec = 'eslint_d'
+let g:syntastic_javascript_eslint_exec = './node_modules/.bin/eslint'
+let g:syntastic_ocaml_checkers = ['merlin']
 let g:syntastic_python_checkers = ['pep8', 'pyflakes']
 let g:syntastic_python_pep8_args='--max-line-length=89'
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exec = './node_modules/.bin/eslint'
-"let g:syntastic_javascript_eslint_exec = 'eslint_d'
+let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
+let g:syntastic_tex_checkers = ['chktex']
 
+" settings
 let g:syntastic_enable_signs = 1
-"
+let g:syntastic_check_on_open = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 " 0: dont jump, 1: always jump to first issue, 2: jump to first error
 let g:syntastic_auto_jump = 0
 " Close the error window but don't open it automatically
@@ -939,7 +953,6 @@ nnoremap <leader>t :YcmCompleter GoTo<CR>
 
 augroup load_us_ycm
   autocmd!
-  " 'ultisnips', , 'syntastic'
   autocmd InsertEnter * call plug#load('YouCompleteMe')
         \| call youcompleteme#Enable() | autocmd! load_us_ycm
 augroup END
