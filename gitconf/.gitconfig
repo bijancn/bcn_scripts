@@ -40,3 +40,8 @@
   notify-command = notify-send -i \"$ICON_PATH\" \"$TITLE\" \"$DESCRIPTION\" -t 0
 [push]
   default = simple
+[sendemail]
+  smtpencryption = tls
+  smtpserver = smtp.gmail.com
+  smtpuser = bijan.chokoufe@gmail.com
+  smtpserverport = 587
