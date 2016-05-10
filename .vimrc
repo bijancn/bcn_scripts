@@ -325,7 +325,7 @@ set pastetoggle=<F2>
 
 " If this many milliseconds nothing is typed the swap file will be written
 " Also used for CursorHold and gitgutter
-set updatetime=250
+set updatetime=1000
 
 "=============================================================================="
 "                              KEYBOARD MAPPINGS                               "
