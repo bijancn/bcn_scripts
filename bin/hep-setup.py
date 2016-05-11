@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
-#import argparse
-#import shutil
 import wgetter
 import tarfile
 from bcn_tools import *
-import sys, os
+import sys
+import os
 
 # Monkey patch default SSL
 # (https://github.com/mtschirs/quizduellapi/issues/://github.com/mtschirs/quizduellapi/issues/2)
@@ -19,17 +18,19 @@ hepmc_package = 'HepMC-2.06.09'
 hepmc_source = 'http://lcgapp.cern.ch/project/simu/HepMC/download/'
 hepmc_configure_options = ['--with-momentum=GEV', '--with-length=MM']
 
-lhapdf_version = '6.1.4'
+lhapdf_version = '6.1.6'
 lhapdf_package = 'LHAPDF-' + lhapdf_version
 lhapdf_source = 'http://www.hepforge.org/archive/lhapdf/'
 lhapdf_configure_options = []
 lhapdf_sets = ['CT10nlo', 'CT10', 'cteq6l1', 'MSTW2008lo68cl', 'MSTW2008nlo90cl']
+
 
 def set_path(target):
   path = os.path.abspath(os.path.join(local_path, target))
   show_variable (target + "_path", path)
   mkdirs(path)
   return path
+
 
 def install(package, source, configure_options):
   stamp = package + '.stamp'
@@ -51,6 +52,7 @@ def install(package, source, configure_options):
     with open(stamp, 'a'):
       os.utime(stamp, None)
 
+
 def get_PDFs(version, source, pdfsets):
   pdf_source = source + 'pdfsets/' + version + '/'
   for pdfset in pdfsets:
@@ -64,6 +66,7 @@ def get_PDFs(version, source, pdfsets):
       os.chdir(build_path)
       with open(stamp, 'a'):
         os.utime(stamp, None)
+
 
 paths = map(set_path, ['build', 'install'])
 build_path = paths[0]

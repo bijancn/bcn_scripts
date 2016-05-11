@@ -537,6 +537,45 @@ alias bp="bitpocket"
 #  cluster  #
 #===========#
 alias qst="cit qstat"
+function save-error-queue () {
+  qstat | grep Eqw | awk '{print $1}' > error-queue
+}
+
+function show-failed-folders-from-queue () {
+  for i in `cat error-queue`
+  do
+    qstat -j $i | grep sge_o_workdir | awk '{print $2}'
+  done
+}
+
+function clean-error-queue () {
+  for i in `cat error-queue`
+  do
+    qdel $i
+  done
+}
+
+function resubmit-error-queue () {
+  for i in `show-failed-folders-from-queue`
+  do
+    cd $i
+    echo $i
+    qsub ~/bcn_scripts/submit
+  done
+}
+
+function show-number-of-waiting-jobs () {
+  qstat | grep ' qw' | wc | awk '{print $1}'
+}
+
+function show-number-of-running-jobs () {
+  qstat | grep ' r' | wc | awk '{print $1}'
+}
+
+function show-number-of-failed-jobs () {
+  qstat | grep ' Eqw' | wc | awk '{print $1}'
+}
+
 alias men="$HOME/mendeleydesktop-1.15-linux-x86_64/bin/mendeleydesktop &"
 alias spi="$HOME/SpiderOak/SpiderOakONE &"
 

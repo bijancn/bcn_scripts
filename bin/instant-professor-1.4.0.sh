@@ -79,7 +79,6 @@ build_python () {
 }
 
 build_pip () {
-  pip_url=$1
   pip_name=`basename $url_pip`
   download $url_pip
   # This works when you have installed python locally without su rights
