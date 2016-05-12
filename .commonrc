@@ -537,6 +537,49 @@ alias bp="bitpocket"
 #  cluster  #
 #===========#
 alias qst="cit qstat"
+function save-error-queue () {
+  qstat | grep Eqw | awk '{print $1}' > error-queue
+}
+
+function show-failed-folders-from-queue () {
+  for i in `cat error-queue`
+  do
+    qstat -j $i | grep sge_o_workdir | awk '{print $2}'
+  done
+}
+
+function clean-error-queue () {
+  for i in `cat error-queue`
+  do
+    qdel $i
+  done
+}
+
+function resubmit-error-queue () {
+  for i in `show-failed-folders-from-queue`
+  do
+    cd $i
+    echo $i
+    qsub ~/bcn_scripts/submit
+  done
+}
+
+function show-number-of-waiting-jobs () {
+  qstat | grep ' qw' | wc | awk '{print $1}'
+}
+
+function show-number-of-running-jobs () {
+  qstat | grep ' r' | wc | awk '{print $1}'
+}
+
+function show-failed-jobs () {
+  qstat | grep ' Eqw'
+}
+
+function show-number-of-failed-jobs () {
+  qstat | grep ' Eqw' | wc | awk '{print $1}'
+}
+
 alias men="$HOME/mendeleydesktop-1.15-linux-x86_64/bin/mendeleydesktop &"
 alias spi="$HOME/SpiderOak/SpiderOakONE &"
 
@@ -597,7 +640,6 @@ fi
 trnk() { cd $whiz_soft/ ; }
 bui() { cd $whiz_soft/_build ; }
 
-alias resubmit-failed-jobs='for i in `cat /data/bcho/BitPocketMaster/jobs`; do file=TuningEEqqMSTJ11eq*/Professor*/mc/*-*/compile.o$i; cd `dirname $file`; qsub -V ~/bcn_scripts/submit; cd -; done'
 alias wsrc='op '$whiz_soft/_install/dist/share/doc/whizard/whizard.pdf
 alias vsrc='op '$whiz_soft/_install/dist/share/doc/vamp/vamp.pdf
 alias osrc='op '$whiz_soft/_install/dist/share/doc/omega/omega.pdf

@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/zsh
 
 # name of job
-#$ -N pyextra3
+#$ -N whizard-ttH-scan
 
 # Note on queues:
 # default.q     100 % (h_rt < 3:00:00, h_vmem < 2G/8G)
@@ -10,11 +10,13 @@
 # On our big birds memory limits are extended to h_vmem=8G+
 
 # Max run time
-#$ -l h_rt=02:59:59
+##$ -l h_rt=00:04:59
+##$ -l h_rt=02:59:59
+#$ -l h_rt=47:59:59
 
 # Max available memory (default 1G)
 ##$ -l h_vmem=1900M
-#$ -l h_vmem=7900M
+#$ -l h_vmem=15900M
 
 # Max available disk space (default 3G)
 #$ -l h_fsize=3000M
@@ -26,13 +28,13 @@
 #$ -l arch=amd64
 
 # request Bourne shell as shell for job
-#$ -S /bin/sh
+#$ -S /bin/zsh
 
 # Send mail after the end(e), begin(b), abort(a) or suspend(s) of the batch jobs
-#$ -m as
+##$ -m as
 
 # Mail for notifications
-#$ -M bijan.chokoufe@desy.de
+##$ -M bijan.chokoufe@desy.de
 
 # Use current working directory
 #$ -cwd
@@ -44,10 +46,11 @@ echo "Got $NSLOTS processors."
 echo "This is job: $JOB_ID and runs in `pwd`"
 
 #make
-#whizard -r run.sin
-#./instant-whizard.sh
-rm fifo.hepmc
-mkfifo fifo.hepmc
-source $HOME/.bashrc
-whizard -r *.sin &
-rivet -a DELPHI_1996_S3430090 fifo.hepmc
+source $HOME/.commonrc
+whizard -r *.sin
+
+#rm fifo.hepmc
+#mkfifo fifo.hepmc
+#source $HOME/.bashrc
+#whizard -r *.sin &
+#rivet -a DELPHI_1996_S3430090 fifo.hepmc
