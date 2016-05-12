@@ -572,6 +572,10 @@ function show-number-of-running-jobs () {
   qstat | grep ' r' | wc | awk '{print $1}'
 }
 
+function show-failed-jobs () {
+  qstat | grep ' Eqw'
+}
+
 function show-number-of-failed-jobs () {
   qstat | grep ' Eqw' | wc | awk '{print $1}'
 }
@@ -636,7 +640,6 @@ fi
 trnk() { cd $whiz_soft/ ; }
 bui() { cd $whiz_soft/_build ; }
 
-alias resubmit-failed-jobs='for i in `cat /data/bcho/BitPocketMaster/jobs`; do file=TuningEEqqMSTJ11eq*/Professor*/mc/*-*/compile.o$i; cd `dirname $file`; qsub -V ~/bcn_scripts/submit; cd -; done'
 alias wsrc='op '$whiz_soft/_install/dist/share/doc/whizard/whizard.pdf
 alias vsrc='op '$whiz_soft/_install/dist/share/doc/vamp/vamp.pdf
 alias osrc='op '$whiz_soft/_install/dist/share/doc/omega/omega.pdf
