@@ -338,8 +338,8 @@ set updatetime=1000
 let mapleader = ";"
 
 nnoremap <leader>ts :call ColorSchemeToggle()<cr>
-let g:color_toggle = 1
-colorscheme lucius
+let g:color_toggle = 2
+colorscheme solarized
 function! ColorSchemeToggle()
   if g:color_toggle == 1
     colorscheme solarized
@@ -358,8 +358,8 @@ function! ColorSchemeToggle()
 endfunction
 
 nnoremap <leader>tb :call BackgroundToggle()<cr>
-let g:background_toggle = 1
-set background=dark
+let g:background_toggle = 2
+set background=light
 function! BackgroundToggle()
   if g:background_toggle == 1
     set background=light
