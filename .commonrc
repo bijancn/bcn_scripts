@@ -561,6 +561,7 @@ function resubmit-error-queue () {
     cd $i
     echo $i
     qsub ~/bcn_scripts/submit
+    cd -
   done
 }
 
