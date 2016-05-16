@@ -7,7 +7,8 @@ if [ -z ${TMUX} ]; then
     fi
   fi
 fi
-# Use self build zsh
+
+# Use self build zsh if there
 if [ -f ${HOME}/install/bin/zsh ] ; then
   source $HOME/.commonrc
   if zsh --version ; then

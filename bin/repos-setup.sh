@@ -54,6 +54,7 @@ ln -s $HOME/dircolors-solarized/dircolors.ansi-universal $HOME/.dircolors
   #get_logilab
 #fi
 
+mkdir -p ~/install/bin
 ln -s $HOME/pydflatex/bin/pydflatex $HOME/install/bin/pydflatex
 ln -s $HOME/bitpocket/bin/bitpocket $HOME/install/bin/bitpocket
 ln -s $HOME/svn-color/svn-color.py $HOME/install/bin/svn-color

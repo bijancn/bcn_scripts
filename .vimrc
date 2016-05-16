@@ -42,7 +42,6 @@ Plug 'bijancn/free-fortran.vim'
 Plug 'bijancn/whizard.vim'
 
 " Pure epicness, the one and only statusbar
-"Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -71,6 +70,9 @@ Plug 'scrooloose/syntastic'
 
 " The ultimate snippet solution
 Plug 'SirVer/ultisnips'
+
+" Community driven snippets repo
+Plug 'honza/vim-snippets'
 
 " Nice fuzzy autocompletion with supertab support
 " Ubuntu libs:  build-essential cmake python-dev
@@ -125,7 +127,7 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'AndrewRadev/switch.vim'
 
 " Work together - apart. Only works with neovim
-Plug 'floobits/floobits-neovim'
+"Plug 'floobits/floobits-neovim'
 
 " Add support for emacs org-mode
 Plug 'jceb/vim-orgmode'
@@ -1161,19 +1163,17 @@ endfunction
 autocmd VimEnter * :call PluginSettings()
 let g:sneak#streak = 1
 let g:sneak#s_next = 1
-"hi link SneakPluginTarget Error
-"hi link SneakPluginScope Error
 hi link SneakStreakTarget Error
 hi link SneakStreakMask Comment
 
 let g:tmuxline_preset = {
       \'a'    : '#H',
+      \'b'    : "#(tmux-mem-cpu-load --interval 3 --graph-lines 3 --mem-mode 1)",
       \'c'    : '',
-      \'b'    : '#(tmux-mem-cpu-load --interval 3 --graph-lines 5)',
-      \'win'  : ['#W'],
-      \'cwin' : ['#I', '#W'],
+      \'win'  : ['#I'],
+      \'cwin' : ['#I'],
       \'x'    : '',
-      \'y'    : ['%a %d', '%b', '%Y'],
+      \'y'    : ['%a %d', '%b'],
       \'z'    : '%R'}
 
 " sections (a, b, c, x, y, z, warn) are optional
