@@ -461,16 +461,22 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "XF86MonBrightnessUp", function ()
         awful.util.spawn("xbacklight -inc 5") end),
 
-    -- Volume
+    -- ALSA volume control
     awful.key({ }, "XF86AudioRaiseVolume", function ()
-        awful.util.spawn("amixer set Master 9%+") end),
+        os.execute(string.format("amixer set %s 1%%+", volumewidget.channel))
+        volumewidget.update()
+    end),
     awful.key({ }, "XF86AudioLowerVolume", function ()
-        awful.util.spawn("amixer set Master 9%-") end),
+        os.execute(string.format("amixer set %s 1%%-", volumewidget.channel))
+        volumewidget.update()
+    end),
     awful.key({ }, "XF86AudioMute", function ()
-        awful.util.spawn("amixer set Master toggle")
-        awful.util.spawn("amixer set Headphone toggle")
-        awful.util.spawn("amixer set Speaker toggle")
-      end),
+        os.execute(string.format("amixer set %s toggle", volumewidget.channel))
+        volumewidget.update()
+        --awful.util.spawn("amixer set Master toggle")
+        --awful.util.spawn("amixer set Headphone toggle")
+        --awful.util.spawn("amixer set Speaker toggle")
+    end),
     awful.key({ }, "XF86AudioMicMute", function ()
         awful.util.spawn("amixer set Capture toggle") end),
 
@@ -508,28 +514,6 @@ globalkeys = awful.util.table.join(
     -- Widgets popups
     awful.key({ altkey,           }, "c",      function () lain.widgets.calendar:show(7) end),
     awful.key({ altkey,           }, "h",      function () fswidget.show(7) end),
-
-    -- ALSA volume control
-    awful.key({ altkey }, "Up",
-        function ()
-            os.execute(string.format("amixer set %s 1%%+", volumewidget.channel))
-            volumewidget.update()
-        end),
-    awful.key({ altkey }, "Down",
-        function ()
-            os.execute(string.format("amixer set %s 1%%-", volumewidget.channel))
-            volumewidget.update()
-        end),
-    awful.key({ altkey }, "m",
-        function ()
-            os.execute(string.format("amixer set %s toggle", volumewidget.channel))
-            volumewidget.update()
-        end),
-    awful.key({ altkey, "Control" }, "m",
-        function ()
-            os.execute(string.format("amixer set %s 100%%", volumewidget.channel))
-            volumewidget.update()
-        end),
 
     -- MPD control
     awful.key({ altkey, "Control" }, "Up",
@@ -686,7 +670,6 @@ for k, v in pairs(user_keys) do
         properties = { tag = v[3] } }
   )
 end
-
 
 -- }}}
 

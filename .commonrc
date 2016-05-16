@@ -9,6 +9,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # vim: set filetype=sh
 
+export GPG_TTY=$(tty)
 export arch=`getconf LONG_BIT`
 
 export LC_ALL=en_US.UTF-8
