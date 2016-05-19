@@ -4,6 +4,7 @@
 --]]
 
 -- {{{ Required libraries
+local revelation = require("revelation")
 local gears     = require("gears")
 local awful     = require("awful")
 awful.rules     = require("awful.rules")
@@ -13,6 +14,8 @@ local beautiful = require("beautiful")
 local naughty   = require("naughty")
 local drop      = require("scratchdrop")
 local lain      = require("lain")
+beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-darker/theme.lua")
+revelation.init()
 -- }}}
 
 -- {{{ Error handling
@@ -21,7 +24,6 @@ if awesome.startup_errors then
                      title = "Oops, there were errors during startup!",
                      text = awesome.startup_errors })
 end
-
 do
     local in_error = false
     awesome.connect_signal("debug::error", function (err)
@@ -45,12 +47,12 @@ function run_once(cmd)
   end
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
-
 run_once("unclutter -root")
 run_once("synclient touchpadoff=1")
 run_once("nm-applet")
 run_once("fluxgui")
-
+run_once("owncloud")
+run_once("eval `dbus-launch`")
 awful.util.spawn_with_shell("xcompmgr &")
 naughty.config.presets.normal.opacity = 0.6
 naughty.config.presets.low.opacity = 0.6
@@ -58,9 +60,6 @@ naughty.config.presets.critical.opacity = 0.8
 -- }}}
 
 -- {{{ Variable definitions
-
--- beautiful init
-beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-darker/theme.lua")
 
 -- common
 modkey     = "Mod4"
@@ -74,36 +73,40 @@ local layouts = {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
     awful.layout.suit.tile.bottom,
+    awful.layout.suit.tile.top,
+    awful.layout.suit.tile.left,
     awful.layout.suit.fair,
     awful.layout.suit.fair.horizontal,
-    awful.layout.suit.tile.left,
-    awful.layout.suit.tile.top,
     awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
-    awful.layout.suit.floating
+    awful.layout.suit.max.fullscreen
 }
 tags = {
-   names = { "web", "work", "spotify", "mendeley", "5"},
-   layout = { layouts[4], layouts[4], layouts[4], layouts[4], layouts[4] }
+   names = {"1", "2", "3", "4", "5", "mutt", "web", "spotify", "mendeley"},
+   layout = {layouts[4], layouts[4], layouts[4], layouts[4], layouts[4],
+              layouts[4], layouts[4], layouts[4], layouts[4]}
 }
 for s = 1, screen.count() do
    tags[s] = awful.tag(tags.names, s, tags.layout)
 end
 -- }}}
 
--- user defined
+-- Use with ModKey + key
+-- key = {executable, class name (get it with xprop), tag to open on}
 user_keys =
 {
-  g = {"google-chrome", "google-chrome", tags[1][1]},
-  t = {"gnome-terminal", "Gnome-terminal", tags[1][2]},
-  s = {"spotify --force-device-scale-factor=1.5", "Spotify", tags[1][3]},
-  e = {"mendeleydesktop", "Mendeleydesktop", tags[1][4]},
+  -- TODO: (bcn 2016-05-17) does not set the class yet. buggy? Recompile gnome
+  -- terminal?
+  n = {"nautilus", "Nautilus", tags[1][1]},
+  t = {"gnome-terminal", "Gnome-terminalNOT", tags[1][2]},
+  m = {"terminator -e 'source ~/.commonrc ; mutt'", "Terminator", tags[1][6]},
+  g = {"google-chrome", "google-chrome", tags[1][7]},
+  s = {"spotify --force-device-scale-factor=1.5", "Spotify", tags[1][8]},
+  e = {"mendeleydesktop", "Mendeleydesktop", tags[1][9]},
   p = {"keepassx", "Keepassx", tags[1][5]},
+  x = {"xournal", "Xournal", tags[1][5]},
   i = {"inkscape", "Inkscape", tags[1][5]}
 }
 
-mail       = terminal .. " -e mutt "
 iptraf     = terminal .. " -g 180x54-20+34 -e sudo iptraf-ng -i all "
 musicplr   = terminal .. " -g 130x34-320+16 -e ncmpcpp "
 
@@ -119,7 +122,7 @@ end
 
 -- {{{ Menu
 mymainmenu = awful.menu.new({ items = require("menugen").build_menu(),
-                              theme = { height = 16, width = 130 }})
+                              theme = { height = 40, width = 300 }})
 -- }}}
 
 -- {{{ Wibox
@@ -140,27 +143,6 @@ mytextclock = lain.widgets.abase({
 
 -- calendar
 lain.widgets.calendar:attach(mytextclock, { font_size = 14 })
-
--- Mail IMAP check
-mailicon = wibox.widget.imagebox(beautiful.widget_mail)
-mailicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn(mail) end)))
---[[ commented because it needs to be set before use
-mailwidget = lain.widgets.imap({
-    timeout  = 180,
-    server   = "server",
-    mail     = "mail",
-    password = "keyring get mail",
-    settings = function()
-        if mailcount > 0 then
-            widget:set_text(" " .. mailcount .. " ")
-            mailicon:set_image(beautiful.widget_mail_on)
-        else
-            widget:set_text("")
-            mailicon:set_image(beautiful.widget_mail)
-        end
-    end
-})
-]]
 
 -- MPD
 mpdicon = wibox.widget.imagebox(beautiful.widget_music)
@@ -337,7 +319,7 @@ for s = 1, screen.count() do
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 20 })
+    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 30 })
 
     -- Widgets that are aligned to the upper left
     local left_layout = wibox.layout.fixed.horizontal()
@@ -369,7 +351,6 @@ for s = 1, screen.count() do
     right_layout:add(arrl)
     right_layout_add(mpdicon, mpdwidget)
     right_layout_add(volicon, volumewidget)
-    --right_layout_add(mailicon, mailwidget)
     right_layout_add(memicon, memwidget)
     right_layout_add(cpuicon, cpuwidget)
     right_layout_add(tempicon, tempwidget)
@@ -433,6 +414,7 @@ globalkeys = awful.util.table.join(
             awful.client.focus.bydirection("up")
             if client.focus then client.focus:raise() end
         end),
+    awful.key({ modkey,           }, "v",      revelation),
     awful.key({ modkey }, "h",
         function()
             awful.client.focus.bydirection("left")
@@ -471,11 +453,11 @@ globalkeys = awful.util.table.join(
         volumewidget.update()
     end),
     awful.key({ }, "XF86AudioMute", function ()
-        os.execute(string.format("amixer set %s toggle", volumewidget.channel))
+        --os.execute(string.format("amixer set %s toggle", volumewidget.channel))
+        awful.util.spawn("amixer set Master toggle")
+        awful.util.spawn("amixer set Headphone toggle")
+        awful.util.spawn("amixer set Speaker toggle")
         volumewidget.update()
-        --awful.util.spawn("amixer set Master toggle")
-        --awful.util.spawn("amixer set Headphone toggle")
-        --awful.util.spawn("amixer set Speaker toggle")
     end),
     awful.key({ }, "XF86AudioMicMute", function ()
         awful.util.spawn("amixer set Capture toggle") end),
@@ -501,7 +483,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "h",      function () awful.tag.incncol( 1)          end),
     awful.key({ modkey,           }, "space",  function () awful.layout.inc(layouts,  1)  end),
     awful.key({ modkey, "Shift"   }, "space",  function () awful.layout.inc(layouts, -1)  end),
-    awful.key({ modkey, "Control" }, "n",      awful.client.restore),
+    --awful.key({ modkey, "Control" }, "n",      awful.client.restore),
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
@@ -541,14 +523,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "c", function () awful.util.spawn("xsel -p -o | xsel -i -b") end),
 
     -- Prompt
-    awful.key({ modkey }, "r", function () mypromptbox[mouse.screen]:run() end),
-    awful.key({ modkey }, "x",
-              function ()
-                  awful.prompt.run({ prompt = "Run Lua code: " },
-                  mypromptbox[mouse.screen].widget,
-                  awful.util.eval, nil,
-                  awful.util.getdir("cache") .. "/history_eval")
-              end)
+    awful.key({ modkey }, "r", function () mypromptbox[mouse.screen]:run() end)
 )
 
 -- User programs
@@ -567,7 +542,7 @@ clientkeys = awful.util.table.join(
     function (c)
       c.fullscreen = not c.fullscreen
     end),
-  awful.key({ modkey, "Shift"   }, "c", function (c) c:kill() end),
+  awful.key({ modkey }, "q", function (c) c:kill() end),
   awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle),
   awful.key({ modkey, "Control" }, "Return",
     function (c)
@@ -575,13 +550,13 @@ clientkeys = awful.util.table.join(
     end),
   awful.key({ modkey, }, "o", awful.client.movetoscreen ),
   awful.key({ modkey, }, "t", function (c) c.ontop = not c.ontop end),
-  awful.key({ modkey, }, "n",
-    function (c)
-        -- The client currently has the input focus, so it cannot be
-        -- minimized, since minimized clients can't have the focus.
-        c.minimized = true
-    end),
-  awful.key({ modkey, }, "m",
+  --awful.key({ modkey, }, "n",
+    --function (c)
+        ---- The client currently has the input focus, so it cannot be
+        ---- minimized, since minimized clients can't have the focus.
+        --c.minimized = true
+    --end),
+  awful.key({ modkey, "Shift"}, "m",
     function (c)
         c.maximized_horizontal = not c.maximized_horizontal
         c.maximized_vertical   = not c.maximized_vertical
@@ -654,10 +629,10 @@ awful.rules.rules = {
                      buttons = clientbuttons,
 	                   size_hints_honor = false } },
     { rule = { class = "Gnome-terminal" },
-          properties = { opacity = 0.99 } },
+          properties = { opacity = 0.90 } },
 
-    { rule = { instance = "google-chrome" },
-          properties = { tag = tags[1][1] } },
+    { rule = { instance = "Google-chrome" },
+          properties = { tag = tags[1][8] } },
 
     { rule = { class = "Gimp", role = "gimp-image-window" },
           properties = { maximized_horizontal = true,
