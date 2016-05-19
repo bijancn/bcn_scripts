@@ -543,6 +543,24 @@ function save-error-queue () {
   qstat | grep Eqw | awk '{print $1}' > error-queue
 }
 
+function save-queue () {
+  qstat | grep ' qw' | awk '{print $1}' > queue
+}
+
+function clean-queue () {
+  for i in `cat queue`
+  do
+    qdel $i
+  done
+}
+
+function show-folders-from-queue () {
+  for i in `cat queue`
+  do
+    qstat -j $i | grep sge_o_workdir | awk '{print $2}'
+  done
+}
+
 function show-failed-folders-from-queue () {
   for i in `cat error-queue`
   do
@@ -554,6 +572,16 @@ function clean-error-queue () {
   for i in `cat error-queue`
   do
     qdel $i
+  done
+}
+
+function resubmit-queue () {
+  for i in `show-folders-from-queue`
+  do
+    cd $i
+    echo $i
+    qsub ~/bcn_scripts/submit
+    cd -
   done
 }
 
