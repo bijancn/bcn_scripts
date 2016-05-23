@@ -77,34 +77,34 @@ local layouts = {
     awful.layout.suit.tile.left,
     awful.layout.suit.fair,
     awful.layout.suit.fair.horizontal,
-    awful.layout.suit.max,
     awful.layout.suit.max.fullscreen
 }
 tags = {
-   names = {"1", "2", "3", "4", "5", "mutt", "web", "spotify", "mendeley"},
-   layout = {layouts[4], layouts[4], layouts[4], layouts[4], layouts[4],
-              layouts[4], layouts[4], layouts[4], layouts[4]}
+   names = {"1", "2", "3", "4", "skype", "mutt", "web", "spotify", "mendeley"},
+   layout = {layouts[5], layouts[5], layouts[5], layouts[5], layouts[5],
+              layouts[5], layouts[5], layouts[5], layouts[5]}
 }
 for s = 1, screen.count() do
    tags[s] = awful.tag(tags.names, s, tags.layout)
 end
 -- }}}
 
--- Use with ModKey + key
+-- Use with user_keys + key
 -- key = {executable, class name (get it with xprop), tag to open on}
+user_combination = {modkey}
+
 user_keys =
 {
-  -- TODO: (bcn 2016-05-17) does not set the class yet. buggy? Recompile gnome
-  -- terminal?
   n = {"nautilus", "Nautilus", tags[1][1]},
   t = {"gnome-terminal", "Gnome-terminalNOT", tags[1][2]},
+  y = {"skype", "Skype", tags[1][5]},
   m = {"terminator -e 'source ~/.commonrc ; mutt'", "Terminator", tags[1][6]},
   g = {"google-chrome", "google-chrome", tags[1][7]},
-  s = {"spotify --force-device-scale-factor=1.5", "Spotify", tags[1][8]},
+  s = {"spotify --force-device-scale-factor=1.7", "Spotify", tags[1][8]},
   e = {"mendeleydesktop", "Mendeleydesktop", tags[1][9]},
-  p = {"keepassx", "Keepassx", tags[1][5]},
-  x = {"xournal", "Xournal", tags[1][5]},
-  i = {"inkscape", "Inkscape", tags[1][5]}
+  k = {"keepassx", "Keepassx", tags[1][4]},
+  x = {"xournal", "Xournal", tags[1][4]},
+  i = {"inkscape", "Inkscape", tags[1][4]}
 }
 
 iptraf     = terminal .. " -g 180x54-20+34 -e sudo iptraf-ng -i all "
@@ -468,13 +468,13 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
     awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
-    awful.key({ modkey,           }, "Tab",
-        function ()
-            awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
-        end),
+    awful.key({ altkey,           }, "Tab",
+      function ()
+        awful.client.focus.history.previous()
+        if client.focus then
+            client.focus:raise()
+        end
+      end),
     awful.key({ altkey, "Shift"   }, "l",      function () awful.tag.incmwfact( 0.05)     end),
     awful.key({ altkey, "Shift"   }, "h",      function () awful.tag.incmwfact(-0.05)     end),
     awful.key({ modkey, "Shift"   }, "l",      function () awful.tag.incnmaster(-1)       end),
@@ -529,7 +529,7 @@ globalkeys = awful.util.table.join(
 -- User programs
 for k, v in pairs(user_keys) do
   globalkeys = awful.util.table.join(globalkeys,
-    awful.key({ modkey, }, k, function ()
+    awful.key(user_combination, k, function ()
       local matcher = function (c)
         return awful.rules.match(c, {class = v[2]})
       end

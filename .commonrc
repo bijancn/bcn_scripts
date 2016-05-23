@@ -638,6 +638,7 @@ alias spi="$HOME/SpiderOak/SpiderOakONE &"
 #===========#
 alias brc="vim ~/.bashrc"
 alias crc="vim ~/.commonrc"
+alias lrc="vim ~/.config/awesome/rc.lua"
 alias mrc="vim ~/.muttrc"
 alias src="vim ~/.ssh/config"
 alias vrc="vim ~/.vimrc"
