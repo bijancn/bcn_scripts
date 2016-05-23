@@ -44,6 +44,9 @@
 # Join stdout and stderr
 #$ -j y
 
+if ! test -z $FOLDER ; then
+  cd $FOLDER
+fi
 echo "Got $NSLOTS processors."
 echo "This is job: $JOB_ID and runs in `pwd`"
 

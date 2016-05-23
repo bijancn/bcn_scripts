@@ -95,15 +95,6 @@ export lingames=/data/lnx_games
 export syncd=$HOME/safe
 export install=$HOME/install
 
-# ifort
-intel_dir=/opt/intel
-if test -f $intel_dir/bin/compilervars.sh -a $arch = 64; then
-  source $intel_dir/bin/compilervars.sh intel64
-elif test -f $intel_dir/2016/bin/compilervars.sh -a $arch = 64; then
-  source $intel_dir/2016/bin/compilervars.sh intel64
-  #source $intel_dir/2011/vtune_amplifier_xe/amplxe-vars.sh
-fi
-
 #=========#
 #  paths  #
 #=========#
@@ -127,67 +118,82 @@ command-exists () {
   type "$1" &> /dev/null ;
 }
 
-if [[ $arch == *64* ]]; then
-  export desy_tex=/afs/desy.de/products/texlive/2012/bin/x86_64-linux
-  prepend-all-paths $install
-else
-  export desy_tex=/afs/desy.de/products/texlive/2012/bin/i386-linux
+if test -z $PATHS_LOADED ; then
+  echo "paths loaded is empty: $PATHS_LOADED"
+  # ifort
+  intel_dir=/opt/intel
+  if test -f $intel_dir/bin/compilervars.sh -a $arch = 64; then
+    source $intel_dir/bin/compilervars.sh intel64
+  elif test -f $intel_dir/2016/bin/compilervars.sh -a $arch = 64; then
+    source $intel_dir/2016/bin/compilervars.sh intel64
+    #source $intel_dir/2011/vtune_amplifier_xe/amplxe-vars.sh
+  fi
+
+  if [[ $arch == *64* ]]; then
+    export desy_tex=/afs/desy.de/products/texlive/2012/bin/x86_64-linux
+    prepend-all-paths $install
+  else
+    export desy_tex=/afs/desy.de/products/texlive/2012/bin/i386-linux
+  fi
+  prepend-pure-path $desy_tex
+  prepend-path $HOME/.gem/ruby/1.9.1
+  export whizard_install=/data/bcho/whizard_install_gfortran
+  if [ -d "$whizard_install" ]; then
+    prepend-all-paths $whizard_install
+  fi
+  export whizard_install=/data/bcho/whizard_install
+  if [ -d "$whizard_install" ]; then
+    prepend-all-paths $whizard_install
+  fi
+
+  prepend-path $HOME/bcn_scripts
+
+  prepend-pure-path $HOME/jrfonseca.gprof2dot
+
+  # python
+  add-pythonpath $HOME/bcn_scripts/include
+  add-pythonpath $HOME/Python-GoogleCalendarParser
+  add-pythonpath $HOME/eZchat
+  add-pythonpath $HOME/.vim/plugged/vim-eZchat/autoload
+  add-pythonpath $HOME/termstyle
+  add-pythonpath $HOME/pydflatex
+  export C_INCLUDE_PATH=$install/include
+  export CPLUS_INCLUDE_PATH=$install/include
+  export PYTHONUSERBASE=$HOME/install
+  export CC=gcc
+
+  tmp1=$HOME/hep
+  tmp2=/nfs/theoc/data/bcho/bird
+  tmp3=/data/bcho
+  if [ -d $tmp1 ]; then
+    export hep=$tmp1
+  elif [ -d $tmp2 ]; then
+    export hep=$tmp2
+  elif [ -d $tmp3 ]; then
+    export hep=$tmp3
+  fi
+
+  if [ -n "$hep" ]; then
+    export std_install=$hep/install
+    #export OpenLoopsPath=$hep/OpenLoops
+    prepend-libpath $hep/OpenLoops
+    #prepend-libpath $hep/OpenLoops_gfortran
+    prepend-all-paths $hep/gosam/local
+    prepend-all-paths $std_install
+    add-pythonpath $std_install/lib/python
+    export CPATH=$std_install/include:$CPATH
+    export LATEXINPUTS=${HOME}/texmf:$std_install/share/texmf/tex/latex/misc:$LATEXINPUTS
+    export TEXINPUTS=${HOME}/texmf:$std_install/share/texmf/tex/latex/misc:$TEXINPUTS
+  fi
+  export TEXMFCNF=${HOME}/texmf:${TEXMFCNF}
+  export HOMETEXMF=${HOME}/texmf:${HOMETEXMF}
+  export TEXMFHOME=${HOME}/texmf:${TEXMFHOME}
+
+  export PATHS_LOADED=true
 fi
 
-prepend-pure-path $desy_tex
-prepend-path $HOME/.gem/ruby/1.9.1
-export whizard_install=/data/bcho/whizard_install_gfortran
-if [ -d "$whizard_install" ]; then
-  prepend-all-paths $whizard_install
-fi
-export whizard_install=/data/bcho/whizard_install
-if [ -d "$whizard_install" ]; then
-  prepend-all-paths $whizard_install
-fi
 
-prepend-path $HOME/bcn_scripts
-
-prepend-pure-path $HOME/jrfonseca.gprof2dot
-
-# python
-add-pythonpath $HOME/bcn_scripts/include
-add-pythonpath $HOME/Python-GoogleCalendarParser
-add-pythonpath $HOME/eZchat
-add-pythonpath $HOME/.vim/plugged/vim-eZchat/autoload
-add-pythonpath $HOME/termstyle
-add-pythonpath $HOME/pydflatex
-export C_INCLUDE_PATH=$install/include
-export CPLUS_INCLUDE_PATH=$install/include
-export PYTHONUSERBASE=$HOME/install
-export CC=gcc
-
-
-tmp1=$HOME/hep
-tmp2=/nfs/theoc/data/bcho/bird
-tmp3=/data/bcho
-if [ -d $tmp1 ]; then
-  export hep=$tmp1
-elif [ -d $tmp2 ]; then
-  export hep=$tmp2
-elif [ -d $tmp3 ]; then
-  export hep=$tmp3
-fi
-
-if [ -n "$hep" ]; then
-  export std_install=$hep/install
-  #export OpenLoopsPath=$hep/OpenLoops
-  prepend-libpath $hep/OpenLoops
-  #prepend-libpath $hep/OpenLoops_gfortran
-  prepend-all-paths $hep/gosam/local
-  prepend-all-paths $std_install
-  add-pythonpath $std_install/lib/python
-  export CPATH=$std_install/include:$CPATH
-  export LATEXINPUTS=${HOME}/texmf:$std_install/share/texmf/tex/latex/misc:$LATEXINPUTS
-  export TEXINPUTS=${HOME}/texmf:$std_install/share/texmf/tex/latex/misc:$TEXINPUTS
-fi
-export TEXMFCNF=${HOME}/texmf:${TEXMFCNF}
-export HOMETEXMF=${HOME}/texmf:${HOMETEXMF}
-export TEXMFHOME=${HOME}/texmf:${TEXMFHOME}
+#export PYTHONHOME=$(dirname $(dirname `which python`))
 
 pythia-configure(){
   packages='--with-hepmc2=$install --with-lhapdf6=$install --with-fastjet3=$install'
@@ -614,6 +620,14 @@ function show-failed-jobs () {
 
 function show-number-of-failed-jobs () {
   qstat | grep ' Eqw' | wc | awk '{print $1}'
+}
+
+function show-number-of-total-jobs () {
+  qstat | wc | awk '{print $1}'
+}
+
+function show-number-of-jobs () {
+  echo "Waiting: `show-number-of-waiting-jobs`, running: `show-number-of-running-jobs`, failed: `show-number-of-failed-jobs`, total: `show-number-of-total-jobs`"
 }
 
 alias men="$HOME/mendeleydesktop-1.15-linux-x86_64/bin/mendeleydesktop &"
@@ -1072,4 +1086,7 @@ function tcsend {
   tcon send theoc "$1"
 }
 alias tcdel='tcon delete --all'
+
+echo "loaded commonrc"
+export LOADED=true
 # vim: set filetype=sh

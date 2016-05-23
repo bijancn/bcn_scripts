@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 def string_to_tpl_list(strg):
   versions = [v.strip() for v in (strg.strip()).split(' ', 1)]
