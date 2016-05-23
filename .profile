@@ -3,6 +3,7 @@ if test -z ${TMUX} ; then
   if command-exists tmux ; then
     echo Starting tmux
     exec tmux attach
+  fi
 fi
 
 # Use self build zsh if there and given zsh is old
