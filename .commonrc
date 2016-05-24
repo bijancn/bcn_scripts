@@ -119,7 +119,6 @@ command-exists () {
 }
 
 if test -z $PATHS_LOADED ; then
-  echo "paths loaded is empty: $PATHS_LOADED"
   # ifort
   intel_dir=/opt/intel
   if test -f $intel_dir/bin/compilervars.sh -a $arch = 64; then
