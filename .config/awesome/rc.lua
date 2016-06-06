@@ -403,6 +403,11 @@ globalkeys = awful.util.table.join(
             if client.focus then client.focus:raise() end
         end),
 
+      awful.key({ modkey }, "u",
+        function ()
+          awful.util.spawn_with_shell('vlc $(xclip -o)')
+        end),
+
     -- By direction client focus
     awful.key({ modkey }, "j",
         function()
@@ -491,7 +496,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "q",      awesome.quit),
 
     -- Dropdown terminal
-    awful.key({ modkey,	          }, "z",      function () drop(terminal) end),
+    awful.key({ modkey,           }, "z",      function () drop(terminal) end),
 
     -- Widgets popups
     awful.key({ altkey,           }, "c",      function () lain.widgets.calendar:show(7) end),
@@ -627,12 +632,24 @@ awful.rules.rules = {
                      focus = true,
                      keys = clientkeys,
                      buttons = clientbuttons,
-	                   size_hints_honor = false } },
+                     size_hints_honor = false } },
     { rule = { class = "Gnome-terminal" },
           properties = { opacity = 0.90 } },
 
     { rule = { instance = "Google-chrome" },
-          properties = { tag = tags[1][8] } },
+          properties = { tag = tags[1][8], floating = true, focus = yes } },
+
+    { rule = { instance = "plugin-container" },
+      properties = { floating = true,
+                     focus = yes } },
+                     --
+ -- Fix for youtube fullscreen in chrome:
+{
+  rule = {
+    instance = "exe"
+  },
+  properties = { floating = true }
+},
 
     { rule = { class = "Gimp", role = "gimp-image-window" },
           properties = { maximized_horizontal = true,

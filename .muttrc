@@ -35,6 +35,11 @@ set thorough_search      # strip headers and eval mimes before searching
 auto_view text/html
 alternative_order text/html text/plain
 macro attach 'V' "<pipe-entry>cat >~/.cache/mutt/mail.html && $BROWSER ~/.cache/mutt/mail.html && rm ~/.cache/mutt/mail.html<enter>"
+#macro index,pager \cl 'urlview' 'Follow links with urlview'
+
+macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+
+macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 
 # Index View Options ---------------------------------
 set date_format = "%y-%m-%d"

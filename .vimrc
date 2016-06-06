@@ -162,6 +162,8 @@ Plug 'imain/notmuch-vim'
 
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
 
+Plug 'vimwiki/vimwiki'
+
 call plug#end()
 
 "=============================================================================="
