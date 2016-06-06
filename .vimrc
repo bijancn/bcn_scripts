@@ -104,6 +104,15 @@ Plug 'visSum.vim', {'on': ['VisSum', '<Plug>SumNum']}
 " Close all buffers but the current one
 Plug 'BufOnly.vim', {'on': 'BufOnly'}
 
+" Adds git status next to the line numbers
+Plug 'airblade/vim-gitgutter'
+
+" Add the s motion
+Plug 'justinmk/vim-sneak'
+
+" Show indentation by gray scales
+Plug 'nathanaelkane/vim-indent-guides'
+
 "==========="
 "  testing  "
 "==========="
@@ -111,12 +120,6 @@ Plug 'BufOnly.vim', {'on': 'BufOnly'}
 Plug 'sjl/badwolf'
 
 Plug 'rking/ag.vim'
-
-" Adds git status next to the line numbers
-Plug 'airblade/vim-gitgutter'
-
-" Add the s motion
-Plug 'justinmk/vim-sneak'
 
 " Reasonably good. Not perfect. Also doesn't change in noweb.
 Plug 'scrooloose/nerdcommenter'
@@ -150,9 +153,6 @@ Plug 'vim-scripts/tracwiki'
 
 " fugitive extension
 Plug 'idanarye/vim-merginal'
-
-" Show indentation by gray scales
-Plug 'nathanaelkane/vim-indent-guides'
 
 " Test runner
 Plug 'janko-m/vim-test'
@@ -702,7 +702,8 @@ let g:syntastic_javascript_checkers = ['eslint']
 "let g:syntastic_javascript_eslint_exec = 'eslint_d'
 let g:syntastic_javascript_eslint_exec = './node_modules/.bin/eslint'
 let g:syntastic_ocaml_checkers = ['merlin']
-let g:syntastic_python_checkers = ['pep8', 'pyflakes']
+"let g:syntastic_python_checkers = ['pep8', 'pyflakes']
+let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_python_pep8_args='--max-line-length=89'
 let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
 let g:syntastic_tex_checkers = ['chktex']
