@@ -1247,3 +1247,35 @@ nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tg :TestVisit<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   VIMWIKI                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"let g:vimwiki_list = [{"path": "~/vimwiki/",
+      "\                "path_html": "~/vimwiki_html/",
+      "\                "syntax": "default",
+      "\                "ext": ".wiki",
+      "\                "css_file": "templates/default.css",
+      "\                "custom_wiki2html": "",
+      "\                "auto_export": 1}]
+
+let vimwiki_path='~/'
+let vimwiki_export_path='~/www/'
+let wiki_settings={
+\ 'template_path': '~/vimwiki/templates/',
+\ 'template_default': 'default',
+\ 'template_ext': '.html',
+\ 'syntax': 'default',
+\ 'ext': '.wiki',
+\ 'auto_export': 1 }
+
+let wikis=["vimwiki/",]
+let g:vimwiki_list = []
+for wiki_name in wikis
+    let wiki=copy(wiki_settings)
+    let wiki.path = vimwiki_path.wiki_name.'/'
+    let wiki.path_html = vimwiki_export_path.wiki_name.'/'
+    let wiki.diary_index = 'index'
+    let wiki.diary_rel_path = 'diary/'
+    call add(g:vimwiki_list, wiki)
+endfor
