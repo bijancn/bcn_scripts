@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 import os
-import sys
 import argparse
 import shutil
 from distutils import spawn
-from bcn_tools import *
+import bcn_tools as bt
 
 # Parse command line options
 parser = argparse.ArgumentParser(description='Build the Whizard',
@@ -57,7 +56,7 @@ parser.add_argument('--only_omega', action='store_true',
 args = parser.parse_args()
 
 # Select a base path
-base_path = get_base_path()
+base_path = bt.get_base_path()
 
 if not args.compiler:
   args.compiler = 'gfortran'
@@ -82,10 +81,9 @@ if spawn.find_executable('simjob'):
   args.configureflags += ['--enable-lcio']
 
 
-# Convenience magic
-#==============================================================================#
+################################################################################
 #                                   SPECIALS                                   #
-#==============================================================================#
+################################################################################
 if 'pgf' in args.build:
   args.compiler = 'pgf90_2015'
 
@@ -113,9 +111,9 @@ if 'quad' in args.build:
 if 'nostatic' in args.build:
   args.configureflags += ['--disable-static']
 
-#==============================================================================#
+################################################################################
 #                                    IFORT                                     #
-#==============================================================================#
+################################################################################
 # -fpe0 exit on floating point exception
 if 'ifort' in args.build:
   args.compiler = 'ifort'
@@ -137,9 +135,9 @@ if 'vectorize' in args.build:
   args.optimization = '3'
   args.fcflags += '-ftree-vectorizer-verbose=2 '
 
-#==============================================================================#
+################################################################################
 #                                   GFORTRAN                                   #
-#==============================================================================#
+################################################################################
 # -fbounds-check is included in fcheck=all. Does not play well with the gosam
 # interface however
 gf_warnings = '-fmax-errors=1 -Wall -Wuninitialized -Wextra -fno-whole-program '
@@ -147,15 +145,15 @@ gf_warnings = '-fmax-errors=1 -Wall -Wuninitialized -Wextra -fno-whole-program '
 gf_warnings += '-Wno-unused-function -Wno-unused-parameter -Wno-unused-dummy-argument '
 # -fimplicit-none does not work with the PDFs
 gf_warnings += '-pedantic -fbacktrace -ggdb -fcheck=all '
-gf_debug_warnings = gf_warnings  + \
+gf_debug_warnings = gf_warnings + \
     '-ffpe-trap=invalid,zero,overflow,underflow,denormal '
 
 if 'gfortran' in args.build:
   args.fcflags = gf_warnings
 
-#==============================================================================#
+################################################################################
 #                                    NAGFOR                                    #
-#==============================================================================#
+################################################################################
 # -gline         Compile code to produce a traceback if an error occurs.
 # -C=all         Maximum runtime checking.
 # -mtrace=all    Enable all memory allocation options.
@@ -175,9 +173,9 @@ if 'jenkins' in args.build:
   # errors in pythia pdf
   # args.f77flags = '-C=all -nan -w -gline '
 
-#==============================================================================#
+################################################################################
 #                                   GENERIC                                    #
-#==============================================================================#
+################################################################################
 if 'debug' in args.build:
   args.optimization = '0'
   if args.compiler == 'nagfor':
@@ -185,7 +183,8 @@ if 'debug' in args.build:
   elif args.compiler == 'gfortran':
     args.fcflags = gf_debug_warnings
   elif args.compiler == 'ifort':
-    args.fcflags = '-g -traceback -check uninit -check pointer -fp-stack-check -debug inline-debug-info -fpe0 '
+    args.fcflags = '-g -traceback -check uninit -check pointer ' + \
+        '-fp-stack-check -debug inline-debug-info -fpe0 '
   args.f77flags = args.fcflags
   args.configureflags += ['--enable-fc-profiling']
 
@@ -223,19 +222,22 @@ if ol_path is not None:
                           '--with-openloops=' + ol_path]
 
 # show set options for builder
-tasks = ['autoreconf', 'remove', 'configure', 'make', 'makecheck', 'makedistcheck', 'all']
+tasks = ['autoreconf', 'remove', 'configure', 'make',
+         'makecheck', 'makedistcheck', 'all']
 options = ['jobs', 'errors']
 variants = ['configureflags', 'compiler', 'optimization', 'fcflags', 'build', 'tag']
 arg_dict = vars(args)
-show_variable('base_path', base_path)
+bt.show_variable('base_path', base_path)
 for item in tasks + options + variants:
-  show_variable(item, arg_dict[item])
-show_variable('prefix', prefix)
+  bt.show_variable(item, arg_dict[item])
+bt.show_variable('prefix', prefix)
+
 
 def _call_verbose(cmd):
   lines_to_show = ['Package name:', 'Version:', 'Date:', 'Status:', 'version',
                    ' path.', ' path ', 'checking for ']
-  call_verbose(cmd, filter_strgs=lines_to_show, show_errors=args.errors)
+  bt.call_verbose(cmd, filter_strgs=lines_to_show, show_errors=args.errors)
+
 
 # autoreconf if desired
 os.chdir(base_path)
@@ -250,9 +252,8 @@ build_path = os.path.join('_build', build_name)
 if args.remove:
   if os.path.isdir(build_path):
     shutil.rmtree(build_path)
-mkdirs(build_path)
+bt.mkdirs(build_path)
 os.chdir(build_path)
-
 
 # configure if desired
 compiler = args.compiler

@@ -1,22 +1,23 @@
-# encoding=utf-8 ==============================================================#
-#                                  bcn_tools                                   #
-#==============================================================================#
+# encoding=utf-8
 
 from __future__ import print_function
 import os
 import subprocess
 import collections
 import textwrap
-from termcolor import colored, cprint
+from termcolor import colored
 import sys
+
 
 def mkdirs(directory):
   if not os.path.exists(directory):
     os.makedirs(directory)
 
+
 def show_file(fname):
   with open(fname, 'r') as fin:
     print(fin.read())
+
 
 def make_filename(strg):
   strg = strg.replace(' ', '_')
@@ -25,26 +26,35 @@ def make_filename(strg):
   strg = (strg[:130] + '..') if len(strg) > 130 else strg
   return strg
 
+
 def pcmd(strg):
   return colored(strg, 'blue', attrs=['bold'])
+
 
 def perr(strg):
   return colored(strg, 'red', attrs=['bold'])
 
+
 def pgood(strg):
   return colored(strg, 'green', attrs=['bold'])
+
 
 def plog(strg):
   return colored(strg, 'blue')
 
+
 def call_verbose(action, filter_strgs=None, show_errors=False):
-  if isinstance(action, list): string = ' '.join(action)
-  else: string = action
+  if isinstance(action, list):
+    string = ' '.join(action)
+  else:
+    string = action
   print(pcmd('Performing ') + plog(string) + pcmd(' ...\n'))
   try:
     # Redirect stderr to stdout
-    if show_errors: log = subprocess.check_output(action)
-    else:           log = subprocess.check_output(action, stderr=subprocess.STDOUT)
+    if show_errors:
+      log = subprocess.check_output(action)
+    else:
+      log = subprocess.check_output(action, stderr=subprocess.STDOUT)
     show = []
     if filter_strgs:
       for line in log.splitlines():
@@ -57,9 +67,10 @@ def call_verbose(action, filter_strgs=None, show_errors=False):
     with open('log_' + make_filename(string), 'w') as fout:
       fout.write(log)
   except (subprocess.CalledProcessError, OSError) as e:
-    print(pcmd("Execution of ") + plog(string) + pcmd(" failed:\n") +\
+    print(pcmd("Execution of ") + plog(string) + pcmd(" failed:\n") +
         perr(str(e)))
   print(pcmd('\n... done!'))
+
 
 def show_variable(var_name, var):
   varlist = None
@@ -83,6 +94,7 @@ def show_variable(var_name, var):
     for s in varlist[1:]:
       text2 = plog(s)
       print(text1 + '      ' + text2)
+
 
 def get_base_path():
   base_paths = ['/data/bcho/trunk', '~/trunk', '/scratch/bcho/trunk']
