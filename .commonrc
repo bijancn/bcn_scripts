@@ -202,15 +202,14 @@ pythia-configure-desy(){
   packages='--with-hepmc2=$std_install --with-lhapdf6=$std_install --with-fastjet3=$std_install'
   ./configure --prefix=$install $packages
 }
-checkout-openloops-gfortran(){
-  #svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public_beta ./OpenLoops
-  svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public ./OpenLoops_gfortran
+checkout-openloops(){
+  svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public ./OpenLoops
   printf '[OpenLoops]\nprocess_repositories=public, whizard\ncompile_extra=1' >> OpenLoops/openloops.cfg
   cd OpenLoops
   ./scons
   ./openloops libinstall ppzj ppzjj ppll ppllj pplljj pplljjj eett eehtt eevvjj ee_tt_wwjj tbw
   cd examples
-  scons
+  ../scons
   ./OL_fortran
 }
 
@@ -555,6 +554,10 @@ function save-error-queue () {
 
 function save-queue () {
   qstat | grep ' qw' | awk '{print $1}' > queue
+}
+
+function running-jobs () {
+  qstat | grep ' r' | awk '{print $1}'
 }
 
 function clean-queue () {
@@ -1055,7 +1058,7 @@ function bitbucket-hg {
 #==============================================================================#
 #                                     SVN                                      #
 #==============================================================================#
-if command-exists svn-color; then
+if command-exists svn-color && command-exists svn; then
   alias svn=svn-color
 fi
 alias svna='svn add'

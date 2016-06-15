@@ -18,13 +18,14 @@
 # Max available memory (default 1G)
 ##$ -l h_vmem=1900M
 ##$ -l h_vmem=15900M
-#$ -l h_vmem=6900M
+##$ -l h_vmem=6900M
 
 # Max available disk space (default 3G)
 #$ -l h_fsize=3000M
 
 # Request Scientific Linux 6
-#$ -l os=sld6
+##$ -l os=sld6
+#$ -l os=el7
 
 # Request 64 bit
 #$ -l arch=amd64
