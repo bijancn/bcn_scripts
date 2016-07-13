@@ -21,7 +21,7 @@ if [ $# -eq 1 ]; then
   fi
 fi
 
-files=".@(bash|colorit|common|dir_colors|msmtp|mutt|offlineimap)rc "
+files=".@(bash|colorit|common|dir_colors|msmtp|mutt|offlineimap|xinit)rc "
 files+=".@(pylint|screen|vim|vimperator|zsh)rc "
 files+=".bash_profile "
 files+=".config/awesome/rc.lua "

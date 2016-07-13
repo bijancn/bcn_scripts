@@ -1279,3 +1279,41 @@ for wiki_name in wikis
     let wiki.diary_rel_path = 'diary/'
     call add(g:vimwiki_list, wiki)
 endfor
+
+" Convert {{URL|#|ID}} -> URL#ID
+function! VimwikiWikiIncludeHandler(value)
+  let str = a:value
+
+  " complete URL
+  let url_0 = matchstr(str, g:vimwiki_rxWikiInclMatchUrl)
+  " URL parts
+  let link_infos = vimwiki#base#resolve_link(url_0)
+  "let arg1 = matchstr(str, VimwikiWikiInclMatchArg(1))
+  "let arg2 = matchstr(str, VimwikiWikiInclMatchArg(2))
+
+return '<embed src="'.url_0.'" width="800px" height="800px">'
+  "if arg1 =~ '#'
+    "return link_infos.filename.'#'.arg2.'testoooo'
+  "endif
+
+  " Return the empty string when unable to process link
+  return ''
+endfunction
+
+" fill rest of line with characters
+function! FillLine( str )
+    " set tw to the desired total length
+    let tw = &textwidth
+    if tw==0 | let tw = 80 | endif
+    " strip trailing spaces first
+    .s/[[:space:]]*$//
+    " calculate total number of 'str's to insert
+    let reps = (tw - col("$") - 4) / len(a:str)
+    " insert them, if there's room, removing trailing spaces (though forcing
+    " there to be one)
+    if reps > 0
+        .s/$/\=(' '.repeat(a:str, reps))/
+    endif
+endfunction
+
+map <leader>td :call FillLine(' ')<CR>A( )<Esc>

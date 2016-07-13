@@ -34,7 +34,7 @@ set thorough_search      # strip headers and eval mimes before searching
 # HTML content --------------------------------------
 auto_view text/html
 alternative_order text/html text/plain
-macro attach 'V' "<pipe-entry>cat >~/.cache/mutt/mail.html && $BROWSER ~/.cache/mutt/mail.html && rm ~/.cache/mutt/mail.html<enter>"
+macro attach 'V' "<pipe-entry>cat >~/.cache/mutt/mail.html && google-chrome ~/.cache/mutt/mail.html<enter>"
 #macro index,pager \cl 'urlview' 'Follow links with urlview'
 
 macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
