@@ -12,8 +12,8 @@
 # Max run time
 ##$ -l h_rt=00:04:59
 ##$ -l h_rt=02:59:59
-#$ -l h_rt=23:59:59
-##$ -l h_rt=47:59:59
+##$ -l h_rt=23:59:59
+#$ -l h_rt=99:59:59
 
 # Max available memory (default 1G)
 ##$ -l h_vmem=1900M
@@ -52,8 +52,8 @@ echo "Got $NSLOTS processors."
 echo "This is job: $JOB_ID and runs in `pwd`"
 
 #make
-source $HOME/.commonrc
-whizard *.sin
+source ../.commonrc
+whizard -r *.sin
 
 #rm fifo.hepmc
 #mkfifo fifo.hepmc

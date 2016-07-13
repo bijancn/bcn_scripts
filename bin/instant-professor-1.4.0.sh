@@ -22,7 +22,7 @@ url_pyminuit=https://github.com/jpivarski/pyminuit.git
 url_minuit=seal.web.cern.ch/seal/minuit/releases/Minuit-1_7_9.tar.gz
 
 # python
-url_python=https://www.python.org/ftp/python/2.7.10/Python-2.7.10.tgz
+url_python=https://www.python.org/ftp/python/2.7.12/Python-2.7.12rc1.tgz
 
 ########################################################################
 # Heuristics for the optimal number of jobs
@@ -155,9 +155,9 @@ export LD_LIBRARY_PATH=$install_dir/lib:$LD_LIBRARY_PATH
 export PYTHONPATH=$install_dir/lib/python:$PYTHONPATH
 echo ">> with install_dir=$install_dir "
 
-#build_python
+build_python
 build_pip
-build_python_packages
+#build_python_packages
 #build_minuit
 #build_pyminuit
 #build_professor

@@ -1,3 +1,5 @@
+# vim: set filetype=sh
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # .commonrc - configurations for bash/zsh. Migrated from .bashrc in 2016.
 #
@@ -7,15 +9,15 @@
 # can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
 # http://www.gnu.org/licenses/gpl-2.0-standalone.html
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# vim: set filetype=sh
 
 export GPG_TTY=$(tty)
 export arch=`getconf LONG_BIT`
 
 # Fix for strange dbus error ocurring when starting gnome-open from vim
-eval $(dbus-launch --sh-syntax)
-export DBUS_SESSION_BUS_ADDRESS
-export DBUS_SESSION_BUS_PID
+# put this in .xinitrc
+#eval $(dbus-launch --sh-syntax)
+#export DBUS_SESSION_BUS_ADDRESS
+#export DBUS_SESSION_BUS_PID
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -81,7 +83,7 @@ if test -r /proc/cpuinfo; then
     parallel_jobs="-j `expr \( 1 \* $n \) / 3`"
   else
     parallel_jobs="-j $n"
-  fi 
+  fi
 fi
 
 # Path for FORM temp files
@@ -118,6 +120,8 @@ command-exists () {
   type "$1" &> /dev/null ;
 }
 
+export CXXFLAGS=-std=c++11
+
 if test -z $PATHS_LOADED ; then
   # ifort
   intel_dir=/opt/intel
@@ -136,14 +140,6 @@ if test -z $PATHS_LOADED ; then
   fi
   prepend-pure-path $desy_tex
   prepend-path $HOME/.gem/ruby/1.9.1
-  export whizard_install=/data/bcho/whizard_install_gfortran
-  if [ -d "$whizard_install" ]; then
-    prepend-all-paths $whizard_install
-  fi
-  export whizard_install=/data/bcho/whizard_install
-  if [ -d "$whizard_install" ]; then
-    prepend-all-paths $whizard_install
-  fi
 
   prepend-path $HOME/bcn_scripts
 
@@ -156,33 +152,32 @@ if test -z $PATHS_LOADED ; then
   add-pythonpath $HOME/.vim/plugged/vim-eZchat/autoload
   add-pythonpath $HOME/termstyle
   add-pythonpath $HOME/pydflatex
-  export C_INCLUDE_PATH=$install/include
-  export CPLUS_INCLUDE_PATH=$install/include
-  export PYTHONUSERBASE=$HOME/install
-  export CC=gcc
+  #export C_INCLUDE_PATH=$install/include
+  #export CPLUS_INCLUDE_PATH=$install/include
+  #export PYTHONUSERBASE=$HOME/install
 
-  tmp1=$HOME/hep
-  tmp2=/nfs/theoc/data/bcho/bird
-  tmp3=/data/bcho
-  if [ -d $tmp1 ]; then
+  tmp0=/nfs/theoc/data2/bcho/sl6
+  tmp1=/nfs/theoc/data/bcho/bird
+  tmp2=/data/bcho
+  if [ -d $tmp0 ]; then
+    export hep=$tmp0
+  elif [ -d $tmp1 ]; then
     export hep=$tmp1
   elif [ -d $tmp2 ]; then
     export hep=$tmp2
-  elif [ -d $tmp3 ]; then
-    export hep=$tmp3
   fi
 
   if [ -n "$hep" ]; then
-    export std_install=$hep/install
-    #export OpenLoopsPath=$hep/OpenLoops
+    export hep_install=$hep/install
     prepend-libpath $hep/OpenLoops
     #prepend-libpath $hep/OpenLoops_gfortran
     prepend-all-paths $hep/gosam/local
-    prepend-all-paths $std_install
-    add-pythonpath $std_install/lib/python
-    export CPATH=$std_install/include:$CPATH
-    export LATEXINPUTS=${HOME}/texmf:$std_install/share/texmf/tex/latex/misc:$LATEXINPUTS
-    export TEXINPUTS=${HOME}/texmf:$std_install/share/texmf/tex/latex/misc:$TEXINPUTS
+    prepend-all-paths $hep_install
+    add-pythonpath $hep_install/lib/python
+    export CPATH=$hep_install/include:$CPATH
+    export LATEXINPUTS=${HOME}/texmf:$hep_install/share/texmf/tex/latex/misc:$LATEXINPUTS
+    export TEXINPUTS=${HOME}/texmf:$hep_install/share/texmf/tex/latex/misc:$TEXINPUTS
+    export LCIO=$hep_install
   fi
   export TEXMFCNF=${HOME}/texmf:${TEXMFCNF}
   export HOMETEXMF=${HOME}/texmf:${HOMETEXMF}
@@ -191,6 +186,29 @@ if test -z $PATHS_LOADED ; then
   export PATHS_LOADED=true
 fi
 
+function load-whizard-gfortran() {
+  export whizard_install=/nfs/theoc/data2/bcho/sl6/whizard_install_gfortran
+  if [ -d "$whizard_install" ]; then
+     prepend-all-paths $whizard_install
+  fi
+}
+
+function load-whizard-ifort() {
+  export whizard_install=/nfs/theoc/data2/bcho/sl6/whizard_install_ifort
+  if [ -d "$whizard_install" ]; then
+     prepend-all-paths $whizard_install
+  fi
+}
+
+#if [ -d /nfs/theoc/data2/bcho/sl6/build/root ]; then
+  ##add-pythonpath /nfs/theoc/data2/bcho/sl6/build/root/lib
+  #old_pwd=`pwd`
+  #root_dir=/nfs/theoc/data2/bcho/sl6/build/root
+  #root_dir=/afs/desy.de/products/root/amd64_rhel60/6.02.00
+  #cd $root_dir
+  #source $root_dir/bin/thisroot.sh
+  #cd $old_pwd
+#fi
 
 #export PYTHONHOME=$(dirname $(dirname `which python`))
 
@@ -199,18 +217,40 @@ pythia-configure(){
   ./configure --prefix=$install $packages
 }
 pythia-configure-desy(){
-  packages='--with-hepmc2=$std_install --with-lhapdf6=$std_install --with-fastjet3=$std_install'
+  packages='--with-hepmc2=$hep_install --with-lhapdf6=$hep_install --with-fastjet3=$hep_install'
   ./configure --prefix=$install $packages
 }
+
 checkout-openloops(){
   svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public ./OpenLoops
-  printf '[OpenLoops]\nprocess_repositories=public, whizard\ncompile_extra=1' >> OpenLoops/openloops.cfg
   cd OpenLoops
+  printf '[OpenLoops]\nprocess_repositories=public, whizard\ncompile_extra=1' > openloops.cfg
   ./scons
   ./openloops libinstall ppzj ppzjj ppll ppllj pplljj pplljjj eett eehtt eevvjj ee_tt_wwjj tbw
   cd examples
   ../scons
   ./OL_fortran
+}
+
+checkout-openloops-ifort(){
+  svn checkout http://openloops.hepforge.org/svn/OpenLoops/branches/public ./OpenLoops_ifort
+  cd OpenLoops_ifort
+  printf '[OpenLoops]\nprocess_repositories=public, whizard\ncompile_extra=1\nfortran_compiler=ifort' > openloops.cfg
+  ./scons
+  ./openloops libinstall ppzj ppzjj ppll ppllj pplljj pplljjj eett eehtt eevvjj ee_tt_wwjj tbw
+  cd examples
+  ../scons
+  ./OL_fortran
+}
+
+checkout-lcio(){
+  svn co svn://svn.freehep.org/lcio/trunk lcio
+  cd lcio
+  mkidr build
+  cd build
+  cmake -DCMAKE_INSTALL_PREFIX=../../install ..
+  make -j10
+  make install
 }
 
 # perl
@@ -229,8 +269,8 @@ fi
 #==================#
 #  compiler flags  #
 #==================#
-export FCFLAGS="-fmax-errors=1 -O2"
-export CFLAGS="-fPIC"
+#export FCFLAGS="-fmax-errors=1 -O2"
+#export CFLAGS="-fPIC"
 
 #====================#
 #  printing at DESY  #
@@ -849,10 +889,10 @@ function show-test-results () {
     done
     case "$i" in
     *dist*)
-      if test -f $i/whizard*.tar.gz; then
-        printf "$BGreen %40s%20s:\tCHECK$NC\n" "dist" "tarball"
+      if test -f $i/whizard-`cat $i/VERSION | awk '{print $2}'`.tar.gz; then
+        printf "$BGreen %40s%20s:\tCHECK$NC\n" "$i" "tarball"
       else
-        printf "$BPurple %40s%20s:\tMissing$NC\n" "dist" "tarball"
+        printf "$BPurple %40s%20s:\tMissing$NC\n" "$i" "tarball"
       fi ;;
     esac
   done
@@ -1036,6 +1076,10 @@ function show-path () {
   tr ':' '\n' <<< "$PATH"
 }
 
+function show-python-path () {
+  tr ':' '\n' <<< "$PYTHONPATH"
+}
+
 function show-lib-path () {
   tr ':' '\n' <<< "$LD_LIBRARY_PATH"
 }
@@ -1092,4 +1136,5 @@ alias tcdel='tcon delete --all'
 
 echo "loaded commonrc"
 export LOADED=true
+
 # vim: set filetype=sh

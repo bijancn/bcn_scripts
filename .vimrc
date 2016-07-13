@@ -695,6 +695,8 @@ let g:loaded_python3_provider = 0
 "                                  SYNTASTIC                                   "
 "=============================================================================="
 " checkers
+let g:syntastic_cpp_checkers = ['cpplint']
+let g:syntastic_cpp_cpplint_exec = 'cpplint'
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_auto_refresh_includes = 1
 let g:syntastic_fortran_checkers = [""]

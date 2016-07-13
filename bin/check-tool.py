@@ -1,12 +1,8 @@
 #!/usr/bin/env python
 
-import os
-import sys
 import argparse
-import shutil
 import subprocess
-from distutils import spawn
-from bcn_tools import *
+from bcn_tools import get_base_path
 
 # Parse command line options
 parser = argparse.ArgumentParser(description='Check the Whizard',
@@ -17,22 +13,20 @@ parser.add_argument("-c", '--clean', action='store_true',
     help='Perform clean rebuilds')
 
 # options how to behave
-parser.add_argument("-j", '--jobs', default=1,
+parser.add_argument("-j", '--jobs', default=2,
     help='Set number of jobs for make and make check')
-parser.add_argument("-n", '--noerrors', action='store_true',
-    help='Hide STDERR during all executed commands')
 
 args = parser.parse_args()
 
 # Select a base path
 base_path = get_base_path()
 
-nostatic_builds = ['develop', 'extended', 'quadruple', 'ifort-stdsemantics',
-                   'ifort-quadruple', 'ifort', 'nagfor-jenkins', 'dist']
+nostatic_builds = ['extended', 'gfortran', 'ifort-stdsemantics',
+                   'ifort-quadruple', 'nagfor-jenkins', 'dist']
 builds = ['nagfor-dist-disabled'] + [b + '-nostatic' for b in nostatic_builds]
-# builds = ['nagfor-jenkins-develop']
 
 print 'builds to consider:', builds
+
 
 def run(cmd, log_filename):
   logfilen = log_filename.replace(' ', '_')
@@ -53,12 +47,12 @@ for b in builds:
   cmds.append(cmd)
 
 for c in cmds:
-  print ('c =    ', c) ### Debugging
+  print ('c =    ', c)
 
-processes = {run(c, 'subprocess.%s.log' % c) for c in cmds}
+processes = [run(c, 'subprocess.%s.log' % c) for c in cmds]
 while processes:
   for p in processes:
     if p[1].poll() is not None:
       processes.remove(p)
-      print "Done with " + p[0] + "return code is " + p[1].returncode
+      print "Done with " + str(p[0]) + "return code is " + str(p[1].returncode)
       break

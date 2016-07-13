@@ -202,14 +202,14 @@ if args.all:
   args.make = True
   args.makecheck = True
 
-global_install_path = '/data/bcho/whizard_install'
-global_gfortran_install_path = '/data/bcho/whizard_install_gfortran'
+global_install_path_ifort = '/nfs/theoc/data2/bcho/sl6/whizard_install_ifort'
+global_gfortran_install_path = '/nfs/theoc/data2/bcho/sl6/whizard_install_gfortran'
 ol_search = 'OpenLoops'
 if args.build == 'ifort-nostatic':
-  prefix = '--prefix=' + global_install_path
+  prefix = '--prefix=' + global_install_path_ifort
+  ol_search = 'OpenLoops_ifort'
 elif args.build == 'gfortran-nostatic':
   prefix = '--prefix=' + global_gfortran_install_path
-  ol_search = 'OpenLoops_gfortran'
 else:
   prefix = '--prefix=' + os.path.join(base_path, '_install', args.build)
 
@@ -217,9 +217,9 @@ ol_path = None
 for path in os.environ["LD_LIBRARY_PATH"].split(':'):
   if ol_search in path:
     ol_path = path[0:-3]
+    break
 if ol_path is not None:
-  args.configureflags += ['--enable-openloops',
-                          '--with-openloops=' + ol_path]
+  args.configureflags += ['--enable-openloops']
 
 # show set options for builder
 tasks = ['autoreconf', 'remove', 'configure', 'make',
@@ -265,10 +265,12 @@ configureflags = args.configureflags
 fortran_compiler = 'FC=' + compiler
 fortran_flags = "FCFLAGS=-O" + optimization + " " + fcflags
 f_flags = "FFLAGS=" + f77flags
+cxx_flags = "CXXFLAGS=-std=c++11"
 if f77flags != " ":
   configure_options = [prefix, fortran_compiler, fortran_flags, f_flags] + configureflags
 else:
   configure_options = [prefix, fortran_compiler, fortran_flags] + configureflags
+configure_options += [cxx_flags]
 if args.configure:
   if args.only_omega:
     package = os.path.join(base_path, 'omega')
