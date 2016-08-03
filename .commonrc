@@ -106,6 +106,9 @@ prepend-path () {
 prepend-pure-path () {
   export PATH=$1:$PATH
 }
+prepend-pure-libpath () {
+  export LD_LIBRARY_PATH=$1:$LD_LIBRARY_PATH
+}
 prepend-libpath () {
   export LD_LIBRARY_PATH=$1/lib64:$1/lib:$LD_LIBRARY_PATH
 }
@@ -170,7 +173,7 @@ if test -z $PATHS_LOADED ; then
   if [ -n "$hep" ]; then
     export hep_install=$hep/install
     prepend-libpath $hep/OpenLoops
-    #prepend-libpath $hep/OpenLoops_gfortran
+    prepend-pure-libpath $hep/recola-collier/recola-1.0/
     prepend-all-paths $hep/gosam/local
     prepend-all-paths $hep_install
     add-pythonpath $hep_install/lib/python
@@ -801,6 +804,8 @@ alias show-distro="lsb_release -a"
 alias show-kernel="uname -r"
 
 alias show-parallel-jobs="echo $parallel_jobs"
+
+alias show-computer-list="vim /afs/desy.de/group/theorie/theopcs/Ueberblick.txt"
 
 function find-ref-dir () {
   pwd=`pwd`

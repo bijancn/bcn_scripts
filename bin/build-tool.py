@@ -213,13 +213,20 @@ elif args.build == 'gfortran-nostatic':
 else:
   prefix = '--prefix=' + os.path.join(base_path, '_install', args.build)
 
-ol_path = None
-for path in os.environ["LD_LIBRARY_PATH"].split(':'):
-  if ol_search in path:
-    ol_path = path[0:-3]
-    break
-if ol_path is not None:
-  args.configureflags += ['--enable-openloops']
+olps = [
+    {'name': 'openloops',
+    'search': ol_search},
+    {'name': 'recola',
+    'search': 'recola-collier'}]
+
+for olp in olps:
+  this_path = None
+  for path in os.environ["LD_LIBRARY_PATH"].split(':'):
+    if olp['search'] in path:
+      this_path = path
+      break
+  if this_path is not None:
+    args.configureflags += ['--enable-' + olp['name']]
 
 # show set options for builder
 tasks = ['autoreconf', 'remove', 'configure', 'make',
