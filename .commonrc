@@ -285,6 +285,7 @@ function prnt_rng() {
   lp -d t00ps1 -o sides=two-sided-long-edge -o page-ranges=$1-$2 $3
 }
 alias prnt_1s='lp -d t00ps1 -o sides=one-sided'
+alias add-monitor='xrandr --output DP2 --auto --left-of eDP1 --rotate left --mode 1920x1200'
 
 #=======#
 #  IPs  #
@@ -527,11 +528,11 @@ function fa () {
 alias rgrep='grep -r'
 alias hgrep='history | grep '
 # Narrowing greps search realms
-if version-bigger grep 2.6.3; then
-  a='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude-dir=_build '
-  b="$a--exclude=*.swp --exclude=Makefile.in --exclude-dir=_install"
-  alias rgrep="grep -r $b"
-fi
+#if version-bigger grep 2.6.3; then
+  #a='--exclude-dir=.svn --exclude-dir=.git --exclude=*.swo --exclude-dir=_build '
+  #b="$a--exclude=*.swp --exclude=Makefile.in --exclude-dir=_install"
+  #alias rgrep="grep -r $b"
+#fi
 
 #========#
 #  htop  #
