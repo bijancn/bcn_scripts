@@ -169,7 +169,8 @@ if 'nagfor' in args.build:
 if 'jenkins' in args.build:
   args.optimization = '0'
   # -C=all => doesnt work with LHAPDF6 somehow due to q2max
-  args.fcflags = '-colour -C=all -nan -w -f2003 -gline -maxcontin=512'
+  # taking out -w which disables all warnings
+  args.fcflags = '-colour -C=all -w=uda -nan -f2003 -gline -maxcontin=512'
   # errors in pythia pdf
   # args.f77flags = '-C=all -nan -w -gline '
 
@@ -179,12 +180,12 @@ if 'jenkins' in args.build:
 if 'debug' in args.build:
   args.optimization = '0'
   if args.compiler == 'nagfor':
-    args.fcflags = '-g -gline -mtrace=all -colour '
+    args.fcflags = '-colour -g -w=uda -gline -mtrace=all '
   elif args.compiler == 'gfortran':
     args.fcflags = gf_debug_warnings
   elif args.compiler == 'ifort':
-    args.fcflags = '-g -traceback -check uninit -check pointer ' + \
-        '-fp-stack-check -debug inline-debug-info -fpe0 '
+    args.fcflags = '-g -traceback -check uninit -check pointer -check noarg_temp_created ' + \
+        '-fp-stack-check -fstack-protector -debug inline-debug-info -fpe0 '
   args.f77flags = args.fcflags
   args.configureflags += ['--enable-fc-profiling']
 

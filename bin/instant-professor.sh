@@ -22,7 +22,8 @@ url_pyminuit=https://github.com/jpivarski/pyminuit.git
 url_minuit=seal.web.cern.ch/seal/minuit/releases/Minuit-1_7_9.tar.gz
 
 # python
-url_python=https://www.python.org/ftp/python/2.7.12/Python-2.7.12rc1.tgz
+url_python=https://www.python.org/ftp/python/2.7.12/Python-2.7.12.tgz
+
 
 ########################################################################
 # Heuristics for the optimal number of jobs
@@ -48,7 +49,7 @@ download () {
 strip_tgz () {
   name=$1
   case $name in
-    .tgz) basename $name .tgz;;
+    *.tgz) basename $name .tgz;;
     *.tar.gz) basename $name .tar.gz;;
     *.tar.bz2) basename $name .tar.bz2;;
     *.zip) basename $name .zip;;
@@ -149,15 +150,15 @@ cd $build_dir || exit 2
 
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 echo ">> this is needed in .bashrc for future use"
+echo ">> export install_dir=$install_dir "
 trap 'echo ">> $BASH_COMMAND"' DEBUG
 export PATH=$install_dir/bin:$PATH
 export LD_LIBRARY_PATH=$install_dir/lib:$LD_LIBRARY_PATH
 export PYTHONPATH=$install_dir/lib/python:$PYTHONPATH
-echo ">> with install_dir=$install_dir "
 
-build_python
-build_pip
-#build_python_packages
+#build_python
+#build_pip
+build_python_packages
 #build_minuit
 #build_pyminuit
 #build_professor

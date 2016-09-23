@@ -12,20 +12,20 @@
 # Max run time
 ##$ -l h_rt=00:04:59
 ##$ -l h_rt=02:59:59
-##$ -l h_rt=23:59:59
-#$ -l h_rt=99:59:59
+#$ -l h_rt=23:59:59
+##$ -l h_rt=99:59:59
 
 # Max available memory (default 1G)
 ##$ -l h_vmem=1900M
 ##$ -l h_vmem=15900M
-##$ -l h_vmem=6900M
+#$ -l h_vmem=6900M
 
 # Max available disk space (default 3G)
 #$ -l h_fsize=3000M
 
 # Request Scientific Linux 6
-##$ -l os=sld6
-#$ -l os=el7
+#$ -l os=sld6
+##$ -l os=el7
 
 # Request 64 bit
 #$ -l arch=amd64
@@ -53,10 +53,13 @@ echo "This is job: $JOB_ID and runs in `pwd`"
 
 #make
 source ../.commonrc
-whizard -r *.sin
+load-whizard-gfortran
+
+#whizard -r *.sin
 
 #rm fifo.hepmc
 #mkfifo fifo.hepmc
-#source $HOME/.bashrc
-#whizard -r *.sin &
-#rivet -a DELPHI_1996_S3430090 fifo.hepmc
+
+export RIVET_ANALYSIS_PATH=../../rivet
+whizard *.sin &
+rivet -a WHIZARD_H4l2b_NLO *.hepmc

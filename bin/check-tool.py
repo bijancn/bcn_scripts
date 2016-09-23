@@ -21,8 +21,8 @@ args = parser.parse_args()
 # Select a base path
 base_path = get_base_path()
 
-nostatic_builds = ['extended', 'gfortran', 'ifort-stdsemantics',
-                   'ifort-quadruple', 'nagfor-jenkins', 'dist']
+nostatic_builds = ['extended', 'gfortran-quadruple', 'ifort-stdsemantics',
+                   'ifort', 'nagfor-jenkins', 'dist']
 builds = ['nagfor-dist-disabled'] + [b + '-nostatic' for b in nostatic_builds]
 
 print 'builds to consider:', builds

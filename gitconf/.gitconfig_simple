@@ -29,3 +29,5 @@
   notify-command = notify-send -i \"$ICON_PATH\" \"$TITLE\" \"$DESCRIPTION\" -t 0
 [push]
   default = current
+[fetch]
+	recurseSubmodules = false

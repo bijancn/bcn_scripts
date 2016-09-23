@@ -34,28 +34,25 @@ export LD_LIBRARY_PATH
 ########################################################################
 
 # Autotools
-url_make=http://ftp.gnu.org/gnu/make/make-3.82.tar.gz
-url_m4=http://ftp.gnu.org/gnu/m4/m4-1.4.16.tar.gz
+url_make=http://ftp.gnu.org/gnu/make/make-4.0.tar.gz
+url_m4=http://ftp.gnu.org/gnu/m4/m4-1.4.17.tar.gz
 url_autoconf=http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
-url_automake=http://ftp.gnu.org/gnu/automake/automake-1.13.1.tar.gz
-url_libtool=http://ftp.gnu.org/gnu/libtool/libtool-2.4.2.tar.gz
+url_automake=http://ftp.gnu.org/gnu/automake/automake-1.14.1.tar.gz
+url_libtool=http://ftp.gnu.org/gnu/libtool/libtool-2.4.6.tar.gz
+
+# Noweb
+url_noweb=ftp://www.eecs.harvard.edu/pub/nr/noweb.tgz
 
 # GCC
 url_gcc=ftp://ftp.mpi-sb.mpg.de/pub/gnu/mirror/gcc.gnu.org/pub/gcc/releases/gcc-4.8.3/gcc-4.8.3.tar.gz
-#url_gmp=ftp://ftp.gnu.org/gnu/gmp/gmp-4.3.2.tar.bz2
-#url_gmp=ftp://ftp.gnu.org/gnu/gmp/gmp-5.1.1.tar.bz2  ## requires recent GCC
-#url_mpfr=http://mpfr.loria.fr/mpfr-2.4.2/mpfr-2.4.2.tar.bz2
-#url_mpfr=http://www.mpfr.org/mpfr-current/mpfr-3.1.1.tar.gz
-#url_mpc=http://www.multiprecision.org/mpc/download/mpc-0.8.2.tar.gz
-#url_mpc=http://www.multiprecision.org/mpc/download/mpc-1.0.1.tar.gz
 
 # O'Caml
-url_ocaml=http://caml.inria.fr/pub/distrib/ocaml-4.00/ocaml-4.00.1.tar.gz
+url_ocaml=http://caml.inria.fr/pub/distrib/ocaml-4.02/ocaml-4.02.2.tar.gz
 
 # Whizard
 url_whizard=http://www.hepforge.org/archive/whizard/whizard-2.2.2.tar.gz
 url_hepmc=http://lcgapp.cern.ch/project/simu/HepMC/download/HepMC-2.06.09.tar.gz
-url_lhapdf=http://www.hepforge.org/archive/lhapdf/lhapdf-5.9.1.tar.gz
+url_lhapdf=http://www.hepforge.org/archive/lhapdf/lhapdf-6.1.4.tar.gz
 
 ########################################################################
 # Heuristics for the optimal number of jobs
@@ -156,9 +153,24 @@ build_ocaml () {
   if test ! -r $dirname.stamp; then
     ( cd $dirname || exit 2
       ./configure -prefix $install_dir
-### The O'Caml Makefiles are not parallel-safe
+### The OCaml Makefiles are not parallel-safe
       make world.opt
       make install )
+  fi
+  touch $dirname.stamp
+}
+
+build_noweb () {
+  url=$1
+  name=`basename $url`
+  dirname=`strip_tgz $name`
+  download $url
+  untar $name
+  if test ! -r $dirname.stamp; then
+    ( cd $dirname-2.11b/src || exit 2
+### Edit the Makefile and then
+###   make install
+      )
   fi
   touch $dirname.stamp
 }
@@ -171,8 +183,7 @@ build_hepmc () {
   untar $name
   if test ! -r $dirname.stamp; then
     ( cd $dirname || exit 2
-      ./configure --prefix=$install_dir \
-	  --with-momentum=GEV --with-length=MM
+      ./configure --prefix=$install_dir --with-momentum=GEV --with-length=MM
       make $parallel_jobs
       make check
       make install )
@@ -231,12 +242,13 @@ EOF
 mkdir -p $build_dir
 cd $build_dir || exit 2
 
-#build_generic $url_make
-#build_generic $url_m4
+build_generic $url_make
+build_generic $url_m4
 build_generic $url_autoconf
-#build_generic $url_automake
+build_generic $url_automake
 #build_generic $url_libtool
 #build_gcc $url_gcc
+#build_noweb $url_noweb
 #build_ocaml $url_ocaml
 #build_hepmc $url_hepmc
 #build_generic $url_lhapdf
@@ -244,4 +256,4 @@ build_generic $url_autoconf
     #cteq61.LHpdf cteq6ll.LHpdf cteq5l.LHgrid GSG961.LHgrid
 #build_whizard $url_whizard
 
-write_script $bin_dir/whizard.sh
+#write_script $bin_dir/whizard.sh

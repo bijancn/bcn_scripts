@@ -119,7 +119,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 " Interesting color scheme
 Plug 'sjl/badwolf'
 
-Plug 'rking/ag.vim'
+Plug 'mileszs/ack.vim'
 
 " Reasonably good. Not perfect. Also doesn't change in noweb.
 Plug 'scrooloose/nerdcommenter'
@@ -228,7 +228,7 @@ set hlsearch              " Switch on highlighting the last used search pattern
 " Folds
 set foldmethod=syntax     " Fold per default according to syntax
 set foldlevel=99          " Open all folds per default
-set foldnestmax=3         " Create 3 levels of folds overall
+set foldnestmax=99        " Number of max levels of folds overall
 
 set wildmenu              " Mode of wildmenu is set by wildmode
 " Complete only as far as possible then give list of possibilities
@@ -585,21 +585,6 @@ vmap <silent> # :<C-U>
 
 " Visually select a line
 nnoremap vv 0v$h
-
-" %:p:h/../../* this was two steps up of the current dir
-" TODO: (bcn 2016-03-24) also match modules
-function! FindFortranObject()
-  let path = system("git rev-parse --show-toplevel")
-  let pattern = "'(public\|type\|function\|subroutine).* :: " . expand("<cword>") . "$'"
-  execute ":Ag " . pattern . " " . path
-endfunction
-function! FindAnyObject()
-  let path = system("git rev-parse --show-toplevel")
-  let pattern = expand("<cword>")
-  execute ":Ag " . pattern . " " . path
-endfunction
-nnoremap <silent> <leader>ff :call FindFortranObject()<CR>
-nnoremap <silent> <leader>fa :call FindAnyObject()<CR>
 
 " Number of lines for command line
 set cmdheight=2
@@ -1323,3 +1308,29 @@ function! FillLine( str )
 endfunction
 
 map <leader>td :call FillLine(' ')<CR>A( )<Esc>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                      AG                                      "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+" Autoclose the quickfix window
+let g:ack_autoclose = 1
+
+" TODO: (bcn 2016-03-24) also match modules
+" TODO: (bcn 2016-09-09) also match public parameters
+function! FindFortranObject()
+  let path = system("git rev-parse --show-toplevel")
+let pattern = "'((public\|type\|function\|subroutine).* ::\|module) " . expand("<cword>") . "$'"
+  execute ":Ack! " . pattern . " " . path
+endfunction
+function! FindAnyObject()
+  let path = system("git rev-parse --show-toplevel")
+  let pattern = expand("<cword>")
+  execute ":Ack! " . pattern . " " . path
+endfunction
+nnoremap <silent> <leader>ff :call FindFortranObject()<CR>
+nnoremap <silent> <leader>fa :call FindAnyObject()<CR>
+
