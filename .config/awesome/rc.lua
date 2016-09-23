@@ -634,7 +634,7 @@ awful.rules.rules = {
                      buttons = clientbuttons,
                      size_hints_honor = false } },
     { rule = { class = "Gnome-terminal" },
-          properties = { opacity = 0.90 } },
+          properties = { opacity = 1.00 } },
 
     { rule = { instance = "Google-chrome" },
           properties = { tag = tags[1][8], floating = true, focus = yes } },

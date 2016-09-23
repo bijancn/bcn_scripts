@@ -2,15 +2,18 @@
 if [ -f ~/.Xmodmap ]; then
   xmodmap ~/.Xmodmap &
 fi
-xset -dpms &  # energy saving
+#xset -dpms &  # energy saving
 xset s off &  # disable screensaver
 
-# mouse settings
-echo 200 | sudo tee /sys/devices/platform/i8042/serio1/serio2/sensitivity &
-echo 150 | sudo tee /sys/devices/platform/i8042/serio1/serio2/speed &
+battery-set-normal-charge-levels
 
-# Start a terminal emulator in the background
-gnome-terminal &
+xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Enabled" 0
+xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 1.5
+xsetwacom set 'Wacom Co.,Ltd. Pen and multitouch sensor Pen stylus' Area 20 30 30900 17340
+xsetwacom set 'Wacom Co.,Ltd. Pen and multitouch sensor Pen eraser' Area 20 30 30900 17340
+
+# Needs su rights
+#set-mouse-settings
 
 # Start the window manager
 #exec awesome

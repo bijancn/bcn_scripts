@@ -164,6 +164,8 @@ Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
 
 Plug 'vimwiki/vimwiki'
 
+Plug 'junegunn/vim-journal'
+
 call plug#end()
 
 "=============================================================================="
@@ -626,6 +628,8 @@ augroup load_filetypes
   autocmd BufNewFile,BufRead *.less set filetype=css
 
   autocmd BufNewFile,BufRead *.ejs set filetype=html
+
+  autocmd BufNewFile,BufRead *.jnl set filetype=journal
 
   autocmd BufRead /tmp/mutt-* set tw=72
 
