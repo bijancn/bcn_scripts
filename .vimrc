@@ -553,8 +553,11 @@ if !exists('W_defined')
   command WQ :Wq
 endif
 
-" Strip Trailing spaces in document
-noremap <leader>st :%s/\s\+$/<CR>
+" Strip trailing spaces in document
+nnoremap <leader>st :%s/\s\+$/<CR>
+
+" Strip traling space in selection
+vnoremap <leader>st :s/\%V\s\+$/<CR>
 
 " Remove ^M chars
 noremap <leader>rm :%s/\r//g<CR>

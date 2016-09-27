@@ -180,6 +180,7 @@ if test -z $PATHS_LOADED ; then
     export LATEXINPUTS=${HOME}/texmf:$hep_install/share/texmf/tex/latex/misc:$LATEXINPUTS
     export TEXINPUTS=${HOME}/texmf:$hep_install/share/texmf/tex/latex/misc:$TEXINPUTS
     export LCIO=$hep_install
+    export CXX=$hep_install/bin/c++
   fi
   export TEXMFCNF=${HOME}/texmf:${TEXMFCNF}
   export HOMETEXMF=${HOME}/texmf:${HOMETEXMF}
