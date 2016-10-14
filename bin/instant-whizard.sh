@@ -44,7 +44,10 @@ url_libtool=http://ftp.gnu.org/gnu/libtool/libtool-2.4.6.tar.gz
 url_noweb=ftp://www.eecs.harvard.edu/pub/nr/noweb.tgz
 
 # GCC
-url_gcc=ftp://ftp.mpi-sb.mpg.de/pub/gnu/mirror/gcc.gnu.org/pub/gcc/releases/gcc-4.8.3/gcc-4.8.3.tar.gz
+url_gcc=ftp://ftp.mpi-sb.mpg.de/pub/gnu/mirror/gcc.gnu.org/pub/gcc/releases/gcc-4.7.4/gcc-4.7.4.tar.gz
+#url_gcc=ftp://ftp.mpi-sb.mpg.de/pub/gnu/mirror/gcc.gnu.org/pub/gcc/releases/gcc-4.9.4/gcc-4.9.4.tar.gz
+#url_gcc=ftp://ftp.mpi-sb.mpg.de/pub/gnu/mirror/gcc.gnu.org/pub/gcc/releases/gcc-6.1/gcc-6.1.tar.gz
+#url_gcc=ftp://ftp.mpi-sb.mpg.de/pub/gnu/mirror/gcc.gnu.org/pub/gcc/releases/gcc-6.2.0/gcc-6.2.0.tar.gz
 
 # O'Caml
 url_ocaml=http://caml.inria.fr/pub/distrib/ocaml-4.02/ocaml-4.02.2.tar.gz
@@ -64,6 +67,7 @@ if test -r /proc/cpuinfo; then
     parallel_jobs="-j `expr \( 3 \* $n \) / 2`"
   fi
 fi
+parallel_jobs="-j1"
 
 ########################################################################
 
@@ -124,20 +128,15 @@ build_gcc () {
   download $gcc_url
   untar $gcc_name
   ( cd $gcc_dirname || exit 2
-    sh contrib/download_prerequisites
-    ### Work around a strange "flex: exec failed" that
-    ### occurs ONLY inside of Jenkins ....
-    cd gmp || exit 2
-    mv -v configure configure-orig
-    sed "s,m4-not-needed,$bin_dir/m4," configure-orig > configure
-    chmod +x configure )
+    sh contrib/download_prerequisites )
   if test ! -r $gcc_dirname.stamp; then
     mkdir $gcc_dirname.build
     ( cd $gcc_dirname.build || exit 2
-      ../$gcc_dirname/configure --prefix=$install_dir \
-  	  --enable-languages='c,c++,fortran' \
-          --disable-multilib
-###       --disable-multiarch
+      # gcc does not like flags like -std=c++11
+      CXXFLAGS='' \
+        ../$gcc_dirname/configure --prefix=$install_dir \
+        --enable-languages='c,c++,fortran' \
+        --disable-multilib
       make bootstrap-lean $parallel_jobs
       make install )
   fi
@@ -242,12 +241,12 @@ EOF
 mkdir -p $build_dir
 cd $build_dir || exit 2
 
-build_generic $url_make
-build_generic $url_m4
-build_generic $url_autoconf
-build_generic $url_automake
+#build_generic $url_make
+#build_generic $url_m4
+#build_generic $url_autoconf
+#build_generic $url_automake
 #build_generic $url_libtool
-#build_gcc $url_gcc
+build_gcc $url_gcc
 #build_noweb $url_noweb
 #build_ocaml $url_ocaml
 #build_hepmc $url_hepmc

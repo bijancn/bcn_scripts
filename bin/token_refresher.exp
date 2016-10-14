@@ -1,0 +1,23 @@
+#!/usr/bin/expect -f
+
+set force_conservative 1  ;# set to 1 to force conservative mode even if
+			  ;# script wasn't run conservatively originally
+if {$force_conservative} {
+	set send_slow {1 .1}
+	proc send {ignore arg} {
+		sleep .1
+		exp_send -s -- $arg
+	}
+}
+set passwd [lindex $argv 0]
+
+spawn $env(SHELL)
+while {1} {
+  sleep 60
+  send -- "kinit ; aklog\r"
+  expect -exact "kinit ; aklog\r\r
+  Password for bcho@DESY.DE:"
+  send -- "$passwd\r"
+}
+send -- "exit\r"
+expect eof
