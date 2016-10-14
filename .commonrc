@@ -757,12 +757,12 @@ fi
 trnk() { cd $whiz_soft/ ; }
 bui() { cd $whiz_soft/_build ; }
 
-alias wsrc='op '$whiz_soft/_install/dist/share/doc/whizard/whizard.pdf
-alias vsrc='op '$whiz_soft/_install/dist/share/doc/vamp/vamp.pdf
-alias osrc='op '$whiz_soft/_install/dist/share/doc/omega/omega.pdf
-alias csrc='op '$whiz_soft/_install/dist/share/doc/circe2/circe2.pdf
-alias wman='op '$whiz_soft/_install/dist/share/doc/whizard/manual.pdf
-alias gman='op '$whiz_soft/_install/dist/share/doc/whizard/gamelan_manual.pdf
+alias wsrc='op '$whiz_soft/_install/gfortran-nostatic-dist/share/doc/whizard/whizard.pdf
+alias vsrc='op '$whiz_soft/_install/gfortran-nostatic-dist/share/doc/vamp/vamp.pdf
+alias osrc='op '$whiz_soft/_install/gfortran-nostatic-dist/share/doc/omega/omega.pdf
+alias csrc='op '$whiz_soft/_install/gfortran-nostatic-dist/share/doc/circe2/circe2.pdf
+alias wman='op '$whiz_soft/_install/gfortran-nostatic-dist/share/doc/whizard/manual.pdf
+alias gman='op '$whiz_soft/_install/gfortran-nostatic-dist/share/doc/whizard/gamelan_manual.pdf
 function make-test () {
   make check TESTS=$1.run
 }

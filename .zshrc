@@ -20,43 +20,32 @@ screen*)
   ;;
 esac
 
-alias so='source ~/.zshrc'
-
-if [ ! -f ${HOME}/.zgen/zgen.zsh ] ; then
-  git clone https://github.com/tarjoilija/zgen.git .zgen
-fi
-source ${HOME}/.zgen/zgen.zsh
-
-if ! zgen saved; then
-  #zgen oh-my-zsh plugins/z
-
-  zgen prezto syntax-highlighting color 'yes'
-  zgen prezto syntax-highlighting highlighters 'main' \
-    'brackets' \
-    'pattern' \
-    'cursor' \
-    'root'
-  zgen prezto autosuggestions color 'yes'
-
-  zgen prezto
-  zgen prezto git
-  zgen prezto node
-  zgen prezto python
-  zgen prezto tmux
-  zgen prezto command-not-found
-  zgen prezto history
-  zgen prezto fasd
-  # dont change the order of these
-  zgen prezto syntax-highlighting
-  zgen prezto history-substring-search
-  zgen prezto autosuggestions
-  zgen prezto prompt
-
-  # generate the init script from plugins above
-  zgen save
+################################################################################
+#                                     ZIM                                      #
+################################################################################
+if [ ! -d ~/.zim ]; then
+  git clone --recursive https://github.com/Eriner/zim.git ${ZDOTDIR:-${HOME}}/.zim
 fi
 
+if [[ -s ${ZDOTDIR:-${HOME}}/.zim/init.zsh ]]; then
+  source ${ZDOTDIR:-${HOME}}/.zim/init.zsh
+fi
+
+################################################################################
+#                               AUTOSUGGESTIONS                                #
+################################################################################
+# we get it by hand as long as it is not part of zim
+if [[ ! -d ~/zsh-autosuggestions ]]; then
+  git clone git://github.com/zsh-users/zsh-autosuggestions ~/zsh-autosuggestions
+fi
+source ~/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+################################################################################
+#                                   MY STUFF                                   #
+################################################################################
 source ${HOME}/.commonrc
+alias so='source ~/.commonrc'
+
 #==============================================================================#
 #                                GLOBAL ALIASES                                #
 #==============================================================================#
@@ -163,3 +152,8 @@ bindkey '\e.' insert-last-word
 
 # Override the -i set by prezto/init
 alias cp="nocorrect cp"
+
+################################################################################
+#                       DONT OVERSHADOW SYSTEM COMMANDS                        #
+################################################################################
+unalias gs

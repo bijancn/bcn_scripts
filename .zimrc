@@ -1,0 +1,40 @@
+# Zim modules
+zmodules=( \
+  archive \
+  directory \
+  environment \
+  input \
+  git \
+  history \
+  ssh \
+  utility \
+  meta \
+  syntax-highlighting \
+  history-substring-search \
+  completion)
+
+# SSH
+zssh_ids=(id_rsa)
+
+# Completion
+# set an optional host-specific filename for the completion cache file
+# if none is provided, the default '.zcompdump' is used.
+#zcompdump_file=".zcompdump-${HOST}-${ZSH_VERSION}"
+
+# Syntax-Highlighting
+# This determines what highlighters will be used with the syntax-highlighting module.
+# Documentation of the highlighters can be found here:
+#   https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
+# For (u)rxvt, termite and gnome-terminal users,
+# removing the 'cursor' highlighter will fix the disappearing cursor problem
+zhighlighters=(main brackets cursor)
+
+# Input
+# Uncomment to enable double-dot expansion.
+# This appends '../' to your input for each '.' you type after an initial '..'
+zdouble_dot_expand='true'
+
+# Utility
+# Uncomment to enable command correction prompts; 'setopt CORRECT'
+# See: http://zsh.sourceforge.net/Doc/Release/Options.html#Input_002fOutput
+#zcorrection='true'

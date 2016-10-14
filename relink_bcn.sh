@@ -22,7 +22,7 @@ if [ $# -eq 1 ]; then
 fi
 
 files=".@(bash|colorit|common|dir_colors|msmtp|mutt|offlineimap|xinit)rc "
-files+=".@(pylint|screen|vim|vimperator|zsh)rc "
+files+=".@(pylint|screen|vim|vimperator|zim|zsh)rc "
 files+=".bash_profile "
 files+=".config/awesome/rc.lua "
 files+=".config/dwb/default/@(bookmarks|quickmarks) "
