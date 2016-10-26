@@ -62,9 +62,6 @@ Plug 'junegunn/limelight.vim'
 " Fuzzy search on files, buffers and more
 Plug 'kien/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPMixed'] }
 
-" Rainbow parentheses
-Plug 'luochen1990/rainbow'
-
 " Show errors and warnings of compilers and checkers
 Plug 'scrooloose/syntastic'
 
@@ -888,48 +885,6 @@ function! DiffoptToggle()
 endfunction
 
 "=============================================================================="
-"                                    UNITE                                     "
-"=============================================================================="
-"let g:unite_source_history_yank_enable = 1
-"call unite#filters#matcher_default#use(['matcher_fuzzy'])
-
-" -no-split opens search in current window
-" -start-insert causes Unite to open with the prompt activated
-" -quick-match allows to open an entry quickly with one keypress
-" async uses vimproc behind the scenes, which affords for searching while it
-" populates the file list in the background
-"nnoremap <space><space> :Unite -no-split -start-insert file_rec<CR>
-" The :! tells unite to run things in the background
-"nnoremap <space><space> :Unite -no-split -start-insert file_rec/async:!<CR>
-"nnoremap <space>f       :Unite -no-split -start-insert file<cr>
-"nnoremap <space>b       :Unite -no-split -start-insert buffer<cr>
-"nnoremap <space>/       :Unite grep:.<cr>
-
-" Allow to delete files in unite (might be dangerous)
-"call unite#custom#alias('file', 'delete', 'vimfiler__delete')
-
-"=============================================================================="
-"                                   VIMFILER                                   "
-"=============================================================================="
-"let g:vimfiler_as_default_explorer = 1
-
-" Pretty symbols
-"let g:vimfiler_tree_leaf_icon = "¦"
-""let g:vimfiler_tree_leaf_icon = "⋮"
-"let g:vimfiler_tree_opened_icon = "▼"
-"let g:vimfiler_tree_closed_icon = "▷"
-""let g:vimfiler_tree_closed_icon = '▸'
-"let g:vimfiler_file_icon = '-'
-"let g:vimfiler_marked_file_icon = '※'
-
-" Enable file operation commands
-"call vimfiler#custom#profile('default', 'context', {
-"      \ 'safe' : 0,
-"      \ })
-
-"nnoremap <leader>f :VimFilerExplorer <c-r>=expand("%:p:h")<cr>/
-
-"=============================================================================="
 "                                   ULTISNIP                                   "
 "=============================================================================="
 " Ensure compatibility with YouCompleteMe
@@ -998,33 +953,6 @@ let g:org_heading_shade_leading_stars = 1
 
 " Multi-state workflows
 let g:org_todo_keywords=['TODO', 'GETFEEDBACK', 'VERIFY', '|', 'DONE', 'DELEGATED']
-
-"=============================================================================="
-"                                   RAINBOW                                    "
-"=============================================================================="
-let g:rainbow_active = 0
-noremap <leader>rt :RainbowToggle<CR>
-let g:rainbow_conf = {
-    \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-    \   'ctermfgs': ['black', '21', 'darkmagenta', '160', '172'],
-    \   'operators': '_,_',
-    \   'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
-    \   'separately': {
-    \       '*': {},
-    \       'lisp': {
-    \           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-    \           'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan', 'darkred', 'darkgreen'],
-    \       },
-    \       'vim': {
-    \           'parentheses': [['fu\w* \s*.*)','endfu\w*'], ['for','endfor'], ['while', 'endwhile'], ['if','_elseif\|else_','endif'], ['(',')'], ['\[','\]'], ['{','}']],
-    \       },
-    \       'tex': {
-    \           'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
-    \       },
-    \       'css': 0,
-    \       'stylus': 0,
-    \   }
-    \}
 
 "=============================================================================="
 "                              erikw/toggle_spell                              "

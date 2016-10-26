@@ -831,22 +831,28 @@ alias show-computer-list="vim /afs/desy.de/group/theorie/theopcs/Ueberblick.txt"
 
 function find-ref-dir () {
   pwd=`pwd`
-  ref_dir=../../../../share/tests/$(basename $pwd)
+  ref_dir=../../../trunk/share/tests/$(basename $pwd)
+  if test -f $ref_dir/ref-output/$1.ref; then
+    echo "$ref_dir/ref-output"
+    return
+  fi
   grep --quiet 'FC_PRECISION = double' Makefile
   if test "$?" = "0" -a -f $ref_dir/ref-output-double/$1.ref; then
     echo "$ref_dir/ref-output-double"
+    return
   fi
   grep --quiet 'FC_PRECISION = extended' Makefile
   if test "$?" = "0" -a -f $ref_dir/ref-output-ext/$1.ref; then
     echo "$ref_dir/ref-output-ext"
+    return
   fi
   grep --quiet 'FC_PRECISION = quadruple' Makefile
   if test "$?" = "0" -a -f $ref_dir/ref-output-quad/$1.ref; then
     echo "$ref_dir/ref-output-quad"
+    return
   elif test -f $ref_dir/ref-output-prec/$1.ref; then
     echo "$ref_dir/ref-output-prec"
-  elif test -f $ref_dir/ref-output/$1.ref; then
-    echo "$ref_dir/ref-output"
+    return
   fi
 }
 
@@ -857,7 +863,11 @@ function show-this-diff () {
 function use-this-as-ref () {
   cp $1.log `find-ref-dir $1`/$1.ref
 }
-
+function use-all-this-as-ref () {
+  for i in `grep "^FAIL: .*.run" test-suite.log | sed "s/FAIL: //" | sed "s/.run//"`; do
+    use-this-as-ref $i
+  done
+}
 function show-diff () {
   $difftool err-output/$1.out `find-ref-dir $1`/$1.ref
 }
@@ -978,6 +988,14 @@ done
 
 function create-svn-commit-msg () {
   git log --pretty=format:'%s,%b' origin/master..HEAD > ~/trunk/svn_commit
+}
+
+function change-email-password () {
+  cd /tmp
+  rm key
+  echo "$1" >> key
+  gpg2 --encrypt key
+  mv key.gpg ~/cloud/keys/offlineimappass-desy.gpg
 }
 
 #==============================================================================#
