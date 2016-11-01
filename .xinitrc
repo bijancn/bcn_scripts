@@ -11,6 +11,9 @@ xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Enabled" 0
 xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 1.5
 xsetwacom set 'Wacom Co.,Ltd. Pen and multitouch sensor Pen stylus' Area 20 30 30900 17340
 xsetwacom set 'Wacom Co.,Ltd. Pen and multitouch sensor Pen eraser' Area 20 30 30900 17340
+xsetwacom set "Wacom Co.,Ltd. Pen and multitouch sensor Finger touch" MapToOutput eDP1
+xsetwacom set "Wacom Co.,Ltd. Pen and multitouch sensor Pen stylus" MapToOutput eDP1
+xsetwacom set "Wacom Co.,Ltd. Pen and multitouch sensor Pen stylus" MapToOutput eDP1
 
 # Needs su rights
 #set-mouse-settings

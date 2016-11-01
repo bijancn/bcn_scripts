@@ -83,8 +83,7 @@ local layouts =
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {
-   names = {" 1 ", " 2 ", " 3 ", " 4 ", " skype ", " mutt ", " web ",
-   " spotify ", " mendeley "},
+   names = {" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " mutt ", " web ", " mendeley "},
    layout = {layouts[5], layouts[5], layouts[5], layouts[5], layouts[5],
               layouts[5], layouts[5], layouts[5], layouts[5]}
 }
@@ -99,16 +98,15 @@ user_combination = {modkey}
 
 user_keys =
 {
-  n = {"nautilus", "Nautilus", tags[1][1]},
-  t = {"gnome-terminal", "Gnome-terminalNOT", tags[1][2]},
-  y = {"skype", "Skype", tags[1][5]},
-  m = {"terminator -e 'source ~/.commonrc ; mutt'", "Terminator", tags[1][6]},
-  g = {"google-chrome", "Google-chrome", tags[1][7]},
-  s = {"spotify --force-device-scale-factor=1.7", "Spotify", tags[1][8]},
-  e = {"mendeleydesktop", "Mendeley Desktop", tags[1][9]},
-  k = {"keepassx", "Keepassx", tags[1][4]},
+  n = {"nautilus", "Nautilus"},
   x = {"xournal", "Xournal"},
-  i = {"inkscape", "Inkscape", tags[1][4]}
+  i = {"inkscape", "Inkscape"},
+  k = {"keepassx", "Keepassx", tags[1][6]},
+  y = {"skype", "Skype", tags[1][6]},
+  m = {"terminator -e 'source ~/.commonrc ; mutt'", "Terminator", tags[1][7]},
+  g = {"google-chrome", "Google-chrome", tags[1][8]},
+  s = {"spotify --force-device-scale-factor=1.7", "Spotify", tags[1][8]},
+  e = {"mendeleydesktop", "Mendeley Desktop", tags[1][9]}
 }
 
 -- {{{ Wallpaper
