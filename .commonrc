@@ -1059,6 +1059,9 @@ alias giti='git interactive'
 # See the current status
 alias gits='git status'
 
+# See status faster but does not track new files
+alias gitS='git status -uno .'
+
 # Pull from the remote
 alias gitl='git pull --rebase'
 
