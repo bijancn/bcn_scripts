@@ -276,7 +276,7 @@ configureflags = args.configureflags
 fortran_compiler = 'FC=' + compiler
 fortran_flags = "FCFLAGS=-O" + optimization + " " + fcflags
 f_flags = "FFLAGS=" + f77flags
-ldflags = "LDFLAGS=" + ldflags
+#  ldflags = "LDFLAGS=" + ldflags
 cxx_flags = "CXXFLAGS=-std=c++11"
 if f77flags != " ":
   configure_options = [prefix, fortran_compiler, fortran_flags, f_flags] + configureflags

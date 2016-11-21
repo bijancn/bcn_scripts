@@ -27,60 +27,57 @@ total_cores = 0
 total_use_cores = 0
 total_load = 0.0
 f = open ('host_file', 'w')
-for i in range(36,4,-1):
-  machine = "theoc%02d" % (i)
-  ret = subprocess.check_output(["ssh", machine, "uptime &&", "who &&",
-    "ps -eo pcpu,user | sed -e 's/^[[:space:]]*//' | sort -k1 -r | head -41 |tail -40 &&",
-    "grep '^core id' /proc/cpuinfo | sort -u | wc -l &&",
-    "echo $(($(grep \"^physical id\" /proc/cpuinfo | awk \'{print $4}\' | sort -un | tail -1)+1))"]);
-  lines = ret.split('\n')
-  if lines.pop() != '':
-    print "show-theoc-load.py: ALERT THIS SHOULD HAVE BEEN EMPTY"
-  real_cores = int(lines.pop()) * int(lines.pop())
-  total_cores += real_cores
-  load5 = float(re_l.search(lines.pop(0)).group(1))
-  total_load += min(load5, real_cores)
-  users = []
-  for line in lines[:-40]:
-    users += [line.split(' ')[0]]
-  if len(users) > 0:
-    users_strg = ','.join(set(users))
-  else:
-    users_strg = '[]'
-
-  if load5 / real_cores > 0.5:
-    color = 'red'
-  elif load5 / real_cores < 0.05:
-    color = 'green'
-  else:
-    color = 'yellow'
-
-  top_processes = filter(lambda line: float(line.split(' ')[0]) > 5, lines[-40:])
-  top_usage = {}
-  for line in top_processes:
-    usage = float(line.split(' ')[0])
-    user  = line.split(' ')[1]
-    tmp = {user: usage}
-    try:
-      top_usage[user] += usage
-    except KeyError:
-      top_usage.update(tmp)
-  usage_strg = ''
-  for user in top_usage:
-    usage_strg += user + ':%3.1f' % (top_usage[user]/100) + ' '
-
-  use_cores = max(int(round(real_cores - load5 - args.safety)), 0)
-  not_too_many = (total_use_cores + use_cores) < (args.num_cores)
-  if use_cores > args.min_cores and not_too_many:
-    f.write(machine + ':' + str(use_cores) + '\n')
-    total_use_cores += use_cores
-  else:
-    use_cores = 0
-
-  string = machine + " load5: %4.1f" % load5 + '  cores: %2i' % real_cores + \
-      "  would-use: %2i" % use_cores + \
-      "  loggedin:%20s" % users_strg + '  usage: ' + usage_strg 
-  print colored(string, color)
+for i in range(36,3,-1):
+  if not i == 23 and not i == 4 and not i == 13:
+      machine = "theoc%02d" % (i)
+      ret = subprocess.check_output(["ssh", machine, "uptime &&", "who &&",
+        "ps -eo pcpu,user | sed -e 's/^[[:space:]]*//' | sort -k1 -r | head -41 |tail -40 &&",
+        "grep '^core id' /proc/cpuinfo | sort -u | wc -l &&",
+        "echo $(($(grep \"^physical id\" /proc/cpuinfo | awk \'{print $4}\' | sort -un | tail -1)+1))"]);
+      lines = ret.split('\n')
+      if lines.pop() != '':
+        print "show-theoc-load.py: ALERT THIS SHOULD HAVE BEEN EMPTY"
+      real_cores = int(lines.pop()) * int(lines.pop())
+      total_cores += real_cores
+      load5 = float(re_l.search(lines.pop(0)).group(1))
+      total_load += min(load5, real_cores)
+      users = []
+      for line in lines[:-40]:
+        users += [line.split(' ')[0]]
+      if len(users) > 0:
+        users_strg = ','.join(set(users))
+      else:
+        users_strg = '[]'
+      if load5 / real_cores > 0.5:
+        color = 'red'
+      elif load5 / real_cores < 0.05:
+        color = 'green'
+      else:
+        color = 'yellow'
+      top_processes = filter(lambda line: float(line.split(' ')[0]) > 5, lines[-40:])
+      top_usage = {}
+      for line in top_processes:
+        usage = float(line.split(' ')[0])
+        user  = line.split(' ')[1]
+        tmp = {user: usage}
+        try:
+          top_usage[user] += usage
+        except KeyError:
+          top_usage.update(tmp)
+      usage_strg = ''
+      for user in top_usage:
+        usage_strg += user + ':%3.1f' % (top_usage[user]/100) + ' '
+      use_cores = max(int(round(real_cores - load5 - args.safety)), 0)
+      not_too_many = (total_use_cores + use_cores) < (args.num_cores)
+      if use_cores > args.min_cores and not_too_many:
+        f.write(machine + ':' + str(use_cores) + '\n')
+        total_use_cores += use_cores
+      else:
+        use_cores = 0
+      string = machine + " load5: %4.1f" % load5 + '  cores: %2i' % real_cores + \
+          "  would-use: %2i" % use_cores + \
+          "  loggedin:%20s" % users_strg + '  usage: ' + usage_strg 
+      print colored(string, color)
 f.close()
 print "="*80
 print "total number of cores:" + str(total_cores) + " loaded with " + \

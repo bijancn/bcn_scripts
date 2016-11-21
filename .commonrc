@@ -1036,6 +1036,8 @@ alias gitin='git init --bare'
 # (followed by ssh://user@yourserver/~/reponame.git)
 alias gitpm='git push --mirror'
 
+alias git-accept-deleted='git ls-files --deleted -z | xargs -0 git rm '
+
 #==========#
 #  basics  #
 #==========#
