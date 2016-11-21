@@ -831,7 +831,7 @@ alias show-computer-list="vim /afs/desy.de/group/theorie/theopcs/Ueberblick.txt"
 
 function find-ref-dir () {
   pwd=`pwd`
-  ref_dir=../../../trunk/share/tests/$(basename $pwd)
+  ref_dir=../../../../share/tests/$(basename $pwd)
   if test -f $ref_dir/ref-output/$1.ref; then
     echo "$ref_dir/ref-output"
     return

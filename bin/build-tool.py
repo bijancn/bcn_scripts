@@ -121,6 +121,10 @@ if 'ifort' in args.build:
   args.fcflags = '-g -traceback '
   args.f77flags = args.fcflags
 
+if 'ipo' in args.build:
+  args.fcflags = '-ipo -qoprt-report=3'
+  ldflags = '-ipo -qoprt-report=3 -qopt-report-phase=ipo'
+
 if 'stdsemantics' in args.build:
   args.fcflags += '-standard-semantics '
 
@@ -272,6 +276,7 @@ configureflags = args.configureflags
 fortran_compiler = 'FC=' + compiler
 fortran_flags = "FCFLAGS=-O" + optimization + " " + fcflags
 f_flags = "FFLAGS=" + f77flags
+ldflags = "LDFLAGS=" + ldflags
 cxx_flags = "CXXFLAGS=-std=c++11"
 if f77flags != " ":
   configure_options = [prefix, fortran_compiler, fortran_flags, f_flags] + configureflags

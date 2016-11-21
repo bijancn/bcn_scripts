@@ -157,6 +157,9 @@ Plug 'janko-m/vim-test'
 " Mail interface
 Plug 'imain/notmuch-vim'
 
+" Fix vims indentation to conform with PEP8
+Plug 'hynek/vim-python-pep8-indent'
+
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
 
 Plug 'vimwiki/vimwiki'
