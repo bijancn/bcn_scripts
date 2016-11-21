@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/bijancn/bcn_scripts/bin/export-dbus.sh
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=export dbus
+Name=export dbus
+Comment[en_US]=
+Comment=

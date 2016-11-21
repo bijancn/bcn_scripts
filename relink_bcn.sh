@@ -24,6 +24,7 @@ fi
 files=".@(bash|colorit|common|dir_colors|msmtp|mutt|offlineimap|xinit)rc "
 files+=".@(pylint|screen|vim|vimperator|zim|zsh)rc "
 files+=".bash_profile "
+files+=".config/autostart/@(export-dbus.sh|fluxgui|ownCloud).desktop "
 files+=".config/awesome/rc.lua "
 files+=".config/dwb/default/@(bookmarks|quickmarks) "
 files+=".config/dwb/@(keys|mimetypes|searchengines|settings) "
