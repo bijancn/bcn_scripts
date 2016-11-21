@@ -922,7 +922,7 @@ nnoremap <leader>t :YcmCompleter GoTo<CR>
 
 augroup load_us_ycm
   autocmd!
-  autocmd InsertEnter * call plug#load('YouCompleteMe')
+  autocmd InsertEnter,CursorHold * call plug#load('YouCompleteMe')
         \| call youcompleteme#Enable() | autocmd! load_us_ycm
 augroup END
 
