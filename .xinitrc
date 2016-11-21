@@ -16,6 +16,11 @@ xsetwacom set "Wacom Co.,Ltd. Pen and multitouch sensor Finger touch" MapToOutpu
 xsetwacom set "Wacom Co.,Ltd. Pen and multitouch sensor Pen stylus" MapToOutput eDP1
 xsetwacom set "Wacom Co.,Ltd. Pen and multitouch sensor Pen stylus" MapToOutput eDP1
 
+# touch screen, pointer and eraser
+xinput map-to-output 9 eDP1
+xinput map-to-output 10 eDP1
+xinput map-to-output 16 eDP1
+
 # Needs su rights
 #set-mouse-settings
 
