@@ -110,16 +110,25 @@ Plug 'justinmk/vim-sneak'
 " Show indentation by gray scales
 Plug 'nathanaelkane/vim-indent-guides'
 
+" Reasonably good. Not perfect. Also doesn't change in noweb.
+Plug 'scrooloose/nerdcommenter'
+
 "==========="
 "  testing  "
 "==========="
+" tree explorer plugin
+Plug 'scrooloose/nerdtree'
+
+" class outline viewer
+Plug 'majutsushi/tagbar'
+
+" Visualize vim undo tree
+Plug 'sjl/gundo.vim'
+
 " Interesting color scheme
 Plug 'sjl/badwolf'
 
 Plug 'mileszs/ack.vim'
-
-" Reasonably good. Not perfect. Also doesn't change in noweb.
-Plug 'scrooloose/nerdcommenter'
 
 " Good support for Markdown
 Plug 'vim-pandoc/vim-pandoc'
@@ -138,6 +147,9 @@ Plug 'vim-voom/VOoM', {'on': ['Voom', 'VoomToggle']}
 
 " Create tables automatically and allow spreadsheet computations
 Plug 'dhruvasagar/vim-table-mode'
+
+" Vim script for text filtering and alignment
+Plug 'godlygeek/tabular'
 
 " Edit multiple locations at once
 Plug 'terryma/vim-multiple-cursors'
@@ -927,7 +939,7 @@ let g:goyo_width=80
 let g:goyo_margin_top=3
 let g:goyo_margin_bottom=3
 let g:goyo_linenr=0
-nnoremap <leader>g :Goyo<CR>
+nnoremap <leader>go :Goyo<CR>
 
 "=============================================================================="
 "                                  LIMELIGHT                                   "
@@ -1268,3 +1280,33 @@ endfunction
 nnoremap <silent> <leader>ff :call FindFortranObject()<CR>
 nnoremap <silent> <leader>fa :call FindAnyObject()<CR>
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                NERD-COMMENTER                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  NERD-TREE                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <C-n> :NERDTreeToggle<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    GUNDO                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>gu :GundoToggle<CR>
