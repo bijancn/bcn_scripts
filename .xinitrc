@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
+setxkbmap -option compose:rctrl # set compose key
 if [ -f ~/.Xmodmap ]; then
   xmodmap ~/.Xmodmap &
 fi
-#xset -dpms &  # energy saving
-xset s off &  # disable screensaver
+# xset -dpms &                  # energy saving
+xset s off &                    # disable screensaver
 
 battery-set-normal-charge-levels
 

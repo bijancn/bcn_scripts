@@ -157,3 +157,6 @@ alias cp="nocorrect cp"
 #                       DONT OVERSHADOW SYSTEM COMMANDS                        #
 ################################################################################
 unalias gs
+
+export NVM_DIR="/home/bijancn/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

@@ -46,3 +46,5 @@
   smtpserver = smtp.gmail.com
   smtpuser = bijan.chokoufe@gmail.com
   smtpserverport = 587
+[branch]
+	autosetupmerge = always
