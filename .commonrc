@@ -161,7 +161,7 @@ if test -z $PATHS_LOADED ; then
     export VIMRUNTIME=$hep/install/share/vim/vim74/
     export vim=$hep/install/bin/vim
   else
-    export VIMRUNTIME=/usr/share/vim/vim74/
+    export VIMRUNTIME=/usr/share/vim/vim80/
     export vim=/usr/bin/vim
   fi
   export EDITOR=$vim
