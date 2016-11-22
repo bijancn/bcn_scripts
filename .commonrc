@@ -158,7 +158,7 @@ if test -z $PATHS_LOADED ; then
     export VIMRUNTIME=/usr/local/share/nvim/runtime/
     export vim=/usr/local/bin/nvim
   elif [ -f $hep/install/bin/vim ]; then
-    export VIMRUNTIME=$hep/install/share/vim/vim74/
+    export VIMRUNTIME=$hep/install/share/vim/vim80/
     export vim=$hep/install/bin/vim
   else
     export VIMRUNTIME=/usr/share/vim/vim80/
