@@ -26,6 +26,9 @@ call plug#begin()
 "=========="
 "  stable  "
 "=========="
+"
+Plug 'tpope/vim-sensible'
+
 " Diffing parts of one or two files
 Plug 'AndrewRadev/linediff.vim'
 
@@ -143,7 +146,7 @@ Plug 'jceb/vim-orgmode'
 
 " Show an outline / table of content of org or tex file and move things around
 " Seems to conflict with vim-orgmodes <CR> and <TAB> behavior
-Plug 'vim-voom/VOoM', {'on': ['Voom', 'VoomToggle']}
+" Plug 'vim-voom/VOoM', {'on': ['Voom', 'VoomToggle']}
 
 " Create tables automatically and allow spreadsheet computations
 Plug 'dhruvasagar/vim-table-mode'
@@ -178,29 +181,25 @@ Plug 'vimwiki/vimwiki'
 
 Plug 'junegunn/vim-journal'
 
+Plug 'chrisbra/unicode.vim'
+
+" Post to slack out of vim
+Plug 'heavenshell/vim-slack'
+
+" Requirement for vim-slack
+Plug 'mattn/webapi-vim'
+
 call plug#end()
 
 "=============================================================================="
 "                                   SETTINGS                                   "
 "=============================================================================="
-" Use the default filetype settings. Also load indent files,
-" to automatically do language-dependent indenting.
-if has('autocmd')
-  filetype plugin indent on
-endif
-if has('syntax') && !exists('g:syntax_on')
-  syntax enable
-endif
-
-" Reuse the indentation of the previous line if no filetype indent is available
-set autoindent
 set shiftwidth=2        " Size of indentation
 set textwidth=80        " Where to brake text to new line
 set formatoptions=qrnj  " Add t to activate automatic wrapping
 set wrap
 set linebreak           " Vim will not break words. See :help breakat
 set showbreak=-->\      " Prefix soft-wrapped lines with these characters
-set autoread            " Automatically reload file when changed only outside
 
 " Highlight consistent line
 if exists('+colorcolumn')
@@ -219,20 +218,7 @@ set list                " Highlight tab characters in files
 set listchars=tab:▸\ ,extends:#,nbsp:.,trail:⋅
 " eol:¬, tab:--
 
-" Do not search in all included files for completions
-set complete-=i
-
-" Don't consider numbers starting with 0 as octal for in/decreasing
-set nrformats-=octal
-
-" Always show a status line
-set laststatus=2
-
-" This allows backspacing over everything in insert mode. Don't insert spaces.
-set backspace=indent,eol,start
-
 " Searching
-set incsearch             " do incremental searching
 set ignorecase            " Standard searches are case insensitive
 set smartcase             " Case sensitive only when uppercase characters appear
 set hlsearch              " Switch on highlighting the last used search pattern
@@ -242,7 +228,6 @@ set foldmethod=syntax     " Fold per default according to syntax
 set foldlevel=99          " Open all folds per default
 set foldnestmax=99        " Number of max levels of folds overall
 
-set wildmenu              " Mode of wildmenu is set by wildmode
 " Complete only as far as possible then give list of possibilities
 set wildmode=longest,list
 " Files and folders to ignore
@@ -251,24 +236,11 @@ set wildignore+=*.so,*.swp,*.zip,*/.git/*,*/.hg/*,*/.svn/*
 
 set nobackup              " do not keep a backup file
 set directory=/tmp/       " Don't put swap files in local directories
-set history=500           " keep 500 lines of command line history
-set ssop-=options         " Do not store global and local values in a session
 set showcmd               " display incomplete commands
 set number                " Activate line numbers on the left side
 "set diffopt+=iwhite       " Ignore whitespace when diffing
 
-" Allow color schemes to do bright colors without forcing bold.
-if &t_Co == 8 && $TERM !~# '^linux'
-  set t_Co=16
-endif
-
-" Load matchit.vim, but only if the user hasn't installed a newer version.
-if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
-  runtime! macros/matchit.vim
-endif
-
 set thesaurus=/usr/share/dict/words
-set shell=/bin/bash
 
 " Hybrid relative absolute number mode
 set relativenumber
@@ -331,7 +303,6 @@ syn sync minlines=500    " default 50
 "syntax sync minlines=2048
 "autocmd BufEnter * :syntax sync fromstart
 set ttyfast
-"set lazyredraw
 
 "if has ("conceal")
   "" Enable concealing, i.e. greek letters are shown as unicode
@@ -505,7 +476,10 @@ noremap <silent> <F11>
 " Don't use Ex-mode, use Q for formatting the current line (or selection)
 noremap Q gq
 
-noremap <leader>ch a✓<ESC>
+" Add checkmark to line
+noremap <leader>ch I ✓ <ESC>
+" Add cross to line
+noremap <leader>cr I ✗ <ESC>
 
 "=============="
 "  deprecated  "
@@ -540,12 +514,6 @@ iabbrev generalisation generalization
 "=============================================================================="
 "                                  SCROLLING                                   "
 "=============================================================================="
-" Set the number of lines you want to stay off of bottom and top. This induces
-" vim to scroll automatically when the cursor comes close.
-if !&scrolloff
-  set scrolloff=2
-endif
-
 " number of lines for <C-D> and <C-U>
 set scroll=10
 
@@ -634,13 +602,13 @@ augroup load_filetypes
   autocmd BufRead /tmp/mutt-* set tw=72
 
   " Enable omni completion
-  autocmd FileType python set omnifunc=pythoncomplete#Complete
-  autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-  autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-  autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-  autocmd FileType c set omnifunc=ccomplete#Complete
+  " autocmd FileType python set omnifunc=pythoncomplete#Complete
+  " autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+  " autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+  " autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+  " autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+  " autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+  " autocmd FileType c set omnifunc=ccomplete#Complete
 augroup END
 
 " Automatically reload .vimrc upon saving it
