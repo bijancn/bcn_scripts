@@ -261,6 +261,10 @@ set guicursor+=n-v-c:blinkon0
 set guicursor+=i:blinkwait10
 set guioptions-=m       " remove menu bar in gVim
 set guioptions-=T       " remove toolbar in gVim
+set guioptions-=r       " remove right-hand scrollbar
+set guioptions-=L       " remove left-hand scrollbar
+set guifont=Monospace\ 12
+
 
 " Highlight consistent line
 if exists('+colorcolumn')
@@ -303,7 +307,9 @@ nnoremap <silent> <leader>/ :nohlsearch<CR>
 noremap <left> <<
 noremap <right> >>
 noremap <up> ddkP
+noremap <S-up> ddggP
 noremap <down> ddp
+noremap <S-down> ddGp
 inoremap <up> <NOP>
 inoremap <down> <NOP>
 inoremap <left> <NOP>
