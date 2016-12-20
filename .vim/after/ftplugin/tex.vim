@@ -24,6 +24,8 @@ else
   setlocal makeprg=scons\ .\ 
 endif
 
-set foldmethod=indent
-set foldlevel=0
-set foldnestmax=1       " Create 3 levels of folds overall
+set textwidth=72          " Where to brake text to new line
+
+" set foldmethod=indent
+" set foldlevel=0
+" set foldnestmax=1

@@ -187,7 +187,8 @@ if 'debug' in args.build:
   elif args.compiler == 'gfortran':
     args.fcflags = gf_debug_warnings
   elif args.compiler == 'ifort':
-    args.fcflags = '-g -traceback -check uninit -check pointer -check noarg_temp_created ' + \
+    args.fcflags = '-g -traceback ' + \
+        '-check uninit -check pointer -check noarg_temp_created ' + \
         '-fp-stack-check -fstack-protector -debug inline-debug-info -fpe0 '
   args.f77flags = args.fcflags
   args.configureflags += ['--enable-fc-profiling']
@@ -209,10 +210,11 @@ if args.all:
 global_install_path_ifort = '/nfs/theoc/data2/bcho/sl6/whizard_install_ifort'
 global_gfortran_install_path = '/nfs/theoc/data2/bcho/sl6/whizard_install_gfortran'
 ol_search = 'OpenLoops'
+
 if args.build == 'ifort-nostatic':
   prefix = '--prefix=' + global_install_path_ifort
   ol_search = 'OpenLoops_ifort'
-elif args.build == 'gfortran-nostatic':
+elif args.build == 'gfortran-nostatic' and 'home' not in base_path:
   prefix = '--prefix=' + global_gfortran_install_path
 else:
   prefix = '--prefix=' + os.path.join(base_path, '_install', args.build)
