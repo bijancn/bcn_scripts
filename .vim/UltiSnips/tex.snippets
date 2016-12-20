@@ -161,21 +161,19 @@ endsnippet
 #  sectioning  #
 #==============#
 snippet part "Part" b
+%
 \part{${1:part name}}
 \label{prt:${2:${1/(\w+)|\W+/(?1:\L$0\E:_)/ga}}}
-
+%
 ${0}
-
-% part $2 (end)
 endsnippet
 
-snippet cha "Chapter" b
+snippet "cha(pter)?" "Chapter" b
+%
 \chapter{${1:chapter name}}
-\label{cha:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
-
+\label{c:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+%
 ${0}
-
-% chapter $2 (end)
 endsnippet
 
 snippet sec "Section" b

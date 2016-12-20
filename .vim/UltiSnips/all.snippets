@@ -10,7 +10,7 @@
 # http://www.gnu.org/licenses/gpl-2.0-standalone.html
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-priority -80
+priority -55
 
 global !p
 from vimsnippets import foldmarker, get_comment_format, make_box
@@ -25,6 +25,21 @@ snip.rv = box[0]
 `
 $0
 endsnippet
+
+snippet cbox "A compact box over the full width" b
+`!p
+if not snip.c:
+	width = int(vim.eval("&textwidth - (virtcol('.') == 1 ? 0 : virtcol('.'))")) or 71
+box = make_box(len(t[1]), width)
+snip += box[1]
+`${1:${VISUAL:content}}`!p
+box = make_box(len(t[1]), width)
+snip.rv = box[2]
+`
+$0
+endsnippet
+
+
 
 snippet todo "General TODO reminder" b
 `!p snip.rv = get_comment_format()[0]
