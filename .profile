@@ -6,7 +6,6 @@ if [ "$PS1" ]; then
       exec tmux attach
     fi
   fi
-
   # Use self build zsh if there and given zsh is old
   if test -f ${HOME}/install/bin/zsh ; then
     source ${HOME}/.commonrc
