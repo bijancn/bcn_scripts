@@ -83,7 +83,8 @@ local layouts =
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {
-   names = {" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " mutt ", " web ", " mendeley "},
+   names = {" 1 ", " 2 ", " 3 ", " 4 ", " 5 ",
+            " Journal ", " mutt ", " web ", " mendeley "},
    layout = {layouts[5], layouts[5], layouts[5], layouts[5], layouts[5],
               layouts[5], layouts[5], layouts[5], layouts[5]}
 }
@@ -101,8 +102,9 @@ user_keys =
   n = {"nautilus", "Nautilus"},
   x = {"xournal", "Xournal"},
   i = {"inkscape", "Inkscape"},
-  k = {"keepassx", "Keepassx", tags[1][6]},
-  y = {"skype", "Skype", tags[1][6]},
+  k = {"keepassx", "Keepassx"},
+  y = {"skype", "Skype"},
+  v = {"gvim", "Gvim", tags[1][6]},
   m = {"terminator -e 'source ~/.commonrc ; mutt'", "Terminator", tags[1][7]},
   g = {"google-chrome", "Google-chrome", tags[1][8]},
   s = {"spotify --force-device-scale-factor=1.7", "Spotify", tags[1][8]},

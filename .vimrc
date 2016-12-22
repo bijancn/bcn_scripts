@@ -878,7 +878,8 @@ let wiki_settings={
 \ 'template_ext': '.html',
 \ 'syntax': 'default',
 \ 'ext': '.wiki',
-\ 'auto_export': 1 }
+\ 'auto_export': 1 ,
+\ 'auto_toc': 1 }
 
 let wikis=["vimwiki/",]
 let g:vimwiki_list = []
