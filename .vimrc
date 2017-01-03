@@ -543,8 +543,8 @@ function! ColorSchemeToggle()
 endfunction
 nnoremap <leader>ts :call ColorSchemeToggle()<cr>
 
-let g:background_toggle = 2
-set background=light
+let g:background_toggle = 1
+set background=dark
 function! BackgroundToggle()
   if g:background_toggle == 1
     set background=light
