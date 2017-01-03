@@ -307,9 +307,11 @@ nnoremap <silent> <leader>/ :nohlsearch<CR>
 noremap <left> <<
 noremap <right> >>
 noremap <up> ddkP
-noremap <S-up> ddggP
+nnoremap <S-up> ddggP
+vnoremap <S-up> dggP
 noremap <down> ddp
-noremap <S-down> ddGp
+nnoremap <S-down> ddGp
+vnoremap <S-down> dGp
 inoremap <up> <NOP>
 inoremap <down> <NOP>
 inoremap <left> <NOP>

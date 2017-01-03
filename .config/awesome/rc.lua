@@ -104,7 +104,7 @@ user_keys =
   i = {"inkscape", "Inkscape"},
   k = {"keepassx", "Keepassx"},
   y = {"skype", "Skype"},
-  v = {"gvim", "Gvim", tags[1][6]},
+  v = {"gvim /home/bijancn/vimwiki/index.wiki", "Gvim", tags[1][6]},
   m = {"terminator -e 'source ~/.commonrc ; mutt'", "Terminator", tags[1][7]},
   g = {"google-chrome", "Google-chrome", tags[1][8]},
   s = {"spotify --force-device-scale-factor=1.7", "Spotify", tags[1][8]},
@@ -129,8 +129,14 @@ myawesomemenu = {
 }
 
 -- {{{ Menu
-mymainmenu = awful.menu.new({ items = require("menugen").build_menu(),
-                              theme = { height = 40, width = 300 }})
+-- mymainmenu = awful.menu.new({ items = require("menugen").build_menu(),
+--                               theme = { height = 40, width = 300 }})
+
+mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+                                    { "Debian", debian.menu.Debian_menu.Debian },
+                                    { "open terminal", terminal }
+                                  }
+                        })
 -- }}}
 
 
@@ -390,7 +396,7 @@ end
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
-    --awful.button({ }, 3, function () mymainmenu:toggle() end),
+    awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))

@@ -1,4 +1,6 @@
-DIRS="~/safe/phd/thesis ~/vimwiki/"
+#!/bin/bash
+
+DIRS="$HOME/safe/phd/thesis $HOME/vimwiki/"
 for dir in $DIRS; do
   echo "-------------- Updating $dir --------------"
   cd $dir
