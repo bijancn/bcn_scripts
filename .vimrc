@@ -155,6 +155,8 @@ Plug 'dhruvasagar/vim-table-mode'
 " Vim script for text filtering and alignment
 Plug 'godlygeek/tabular'
 
+Plug 'tpope/vim-unimpaired'
+
 " class outline viewer
 Plug 'majutsushi/tagbar'
 
@@ -292,6 +294,8 @@ let mapleader = ";"
 
 noremap ]p ]cdp
 noremap [p [cdp
+nnoremap d]p ]cdp
+nnoremap d[p [cdp
 nnoremap <Leader>dp :%diffput<CR>
 nnoremap <Leader>do :%diffget<CR>
 
