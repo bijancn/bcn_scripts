@@ -106,9 +106,6 @@ Plug 'janko-m/vim-test'
 " Standard set of options
 Plug 'tpope/vim-sensible'
 
-" Detect shiftwidth and expandtab heuristically
-Plug 'tpope/vim-sleuth'
-
 " Allow to increment/decremt dates, roman numerals, ordinals, letters
 Plug 'tpope/vim-speeddating'
 
