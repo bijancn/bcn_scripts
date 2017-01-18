@@ -81,7 +81,7 @@ def checkout_machine(f, machine, total_cores, total_load, total_use_cores):
   top_processes = filter(lambda line: float(line.split(' ')[0]) > 5, lines[-40:])
   usage_strg = compute_top_usage(top_processes)
   use_cores = max(int(round(real_cores - load5 - args.safety)), 0)
-  not_too_many = (total_use_cores + use_cores) < (args.num_cores)
+  not_too_many = total_use_cores < args.num_cores
   if use_cores > args.min_cores and not_too_many:
     f.write(machine + ':' + str(use_cores) + '\n')
     total_use_cores += use_cores
@@ -98,7 +98,7 @@ total_cores = 0
 total_use_cores = 0
 total_load = 0.0
 with open('host_file', 'w') as f:
-  for i in [4, 5, 6, 7, 8] + range(35, 8, -1) + [36]:
+  for i in range(4, 37):
     if not i == 13:
         machine = "theoc%02d" % (i)
         total_cores, total_load, total_use_cores = checkout_machine(f, machine,
