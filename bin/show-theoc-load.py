@@ -98,7 +98,7 @@ total_cores = 0
 total_use_cores = 0
 total_load = 0.0
 with open('host_file', 'w') as f:
-  for i in range(4, 37):
+  for i in range(2, 37):
     if not i == 13:
         machine = "theoc%02d" % (i)
         total_cores, total_load, total_use_cores = checkout_machine(f, machine,
