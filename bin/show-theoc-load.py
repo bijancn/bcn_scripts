@@ -16,7 +16,7 @@ parser.add_argument("-f", '--host_file', action='store_true',
 # options how to behave
 parser.add_argument("-s", '--safety', default=0, type=int,
     help='Number of cores to leave at least free')
-parser.add_argument("-m", '--min_cores', default=5, type=int,
+parser.add_argument("-m", '--min_cores', default=1, type=int,
     help='Only use machines that can allocate at least MIN_CORES')
 parser.add_argument("-n", '--num_cores', default=300, type=int,
     help='Try to use NUM_CORES if available and respecting SAFETY and MIN_CORES')
@@ -81,6 +81,8 @@ def checkout_machine(f, machine, total_cores, total_load, total_use_cores):
   top_processes = filter(lambda line: float(line.split(' ')[0]) > 5, lines[-40:])
   usage_strg = compute_top_usage(top_processes)
   use_cores = max(int(round(real_cores - load5 - args.safety)), 0)
+  if machine == "theoc01":
+      use_cores = max(use_cores - 3, 0)
   not_too_many = total_use_cores < args.num_cores
   if use_cores > args.min_cores and not_too_many:
     f.write(machine + ':' + str(use_cores) + '\n')
@@ -98,7 +100,7 @@ total_cores = 0
 total_use_cores = 0
 total_load = 0.0
 with open('host_file', 'w') as f:
-  for i in range(2, 37):
+  for i in range(1, 37):
     if not i == 13:
         machine = "theoc%02d" % (i)
         total_cores, total_load, total_use_cores = checkout_machine(f, machine,
