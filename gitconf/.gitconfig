@@ -47,4 +47,4 @@
   smtpuser = bijan.chokoufe@gmail.com
   smtpserverport = 587
 [branch]
-	autosetupmerge = always
+  autosetupmerge = always

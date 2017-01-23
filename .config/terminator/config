@@ -15,24 +15,33 @@
   switch_to_tab_9 = <Alt>9
 [layouts]
   [[default]]
-    [[[child1]]]
-      parent = window0
+    [[[child0]]]
+      fullscreen = False
+      last_active_term = 26c1fdae-9062-4b3e-bc96-abdb770f9670
+      last_active_window = True
+      maximised = False
+      order = 0
+      parent = ""
+      position = 27:19
+      size = 1831, 1102
+      title = /usr/bin/zsh
+      type = Window
+    [[[terminal1]]]
+      order = 0
+      parent = child0
       profile = default
       type = Terminal
-    [[[window0]]]
-      parent = ""
-      size = 685, 1000
-      type = Window
+      uuid = 26c1fdae-9062-4b3e-bc96-abdb770f9670
 [plugins]
 [profiles]
   [[default]]
-    background_color = "#fdf6e3"
-    background_darkness = 0.91
+    background_color = "#002b36"
+    background_darkness = 0.86
     background_image = None
     background_type = transparent
     cursor_blink = False
     font = Monospace 13
-    foreground_color = "#657b83"
+    foreground_color = "#839496"
     palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
     scroll_on_output = False
     scrollback_infinite = True
@@ -40,39 +49,3 @@
     show_titlebar = False
     use_system_font = False
     word_chars = "-A-Za-z0-9,./?%&#:_~"
-  [[black]]
-    active_encodings = ANSI_X3.4-1968, UTF-8, ISO-8859-1
-    background_color = "#ffffff"
-    background_image = None
-    cursor_blink = False
-    font = Monospace 10.5
-    foreground_color = "#000000"
-    login_shell = True
-    scrollback_infinite = True
-    scrollbar_position = hidden
-    show_titlebar = False
-    use_system_font = False
-    word_chars = "-A-Za-z0-9,./?%&#:_+"
-  [[dark]]
-    background_color = "#262626"
-    background_darkness = 0.85
-    background_image = None
-    cursor_blink = False
-    font = Monospace 10.5
-    foreground_color = "#cccccc"
-    palette = "#444444:#ff1919:#5dbf00:#fff000:#3f94ff:#ec6bff:#00fcff:#d3d7cf:#868686:#ff7c7c:#7eff00:#fffc99:#9ecdff:#ffc4f9:#b2ffff:#ffffff"
-    scrollback_infinite = True
-    scrollbar_position = hidden
-    show_titlebar = False
-    use_system_font = False
-  [[light]]
-    background_color = "#ffffff"
-    background_image = None
-    cursor_blink = False
-    font = Liberation Mono 11
-    foreground_color = "#000000"
-    palette = "#000000:#aa0000:#00aa00:#aa5500:#0000aa:#aa00aa:#00aaaa:#aaaaaa:#555555:#ff5555:#55ff55:#ffff55:#5555ff:#ff55ff:#55ffff:#ffffff"
-    scrollback_infinite = True
-    scrollbar_position = hidden
-    show_titlebar = False
-    use_system_font = False

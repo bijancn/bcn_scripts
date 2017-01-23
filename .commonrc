@@ -872,6 +872,7 @@ function show-this-diff () {
 function use-this-as-ref () {
   cp $1.log `find-ref-dir $1`/$1.ref
 }
+
 function use-all-this-as-ref () {
   for i in `grep "^FAIL: .*.run" test-suite.log | sed "s/FAIL: //" | sed "s/.run//"`; do
     use-this-as-ref $i

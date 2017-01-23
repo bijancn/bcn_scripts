@@ -183,6 +183,12 @@ Plug 'heavenshell/vim-slack'
 " Requirement for vim-slack
 Plug 'mattn/webapi-vim'
 
+" Show synonyms in a quickfix window
+Plug 'beloglazov/vim-online-thesaurus'
+
+" Show coverage
+Plug 'alfredodeza/coveragepy.vim'
+
 " Work together - apart. Only works with neovim
 "Plug 'floobits/floobits-neovim'
 
@@ -214,6 +220,7 @@ set cmdheight=2           " Number of lines for command line
 set ttyfast               " Indicate a fast terminal for smoother drawing
 set pastetoggle=<F2>      " Toggles the paste option
 set cursorline            " Highlight current line
+set linespace=5           " Value larger than 1 avoids invisible underscores
 set thesaurus=/usr/share/dict/words
 set printoptions=paper:A4,syntax:y,wrap:y,number:y
 
@@ -222,7 +229,7 @@ set printoptions=paper:A4,syntax:y,wrap:y,number:y
 set updatetime=1000
 
 " Tabs. Note: Use :retab to clean up mixed indentation
-set noexpandtab         " Instert a <Tab> when <Tab> is pressed
+set expandtab
 set tabstop=2           " Number of spaces a <Tab> counts for
 set list                " Highlight listchars in files
 set listchars=tab:▸\ ,extends:#,nbsp:.,trail:⋅
@@ -1047,3 +1054,9 @@ let g:loaded_python3_provider = 0
 
 " LaTeX
 let g:Tex_flavor = 'latex'      " Use latex per default
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               ONLINE THESAURUS                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:online_thesaurus_map_keys = 0
+nnoremap <Leader>h :OnlineThesaurusCurrentWord<CR>
