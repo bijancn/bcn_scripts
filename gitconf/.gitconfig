@@ -11,7 +11,7 @@
   cmd = meld --output "$MERGED" "$LOCAL" "$BASE" "$REMOTE"
 [alias]
   makedot = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
-  mylog = !echo && git log --graph --format=format:'%C(black)%h%C(reset) - %C(red)(%ar)%C(reset) %C(blue)%cn%C(reset)%n        %C(green)%s%C(reset)' --abbrev-commit --date=relative | head -n 20 && echo
+  mylog = !echo && git log --graph --format=format:'%h - %C(red)(%ar)%C(reset) %C(blue)%cn%C(reset)%n        %C(green)%s%C(reset)' --abbrev-commit --date=relative | head -n 20 && echo
   morelog = log --graph --decorate --pretty=medium --abbrev-commit --date=relative --all
 [alias]
   interactive = add -p

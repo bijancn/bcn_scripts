@@ -807,7 +807,7 @@ if command-exists trash-put; then
   alias rmm='/bin/rm'
 else
   if version-bigger rm 8.4; then
-    alias rm='rm -vI'
+    alias rm='rm -v'
   fi
 fi
 alias mv='mv -v'
