@@ -17,7 +17,7 @@
   interactive = add -p
   pullhard = !git fetch --all && git reset --hard origin/master
   whatsnew = !sh -c 'git log $1@{1}..$1@{0} "$@"'
-  unstage = reset -q HEAD --
+  unstage = reset HEAD --
   discard = checkout --
   uncommit = reset --mixed HEAD~
   amend = commit --amend
