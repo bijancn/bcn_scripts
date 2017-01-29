@@ -55,8 +55,9 @@ github morgwai tpbat-utils-acpi
 
 mkdir -p ~/install/bin
 ln -sf $HOME/dircolors-solarized/dircolors.ansi-universal $HOME/.dircolors
-ln -sf $HOME/pydflatex/bin/pydflatex $HOME/install/bin/pydflatex
-ln -sf $HOME/bitpocket/bin/bitpocket $HOME/install/bin/bitpocket
-ln -sf $HOME/svn-color/svn-color.py $HOME/install/bin/svn-color
-ln -sf $HOME/Git-Status/show_status $HOME/install/bin/show_status
-ln -sf $HOME/mutt-notmuch-py/mutt-notmuch-py $HOME/install/bin/mutt-notmuch-py
+ln -sf $HOME/pydflatex/bin/pydflatex           $HOME/install/bin/
+ln -sf $HOME/bitpocket/bin/bitpocket           $HOME/install/bin/
+ln -sf $HOME/svn-color/svn-color.py            $HOME/install/bin/
+ln -sf $HOME/Git-Status/show_status            $HOME/install/bin/
+ln -sf $HOME/mutt-notmuch-py/mutt-notmuch-py   $HOME/install/bin/
+ln -sf $HOME/tpbat-utils-acpi/battery-*        $HOME/install/bin/

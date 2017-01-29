@@ -1162,8 +1162,8 @@ function bitbucket-hg {
 #==============================================================================#
 #                                     SVN                                      #
 #==============================================================================#
-if command-exists svn-color && command-exists svn; then
-  alias svn=svn-color
+if command-exists svn-color.py && command-exists svn; then
+  alias svn=svn-color.py
 fi
 alias svna='svn add'
 alias svnu='svn update'
