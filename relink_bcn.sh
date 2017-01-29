@@ -37,7 +37,7 @@ files+=".config/terminator/config "
 files+=".fonts/AvantGarde_LT_Medium.ttf .fonts/GE_Inspira.ttf "
 files+=".fonts/PowerlineSymbols.otf .fonts/Ubuntu.ttf "
 files+=".gitignore_global "
-files+=".local/share/applications/mimeapps.list "
+files+=".local/share/applications/@(mimeapps.list|spotify.desktop|gnome-terminal.desktop) "
 files+=".mutt.desy .mutt.gmail .mutt.mailcap "
 files+=".notmuch-config "
 files+=".profile .ssh/config .ssh/id_rsa .ssh/id_rsa.pub .ssh/known_hosts "
@@ -53,6 +53,7 @@ files+=".vim/after/ftplugin/@(c|markdown|noweb|ocaml|python|sindarin|tex|vimwiki
 files+=".vim/spell/en.utf-8.add "
 files+=".vim/syntax/noweb.vim "
 files+=".vim/UltiSnips/@(all|fortran|javascript|noweb|ocaml|pandoc|python|sh|tex).snippets "
+files+=".Xmodmap "
 
 for f in $files; do
   mkdir ~/$(dirname $f) -p
@@ -71,6 +72,7 @@ for f in $files; do
     fi
   fi
 done
+chmod 600 ~/.msmtprc
 
 gitversion=`git --version | awk '{print $3}'`
 bigger=`./bin/version-compare.py $gitversion 1.7.11`
@@ -87,10 +89,4 @@ cd $mpwd
 
 ln -sf ~/.vim ~/.nvim
 ln -sf ~/.vimrc ~/.nvimrc
-
-chmod 600 ~/.msmtprc
-mkdir -p .mutt/temp
-if type goobook &> /dev/null ; then
-  pip install goobook
-  goobook authenticate
-fi
+ln -sf ~/mutt-notmuch-py/mutt-notmuch-py ~/install/bin/mutt-notmuch-py

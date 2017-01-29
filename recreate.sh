@@ -5,13 +5,13 @@
 sudo apt-get install \
   autoconf automake autotools-dev build-essential \
   cmake curl dict diffpdf g++ \
-  gfortran git graphviz htop inkscape ipython \
-  keepassx libtool lynx meld mercurial msmtp mutt \
-  noweb libfindlib-ocaml-dev ocaml pandoc \
-  pdftk procmail python-dev python-matplotlib \
-  python-numpy python-scipy \
-  python-unidecode scons subversion \
-  vim-gtk xsel
+  gfortran git graphviz htop inkscape \
+  keepassx libtool lynx meld mercurial msmtp mutt mutt-patched \
+  noweb libfindlib-ocaml-dev ocaml offlineimap pandoc \
+  pdftk procmail \
+  ipython python-dev python-matplotlib python-numpy python-pip python-scipy \
+  python-unidecode scons subversion tmux \
+  vim-gtk xsel zsh
 mkdir -p ~/install/bin
 mkdir -p ~/.mutt/temp
 vim -c 'PlugInstall' -c qa
@@ -71,9 +71,48 @@ select yn in "Yes" "No"; do
   esac
 done
 
+echo "Do you intent to build vim from source?"
+select yn in "Yes" "No"; do
+  case $yn in
+    Yes ) sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev \
+      libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
+      libcairo2-dev libx11-dev libxpm-dev libxt-dev \
+      python3-dev ruby-dev lua5.1 liblua5.1-dev libperl-dev \
+    ; break;;
+    No ) break;;
+  esac
+done
+
 pip install wgetter # used in hep-setup.py
 pip install unidecode # used in Ultisnips
 
-sudo apt-get install libqwt5-qt4 libqtwebkit4
-firefox \
-  -new-tab http://www.mendeley.com/download-mendeley-desktop/ubuntu/instructions/
+sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1
+sudo update-alternatives --set editor /usr/bin/vim
+sudo update-alternatives --install /usr/bin/vi vi /usr/bin/vim 1
+sudo update-alternatives --set vi /usr/bin/vim
+
+mkdir -p ~/.mail/desy
+mkdir -p ~/.mail/gmail
+
+# XMODMAP
+# colors for mutt?
+
+cd && \
+  git clone https://github.com/powerline/fonts.git && \
+  cd fonts && \
+  ./install.sh
+
+mkdir -p .mutt/temp
+if type goobook &> /dev/null ; then
+  pip install goobook
+  goobook authenticate
+fi
+
+cd ~/cloud/keys/PGP/ && gpg2 --allow-secret-key-import --import *.key && gpg2 --import *.pub
+
+echo "Changing shell! Enter '/usr/bin/zsh'" && chsh
+
+www-browser http://www.mendeley.com/download-mendeley-desktop/ubuntu/instructions/
+www-browser https://owncloud.org/install/#install-clients
+www-browser https://www.google.de/chrome/browser/desktop/
+www-browser https://www.spotify.com/de/download/linux/
