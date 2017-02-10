@@ -40,6 +40,8 @@ github honza mutt-notmuch-py
 github Anthony25 gnome-terminal-colors-solarized
 github seebi dircolors-solarized
 github morgwai tpbat-utils-acpi
+bitbucket bijancn vimwiki
+bitbucket bijancn thesis
 
 ./gnome-terminal-colors-solarized/install.sh -s dark -p Default
 

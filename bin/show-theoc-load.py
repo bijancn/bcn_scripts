@@ -2,7 +2,11 @@
 import subprocess
 import re
 import argparse
-from termcolor import colored
+try:
+  from termcolor import colored
+except ImportError:
+  print 'No colors until you install termcolor'
+  colored = lambda string, color: string
 
 # Parse command line options
 parser = argparse.ArgumentParser(

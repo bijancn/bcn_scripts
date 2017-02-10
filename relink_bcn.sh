@@ -40,7 +40,7 @@ files+=".gitignore_global "
 files+=".local/share/applications/@(mimeapps.list|spotify.desktop|gnome-terminal.desktop) "
 files+=".mutt.desy .mutt.gmail .mutt.mailcap "
 files+=".notmuch-config "
-files+=".profile .ssh/config .ssh/id_rsa .ssh/id_rsa.pub .ssh/known_hosts "
+files+=".profile "
 l="texmf/tex/latex"
 files+="$l/bcn_beamer@(.sty|_example.pdf|_example.tex) "
 files+="$l/bcn_@(color|commands|koma).sty "
@@ -73,6 +73,20 @@ for f in $files; do
   fi
 done
 chmod 600 ~/.msmtprc
+
+mkdir ~/.ssh
+for f in config id_rsa id_rsa.pub known_hosts; do
+  if test -f ~/.ssh/$f -a $force = "false"; then
+    echo "--- $f   already exists, doing nothing"
+  else
+    if [ -e "$safe/ssh/$f" ] ; then
+      echo "+++ Linking ssh/$f"
+      ln -sf $safe/ssh/$f                     ~/.ssh/$f
+    else
+      echo "000 FILE $f NOT FOUND in $bcn or $safe"
+    fi
+  fi
+done
 
 gitversion=`git --version | awk '{print $3}'`
 bigger=`./bin/version-compare.py $gitversion 1.7.11`

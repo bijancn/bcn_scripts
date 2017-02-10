@@ -5,7 +5,7 @@
 sudo apt-get install \
   autoconf automake autotools-dev build-essential \
   cmake curl dict diffpdf g++ \
-  gfortran git graphviz htop inkscape \
+  goobook gfortran git graphviz htop inkscape \
   keepassx libtool lynx meld mercurial msmtp mutt mutt-patched \
   noweb libfindlib-ocaml-dev ocaml offlineimap pandoc \
   pdftk procmail \
@@ -14,6 +14,7 @@ sudo apt-get install \
   vim-gtk xsel zsh
 mkdir -p ~/install/bin
 mkdir -p ~/.mutt/temp
+mkdir -p ~/.cache/mutt/
 vim -c 'PlugInstall' -c qa
 echo "Do you want to build YouCompleteMe?"
 select yn in "Yes" "No"; do
@@ -104,7 +105,6 @@ cd && \
 
 mkdir -p .mutt/temp
 if type goobook &> /dev/null ; then
-  pip install goobook
   goobook authenticate
 fi
 
@@ -116,3 +116,5 @@ www-browser http://www.mendeley.com/download-mendeley-desktop/ubuntu/instruction
 www-browser https://owncloud.org/install/#install-clients
 www-browser https://www.google.de/chrome/browser/desktop/
 www-browser https://www.spotify.com/de/download/linux/
+www-browser https://github.com/mkropat/jumpapp
+www-browser https://launchpad.net/~nathan-renniewaldock/+archive/ubuntu/flux

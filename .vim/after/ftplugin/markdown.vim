@@ -19,3 +19,5 @@
 if !filereadable(expand("%:p:h")."/Makefile")
   setlocal makeprg=pandoc\ -o\ %<.pdf\ -V\ geometry\:margin=3cm\ %
 endif
+
+set textwidth=72

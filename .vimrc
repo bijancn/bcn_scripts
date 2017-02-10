@@ -149,8 +149,11 @@ Plug 'mhinz/vim-startify'
 " Create tables automatically and allow spreadsheet computations
 Plug 'dhruvasagar/vim-table-mode'
 
-" Vim script for text filtering and alignment
+" Vim script for text filtering and alignment. Also used by plasticboy/vim-markdown
 Plug 'godlygeek/tabular'
+
+" Markdown support
+Plug 'plasticboy/vim-markdown'
 
 Plug 'tpope/vim-unimpaired'
 
@@ -164,7 +167,7 @@ Plug 'taglist.vim'
 Plug 'sjl/gundo.vim'
 
 " Good support for Markdown
-Plug 'vim-pandoc/vim-pandoc'
+" Plug 'vim-pandoc/vim-pandoc'
 
 " Trac highlighting
 Plug 'vim-scripts/tracwiki'
@@ -188,6 +191,9 @@ Plug 'beloglazov/vim-online-thesaurus'
 
 " Show coverage
 Plug 'alfredodeza/coveragepy.vim'
+
+" Grammar checker for English, German and more
+Plug 'vim-scripts/LanguageTool'
 
 " Work together - apart. Only works with neovim
 "Plug 'floobits/floobits-neovim'
@@ -1060,3 +1066,9 @@ let g:Tex_flavor = 'latex'      " Use latex per default
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:online_thesaurus_map_keys = 0
 nnoremap <Leader>h :OnlineThesaurusCurrentWord<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                LANGUAGE TOOL                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:languagetool_jar = "~/LanguageTool-3.6/languagetool-commandline.jar"
+let g:languagetool_disable_rules = "WHITESPACE_RULE,EN_QUOTES,COMMA_PARENTHESIS_WHITESPACE,EN_UNPAIRED_BRACKETS,CURRENCY"
