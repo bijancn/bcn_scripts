@@ -120,7 +120,8 @@ bindkey '^I' expand-or-complete-or-list-files
 # setopt RM_STAR_WAIT
 # 10 seconds are just too long
 
-setopt VI
+# Is it faster without?
+# setopt VI
 
 setopt EXTENDED_GLOB
 

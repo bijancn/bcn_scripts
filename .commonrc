@@ -784,6 +784,22 @@ function save-RES () {
   file=/data/bcho/whizard_ttbar_threshold_project/Data/validation/$(basename $1)$2.dat
   get-RES $1 > $file && echo "Saved to $file"
 }
+function update-from-Max () {
+  cd ~/threshold
+  svn up
+  cd Data/ValidationForPaper
+  cp MpoleFixed/* ~/run-scripts/threshold_validation/scan-results/
+  cd ~/run-scripts/threshold_validation/scan-results/
+  rm Max*.dat
+  python ~/run-scripts/Mathematica-importer.py
+  rm Max*.txt
+  cd ~/threshold/Data/ValidationForPaper
+  cp MpoleFromM1S/* ~/run-scripts/threshold_validation_mpoleUnfixed/scan-results/
+  cd ~/run-scripts/threshold_validation_mpoleUnfixed/scan-results/
+  rm Max*.dat
+  python ~/run-scripts/Mathematica-importer.py
+  rm Max*.txt
+}
 
 function gosam-helicities () {
   for i in $(eval echo "helicity{$1..$2}") ; do echo $i ; cd $i ; make ; cd .. ; done
