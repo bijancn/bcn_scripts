@@ -195,6 +195,9 @@ Plug 'alfredodeza/coveragepy.vim'
 " Grammar checker for English, German and more
 Plug 'vim-scripts/LanguageTool'
 
+" Lightweight latex folder
+Plug 'matze/vim-tex-fold'
+
 " Work together - apart. Only works with neovim
 "Plug 'floobits/floobits-neovim'
 
@@ -1071,4 +1074,4 @@ nnoremap <Leader>h :OnlineThesaurusCurrentWord<CR>
 "                                LANGUAGE TOOL                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:languagetool_jar = "~/LanguageTool-3.6/languagetool-commandline.jar"
-let g:languagetool_disable_rules = "WHITESPACE_RULE,EN_QUOTES,COMMA_PARENTHESIS_WHITESPACE,EN_UNPAIRED_BRACKETS,CURRENCY"
+let g:languagetool_disable_rules = "WHITESPACE_RULE,EN_QUOTES,COMMA_PARENTHESIS_WHITESPACE,EN_UNPAIRED_BRACKETS,CURRENCY,MORFOLOGIK_RULE_EN_US"
