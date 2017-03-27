@@ -125,6 +125,8 @@ bindkey '^I' expand-or-complete-or-list-files
 
 setopt EXTENDED_GLOB
 
+setopt AUTO_CD
+
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 
 #==============================================================================#

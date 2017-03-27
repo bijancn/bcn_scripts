@@ -227,7 +227,7 @@ olps = [
 
 for olp in olps:
   this_path = None
-  for path in os.environ["LD_LIBRARY_PATH"].split(':'):
+  for path in os.environ.get("LD_LIBRARY_PATH", "").split(':'):
     if olp['search'] in path:
       this_path = path
       break

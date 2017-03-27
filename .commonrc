@@ -226,18 +226,6 @@ function load-whizard-ifort() {
   fi
 }
 
-#if [ -d /nfs/theoc/data2/bcho/sl6/build/root ]; then
-  ##add-pythonpath /nfs/theoc/data2/bcho/sl6/build/root/lib
-  #old_pwd=`pwd`
-  #root_dir=/nfs/theoc/data2/bcho/sl6/build/root
-  #root_dir=/afs/desy.de/products/root/amd64_rhel60/6.02.00
-  #cd $root_dir
-  #source $root_dir/bin/thisroot.sh
-  #cd $old_pwd
-#fi
-
-#export PYTHONHOME=$(dirname $(dirname `which python`))
-
 pythia-configure(){
   packages='--with-hepmc2=$install --with-lhapdf6=$install --with-fastjet3=$install'
   ./configure --prefix=$install $packages
@@ -670,6 +658,11 @@ function remove-undesired () {
   done
 }
 
+remove-all-but-templates () {
+  git add *template.sin
+  for i in ^*template.sin ; do rm -rf $i ; done
+}
+
 function show-folders-from-queue () {
   for i in `cat queue`
   do
@@ -867,6 +860,14 @@ alias briss="java -jar $syncd/scripts/briss-0.9/briss-0.9.jar"
 alias yt-mp3='youtube-dl -t --extract-audio --audio-format=mp3'
 alias reset-file-perms='find . -type f -exec chmod 644 {} +'
 alias reset-dir-perms='find . -type d -exec chmod 755 {} +'
+
+function save-inodes-per-folder () {
+  find . -xdev  -printf '%h\n' | sort | uniq -c | sort -k 1 -n > inodes_per_folder
+}
+
+function compute-sum-of-inodes () {
+  tail inodes_per_folder -n30 | awk '{s+=$1} END {print s}'
+}
 
 #==============================================================================#
 #                                SHOW-COMMANDS                                 #

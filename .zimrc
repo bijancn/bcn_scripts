@@ -1,7 +1,6 @@
 # Zim modules
 zmodules=( \
   archive \
-  directory \
   environment \
   input \
   git \

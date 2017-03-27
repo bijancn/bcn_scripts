@@ -5,7 +5,11 @@ import os
 import subprocess
 import collections
 import textwrap
-from termcolor import colored
+try:
+  from termcolor import colored
+except ImportError:
+  print('No colors until you install termcolor')
+  colored = lambda string, color: string
 import sys
 
 
@@ -28,15 +32,15 @@ def make_filename(strg):
 
 
 def pcmd(strg):
-  return colored(strg, 'blue', attrs=['bold'])
+  return colored(strg, 'blue')
 
 
 def perr(strg):
-  return colored(strg, 'red', attrs=['bold'])
+  return colored(strg, 'red')
 
 
 def pgood(strg):
-  return colored(strg, 'green', attrs=['bold'])
+  return colored(strg, 'green')
 
 
 def plog(strg):
@@ -97,7 +101,7 @@ def show_variable(var_name, var):
 
 
 def get_base_path():
-  base_paths = ['/data/bcho/trunk', '~/trunk', '/scratch/bcho/trunk']
+  base_paths = [os.getcwd() + '/..', '/data/bcho/trunk', '~/trunk', '/scratch/bcho/trunk']
   base_paths = map(os.path.expanduser, base_paths)
   for bpath in base_paths:
     if os.path.exists(bpath):

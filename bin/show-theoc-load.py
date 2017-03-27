@@ -114,17 +114,21 @@ total_use_cores = 0
 total_load = 0.0
 total_usage_dict = {}
 with open('host_file', 'w') as f:
-  for i in range(1, 37):
+  for i in range(1, 36):
     if not i == 13:
         machine = "theoc%02d" % (i)
-        total_cores, total_load, total_use_cores, total_usage_dict = \
-            checkout_machine(f, machine, total_cores, total_load,
-                             total_use_cores, total_usage_dict)
+        try:
+            total_cores, total_load, total_use_cores, total_usage_dict = \
+                checkout_machine(f, machine, total_cores, total_load,
+                                 total_use_cores, total_usage_dict)
+        except subprocess.CalledProcessError:
+            print 'Could not connect to ' + machine
 print "=" * 90
 print "total number of cores: " + str(total_cores) + "  loaded with " + \
     str(total_load) + " (%4.1f" % (total_load / total_cores * 100) + " %)  " + \
     "free cores: " + str(total_cores - total_load)
-sortedList = [(k, total_usage_dict[k]) for k in sorted(total_usage_dict, key=total_usage_dict.get, reverse=True)]
+sortedvalues = sorted(total_usage_dict, key=total_usage_dict.get, reverse=True)
+sortedList = [(k, total_usage_dict[k]) for k in sortedvalues]
 print "total-usage:", ' '.join([user + ':%3.1f' % (usage / 100) for
                                 user, usage in sortedList if usage > 200])
 print "I could use " + str(total_use_cores) + " cores"
