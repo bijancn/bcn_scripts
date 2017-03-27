@@ -38,6 +38,8 @@ Plug 'AndrewRadev/switch.vim'
 " A very decent color scheme. Forked for minor color changes.
 Plug 'bijancn/vim-lucius'
 
+Plug 'romainl/Apprentice'
+
 " Faster syntax and indent for free-form Fortran
 Plug 'bijancn/free-fortran.vim'
 
@@ -560,8 +562,8 @@ function! ColorSchemeToggle()
 endfunction
 nnoremap <leader>ts :call ColorSchemeToggle()<cr>
 
-let g:background_toggle = 1
-set background=dark
+let g:background_toggle = 2
+set background=light
 function! BackgroundToggle()
   if g:background_toggle == 1
     set background=light
@@ -944,6 +946,24 @@ function! FindAnyObject()
 endfunction
 nnoremap <silent> <leader>ff :call FindFortranObject()<CR>
 nnoremap <silent> <leader>fa :call FindAnyObject()<CR>
+
+function! s:get_visual_selection()
+  " Why is this not a built-in Vim script function?!
+  let [lnum1, col1] = getpos("'<")[1:2]
+  let [lnum2, col2] = getpos("'>")[1:2]
+  let lines = getline(lnum1, lnum2)
+  let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+  let lines[0] = lines[0][col1 - 1:]
+  return join(lines, "\n")
+endfunction
+
+function! AddBibitem()
+  let selection = getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]
+  let cmdline = "curl -s 'https://inspirehep.net/search?p=".selection."&of=hx&em=B&sf=year&so=d' | sed '/div>\\|<div\\|pre\\|%%%\\|%%%>/d'"
+  let result = system(cmdline)
+  put = result
+endfunction
+vnoremap <silent> <leader>ab :call AddBibitem()<CR><CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                NERD-COMMENTER                                "

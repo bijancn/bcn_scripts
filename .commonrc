@@ -292,6 +292,10 @@ if command-exists pydflatex; then
   export pdftool=pydflatex
 fi
 
+function get-inspire-bibtex () {
+  curl "https://inspirehep.net/search?p=$1&of=hx&em=B&sf=year&so=d" | sed '/div>\|<div\|pre>/d'
+}
+
 #==================#
 #  compiler flags  #
 #==================#
@@ -453,10 +457,16 @@ function extract() {
 
 function shrink-pdf () {
   fname=$(basename $1)
+  echo $fname
   fbname=${fname%.*}
-  gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
-     -dCompatibilityLevel=1.5 -dPDFSETTINGS=/ebook \
+  echo $fbname
+  gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompressFonts=true -r100 \
+     -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook \
      -sOutputFile=$fbname-small.pdf $1
+}
+
+function bundle-application () {
+  pdftk anschreiben.pdf bchokoufe-cv.pdf bchokoufe-bachelor-master-zeugnis.pdf bchokoufe-abitur-zeugnis-small.pdf cat output bchokoufe.pdf
 }
 
 function convert-pdf-to-jpg {
@@ -1038,7 +1048,7 @@ function create-svn-commit-msg () {
 function change-email-password () {
   cd /tmp
   rm key
-  echo "$1" >> key
+  echo "$1" > key
   gpg2 --encrypt key
   mv key.gpg ~/cloud/keys/offlineimappass-desy.gpg
 }

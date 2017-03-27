@@ -13,6 +13,9 @@ set tmpdir           = ~/.mutt/temp          # where to keep temp files
 set signature        = ~/.mutt/sig           # my signature file
 source ~/mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
 
+set pgp_use_gpg_agent=yes
+source "~/.mutt/gpg.rc"
+
 source ~/.mutt.desy
 folder-hook desy/*  source ~/.mutt.desy
 folder-hook gmail/* source ~/.mutt.gmail
