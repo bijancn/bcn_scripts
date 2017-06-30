@@ -1,10 +1,9 @@
 for i in *$1*/ ; do
   # TODO: (bcn 2017-02-21) combine with or
-  if ! grep 'event sample complete' $i/whizard.log; then
-  # if ! grep -q 'RES' $i/whizard.log; then
+  # if ! grep 'event sample complete' $i/whizard.log; then
+  if ! grep -q 'RES' $i/whizard.log; then
     echo "Not complete in $i"
     cd $i
-    # sed -i 's/n_events = .*$/n_events = 3000000/' *sin
     qsub ../submit
     rm done
     cd -

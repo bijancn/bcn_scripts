@@ -78,7 +78,7 @@ lhapdf = {
     'version': '6.1.6',
     'source': 'http://www.hepforge.org/archive/lhapdf/',
     'configure_options': ['CXXFLAGS=-std=c++11'],
-    'sets': ['CT10nlo', 'CT10', 'cteq6l1', 'MSTW2008lo68cl', 'MSTW2008nlo90cl']
+    'sets': ['CT10nlo', 'CT10', 'cteq6l1', 'MSTW2008lo68cl', 'MSTW2008nlo90cl', 'NNPDF30_nlo_as_0118']
 }
 
 fastjet = {

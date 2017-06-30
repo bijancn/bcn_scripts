@@ -192,6 +192,8 @@ load-paths () {
   if [ -n "$hep" ]; then
     export hep_install=$hep/install
     prepend-libpath $hep/OpenLoops
+    prepend-pure-libpath $hep/recola-collier-1.2/COLLIER-1.1
+    prepend-pure-libpath $hep/recola-collier-1.2/recola-1.2
     prepend-all-paths $hep/gosam/local
     prepend-all-paths $hep_install
     add-pythonpath $hep_install/lib/python

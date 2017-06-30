@@ -114,7 +114,7 @@ total_use_cores = 0
 total_load = 0.0
 total_usage_dict = {}
 with open('host_file', 'w') as f:
-  for i in range(1, 36):
+  for i in range(1, 35):
     if not i == 13:
         machine = "theoc%02d" % (i)
         try:

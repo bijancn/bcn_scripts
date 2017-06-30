@@ -293,8 +293,8 @@ endif
 
 " Enable concealing, e.g. greek letters are shown as unicode
 if has ("conceal")
-  let g:conceal_active = 1
-  set conceallevel=2
+  let g:conceal_active = 0
+  set conceallevel=0
   set concealcursor=nc    " Stay concealed even if cursor is on line
 endif
 
