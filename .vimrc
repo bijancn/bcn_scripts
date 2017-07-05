@@ -174,6 +174,8 @@ Plug 'sjl/gundo.vim'
 " Trac highlighting
 Plug 'vim-scripts/tracwiki'
 
+Plug 'wkentaro/conque.vim'
+
 " Edit multiple locations at once
 Plug 'terryma/vim-multiple-cursors'
 
@@ -198,7 +200,18 @@ Plug 'alfredodeza/coveragepy.vim'
 Plug 'vim-scripts/LanguageTool'
 
 " Lightweight latex folder
-Plug 'matze/vim-tex-fold'
+" Plug 'matze/vim-tex-fold'
+
+" Scala plugin modules
+Plug 'derekwyatt/vim-scala'
+
+" Plug 'ensime/ensime-vim'
+
+" Use sbt from within vim
+Plug 'ktvoelker/sbt-vim'
+
+" Some conceal cuteness
+Plug 'mpollmeier/vim-scalaConceal'
 
 " Work together - apart. Only works with neovim
 "Plug 'floobits/floobits-neovim'
@@ -255,6 +268,21 @@ set hlsearch              " Switch on highlighting the last used search pattern
 set foldmethod=indent     " Fold per default according to indent
 set foldlevel=99          " Open all folds per default
 set foldnestmax=99        " Number of max levels of folds overall
+function! NeatFoldText()
+  let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+  let lines_count = v:foldend - v:foldstart + 1
+  let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
+  let foldchar = matchstr(&fillchars, 'fold:\zs.')
+  let foldchar = ' '
+  let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(foldchar, 8)
+  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
+endfunction
+set foldtext=NeatFoldText()
+" foldexpression that matches a paragraph
+set foldexpr=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
+set foldmethod=expr
 
 " Completion
 set wildmode=longest,list  " Complete as far possible then give list
@@ -280,7 +308,7 @@ set guioptions-=m       " remove menu bar in gVim
 set guioptions-=T       " remove toolbar in gVim
 set guioptions-=r       " remove right-hand scrollbar
 set guioptions-=L       " remove left-hand scrollbar
-set guifont=Monospace\ 12
+set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 9
 
 
 " Highlight consistent line
@@ -461,6 +489,8 @@ augroup reload_other
 
   " Load indentexpr from fortran and switch back to noweb for syntax hl
   autocmd BufWinEnter *.nw setlocal filetype=fortran | setlocal filetype=noweb
+
+  autocmd BufWinEnter *.tex setlocal filetype=tex
 
   " Don't screw up folds when inserting text that might affect them, until
   " leaving insert mode. Foldmethod is local to the window. Protect against
@@ -752,6 +782,9 @@ let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_python_pep8_args='--max-line-length=89'
 let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
 let g:syntastic_tex_checkers = ['chktex']
+let g:syntastic_scala_checkers = ['scalastyle']
+let g:syntastic_scala_scalastyle_jar = '~/scalastyle_2.11-0.8.0-batch.jar'
+let g:syntastic_scala_scalastyle_config_file = '~/scalastyle_config.xml'
 
 " settings
 let g:syntastic_enable_signs = 1
@@ -1095,3 +1128,5 @@ nnoremap <Leader>h :OnlineThesaurusCurrentWord<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:languagetool_jar = "~/LanguageTool-3.6/languagetool-commandline.jar"
 let g:languagetool_disable_rules = "WHITESPACE_RULE,EN_QUOTES,COMMA_PARENTHESIS_WHITESPACE,EN_UNPAIRED_BRACKETS,CURRENCY,MORFOLOGIK_RULE_EN_US"
+
+let ensime_server_v2=1

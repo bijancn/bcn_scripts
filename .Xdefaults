@@ -1,0 +1,64 @@
+! XTerm*utf8:                    2
+! XTerm.vt100.locale:            true
+! XTerm*eightBitInput:           true
+XTerm*saveLines:               32767
+XTerm*scrollTtyKeypress:       true
+XTerm*scrollTtyOutput:         false
+! XTerm*scrollBar:               false
+! XTerm.vt100.scrollbar.width:   12
+! XTerm*loginShell:              true
+! start with TrueType fonts
+XTerm.vt100.renderFont: true
+XTerm*faceName: Source Code Pro for Powerline:size=16
+! XTerm*faceName: DejaVu Sans Mono for Powerline
+! XTerm.vt100.faceName: Liberation Mono:size=20
+XTerm.vt100.scaleHeight: 1.05
+! XTerm.vt100.font: 7x13
+! XTerm*jumpScroll:              true
+! XTerm*multiScroll:             true
+
+! XTerm*toolBar:                 false
+! XTerm.vt100.geometry:          80x32
+! XTerm*geometry:                80x80
+! XTerm.vt100.metaSendsEscape:   true
+! XTerm.vt100.backarrowKey:      false
+! XTerm.ttyModes:                erase ^?
+
+XTerm*background:              #fdf6e3
+XTerm*foreground:              #657b83
+XTerm*fadeColor:               #fdf6e3
+XTerm*cursorColor:             #586e75
+XTerm*pointerColorBackground:  #93a1a1
+XTerm*pointerColorForeground:  #586e75
+
+!! black dark/light
+XTerm*color0:                #073642
+XTerm*color8:                #002b36
+
+!! red dark/light
+XTerm*color1:                #dc322f
+XTerm*color9:                #cb4b16
+
+!! green dark/light
+XTerm*color2:                #859900
+XTerm*color10:               #586e75
+
+!! yellow dark/light
+XTerm*color3:                #b58900
+XTerm*color11:               #657b83
+
+!! blue dark/light
+XTerm*color4:                #268bd2
+XTerm*color12:               #839496
+
+!! magenta dark/light
+XTerm*color5:                #d33682
+XTerm*color13:               #6c71c4
+
+!! cyan dark/light
+XTerm*color6:                #2aa198
+XTerm*color14:               #93a1a1
+
+!! white dark/light
+XTerm*color7:                #eee8d5
+XTerm*color15:               #fdf6e3

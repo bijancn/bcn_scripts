@@ -28,3 +28,5 @@ battery-set-normal-charge-levels
 
 # Start the window manager
 #exec awesome
+
+[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources

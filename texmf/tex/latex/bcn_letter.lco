@@ -39,6 +39,13 @@
     \multicolumn{1} {@{}l@{}} {\usekomavar{fromname}}\\[.5em]
     \usekomavar{fromaddress}
     \end{tabular}
+    \ifkomavarempty{fromurl}{}{
+    \begin{tabular}[t]{l@{}}
+    \multicolumn{1}{@{}l@{}}{\usekomavar*{fromurl}}\\ \usekomavar{fromurl}
+    \\[.5em]
+    \multicolumn{1}{@{}l@{}}{\usekomavar*{fromfax}}\\\usekomavar{fromfax}
+    \end{tabular}
+    }
     %
     % Workaround for the cases where you don't want to share all information with
     % your correspondence (bank data and or phone/mail) and but still want a nice

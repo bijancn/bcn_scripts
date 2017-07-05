@@ -159,9 +159,6 @@ load-paths () {
   add-pythonpath $HOME/.vim/plugged/vim-eZchat/autoload
   add-pythonpath $HOME/termstyle
   add-pythonpath $HOME/pydflatex
-  #export C_INCLUDE_PATH=$install/include
-  #export CPLUS_INCLUDE_PATH=$install/include
-  #export PYTHONUSERBASE=$HOME/install
 
   tmp0=/nfs/theoc/data2/bcho/sl6
   tmp1=/nfs/theoc/data/bcho/bird
@@ -283,7 +280,44 @@ if command-exists pydflatex; then
 fi
 
 function get-inspire-bibtex () {
-  curl "https://inspirehep.net/search?p=$1&of=hx&em=B&sf=year&so=d" | sed '/div>\|<div\|pre>/d'
+  curl -s "https://inspirehep.net/search?p=$1&of=hx&em=B&sf=year&so=d" | sed '/div>\|<div\|pre>/d'
+}
+
+function replace-inspire () {
+  sed -i "s,$1,${2}," *.tex *.bib
+}
+
+function get-arxiv-number () {
+  get-inspire-bibtex $1 | grep eprint | sed 's/.*= "//' | sed 's/",.*//' 
+}
+
+function replace-inspire-extra () {
+  result=`get-arxiv-number $1`
+  if [ ${#result} -ge 1 ] ; then
+    echo "Replacing $1"
+    sed -i "s,$1,${result}," *.tex *.bib
+  fi
+}
+alias rin=replace-inspire-extra
+
+function get-articles-and-proceedings () {
+  grep '@article\|@inproceedings' $1 | sed 's/@article{//' | sed 's/@inproceedings{//' | sed 's/,//'
+}
+
+function get-defined-acronyms () {
+  grep '  \\acro' main.tex | sed 's/  \\acro{//' | sed 's/}{.*//'
+}
+
+function check-if-used () {
+  if grep -q '\\ac{'$1 *.tex; then
+    echo "used"
+  else
+    echo "not used: $1"
+  fi
+}
+
+function check-if-defined-acronyms-are-used () {
+  for i in `get-defined-acronyms` ; do check-if-used $i ; done
 }
 
 #==================#
@@ -301,11 +335,17 @@ alias prnt-2p='lp -d t00ps1 -o sides=two-sided-long-edge -o number-up=2'
 function prnt-rng() {
   lp -d t00ps1 -o sides=two-sided-long-edge -o page-ranges=$1-$2 $3
 }
-alias prnt-1s='lp -d t00ps1 -o sides=one-sided'
-alias prntA4-1s-color='lpr -o sides=one-sided -o PageSize=A4 -o scaling=100 -o fit-to-page -Ppubcp1'
-alias prntA4-2s-color='lpr -o sides=two-sided-long-edge -o PageSize=A4 -o scaling=100 -o fit-to-page -Ppubcp1'
-alias prntA3-1s-color='lpr -o sides=one-sided -o PageSize=A3 -o scaling=100 -o fit-to-page -Ppubcp1'
-alias prntA0-1s-color='lpr -o sides=one-sided -o PageSize=A0 -o scaling=100 -o fit-to-page -Ppubcp4a0'
+ONESIDE='-o sides=one-sided'
+TWOSIDE='-o sides=two-sided-long-edge'
+COLPRINT='-o InputSlot=1Tray  -o scaling=100 -o fit-to-page -Ppubcp1'
+POSTER='-o PageSize=A0 -o scaling=100 -o fit-to-page -Ppubcp4a0'
+A4='-o PageSize=A4'
+A3='-o PageSize=A3'
+alias prnt-1s="lp -d t00ps1 $ONESIDE $A4"
+alias prntA4-1s-color="lpr $ONESIDE $COLPRINT"
+alias prntA4-2s-color="lpr $TWOSIDE $COLPRINT $A4"
+alias prntA3-1s-color="lpr $ONESIDE $COLPRINT $A3"
+alias prntA0-1s-color="lpr $ONESIDE $POSTER"
 
 #=======#
 #  IPs  #
@@ -594,7 +634,7 @@ alias p="python"
 alias t="/usr/bin/time"
 alias c="./configure"
 alias b="cd $HOME/trunk/_build"
-alias i="impressive.py -s -ff -g 1200x1820+1200+0 --cache memory --poll 1"
+alias i="impressive -s -ff -g 1200x1200+0+0 --cache memory --poll 1"
 
 #========#
 #  make  #
@@ -633,8 +673,7 @@ function running-jobs () {
 }
 
 function clean-queue () {
-  for i in `cat queue`
-  do
+  for i in `cat queue` ; do
     qdel $i
   done
 }
@@ -876,6 +915,7 @@ function compute-sum-of-inodes () {
 #==============================================================================#
 function show-wlan-channels () {
   sudo iwlist wlan0 scan | grep Frequency | sort | uniq -c | sort -n
+  # doesn't work anymore?
 }
 
 alias show-distro="lsb_release -a"
@@ -1054,6 +1094,12 @@ function change-email-password () {
   echo "$1" > key
   gpg2 --encrypt key
   mv key.gpg ~/cloud/keys/offlineimappass-desy.gpg
+}
+
+function st () {
+  sensible-browser &> /dev/null &
+  spotify --force-device-scale-factor=1.5 &> /dev/null &
+  tmux
 }
 
 #==============================================================================#
@@ -1244,5 +1290,28 @@ alias tcdel='tcon delete --all'
 
 echo "loaded commonrc"
 export LOADED=true
+
+
+function start-presentation-servers () {
+  cd 01-intro
+  grunt serve --port=8001 &
+  cd ..
+  cd 02-more-commands
+  grunt serve --port=8002 &
+  cd ..
+  cd 03-bash-scripting
+  grunt serve --port=8003 &
+  cd ..
+  cd 04-regex
+  grunt serve --port=8004 &
+  cd ..
+  cd 05-makefiles
+  grunt serve --port=8005 &
+  cd ..
+  cd 06-git
+  grunt serve --port=8006 &
+  cd ..
+}
+
 
 # vim: set filetype=sh
