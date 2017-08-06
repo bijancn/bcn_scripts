@@ -23,22 +23,17 @@ let g:plug_timeout=100
 
 call plug#begin()
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                STABLE PLUGINS                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Adds git status next to the line numbers and allows reverting of chunks
 Plug 'airblade/vim-gitgutter'
-
-" The infamous solarized
-Plug 'altercation/vim-colors-solarized'
 
 " Diffing parts of one or two files
 Plug 'AndrewRadev/linediff.vim'
 
 " Replace true with false with <leader>gs and much more
 Plug 'AndrewRadev/switch.vim'
-
-" A very decent color scheme. Forked for minor color changes.
-Plug 'bijancn/vim-lucius'
-
-Plug 'romainl/Apprentice'
 
 " Faster syntax and indent for free-form Fortran
 Plug 'bijancn/free-fortran.vim'
@@ -56,6 +51,12 @@ Plug 'edkolev/promptline.vim'
 " in vim:     :Tmuxline airline         :TmuxlineSnapshot ~/.tmux.statusline
 Plug 'edkolev/tmuxline.vim'
 
+" Fix vims indentation to conform with PEP8
+Plug 'hynek/vim-python-pep8-indent'
+
+" A Vim wrapper for running tests on different granularities
+Plug 'janko-m/vim-test'
+
 " Allows to focus completely. limelight dims out other paragraphs
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
@@ -66,7 +67,10 @@ Plug 'justinmk/vim-sneak'
 " Fuzzy search on files, buffers and more
 Plug 'kien/ctrlp.vim', { 'on' : ['CtrlP', 'CtrlPMixed'] }
 
-" Make indent level a text object
+" Pretty and useful startup screen
+Plug 'mhinz/vim-startify'
+
+" Make the indent level a text object
 Plug 'michaeljsmith/vim-indent-object'
 
 " Fast search with ag
@@ -75,7 +79,11 @@ Plug 'mileszs/ack.vim'
 " Show indentation by gray scales
 Plug 'nathanaelkane/vim-indent-guides'
 
-" Reasonably good commenting. Does not change in noweb docu/source chunks
+" Markdown support
+Plug 'plasticboy/vim-markdown'
+
+" Reasonably good commenting
+" Try tpope/vim-commentary when you find something lacking
 Plug 'scrooloose/nerdcommenter'
 
 " tree explorer plugin
@@ -102,9 +110,6 @@ Plug 'gregsexton/gitv'
 " Can show and switch branches easily. Needs vim-fugitive
 Plug 'idanarye/vim-merginal'
 
-" A Vim wrapper for running tests on different granularities
-Plug 'janko-m/vim-test'
-
 " Standard set of options
 Plug 'tpope/vim-sensible'
 
@@ -122,6 +127,8 @@ Plug 'tueda/form.vim'
 " Ubuntu libs:  build-essential cmake python-dev
 " Build with:   cd ~/.vim/bundle/YouCompleteMe && ./install.py --clang-completer --tern-completer
 Plug 'Valloric/YouCompleteMe', { 'on' : [] } " , { 'do': 'export YCM_CORES=4 ; ./install.py' }
+" Generate YCM configs for C++
+Plug 'rdnetto/YCM-Generator', {'branch': 'stable', 'on': []}
 
 " Personal wiki and journal
 Plug 'vimwiki/vimwiki'
@@ -133,29 +140,38 @@ Plug 'visSum.vim', {'on': ['VisSum', '<Plug>SumNum']}
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-"==========="
-"  testing  "
-"==========="
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    COLORS                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" The infamous solarized
+Plug 'altercation/vim-colors-solarized'
+
+" A very decent color scheme. Forked for minor color changes.
+Plug 'bijancn/vim-lucius'
+
+" A dark, low-contrast, Vim colorscheme
+Plug 'romainl/Apprentice'
+
+" Swap arguments with g<, g> and gs
+Plug 'machakann/vim-swap'
+
+" Highlight the yanked region shortly
+Plug 'machakann/vim-highlightedyank'
+
+" Exchange two objects with cx<motion>
+Plug 'tommcdo/vim-exchange'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   TESTING                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Highlight characters for f,F,t,T
 Plug 'unblevable/quick-scope'
-
-" Fix vims indentation to conform with PEP8
-Plug 'hynek/vim-python-pep8-indent'
-
-" Generate YCM configs for C++
-Plug 'rdnetto/YCM-Generator', {'branch': 'stable', 'on': []}
-
-" Pretty and usefull startup screen
-Plug 'mhinz/vim-startify'
 
 " Create tables automatically and allow spreadsheet computations
 Plug 'dhruvasagar/vim-table-mode'
 
 " Vim script for text filtering and alignment. Also used by plasticboy/vim-markdown
 Plug 'godlygeek/tabular'
-
-" Markdown support
-Plug 'plasticboy/vim-markdown'
 
 Plug 'tpope/vim-unimpaired'
 
@@ -182,7 +198,7 @@ Plug 'terryma/vim-multiple-cursors'
 " eZchatting while vimming
 Plug 'JNicL/vim-eZchat'
 
-" Helper plugin for unicde
+" Helper plugin for unicode
 Plug 'chrisbra/unicode.vim'
 
 " Post to slack out of vim
@@ -350,7 +366,7 @@ nnoremap <leader>o :set cursorline! cursorcolumn!<CR>
 " Clearing highlighted search
 nnoremap <silent> <leader>/ :nohlsearch<CR>
 
-" Using left and right for adjusting comments
+" Using left and right for adjusting indent
 noremap <left> <<
 noremap <right> >>
 noremap <up> ddkP
@@ -1034,7 +1050,7 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " Merginal
 " Show branches
-nnoremap <leader>gb :Merginal<CR>
+nnoremap <leader>gb :MerginalToggle<CR>
 
 " Gitv
 noremap <leader>gv :Gitv!<CR>
@@ -1130,3 +1146,8 @@ let g:languagetool_jar = "~/LanguageTool-3.6/languagetool-commandline.jar"
 let g:languagetool_disable_rules = "WHITESPACE_RULE,EN_QUOTES,COMMA_PARENTHESIS_WHITESPACE,EN_UNPAIRED_BRACKETS,CURRENCY,MORFOLOGIK_RULE_EN_US"
 
 let ensime_server_v2=1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                             vim-highlightedyank                              "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map y <Plug>(highlightedyank)

@@ -1,19 +1,46 @@
-! XTerm*utf8:                    2
-! XTerm.vt100.locale:            true
-! XTerm*eightBitInput:           true
-XTerm*saveLines:               32767
+*customization: -color
+Xcursor.size:   48
+Xcursor.theme:  elementary
+Xft.antialias:  1
+Xft.dpi:        192
+Xft.hinting:    1
+Xft.hintstyle:  hintslight
+Xft.rgba:       rgb
+
+! Always UTF8
+XTerm.vt100.utf8:              2
+! Fix alt+. and others
+XTerm*eightBitInput:           false
+! Use LC_CTYPE locale encoding
+XTerm.vt100.locale:            false
+XTerm.vt100.saveLines:         32767
 XTerm*scrollTtyKeypress:       true
 XTerm*scrollTtyOutput:         false
-! XTerm*scrollBar:               false
-! XTerm.vt100.scrollbar.width:   12
-! XTerm*loginShell:              true
+
+*VT100*translations: #override Shift <Btn1Up>: exec-formatted("sensible-browser '%t'", PRIMARY)
+
+XTerm*dynamicColors:           true
+
+! double-click to select whole URLs :D
+xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+
 ! start with TrueType fonts
 XTerm.vt100.renderFont: true
-XTerm*faceName: Source Code Pro for Powerline:size=16
+XTerm*faceName: Droid Sans Mono for Powerline:size=9
+! XTerm*faceNameDoublesize: xft:Microsoft YaHei:size=9
+! XTerm*faceName: DejaVu Sans Mono Book
+! XTerm*faceSize: 11
+! xterm*wideFont: -misc-fixed-medium-r-normal-ja-18-120-100-100-c-180-iso10646-1
+! XTerm*faceName:monospace:pixelsize=20
+! XTerm*faceName: Source Code Pro for Powerline:size=9
 ! XTerm*faceName: DejaVu Sans Mono for Powerline
 ! XTerm.vt100.faceName: Liberation Mono:size=20
 XTerm.vt100.scaleHeight: 1.05
 ! XTerm.vt100.font: 7x13
+
+! XTerm*scrollBar:               false
+! XTerm.vt100.scrollbar.width:   12
+! XTerm*loginShell:              true
 ! XTerm*jumpScroll:              true
 ! XTerm*multiScroll:             true
 
