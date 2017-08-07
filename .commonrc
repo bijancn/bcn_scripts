@@ -152,6 +152,8 @@ load-paths () {
 
   prepend-pure-path $HOME/jrfonseca.gprof2dot
 
+  prepend-all-paths /usr/local
+
   # python
   add-pythonpath $HOME/bcn_scripts/include
   add-pythonpath $HOME/Python-GoogleCalendarParser
@@ -179,8 +181,8 @@ load-paths () {
     export VIMRUNTIME=$hep/install/share/vim/vim80/
     export vim=$hep/install/bin/vim
   else
-    export VIMRUNTIME=/usr/share/vim/vim80/
-    export vim=/usr/bin/vim
+    export VIMRUNTIME=/usr/local/share/vim/vim80/
+    export vim=/usr/local/bin/vim
   fi
   export EDITOR=$vim
   export SVN_EDITOR=$vim
@@ -395,7 +397,7 @@ function set-title() {
   echo -en "\e]0;$1\a"
 }
 
-eval `dircolors ~/.dircolors`
+eval `dircolors ~/.dir_colorsrc`
 
 
 #==============================================================================#

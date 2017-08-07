@@ -42,7 +42,7 @@ Plug 'bijancn/free-fortran.vim'
 Plug 'bijancn/whizard.vim'
 
 " Close all buffers but the current one
-Plug 'BufOnly.vim', {'on': 'BufOnly'}
+Plug 'schickling/vim-bufonly', {'on': 'BufOnly'}
 
 " Generate a fast shell prompt with powerline symbols and airline colors
 " in vim:     :PromptlineSnapshot ~/.shell_prompt.sh airline
@@ -134,7 +134,7 @@ Plug 'rdnetto/YCM-Generator', {'branch': 'stable', 'on': []}
 Plug 'vimwiki/vimwiki'
 
 " Compute sums of columns
-Plug 'visSum.vim', {'on': ['VisSum', '<Plug>SumNum']}
+Plug 'vim-scripts/visSum.vim', {'on': ['VisSum', '<Plug>SumNum']}
 
 " Pure epicness, the one and only statusbar
 Plug 'vim-airline/vim-airline'
@@ -179,7 +179,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'majutsushi/tagbar'
 
 " Browse ctags
-Plug 'taglist.vim'
+" Plug 'vim-scripts/taglist.vim'
 
 " Visualize vim undo tree
 Plug 'sjl/gundo.vim'
@@ -218,10 +218,11 @@ Plug 'vim-scripts/LanguageTool'
 " Lightweight latex folder
 " Plug 'matze/vim-tex-fold'
 
-" Scala plugin modules
+" Scala syntax. Also has SortScalaImports and let g:scala_scaladoc_indent = 1
 Plug 'derekwyatt/vim-scala'
 
-" Plug 'ensime/ensime-vim'
+" ENSIME integration
+Plug 'ensime/ensime-vim'
 
 " Use sbt from within vim
 Plug 'ktvoelker/sbt-vim'
@@ -356,7 +357,7 @@ noremap [p [cdp
 nnoremap d]p ]cdp
 nnoremap d[p [cdp
 nnoremap <Leader>dp :%diffput<CR>
-nnoremap <Leader>do :%diffget<CR>
+au FileType diff nnoremap <Leader>do :%diffget<CR>
 
 noremap <leader>w :w<CR>
 
@@ -1145,9 +1146,23 @@ nnoremap <Leader>h :OnlineThesaurusCurrentWord<CR>
 let g:languagetool_jar = "~/LanguageTool-3.6/languagetool-commandline.jar"
 let g:languagetool_disable_rules = "WHITESPACE_RULE,EN_QUOTES,COMMA_PARENTHESIS_WHITESPACE,EN_UNPAIRED_BRACKETS,CURRENCY,MORFOLOGIK_RULE_EN_US"
 
-let ensime_server_v2=1
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                             vim-highlightedyank                              "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map y <Plug>(highlightedyank)
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    ENSIME                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Typechecking after writing
+autocmd BufWritePost *.scala silent :EnTypeCheck
+" Easy Type Inspection
+nnoremap <leader>ty :EnType<CR>
+" Go to declaration
+au FileType scala nnoremap <leader>de :EnDeclaration<CR>
+" Open declaration in a horizontal split
+au FileType scala nnoremap <leader>ds :EnDeclarationSplit<CR>
+" Open documentation in a browser
+au FileType scala nnoremap <leader>do :EnDocBrowse<CR>
+
+let ensime_server_v2=1
