@@ -120,15 +120,15 @@ load-paths () {
   fi
   source "$NVM_DIR/nvm.sh"  # This loads nvm
 
-  export RVM_DIR="$HOME/.rvm"
-  prepend-path $RVM_DIR
-  if ! test -s "$RVM_DIR/scripts/rvm" ; then
-    echo ">> installing rvm <<"
-    curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
-    source "$RVM_DIR/scripts/rvm"
-    rvm install ruby --latest
-  fi
-  source "$RVM_DIR/scripts/rvm" # This loads rvm
+  # export RVM_DIR="$HOME/.rvm"
+  # prepend-path $RVM_DIR
+  # if ! test -s "$RVM_DIR/scripts/rvm" ; then
+  #   echo ">> installing rvm <<"
+  #   curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
+  #   source "$RVM_DIR/scripts/rvm"
+  #   rvm install ruby --latest
+  # fi
+  # source "$RVM_DIR/scripts/rvm" # This loads rvm
 
   # ifort
   intel_dir=/opt/intel
@@ -331,7 +331,7 @@ function check-if-defined-acronyms-are-used () {
 #====================#
 #  printing at DESY  #
 #====================#
-export CUPS_SERVER=cups-hep.desy.de
+# export CUPS_SERVER=cups-hep.desy.de
 alias prnt='lp -d t00ps1 -o sides=two-sided-long-edge'
 alias prnt-2p='lp -d t00ps1 -o sides=two-sided-long-edge -o number-up=2'
 function prnt-rng() {
@@ -1315,5 +1315,15 @@ function start-presentation-servers () {
   cd ..
 }
 
+################################################################################
+#                                     SBT                                      #
+################################################################################
+alias sbt='sbt -mem 4096'
+
+################################################################################
+#                                    DOCKER                                    #
+################################################################################
+alias docker-stop-all="docker stop $(docker ps -a -q)"
+alias docker-rm-all="docker rm $(docker ps -a -q)"
 
 # vim: set filetype=sh

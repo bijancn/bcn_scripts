@@ -22,6 +22,7 @@ _test/
 log*
 dist/
 __pycache__/
+tags
 
 #===============#
 #  build files  #
@@ -100,3 +101,9 @@ Makefile.in
 .netrwhist
 .svn
 .merlin
+
+###########
+#  scala  #
+###########
+.ensime
+.ensime_cache

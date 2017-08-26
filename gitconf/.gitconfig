@@ -1,5 +1,5 @@
 [user]
-  email = bijan@chokoufe.com
+  email = bijan.chokoufe@esailors.de
   name = Bijan Chokoufe Nejad
 [core]
   editor = vim
@@ -40,11 +40,9 @@
   icon = /afs/desy.de/user/b/bcho/.git-dude/github32.png
   notify-command = notify-send -i \"$ICON_PATH\" \"$TITLE\" \"$DESCRIPTION\" -t 0
 [push]
-  default = simple
+  default = current
 [sendemail]
   smtpencryption = tls
   smtpserver = smtp.gmail.com
   smtpuser = bijan.chokoufe@gmail.com
   smtpserverport = 587
-[branch]
-  autosetupmerge = always

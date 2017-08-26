@@ -5,13 +5,13 @@
 sudo apt-get install \
   autoconf automake autotools-dev build-essential \
   cmake curl dict diffpdf g++ \
-  goobook gfortran git graphviz htop inkscape \
-  keepassx libtool lynx meld mercurial msmtp mutt mutt-patched \
-  noweb libfindlib-ocaml-dev ocaml offlineimap pandoc \
+  goobook git graphviz htop inkscape \
+  keepassx libtool mercurial msmtp mutt mutt-patched \
+  noweb offlineimap pandoc \
   pdftk procmail \
   ipython python-dev python-matplotlib python-numpy python-pip python-scipy \
   python-unidecode scons subversion tmux \
-  vim-gtk xsel zsh
+  xsel zsh
 mkdir -p ~/install/bin
 mkdir -p ~/.mutt/temp
 mkdir -p ~/.cache/mutt/

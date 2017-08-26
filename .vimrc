@@ -155,9 +155,6 @@ Plug 'romainl/Apprentice'
 " Swap arguments with g<, g> and gs
 Plug 'machakann/vim-swap'
 
-" Highlight the yanked region shortly
-Plug 'machakann/vim-highlightedyank'
-
 " Exchange two objects with cx<motion>
 Plug 'tommcdo/vim-exchange'
 
@@ -180,6 +177,7 @@ Plug 'majutsushi/tagbar'
 
 " Browse ctags
 " Plug 'vim-scripts/taglist.vim'
+Plug 'majutsushi/tagbar'
 
 " Visualize vim undo tree
 Plug 'sjl/gundo.vim'
@@ -224,11 +222,12 @@ Plug 'derekwyatt/vim-scala'
 " ENSIME integration
 Plug 'ensime/ensime-vim'
 
-" Use sbt from within vim
-Plug 'ktvoelker/sbt-vim'
+Plug 'Chiel92/vim-autoformat'
 
-" Some conceal cuteness
-Plug 'mpollmeier/vim-scalaConceal'
+Plug 'luochen1990/rainbow'
+
+" Quick fix file is not created by sbt :(
+Plug '~/.vim/plugged/vim-sbt'
 
 " Work together - apart. Only works with neovim
 "Plug 'floobits/floobits-neovim'
@@ -243,7 +242,7 @@ call plug#end()
 "                                   SETTINGS                                   "
 "=============================================================================="
 set shiftwidth=2          " Size of indentation
-set textwidth=80          " Where to brake text to new line
+set textwidth=80          " Where to break text to new line
 set formatoptions=qrnj    " Add t to activate automatic wrapping
 set linebreak             " Vim will not break words. See :help breakat
 set wrap                  " Wrap long lines softly
@@ -264,6 +263,7 @@ set cursorline            " Highlight current line
 set linespace=5           " Value larger than 1 avoids invisible underscores
 set thesaurus=/usr/share/dict/words
 set printoptions=paper:A4,syntax:y,wrap:y,number:y
+set diffopt+=vertical     " I like em vertical
 
 " If this many milliseconds nothing is typed the swap file will be written
 " Also used for CursorHold and gitgutter
@@ -325,7 +325,7 @@ set guioptions-=m       " remove menu bar in gVim
 set guioptions-=T       " remove toolbar in gVim
 set guioptions-=r       " remove right-hand scrollbar
 set guioptions-=L       " remove left-hand scrollbar
-set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 9
+set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 14
 
 
 " Highlight consistent line
@@ -440,7 +440,7 @@ nnoremap <leader>bi :exe '!biber ' . expand('%:r') . '.bcf' <CR><CR>
 vnoremap <leader>l :Linediff<CR>
 
 " Printing
-noremap <leader>p :hardcopy <CR>
+" noremap <leader>p :hardcopy <CR>
 
 " Put in yanked and keep it yanked
 xnoremap P pgvy
@@ -502,7 +502,7 @@ augroup END
 augroup reload_other
   autocmd!
   " Auto loading quick fix is quite annoying for make and navigating with ag
-  " autocmd QuickFixCmdPost * copen
+  autocmd QuickFixCmdPost * copen
 
   " Load indentexpr from fortran and switch back to noweb for syntax hl
   autocmd BufWinEnter *.nw setlocal filetype=fortran | setlocal filetype=noweb
@@ -550,19 +550,19 @@ iabbrev generalisation generalization
 "                                   TOGGLES                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " QuickFixToggle
-let g:quickfix_is_open = 0
-function! QuickfixToggle()
-  if g:quickfix_is_open
-    cclose
-    let g:quickfix_is_open = 0
-    execute g:quickfix_return_to_window . "wincmd w"
-  else
-    let g:quickfix_return_to_window = winnr()
-    copen
-    let g:quickfix_is_open = 1
-  endif
-endfunction
-nnoremap <leader>q :call QuickfixToggle()<CR>
+" let g:quickfix_is_open = 0
+" function! QuickfixToggle()
+"   if g:quickfix_is_open
+"     cclose
+"     let g:quickfix_is_open = 0
+"     execute g:quickfix_return_to_window . "wincmd w"
+"   else
+"     let g:quickfix_return_to_window = winnr()
+"     copen
+"     let g:quickfix_is_open = 1
+"   endif
+" endfunction
+" nnoremap <leader>q :call QuickfixToggle()<CR>
 
 " ConcealToggle
 function! ConcealToggle()
@@ -889,6 +889,7 @@ let g:ctrlp_custom_ignore = {
 "=============================================================================="
 "                                   FUGITIVE                                   "
 "=============================================================================="
+nnoremap <leader>gc :Gcommit -v<CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gp :Gpush<CR>:redraw!<CR>
 " TODO: (bcn 2015-05-19) Gpull doesnt work with 1.7.1...
@@ -992,7 +993,7 @@ endfunction
 function! FindAnyObject()
   let path = system("git rev-parse --show-toplevel")
   let pattern = expand("<cword>")
-  execute ":Ack! " . pattern . " " . path
+  execute ":Ack! --case-sensitive " . pattern . " " . path
 endfunction
 nnoremap <silent> <leader>ff :call FindFortranObject()<CR>
 nnoremap <silent> <leader>fa :call FindAnyObject()<CR>
@@ -1041,6 +1042,7 @@ let g:NERDTrimTrailingWhitespace = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTree
 nnoremap <C-t> :NERDTreeToggle<CR>
+let NERDTreeWinSize = 50
 
 " Gundo
 nnoremap <leader>gu :GundoToggle<CR>
@@ -1149,7 +1151,7 @@ let g:languagetool_disable_rules = "WHITESPACE_RULE,EN_QUOTES,COMMA_PARENTHESIS_
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                             vim-highlightedyank                              "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map y <Plug>(highlightedyank)
+" map y <Plug>(highlightedyank)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                    ENSIME                                    "
@@ -1166,3 +1168,37 @@ au FileType scala nnoremap <leader>ds :EnDeclarationSplit<CR>
 au FileType scala nnoremap <leader>do :EnDocBrowse<CR>
 
 let ensime_server_v2=1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                           VIM-AUTOFORMAT SCALAFMT                            "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+noremap <F5> :Autoformat<CR>
+let g:formatdef_scalafmt = "'scalafmt --stdin'"
+let g:formatters_scala = ['scalafmt']
+
+
+au BufEnter *.scala setl formatprg=java\ -jar\ /home/bijan/bin/scalariform.jar\ -f\ -q\ -preserveSpaceBeforeArguments\ -spacesAroundMultiImports\ +doubleIndentConstructorArguments\ -placeScaladocAsterisksBeneathSecondAsterisk\ --stdin\ --stdout
+au BufEnter *.scala setl equalprg=java\ -jar\ /home/bijan/bin/scalariform.jar\ -f\ -q\ -preserveSpaceBeforeArguments\ -spacesAroundMultiImports\ +doubleIndentConstructorArguments\ -placeScaladocAsterisksBeneathSecondAsterisk\ --stdin\ --stdout
+au BufEnter *.scala set textwidth=120          " Where to break text to new line
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   RAINBOW                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:rainbow_active = 1
+  let g:rainbow_conf = {
+  \  'ctermfgs': ['64', '37', '33', '61', '125', '124', '166'],
+  \}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    CTAGS                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Move up until you find tags
+set tags=tags;/
+map <leader>ct :!ctags -R .<CR>
+nnoremap <C-g> <C-]>
+vnoremap <C-g> <C-]>
+" map <C-h> :tn<CR>
+" map <C-f> :tp<CR>
+map <leader>p :CtrlPTag<CR>
+map <leader>to :TagbarToggle<CR>
+

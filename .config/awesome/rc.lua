@@ -1,5 +1,5 @@
 -- Standard awesome library
---local revelation = require("revelation")
+local revelation = require("revelation")
 local gears = require("gears")
 local awful = require("awful")
 local common = require("awful.widget.common")
@@ -12,15 +12,16 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
-local lain      = require("lain")
+-- local lain      = require("lain")
 
 -- Custom libraries
-local helpers = require("helpers")
+-- local helpers = require("helpers")
 
 -- Custom widgets
-local myvolume = require("volume")
-local mybattery = require("battery")
-local mywifi = require("wifi")
+-- local myvolume = require("volume")
+
+-- local mybattery = require("battery")
+-- local mywifi = require("wifi")
 
 -- Load Debian menu entries
 require("debian.menu")
@@ -56,10 +57,10 @@ naughty.config.presets.critical.opacity = 0.8
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 beautiful.init("~/.config/awesome/themes/current/theme.lua")
---revelation.init()
+revelation.init()
 
 -- This is used later as the default terminal and editor to run.
-terminal = "gnome-terminal"
+terminal = "konsole"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -84,7 +85,7 @@ local layouts =
 -- Define a tag table which hold all screen tags.
 tags = {
    names = {" 1 ", " 2 ", " 3 ", " 4 ", " 5 ",
-            " Journal ", " mutt ", " web ", " mendeley "},
+            " vim ", " mail ", " web ", " spotify "},
    layout = {layouts[5], layouts[5], layouts[5], layouts[5], layouts[5],
               layouts[5], layouts[5], layouts[5], layouts[5]}
 }
@@ -97,18 +98,28 @@ end
 -- key = {executable, class name (get it with xprop), tag to open on}
 user_combination = {modkey}
 
+first = 1
+second = math.max(screen.count()-1,1)
+third = screen.count()
+
 user_keys =
 {
+  -- m = {"terminator -e 'source ~/.commonrc ; mutt'", "Terminator", tags[1][7]},
+  -- e = {"mendeleydesktop", "Mendeley Desktop", tags[1][9]}
+  -- i = {"inkscape", "Inkscape"},
   n = {"nautilus", "Nautilus"},
   x = {"xournal", "Xournal"},
-  i = {"inkscape", "Inkscape"},
   k = {"keepassx", "Keepassx"},
   y = {"skype", "Skype"},
-  v = {"gvim /home/bijancn/vimwiki/index.wiki", "Gvim", tags[1][6]},
-  m = {"terminator -e 'source ~/.commonrc ; mutt'", "Terminator", tags[1][7]},
-  g = {"google-chrome", "Google-chrome", tags[1][8]},
-  s = {"spotify --force-device-scale-factor=1.7", "Spotify", tags[1][8]},
-  e = {"mendeleydesktop", "Mendeley Desktop", tags[1][9]}
+
+  v = {"gvim", "Gvim", tags[first][6]},
+  i = {"/home/bijan/Downloads/idea-IU-172.3544.35/bin/idea.sh", "jetbrains-idea", tags[first][6]},
+
+  m = {"evolution", "Evolution", tags[second][7]},
+  s = {"spotify --force-device-scale-factor=1.7", "Spotify", tags[second][9]},
+
+  Return = {"konsole", "konsole", tags[third][1]},
+  g = {"firefox", "Firefox", tags[third][8]}
 }
 
 -- {{{ Wallpaper
@@ -197,7 +208,7 @@ function tasklistupdate(w, buttons, labelfunc, data, objects)
             icon:buttons(common.create_buttons(buttons, o))
 
             -- Use custom drawing method for drawing icons
-            helpers:set_draw_method(icon)
+            -- helpers:set_draw_method(icon)
         end
 
         -- Use a fallback for clients without icons
@@ -217,18 +228,18 @@ function tasklistupdate(w, buttons, labelfunc, data, objects)
         inactiveclients:add(background)
 
         -- If client is focused, add text and set as active client
-        if bg == theme.tasklist_bg_focus then
-            local labeltext = text
-
-            -- Append (F) if client is floating
-            if awful.client.floating.get(o) then
-                labeltext = labeltext .. " (F)"
-            end
-
-            label:set_markup("   " .. labeltext .. "   ")
-
-            activeclient = label
-        end
+        -- if bg == theme.tasklist_bg_focus then
+        --     local labeltext = text
+        --
+        --     -- Append (F) if client is floating
+        --     if awful.client.floating.get(o) then
+        --         labeltext = labeltext .. " (F)"
+        --     end
+        --
+        --     label:set_markup("   " .. labeltext .. "   ")
+        --
+        --     activeclient = label
+        -- end
     end
 
     -- Add the inactive clients as icons first
@@ -341,41 +352,41 @@ for s = 1, screen.count() do
 
     if s == 1 then
         right_layout:add(mysystraymargin)
-        right_layout:add(myvolume.icon)
-        right_layout:add(myvolume.text)
+        -- right_layout:add(myvolume.icon)
+        -- right_layout:add(myvolume.text)
 
-        if mybattery.hasbattery then
-            right_layout:add(separator)
-            right_layout:add(mybattery.icon)
-            right_layout:add(mybattery.text)
-        end
+        -- if mybattery.hasbattery then
+        --     right_layout:add(separator)
+        --     right_layout:add(mybattery.icon)
+        --     right_layout:add(mybattery.text)
+        -- end
 
 -- Battery
 baticon = wibox.widget.imagebox(beautiful.widget_battery)
-batwidget = lain.widgets.bat({
-    settings = function()
-        if bat_now.perc == "N/A" then
-            widget:set_markup(" AC ")
-            baticon:set_image(beautiful.widget_ac)
-            return
-        elseif tonumber(bat_now.perc) <= 5 then
-            baticon:set_image(beautiful.widget_battery_empty)
-        elseif tonumber(bat_now.perc) <= 15 then
-            baticon:set_image(beautiful.widget_battery_low)
-        else
-            baticon:set_image(beautiful.widget_battery)
-        end
-        widget:set_markup("Bat " .. bat_now.perc .. "% ")
-    end
-})
-    --right_layout_add(baticon, batwidget)
-    right_layout:add(baticon, batwidget)
+-- batwidget = lain.widgets.bat({
+--     settings = function()
+--         if bat_now.perc == "N/A" then
+--             widget:set_markup(" AC ")
+--             baticon:set_image(beautiful.widget_ac)
+--             return
+--         elseif tonumber(bat_now.perc) <= 5 then
+--             baticon:set_image(beautiful.widget_battery_empty)
+--         elseif tonumber(bat_now.perc) <= 15 then
+--             baticon:set_image(beautiful.widget_battery_low)
+--         else
+--             baticon:set_image(beautiful.widget_battery)
+--         end
+--         widget:set_markup("Bat " .. bat_now.perc .. "% ")
+--     end
+-- })
+--     --right_layout_add(baticon, batwidget)
+--     right_layout:add(baticon, batwidget)
 
-        if mywifi.haswifi then
-            right_layout:add(separator)
-            right_layout:add(mywifi.icon)
-            right_layout:add(mywifi.text)
-        end
+        -- if mywifi.haswifi then
+        --     right_layout:add(separator)
+        --     right_layout:add(mywifi.icon)
+        --     right_layout:add(mywifi.text)
+        -- end
 
         right_layout:add(separatorbig)
         right_layout:add(mytextclock)
@@ -405,20 +416,20 @@ root.buttons(awful.util.table.join(
 -- {{{ Key binding functions
 function raisevolume()
     awful.util.spawn("amixer set Master 2%+", false)
-    helpers:delay(myvolume.update, 0.1)
+    -- helpers:delay(myvolume.update, 0.1)
 end
 
 function lowervolume()
     awful.util.spawn("amixer set Master 9%-", false)
-    helpers:delay(myvolume.update, 0.1)
+    -- helpers:delay(myvolume.update, 0.1)
 end
 
 function mutevolume()
     awful.util.spawn("amixer -D pulse set Master 1+ toggle", false)
-    helpers:delay(myvolume.update, 0.1)
+    -- helpers:delay(myvolume.update, 0.1)
 end
--- }}}
-
+-- -- }}}
+--
 ---- Get active outputs
 local function outputs()
    local outputs = {}
@@ -522,7 +533,7 @@ local function xrandr()
         icon = icon,
         timeout = 4,
         screen = mouse.screen, -- Important, not all screens may be visible
-        font = "Free Sans 18",
+        font = "Free Sans 20",
         replaces_id = state.cid }).id
    -- Setup the timer
    state.timer = timer { timeout = 4 }
@@ -542,16 +553,16 @@ end
 globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control"          }, "y", xrandr),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
-    --awful.key({ modkey,           }, "v",      revelation),
+    awful.key({ modkey, "Control" }, "v",      revelation),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 
     -- Non-empty tag browsing
-    awful.key({ modkey, "Control" }, "Left", function ()
-      lain.util.tag_view_nonempty(-1) end),
-    awful.key({ modkey, "Control" }, "Right", function ()
-      lain.util.tag_view_nonempty(1) end),
+    -- awful.key({ modkey, "Control" }, "Left", function ()
+    --   lain.util.tag_view_nonempty(-1) end),
+    -- awful.key({ modkey, "Control" }, "Right", function ()
+    --   lain.util.tag_view_nonempty(1) end),
 
     awful.key({ modkey,           }, "j",
         function ()
@@ -581,16 +592,17 @@ globalkeys = awful.util.table.join(
         end),
 
     -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
+    -- awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
+    awful.key({ modkey, "Control" }, "l",     function () awful.util.spawn("i3lock -c 000000") end),
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
     awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
-    awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
-    awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
+    -- awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
+    -- awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
@@ -760,17 +772,17 @@ end
 
 
 -- No border for maximized clients
-client.connect_signal("focus",
-  function(c)
-    if c.maximized_horizontal == true and c.maximized_vertical == true then
-      c.border_color = beautiful.border_normal
-    else
-      c.border_color = beautiful.border_focus
-    end
-  end)
-client.connect_signal("unfocus", function(c)
-  c.border_color = beautiful.border_normal
-end)
+-- client.connect_signal("focus",
+--   function(c)
+--     if c.maximized_horizontal == true and c.maximized_vertical == true then
+--       c.border_color = beautiful.border_normal
+--     else
+--       c.border_color = beautiful.border_focus
+--     end
+--   end)
+-- client.connect_signal("unfocus", function(c)
+--   c.border_color = beautiful.border_normal
+-- end)
 -- }}}
 
 
