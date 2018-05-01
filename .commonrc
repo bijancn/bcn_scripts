@@ -162,6 +162,9 @@ load-paths () {
   add-pythonpath $HOME/termstyle
   add-pythonpath $HOME/pydflatex
 
+  # added by Miniconda3 installer
+  # export PATH="/home/bijan/miniconda3/bin:$PATH"
+
   tmp0=/nfs/theoc/data2/bcho/sl6
   tmp1=/nfs/theoc/data/bcho/bird
   tmp2=/data/bcho
@@ -612,6 +615,10 @@ if ! command-exists htop ; then
 fi
 
 alias show-top-processes="top -b -n 1 | grep -v ' root ' | head -n 12  | tail -n 8"
+alias show-top-swappiness-usage='for file in /proc/*/status ; do echo "$file: `cat $file | grep -i swap`" ; done |  sort -k 3 -n -r | head'
+function show-top-swappiness-processes() {
+  for file in /proc/*/status ; do echo "$file: `cat $file | grep -i swap`" ; done |  sort -k 3 -n -r | head | sed 's/\/proc\///' | sed 's/\/status.*//' | xargs ps
+}
 
 #=============#
 #  callgrind  #
@@ -1075,6 +1082,22 @@ function show-disk-speed () {
   dd if=/dev/zero of=$1/output conv=fdatasync bs=100k count=1k; rm -f $1/output
 }
 
+function count-lines-of-code () {
+  for i in */; do cd $i; echo "$i `fa \.scala | grep -v html | xargs wc -l | grep total`" | grep total ; cd .. ; done
+}
+
+function mqmc-end-to-end-test () {
+  docker-compose -p mqmc up -d kafka postgres && sleep 30 && \
+  docker-compose -p mqmc up -d collector winners-calculation quota-calculation api fx-rates-fetcher && sleep 10 && \
+  docker-compose -p mqmc up -d draw-metadata-generator && \
+  docker-compose -p mqmc up -d pool-order-generator && \
+  docker-compose -p mqmc up -d draw-result-generator && \
+  docker-compose -p mqmc up -d primary-quotas-generator && \
+  docker-compose -p mqmc up -d trigger-secondary-winner-calculation-generator && sleep 5 &&
+  docker-compose -p mqmc up -d trigger-secondary-quota-calculation-generator && sleep 5 &&
+  docker-compose -p mqmc up -d publish-secondary-quotas-generator
+}
+
 function show-big-files () {
   find . -type f -size +20000k -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
 }
@@ -1116,6 +1139,10 @@ alias gituinu='git update-index --no-assume-unchanged'
 
 function gitignore () {
   echo "$1" >> .gitignore
+}
+
+function git-changelog () {
+  git log $(git tag --sort version:refname | tail -2 | sed ':a;N;$!ba;s/\n/../g') --pretty=oneline --abbrev-commit
 }
 
 #==================#
@@ -1318,12 +1345,108 @@ function start-presentation-servers () {
 ################################################################################
 #                                     SBT                                      #
 ################################################################################
-alias sbt='sbt -mem 4096'
+alias sbt='sbt -mem 8192'
 
 ################################################################################
 #                                    DOCKER                                    #
 ################################################################################
 alias docker-stop-all="docker stop $(docker ps -a -q)"
 alias docker-rm-all="docker rm $(docker ps -a -q)"
+
+################################################################################
+#                                     HPO                                      #
+################################################################################
+export HAM="seals.ham.sg-cloud.co.uk"
+export QA="$HAM"
+export ZOE_QA="app-qa-01.$QA"
+export MQMC_QA="mqmc-qa-01.$QA"
+export HEDGING_QA="hedging-qa-01.$QA"
+export LIS_QA="external-services.$QA"
+export EXTERNAL_QA="external-services.$QA"
+export KAFKA_QA="kafka-qa-01.$QA"
+export POSTGRES_QA="pgsql-qa-01.$QA"
+export CASSANDRA_QA="cas-db-qa-01.$QA"
+
+export STAGEC="m24.stagec.sg-cloud.co.uk"
+export PREPROD="$STAGEC"
+export ZOE_PREPROD="app-01.$STAGEC"
+export MQMC_PREPROD="mqmc-01.$STAGEC"
+export HEDGING_PREPROD="hedging-01.$STAGEC"
+export LIS_PREPROD="external-services.$STAGEC"
+export EXTERNAL_PREPROD="external-services.$STAGEC"
+export KAFKA_PREPROD="kafka-01.$STAGEC"
+export POSTGRES_PREPROD="pgsql-01.$STAGEC"
+export CASSANDRA_PREPROD="cassandra-01.$STAGEC"
+
+
+export LIVEC="m24.livec.sg-cloud.co.uk"
+export MQMC_PROD="mqmc-01.$LIVEC"
+export POSTGRES_PROD="pgsql-01.$LIVEC"
+
+export ZOE_PREPROD_HAM=app-pre-prod-02.seals.ham.sg-cloud.co.uk
+
+function connectZoeUiToQA () {
+  export MQMC_HOSTNAME=$MQMC_QA
+  export ZOE_HOST=$ZOE_QA:8080
+  export LIS_HOST=$LIS_QA
+}
+function connectZoeUiToPreProd () {
+  export MQMC_HOSTNAME=$MQMC_PREPROD
+  export ZOE_HOST=$ZOE_PREPROD_HAM:8080
+}
+export ZOE_UI_TABLE_RELOAD=false
+export GITHUB_API="https://srv-git-01-hh1.alinghi.tipp24.net/api/v3"
+function show-open-prs () {
+  curl -s -X GET "$GITHUB_API/search/issues?q=state:open+org:hpo+no:label+is:pr" \
+  | jq ".items[] | .title,.html_url" | awk 'NR%2{printf "`%-80s `",$0;next;}1'
+}
+
+function show-open-prs-that-need-review () {
+  curl -s -X GET "$GITHUB_API/search/issues?q=state:open+org:hpo+no:label+is:pr+review:required" \
+  | jq ".items[] | .title,.html_url" | awk 'NR%2{printf "`%-80s `",$0;next;}1'
+}
+
+function show-open-prs-that-are-approved () {
+  curl -s -X GET "$GITHUB_API/search/issues?q=state:open+org:hpo+no:label+is:pr+review:approved" \
+  | jq ".items[] | .title,.html_url" | awk 'NR%2{printf "`%-80s `",$0;next;}1'
+}
+
+function show-open-prs-that-requested-changes () {
+  curl -s -X GET "$GITHUB_API/search/issues?q=state:open+org:hpo+no:label+is:pr+review:changes_requested" \
+  | jq ".items[] | .title,.html_url" | awk 'NR%2{printf "`%-80s `",$0;next;}1'
+}
+
+function pushToLive () {
+echo foo
+  for i in `echo "collector fx-rates-fetcher winners-calculator quota-calculator api"`; do \
+    docker pull "devservices01.office.tipp24.de:5000/mqmc/$i:0.4.6" && \
+    docker tag "devservices01.office.tipp24.de:5000/mqmc/$i:0.4.6" \
+      "docker-registry.games.live.tipp24.net:5000/mqmc/$i:0.4.6" && \
+    docker push "docker-registry.games.live.tipp24.net:5000/mqmc/$i:0.4.6" ; \
+  done
+}
+
+function show-open-prs-ordered () {
+  echo "PRs that need review: :eyes:"
+  show-open-prs-that-need-review
+  echo
+  echo "PRs that are approved: :white_check_mark:"
+  show-open-prs-that-are-approved
+  echo
+  echo "PRs for which changes have been requested: :construction:"
+  show-open-prs-that-requested-changes
+}
+
+function show-contributions-of-hpo () {
+  ~/bcn_scripts/bin/show-contributions-of-repo.sh mqmc
+  ~/bcn_scripts/bin/show-contributions-of-repo.sh hedging-services
+  ~/bcn_scripts/bin/show-contributions-of-repo.sh zoe
+}
+
+function show-my-PRs-of-this-month () {
+  curl -s -X GET "$GITHUB_API/search/issues?q=author:bijan-chokoufe+org:hpo+is:pr+created:>=2017-12-01" | jq ".items[] | .title"
+}
+
+alias a='./ansiblew -u bijan.chokoufe --vault-password-file ~/.ansible/vault.key'
 
 # vim: set filetype=sh

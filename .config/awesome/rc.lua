@@ -65,7 +65,7 @@ editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
 modkey = "Mod4"
-altkey     = "Mod1"
+altkey = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
@@ -105,8 +105,8 @@ third = screen.count()
 user_keys =
 {
   -- m = {"terminator -e 'source ~/.commonrc ; mutt'", "Terminator", tags[1][7]},
-  -- e = {"mendeleydesktop", "Mendeley Desktop", tags[1][9]}
   -- i = {"inkscape", "Inkscape"},
+  e = {"emacs", "emacs"},
   n = {"nautilus", "Nautilus"},
   x = {"xournal", "Xournal"},
   k = {"keepassx", "Keepassx"},

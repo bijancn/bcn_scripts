@@ -78,7 +78,6 @@ Makefile.in
 *.fls
 *.lof
 *.out
-*.run.xml
 *.tex.blg
 *.toc
 #*.t[123456789]
