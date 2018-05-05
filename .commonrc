@@ -1419,10 +1419,10 @@ function show-open-prs-that-requested-changes () {
 function pushToLive () {
 echo foo
   for i in `echo "collector fx-rates-fetcher winners-calculator quota-calculator api"`; do \
-    docker pull "devservices01.office.tipp24.de:5000/mqmc/$i:0.4.6" && \
-    docker tag "devservices01.office.tipp24.de:5000/mqmc/$i:0.4.6" \
-      "docker-registry.games.live.tipp24.net:5000/mqmc/$i:0.4.6" && \
-    docker push "docker-registry.games.live.tipp24.net:5000/mqmc/$i:0.4.6" ; \
+    docker pull "devservices01.office.tipp24.de:5000/mqmc/$i:0.4.7" && \
+    docker tag "devservices01.office.tipp24.de:5000/mqmc/$i:0.4.7" \
+      "docker-registry.games.live.tipp24.net:5000/mqmc/$i:0.4.7" && \
+    docker push "docker-registry.games.live.tipp24.net:5000/mqmc/$i:0.4.7" ; \
   done
 }
 
