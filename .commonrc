@@ -56,7 +56,7 @@ export KMP_STACKSIZE=500000000
 export KMP_AFFINITY='compact'
 
 # Number of cores for the OpenMP library
-export OMP_NUM_THREADS=12
+export OMP_NUM_THREADS=4
 export GOMP_CPU_AFFINITY="0 2 4 6 8 10 1 3 5 7 9 11"
 
 parallel_jobs=
@@ -177,19 +177,19 @@ load-paths () {
   fi
 
   # vim
-  if [ -f /usr/local/bin/nvim ]; then
-    export VIMRUNTIME=/usr/local/share/nvim/runtime/
-    export vim=/usr/local/bin/nvim
-  elif [ -f $hep/install/bin/vim ]; then
-    export VIMRUNTIME=$hep/install/share/vim/vim80/
-    export vim=$hep/install/bin/vim
-  else
-    export VIMRUNTIME=/usr/local/share/vim/vim80/
-    export vim=/usr/local/bin/vim
-  fi
-  export EDITOR=$vim
-  export SVN_EDITOR=$vim
-  export VISUAL=$vim
+  # if [ -f /usr/local/bin/nvim ]; then
+  #   export VIMRUNTIME=/usr/local/share/nvim/runtime/
+  #   export vim=/usr/local/bin/nvim
+  # elif [ -f $hep/install/bin/vim ]; then
+  #   export VIMRUNTIME=$hep/install/share/vim/vim80/
+  #   export vim=$hep/install/bin/vim
+  # else
+  #   export VIMRUNTIME=/usr/local/share/vim/vim80/
+  #   export vim=/usr/local/bin/vim
+  # fi
+  # export EDITOR=$vim
+  # export SVN_EDITOR=$vim
+  # export VISUAL=$vim
 
   if [ -n "$hep" ]; then
     export hep_install=$hep/install
@@ -1346,6 +1346,7 @@ function start-presentation-servers () {
 #                                     SBT                                      #
 ################################################################################
 alias sbt='sbt -mem 8192'
+alias sbt-plugin-updates='sbt ";dependencyUpdates; reload plugins; dependencyUpdates"'
 
 ################################################################################
 #                                    DOCKER                                    #
@@ -1398,22 +1399,26 @@ export ZOE_UI_TABLE_RELOAD=false
 export GITHUB_API="https://srv-git-01-hh1.alinghi.tipp24.net/api/v3"
 function show-open-prs () {
   curl -s -X GET "$GITHUB_API/search/issues?q=state:open+org:hpo+no:label+is:pr" \
-  | jq ".items[] | .title,.html_url" | awk 'NR%2{printf "`%-80s `",$0;next;}1'
+  | jq ".items | map(\"\(.title) by \(.user.login)\",.html_url)[]" | awk 'NR%2{printf "`%-90s `",$0;next;}1'
 }
 
 function show-open-prs-that-need-review () {
   curl -s -X GET "$GITHUB_API/search/issues?q=state:open+org:hpo+no:label+is:pr+review:required" \
-  | jq ".items[] | .title,.html_url" | awk 'NR%2{printf "`%-80s `",$0;next;}1'
+  | jq ".items | map(\"\(.title) by \(.user.login)\",.html_url)[]" | awk 'NR%2{printf "`%-90s `",$0;next;}1'
 }
 
 function show-open-prs-that-are-approved () {
   curl -s -X GET "$GITHUB_API/search/issues?q=state:open+org:hpo+no:label+is:pr+review:approved" \
-  | jq ".items[] | .title,.html_url" | awk 'NR%2{printf "`%-80s `",$0;next;}1'
+  | jq ".items | map(\"\(.title) by \(.user.login)\",.html_url)[]" | awk 'NR%2{printf "`%-90s `",$0;next;}1'
 }
 
 function show-open-prs-that-requested-changes () {
   curl -s -X GET "$GITHUB_API/search/issues?q=state:open+org:hpo+no:label+is:pr+review:changes_requested" \
-  | jq ".items[] | .title,.html_url" | awk 'NR%2{printf "`%-80s `",$0;next;}1'
+  | jq ".items | map(\"\(.title) by \(.user.login)\",.html_url)[]" | awk 'NR%2{printf "`%-90s `",$0;next;}1'
+}
+
+function show-repos () {
+  curl -s -X GET "$GITHUB_API/orgs/hpo/repos?type=sources&per_page=100" | jq "map(.git_url) | .[]" -M -r
 }
 
 function pushToLive () {
@@ -1448,5 +1453,8 @@ function show-my-PRs-of-this-month () {
 }
 
 alias a='./ansiblew -u bijan.chokoufe --vault-password-file ~/.ansible/vault.key'
+
+
+export PATH="/home/bijancn/miniconda2/bin:$PATH"
 
 # vim: set filetype=sh

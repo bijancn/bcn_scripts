@@ -43,8 +43,8 @@ select yn in "Yes" "No"; do
             texlive-lang-german texlive-latex-extra \
             texlive-metapost texlive-pstricks \
             texlive-publishers texlive-science \
-            feynmf latexmk latex-beamer \
-            latex-mk latex-xcolor context \
+            feynmf latexmk \
+            latex-mk context \
       ; break;;
     No ) break;;
   esac

@@ -89,3 +89,6 @@ fi
 #                                 LAST COMMAND                                 #
 #==============================================================================#
 bind '"\e."':yank-last-arg
+
+# added by Miniconda2 installer
+export PATH="/home/bijancn/miniconda2/bin:$PATH"

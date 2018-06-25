@@ -1,10 +1,10 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
-Name=Spotify
+Name=Spotify Scaled
 GenericName=Music Player
 Comment=Spotify streaming music client
-Icon=spotify-client
-Exec=spotify --force-device-scale-factor=2.0 %U
+Icon=/home/bijancn/bcn_scripts/.local/share/applications/spotify-linux-256.png
+Exec=spotify --force-device-scale-factor=1.5 %U
 Terminal=false
 Type=Application
 Categories=Audio;Music;Player;AudioVideo;

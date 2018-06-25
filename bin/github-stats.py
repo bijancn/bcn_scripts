@@ -79,7 +79,7 @@ def main(user, month):
     total_adds += adds
     dels = detail_json['deletions']
     total_dels += dels
-    summed = min(adds + dels, 1000)
+    summed = min(adds + dels, 2000)
     total_summed += summed
     total_prs += 1
     created = detail_json['created_at'][:10]
@@ -125,7 +125,8 @@ for month in monthRange:
   print args.year, calendar.month_name[month]
   if args.user == "all":
     for user in ['bijan-chokoufe', 'denis-borisenko', 'kai-hoffmann',
-                 'nenad-nikolic', 'rastislav-vojtko', 'sebastian-naefe']:
+                 'rastislav-vojtko', 'sebastian-naefe']:
+      print("--> " + user)
       (user, adds, dels, summed, prs) = main(user, month)
       add_to_dict(summed_dict, user, summed)
       add_to_dict(prs_dict, user, prs)

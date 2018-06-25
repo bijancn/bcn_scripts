@@ -12,7 +12,7 @@
 shopt -s extglob
 mpwd=`pwd`
 bcn=~/bcn_scripts
-safe=${HOME}/cloud/keys
+safe=${HOME}/ownCloud/keys
 cd $bcn
 force="false"
 if [ $# -eq 1 ]; then
