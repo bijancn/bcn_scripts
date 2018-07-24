@@ -1456,5 +1456,7 @@ alias a='./ansiblew -u bijan.chokoufe --vault-password-file ~/.ansible/vault.key
 
 
 export PATH="/home/bijancn/miniconda2/bin:$PATH"
+# fix for that shit broken conda
+export MKL_THREADING_LAYER=GNU
 
 # vim: set filetype=sh
