@@ -158,9 +158,18 @@ Plug 'machakann/vim-swap'
 " Exchange two objects with cx<motion>
 Plug 'tommcdo/vim-exchange'
 
+Plug 'Erichain/vim-monokai-pro'
+
+Plug 'aonemd/kuroi.vim'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   TESTING                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Plug 'hashivim/vim-terraform'
+
+Plug 'martinda/Jenkinsfile-vim-syntax'
+
 " Highlight characters for f,F,t,T
 Plug 'unblevable/quick-scope'
 
@@ -220,14 +229,16 @@ Plug 'vim-scripts/LanguageTool'
 Plug 'derekwyatt/vim-scala'
 
 " ENSIME integration
-Plug 'ensime/ensime-vim'
+" Plug 'ensime/ensime-vim'
 
 Plug 'Chiel92/vim-autoformat'
 
-Plug 'luochen1990/rainbow'
+" Plug 'luochen1990/rainbow'
 
 " Quick fix file is not created by sbt :(
 Plug '~/.vim/plugged/vim-sbt'
+
+Plug 'reasonml-editor/vim-reason-plus'
 
 " Work together - apart. Only works with neovim
 "Plug 'floobits/floobits-neovim'
@@ -253,7 +264,7 @@ set directory=/tmp/       " Don't put swap files in local directories
 set showcmd               " display incomplete commands
 set number                " Activate line numbers on the left side
 set relativenumber        " Hybrid relative absolute number mode
-set clipboard=unnamedplus " Always use the overall clipboard
+set clipboard=unnamed " Always use the overall clipboard
 set hidden                " Allows to have unsaved changes in different buffers
 set gdefault              " search+replace globally per default
 set cmdheight=2           " Number of lines for command line
@@ -303,7 +314,7 @@ set foldmethod=expr
 
 " Completion
 set wildmode=longest,list  " Complete as far possible then give list
-set wildignore+=*.so,*.swp,*.zip,*/.git/*,*/.hg/*,*/.svn/*
+set wildignore+=*.so,*.swp,*.zip,*.git/*,*/.hg/*,*/.svn/*
 
 " Splits
 set splitbelow
@@ -590,7 +601,7 @@ endfunction
 nnoremap <leader>d :call DiffoptToggle()<CR>
 
 let g:color_toggle = 2
-colorscheme solarized
+colorscheme monokai_pro
 function! ColorSchemeToggle()
   if g:color_toggle == 1
     colorscheme solarized
@@ -610,7 +621,7 @@ endfunction
 nnoremap <leader>ts :call ColorSchemeToggle()<cr>
 
 let g:background_toggle = 2
-set background=light
+set background=dark
 function! BackgroundToggle()
   if g:background_toggle == 1
     set background=light
@@ -867,7 +878,8 @@ let g:airline#extensions#whitespace#enabled = 1
 
 let g:airline#extensions#tmuxline#enabled = 0
 
-let g:airline_theme = "papercolor"
+let g:airline_theme = "deus"
+let g:airline_solarized_bg='dark'
 
 "=============================================================================="
 "                                    CTRLP                                     "
@@ -911,6 +923,9 @@ let g:ycm_disable_for_files_larger_than_kb = 2000
 let g:ycm_use_ultisnips_completer = 1
 
 nnoremap <leader>gt :YcmCompleter GoTo<CR>
+nnoremap <leader>fi :YcmCompleter FixIt<CR>
+nnoremap <leader>[  <C-O>
+nnoremap <leader>]  <C-I>
 
 augroup load_ycm
   autocmd!

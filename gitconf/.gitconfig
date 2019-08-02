@@ -1,9 +1,9 @@
 [user]
-  email = bijan.chokoufe@esailors.de
-  name = Bijan Chokoufe Nejad
+	email = bijan.nejad@numberfour.eu
+	name = Bijan Chokoufe Nejad
 [core]
   editor = vim
-  excludesfile = ~/.gitignore_global
+	excludesfile = /Users/bijanchokoufe.nejad/.gitignore_global
 [merge]
   tool = vimdiff
   conflictstyle = diff3
@@ -46,3 +46,18 @@
   smtpserver = smtp.gmail.com
   smtpuser = bijan.chokoufe@gmail.com
   smtpserverport = 587
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/bijanchokoufe.nejad/.stCommitMsg
+[hub]
+	host = github.numberfour.eu

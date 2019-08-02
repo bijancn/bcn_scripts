@@ -22,3 +22,6 @@ fi
 #else
   #. .bashrc
 #fi
+
+# added by Miniconda2 installer
+export PATH="$HOME/miniconda2/bin:$PATH"

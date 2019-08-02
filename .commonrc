@@ -9,6 +9,21 @@
 # can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
 # http://www.gnu.org/licenses/gpl-2.0-standalone.html
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+alias kdebug='kubectl run my-shell2 --rm -i --tty --image robertxie/ubuntu-nettools -- bash'
+alias clean-targets='rm -rf */target target'
+alias ct=clean-targets
+
+eval "$(fasd --init auto)"
+
+export POSTGRES_HOST=localhost
+export KAFKA_HOST=localhost:9092
+
+export CLICOLOR=1
+export LSCOLORS=ExFxCxDxBxegedabagacad
+alias dcu="docker-compose up"
+alias dka="docker ps -aq | xargs docker rm -f"
+alias dcd="docker-compose down"
 
 export GPG_TTY=$(tty)
 export arch=`getconf LONG_BIT`
@@ -150,9 +165,16 @@ load-paths () {
 
   prepend-path $HOME/bcn_scripts
 
+  prepend-path $HOME/.cargo
+
   prepend-pure-path $HOME/jrfonseca.gprof2dot
 
   prepend-all-paths /usr/local
+
+  export LDFLAGS="-L/usr/local/opt/zlib/lib "
+  export CPPFLAGS="-I/usr/local/opt/zlib/include "
+  export LDFLAGS="$LDFLAGS -L$(brew --prefix openssl)/lib "
+  export CFLAGS="$CFLAGS -I$(brew --prefix openssl)/include "
 
   # python
   add-pythonpath $HOME/bcn_scripts/include
@@ -161,9 +183,6 @@ load-paths () {
   add-pythonpath $HOME/.vim/plugged/vim-eZchat/autoload
   add-pythonpath $HOME/termstyle
   add-pythonpath $HOME/pydflatex
-
-  # added by Miniconda3 installer
-  # export PATH="/home/bijan/miniconda3/bin:$PATH"
 
   tmp0=/nfs/theoc/data2/bcho/sl6
   tmp1=/nfs/theoc/data/bcho/bird
@@ -293,7 +312,7 @@ function replace-inspire () {
 }
 
 function get-arxiv-number () {
-  get-inspire-bibtex $1 | grep eprint | sed 's/.*= "//' | sed 's/",.*//' 
+  get-inspire-bibtex $1 | grep eprint | sed 's/.*= "//' | sed 's/",.*//'
 }
 
 function replace-inspire-extra () {
@@ -358,6 +377,7 @@ alias prntA0-1s-color="lpr $ONESIDE $POSTER"
 if [ -f $HOME/cloud/keys/IPs.sh ]; then
   source $HOME/cloud/keys/IPs.sh
 fi
+source $HOME/enfore.sh
 
 function my-ip() # Get IP adress on ethernet.
 {
@@ -389,8 +409,6 @@ function cmake-recreate() {
 #==========#
 #  custom  #
 #==========#
-# Current date in ISO norm
-export today=`date -I`
 
 # Acronym usable for UltiSnips and other
 export USER_ACR=bcn
@@ -400,7 +418,7 @@ function set-title() {
   echo -en "\e]0;$1\a"
 }
 
-eval `dircolors ~/.dir_colorsrc`
+# eval `dircolors ~/.dir_colorsrc`
 
 
 #==============================================================================#
@@ -596,7 +614,7 @@ function si () {
 #  finding  #
 #===========#
 function fa () {
-  find -iname "*$1*"
+  find . -iname "*$1*"
 }
 alias rgrep='grep -r'
 alias hgrep='history | grep '
@@ -648,13 +666,13 @@ alias i="impressive -s -ff -g 1200x1200+0+0 --cache memory --poll 1"
 #========#
 #  make  #
 #========#
-if command-exists colorit; then
-  alias m="make -s V=0 $parallel_jobs | colorit"
-  alias mV="make V=1 $parallel_jobs | colorit"
-else
+# if command-exists colorit; then
+#   alias m="make -s V=0 $parallel_jobs | colorit"
+#   alias mV="make V=1 $parallel_jobs | colorit"
+# else
   alias m="make -s V=0 $parallel_jobs"
   alias mV="make V=1 $parallel_jobs"
-fi
+# fi
 
 alias mi="make -s V=0 install > /dev/null"
 alias mc="make -s V=0 check $parallel_jobs"
@@ -806,12 +824,18 @@ alias ..5="cd ../../../../.."
 #=========#
 #  lists  #
 #=========#
-alias ls='ls --color'
-alias lsd='ls --color -d */'
-alias ll='ls --color -lh'
-alias la='ls --color -lah'
-alias lad='ls --color -lah -d */'
-alias lk='ls --color -lSrh'         #  Sort by size, biggest last.
+# alias ls='ls --color'
+# alias lsd='ls --color -d */'
+# alias ll='ls --color -lh'
+# alias la='ls --color -lah'
+# alias lad='ls --color -lah -d */'
+# alias lk='ls --color -lSrh'         #  Sort by size, biggest last.
+alias ls='ls'
+alias lsd='ls -d */'
+alias ll='ls -lh'
+alias la='ls -lah'
+alias lad='ls -lah -d */'
+alias lk='ls -lSrh'         #  Sort by size, biggest last.
 
 #===========#
 #  apt-get  #
@@ -894,14 +918,14 @@ if command-exists trash-put; then
   alias rm='trash-put -v'
   alias rmm='/bin/rm'
 else
-  if version-bigger rm 8.4; then
+  # if version-bigger rm 8.4; then
     alias rm='rm -v'
-  fi
+  # fi
 fi
 alias mv='mv -v'
 alias md='mkdir'
 alias mdc='mkdircd'
-alias sd='sudo shutdown now -P'
+# alias sd='sudo shutdown now -P'
 alias rb='sudo reboot'
 alias re='export DISPLAY=:0; cinnamon &'
 alias du-dirs='du -sh -- * | sort -h'
@@ -1145,6 +1169,11 @@ function git-changelog () {
   git log $(git tag --sort version:refname | tail -2 | sed ':a;N;$!ba;s/\n/../g') --pretty=oneline --abbrev-commit
 }
 
+function git-set-upstream {
+  branch=$(git rev-parse --abbrev-ref HEAD)
+  git branch --set-upstream-to=origin/${branch} ${branch}
+}
+
 #==================#
 #  initialization  #
 #==================#
@@ -1233,6 +1262,9 @@ alias gitdb='git diff --stat --color'
 #============#
 # Checkout another branch or file from it 'gite BRANCH -- FILE'
 alias gite='git checkout'
+
+# Create new branch
+alias gitcb='git checkout -b'
 
 # Cherry pick a commit from another branch
 alias gitcp='git cherry-pick'
@@ -1345,8 +1377,10 @@ function start-presentation-servers () {
 ################################################################################
 #                                     SBT                                      #
 ################################################################################
-alias sbt='sbt -mem 8192'
+# alias sbt='sbt -mem 8192'
 alias sbt-plugin-updates='sbt ";dependencyUpdates; reload plugins; dependencyUpdates"'
+export SBT_GLOBAL_SERVER_DIR=$HOME/sbt
+export SBT_OPTS="-Xmx8G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xss8M"
 
 ################################################################################
 #                                    DOCKER                                    #
@@ -1423,9 +1457,12 @@ function show-my-PRs-of-this-month () {
 
 alias a='./ansiblew -u bijan.chokoufe --vault-password-file ~/.ansible/vault.key'
 
+export PATH="$HOME/dev/full/dev-tools/relbin:$PATH"
 
-export PATH="/home/bijancn/miniconda2/bin:$PATH"
+# export PATH="$HOME/miniconda2/bin:$PATH"
 # fix for that shit broken conda
 export MKL_THREADING_LAYER=GNU
 
 # vim: set filetype=sh
+#
+#

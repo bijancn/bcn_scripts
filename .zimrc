@@ -7,7 +7,6 @@ zmodules=( \
   history \
   ssh \
   utility \
-  meta \
   syntax-highlighting \
   history-substring-search \
   completion)

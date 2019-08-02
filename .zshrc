@@ -169,3 +169,80 @@ alias cp="nocorrect cp"
 #                                   KUBECTL                                    #
 ################################################################################
 plugins=(git zsh-completions kubectl)
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
+source <(kubectl completion zsh)  # setup autocomplete in zsh into the current shell
+if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
+
+
+
+## Kuberentes (kubectl) functions --------------
+
+# Finds pods using a search term
+# Run using `podname <namespace> <search-term>
+podname() {
+  kubectl -n $1 get pods | grep -i "$2" | awk '{print $1;}'
+}
+
+# Find the namespace that matches a string
+# Run using `findns <search-term>`
+findns() {
+  kubectl get namespaces | grep -i "$@" | awk '{print $1;}'
+}
+
+# Deletes all pods matching a given search term
+# Run using `deletepod <namespace> <search-term>`
+deletepod() {
+  kubectl -n $1 delete pod `podname "$1" "$2"`
+}
+
+# Describes all pods matching a given search term
+# Run using `descpod <namespace> <search-term>`
+descpod() {
+  kubectl -n $1 describe pod `podname "$1" "$2"`
+}
+
+# Watches pods for changes in a given namespace
+# Run using `watchnspods <namespace>`
+watchpods() {
+  kubectl -n $1 get pods -w
+}
+
+# Gets a resource from kubernetes by `kubectl get <resource list>`
+# Run using `kget <resource-list>`
+# To use a namespace, run using `kget -n <namespace> <resource-list>`
+kget() {
+  kubectl get "$@"
+}
+
+# Finds a type of resources for a given searchable namespace
+# Run using `knget <namespace-search-term> <resource>`
+knget() {
+  kubectl -n `findns $1` get $2
+}
+
+# Starts tailing the logs of a pod defined in a namespace after
+# looking up the name of the pod
+# Run using `klogs <namespace> <podname>`
+klogs() {
+  export ns=$(findns $1)
+  export pod=$(podname $ns $2)
+  kubectl logs -f -n $ns $pod
+}
+
+# Forwards porsts frmo a given pod by searching for a namespace
+# and pod name from other functions
+# Run using `kfwd <namespace-search-term> <podname-search-term> <port-to-forward>`
+kfwd() {
+  export ns=$(findns $1)
+  export pod=$(podname $ns $2)
+  kubectl -n $ns port-forward $pod $3:$3
+}
+
+## End Kubernetes (kubectl) functions ---------
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
