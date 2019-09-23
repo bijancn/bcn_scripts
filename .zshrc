@@ -73,29 +73,6 @@ alias -s pdf=gnome-open
 zstyle ':completion:*:*:-command-:*:*' ignored-patterns '_*'
 
 #==============================================================================#
-#                                   AUTO-LS                                    #
-#==============================================================================#
-# Allows to use enter on empty line for ls
-auto-ls () {
-  if [[ $#BUFFER -eq 0 ]]; then
-    echo ""
-    ls
-    zle redisplay
-  else
-    zle .$WIDGET
-  fi
-}
-zle -N accept-line auto-ls
-zle -N other-widget auto-ls
-
-#==============================================================================#
-#                                SUDO ON ALT-S                                 #
-#==============================================================================#
-insert_sudo () { zle beginning-of-line; zle -U "sudo " }
-zle -N insert-sudo insert_sudo
-bindkey "^[s" insert-sudo
-
-#==============================================================================#
 #                                  EMPTY TAB                                   #
 #==============================================================================#
 # Allows to use tab on empty line to list files
@@ -116,13 +93,6 @@ bindkey '^I' expand-or-complete-or-list-files
 #==============================================================================#
 #                                   SETTINGS                                   #
 #==============================================================================#
-# 10 second wait if you do something that will delete everything
-# setopt RM_STAR_WAIT
-# 10 seconds are just too long
-
-# Is it faster without?
-# setopt VI
-
 setopt EXTENDED_GLOB
 
 setopt AUTO_CD
@@ -145,12 +115,8 @@ bindkey -M vicmd v edit-command-line
 #==============================================================================#
 #                                    PROMPT                                    #
 #==============================================================================#
-# Set up prompt
-if [ -f ~/.shell_prompt.sh ] ; then
-  source ~/.shell_prompt.sh
-else
-  PS1='\[\e[00;34m\]\u\[\e[02;37m\]@\[\e[01;31m\]\h:\[\e[01;34m\] \w \[\e[00m\]\n $ '
-fi
+
+eval "$(starship init zsh)"
 
 #==============================================================================#
 #                                 LAST COMMAND                                 #
@@ -159,11 +125,6 @@ bindkey '\e.' insert-last-word
 
 # Override the -i set by prezto/init
 alias cp="nocorrect cp"
-
-################################################################################
-#                       DONT OVERSHADOW SYSTEM COMMANDS                        #
-################################################################################
-# unalias gs
 
 ################################################################################
 #                                   KUBECTL                                    #
@@ -177,72 +138,8 @@ eval "$(jenv init -)"
 source <(kubectl completion zsh)  # setup autocomplete in zsh into the current shell
 if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
 
-
-
-## Kuberentes (kubectl) functions --------------
-
-# Finds pods using a search term
-# Run using `podname <namespace> <search-term>
-podname() {
-  kubectl -n $1 get pods | grep -i "$2" | awk '{print $1;}'
-}
-
-# Find the namespace that matches a string
-# Run using `findns <search-term>`
-findns() {
-  kubectl get namespaces | grep -i "$@" | awk '{print $1;}'
-}
-
-# Deletes all pods matching a given search term
-# Run using `deletepod <namespace> <search-term>`
-deletepod() {
-  kubectl -n $1 delete pod `podname "$1" "$2"`
-}
-
-# Describes all pods matching a given search term
-# Run using `descpod <namespace> <search-term>`
-descpod() {
-  kubectl -n $1 describe pod `podname "$1" "$2"`
-}
-
-# Watches pods for changes in a given namespace
-# Run using `watchnspods <namespace>`
-watchpods() {
-  kubectl -n $1 get pods -w
-}
-
-# Gets a resource from kubernetes by `kubectl get <resource list>`
-# Run using `kget <resource-list>`
-# To use a namespace, run using `kget -n <namespace> <resource-list>`
-kget() {
-  kubectl get "$@"
-}
-
-# Finds a type of resources for a given searchable namespace
-# Run using `knget <namespace-search-term> <resource>`
-knget() {
-  kubectl -n `findns $1` get $2
-}
-
-# Starts tailing the logs of a pod defined in a namespace after
-# looking up the name of the pod
-# Run using `klogs <namespace> <podname>`
-klogs() {
-  export ns=$(findns $1)
-  export pod=$(podname $ns $2)
-  kubectl logs -f -n $ns $pod
-}
-
-# Forwards porsts frmo a given pod by searching for a namespace
-# and pod name from other functions
-# Run using `kfwd <namespace-search-term> <podname-search-term> <port-to-forward>`
-kfwd() {
-  export ns=$(findns $1)
-  export pod=$(podname $ns $2)
-  kubectl -n $ns port-forward $pod $3:$3
-}
-
-## End Kubernetes (kubectl) functions ---------
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh

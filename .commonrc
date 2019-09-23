@@ -10,9 +10,30 @@
 # http://www.gnu.org/licenses/gpl-2.0-standalone.html
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
+
+RUSTC_ROOT="$(rustc --print sysroot)"
+export RUST_SRC_PATH="${RUSTC_ROOT}/lib/rustlib/src/rust/src"
+
+alias kdev='kubectx DEV'
+alias kprrod='kubectx PROD'
 alias kdebug='kubectl run my-shell2 --rm -i --tty --image robertxie/ubuntu-nettools -- bash'
 alias clean-targets='rm -rf */target target'
 alias ct=clean-targets
+alias flush='sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder'
+
+function kall () {
+  kubectx DEV
+  for i in master stable qa ; do
+    echo "### $i ###" && kubectl -n $i $@
+  done
+}
+
+function kallprod () {
+  kall $@
+  kubectx PROD
+  echo "### PROD ###" && kubectl -n prod $@
+  kubectx DEV
+}
 
 eval "$(fasd --init auto)"
 
@@ -1223,6 +1244,8 @@ alias giti='git interactive'
 # See the current status
 alias gits='git status'
 
+alias gitfa='git fetch --all'
+
 # See status faster but does not track new files
 alias gitS='git status -uno .'
 
@@ -1380,7 +1403,7 @@ function start-presentation-servers () {
 # alias sbt='sbt -mem 8192'
 alias sbt-plugin-updates='sbt ";dependencyUpdates; reload plugins; dependencyUpdates"'
 export SBT_GLOBAL_SERVER_DIR=$HOME/sbt
-export SBT_OPTS="-Xmx8G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xss8M"
+export SBT_OPTS='-Xms1G -Xmx8G -Xss8M -XX:MaxMetaspaceSize=1000m -XX:MetaspaceSize=500m -XX:+CMSClassUnloadingEnabled'
 
 ################################################################################
 #                                    DOCKER                                    #

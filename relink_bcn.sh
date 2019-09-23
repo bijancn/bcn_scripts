@@ -31,17 +31,20 @@ files+=".config/dwb/@(keys|mimetypes|searchengines|settings) "
 files+=".config/dwb/userscripts/@(autostart_player.js|extension_loader.js|start_streamer) "
 files+=".config/fontconfig/conf.d/10-powerline-symbols.conf "
 files+=".config/evince/@(accels|print-settings) "
+files+=".config/karabiner/karabiner.json "
 files+=".config/keepassx/config.ini "
 files+=".config/matplotlib/matplotlibrc "
 files+=".config/terminator/config "
 files+=".fonts/AvantGarde_LT_Medium.ttf .fonts/GE_Inspira.ttf "
 files+=".fonts/PowerlineSymbols.otf .fonts/Ubuntu.ttf "
 files+=".gitignore_global "
+files+=".hammerspoon/init.lua "
 files+=".local/share/applications/@(mimeapps.list|spotify.desktop|gnome-terminal.desktop) "
 files+=".mutt.desy .mutt.gmail .mutt.mailcap "
 files+=".notmuch-config "
 files+=".profile scalastyle_config.xml "
 files+=".spacemacs "
+files+="Library/KeyBindings/DefaultKeyBinding.dict "
 l="texmf/tex/latex"
 files+="$l/bcn_beamer@(.sty|_example.pdf|_example.tex) "
 files+="$l/bcn_@(color|commands|koma).sty "
@@ -57,7 +60,7 @@ files+=".vim/UltiSnips/@(all|fortran|javascript|noweb|ocaml|markdown|python|sh|t
 files+=".Xmodmap .Xdefaults "
 
 for f in $files; do
-  mkdir ~/$(dirname $f) -p
+  mkdir -p ~/$(dirname $f)
   if test -f ~/$f -a $force = "false"; then
     echo "--- $f   already exists, doing nothing"
   else

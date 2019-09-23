@@ -25,3 +25,5 @@ fi
 
 # added by Miniconda2 installer
 export PATH="$HOME/miniconda2/bin:$PATH"
+
+export PATH="$HOME/.cargo/bin:$PATH"

@@ -126,7 +126,7 @@ Plug 'tueda/form.vim'
 " Nice fuzzy autocompletion with supertab support
 " Ubuntu libs:  build-essential cmake python-dev
 " Build with:   cd ~/.vim/bundle/YouCompleteMe && ./install.py --clang-completer --tern-completer
-Plug 'Valloric/YouCompleteMe', { 'on' : [] } " , { 'do': 'export YCM_CORES=4 ; ./install.py' }
+" Plug 'Valloric/YouCompleteMe', { 'on' : [] } " , { 'do': 'export YCM_CORES=4 ; ./install.py' }
 " Generate YCM configs for C++
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable', 'on': []}
 
@@ -165,6 +165,16 @@ Plug 'aonemd/kuroi.vim'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   TESTING                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Plug 'autozimu/LanguageClient-neovim', {
+        \ 'branch': 'next',
+        \ 'do': 'bash install.sh',
+        \ }
+
+" Plug 'rust-lang/rust.vim'
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/vim-lsp'
+" Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 Plug 'hashivim/vim-terraform'
 
@@ -489,6 +499,9 @@ nnoremap <silent> <leader>so :source $MYVIMRC<CR>
 " Edit vimrc
 nnoremap <silent> <leader>rc :e $MYVIMRC<CR>
 
+
+nnoremap <leader>ji :%s/\(\<<c-r>=expand("<cWORD>")<cr>\>\)/[\1](https:\/\/jira.numberfour.eu\/browse\/\1)/<CR>
+
 "=============================================================================="
 "                                   AUTOCMD                                    "
 "=============================================================================="
@@ -683,7 +696,7 @@ vmap <silent> # :<C-U>
 " Show the corresponding PDF file
 function! OpenPDF()
   let file_stripped = expand("%:r")
-  echo system('gnome-open '.file_stripped.'.pdf')
+  echo system('open '.file_stripped.'.pdf')
 endfunction
 noremap <leader>v :call OpenPDF()<CR>
 
@@ -917,27 +930,27 @@ nnoremap <leader>gr :Greview<cr>
 "                                YOUCOMPLETEME                                 "
 "=============================================================================="
 " Defines the max size (in Kb) for a file to be considered for completion
-let g:ycm_disable_for_files_larger_than_kb = 2000
+" let g:ycm_disable_for_files_larger_than_kb = 2000
 
 " Query the UltiSnips plugin for possible completions of snippet triggers
-let g:ycm_use_ultisnips_completer = 1
+" let g:ycm_use_ultisnips_completer = 1
 
-nnoremap <leader>gt :YcmCompleter GoTo<CR>
-nnoremap <leader>fi :YcmCompleter FixIt<CR>
-nnoremap <leader>[  <C-O>
-nnoremap <leader>]  <C-I>
-
-augroup load_ycm
-  autocmd!
-  autocmd InsertEnter,CursorHold * call plug#load('YouCompleteMe')
-        \| call youcompleteme#Enable() | autocmd! load_ycm
-augroup END
-
+" nnoremap <leader>gt :YcmCompleter GoTo<CR>
+" nnoremap <leader>fi :YcmCompleter FixIt<CR>
+" nnoremap <leader>[  <C-O>
+" nnoremap <leader>]  <C-I>
+"
+" augroup load_ycm
+"   autocmd!
+"   autocmd InsertEnter,CursorHold * call plug#load('YouCompleteMe')
+"         \| call youcompleteme#Enable() | autocmd! load_ycm
+" augroup END
+"
 "  YCM's identifier completer will seed its database with keywords of language
-let g:ycm_seed_identifiers_with_syntax = 1
+" let g:ycm_seed_identifiers_with_syntax = 1
 
 " Load every .ycm_extra_conf.py that you find
-let g:ycm_confirm_extra_conf = 0
+" let g:ycm_confirm_extra_conf = 0
 
 "=============================================================================="
 "                                  LIMELIGHT                                   "
@@ -963,21 +976,14 @@ let wiki_settings={
 \ 'template_path': '~/vimwiki/templates/',
 \ 'template_default': 'default',
 \ 'template_ext': '.html',
-\ 'syntax': 'default',
-\ 'ext': '.wiki',
+\ 'path': '~/vimwiki/',
+\ 'syntax': 'markdown',
+\ 'ext': '.md',
 \ 'auto_export': 1 ,
 \ 'auto_toc': 1 }
-
-let wikis=["vimwiki/",]
-let g:vimwiki_list = []
-for wiki_name in wikis
-  let wiki=copy(wiki_settings)
-  let wiki.path = vimwiki_path.wiki_name.'/'
-  let wiki.path_html = vimwiki_export_path.wiki_name.'/'
-  let wiki.diary_index = 'index'
-  let wiki.diary_rel_path = 'diary/'
-  call add(g:vimwiki_list, wiki)
-endfor
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
+au BufNewFile ~/vimwiki/monthly_*-*.md :silent 0r !~/bcn_scripts/bin/monthly-log.py '%'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                      AG                                      "
@@ -1220,3 +1226,16 @@ vnoremap <C-g> <C-]>
 map <leader>p :CtrlPTag<CR>
 map <leader>to :TagbarToggle<CR>
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                     RUST                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if executable('rls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rls',
+        \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
+        \ 'whitelist': ['rust'],
+        \ })
+endif 
+
+let g:rustfmt_autosave = 1
