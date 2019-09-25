@@ -188,6 +188,8 @@ load-paths () {
 
   prepend-path $HOME/.cargo
 
+  prepend-path $HOME/.nvm/versions/node/v10.9.0/lib/node_modules/node/lib/node_modules/node/bin/
+
   prepend-pure-path $HOME/jrfonseca.gprof2dot
 
   prepend-all-paths /usr/local
@@ -230,6 +232,7 @@ load-paths () {
   # export EDITOR=$vim
   # export SVN_EDITOR=$vim
   # export VISUAL=$vim
+  alias vim=nvim
 
   if [ -n "$hep" ]; then
     export hep_install=$hep/install

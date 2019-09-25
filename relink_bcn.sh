@@ -11,7 +11,7 @@
 
 shopt -s extglob
 mpwd=`pwd`
-bcn=~/bcn_scripts
+bcn=~/repos/bcn_scripts
 safe=${HOME}/ownCloud/keys
 cd $bcn
 force="false"
