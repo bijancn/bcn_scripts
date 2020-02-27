@@ -18,6 +18,9 @@
         "$~\UF703" = ("insertText:", "⇉"); /* (Shift-opt) Double-right arrow */
         "\$" = ("insertText:", "💰");
         "*" = ("insertText:", "★");
+        "s" = {
+          "s" = ("insertText:", "ß")
+        };
         "\"" = {
           "o" = ("insertText:", "ö");
           "u" = ("insertText:", "ü");

@@ -10,7 +10,7 @@ hyperExtra = {"ctrl", "cmd", "shift"}
 -- git H ub
 hs.hotkey.bind(hyper, "h", function() hs.application.launchOrFocus("Github") end)
 -- G oogle chrome
-hs.hotkey.bind(hyper, "g", function() hs.application.launchOrFocus("Google Chrome") end)
+hs.hotkey.bind(hyper, "g", function() hs.application.launchOrFocus("Firefox") end)
 -- I ntellij
 hs.hotkey.bind(hyper, "i", function() hs.application.launchOrFocus("IntelliJ IDEA CE") end)
 -- enter the terminal
@@ -26,7 +26,7 @@ hs.hotkey.bind(hyper, "p", function() hs.application.launchOrFocus("Postico") en
 -- safa R i
 -- hs.hotkey.bind(hyper, "r", function() hs.application.launchOrFocus("Safari") end)
 -- S lack
-hs.hotkey.bind(hyper, "s", function() hs.application.launchOrFocus("Slack") end)
+hs.hotkey.bind(hyper, "s", function() hs.application.launchOrFocus("All-in-One Messenger") end)
 -- M ail
 hs.hotkey.bind(hyper, "m", function() hs.application.launchOrFocus("Spark") end)
 -- spotif Y

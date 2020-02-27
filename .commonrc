@@ -11,6 +11,9 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+function number-of-routes() {
+    for i in get put post; do echo "Number of $i routes:  `pt -c \"$i:\" | sed 's/.*://' | awk '{s+=$1} END {print s}'`" ; done
+}
 RUSTC_ROOT="$(rustc --print sysroot)"
 export RUST_SRC_PATH="${RUSTC_ROOT}/lib/rustlib/src/rust/src"
 
@@ -20,6 +23,7 @@ alias kdebug='kubectl run my-shell2 --rm -i --tty --image robertxie/ubuntu-netto
 alias clean-targets='rm -rf */target target'
 alias ct=clean-targets
 alias flush='sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder'
+alias dodo='docker run -it -v `pwd`:`pwd` -w `pwd`'
 
 function kall () {
   kubectx DEV
@@ -1190,6 +1194,12 @@ function gitignore () {
 }
 
 function git-changelog () {
+  local last_tag=$(git describe --tags --abbrev=0)
+  echo "Changes since last tag: ${last_tag}"
+  git log --oneline --decorate ${last_tag}..HEAD
+}
+
+function git-changelog-old () {
   git log $(git tag --sort version:refname | tail -2 | sed ':a;N;$!ba;s/\n/../g') --pretty=oneline --abbrev-commit
 }
 
@@ -1220,6 +1230,7 @@ alias gitin='git init --bare'
 # Push your complete local repo to the server
 # (followed by ssh://user@yourserver/~/reponame.git)
 alias gitpm='git push --mirror'
+alias gitpf='git push --force'
 
 alias git-accept-deleted='git ls-files --deleted -z | xargs -0 git rm '
 
@@ -1489,6 +1500,9 @@ export PATH="$HOME/dev/full/dev-tools/relbin:$PATH"
 # fix for that shit broken conda
 export MKL_THREADING_LAYER=GNU
 
+alias vim=nvim
+
 # vim: set filetype=sh
 #
 #
+

@@ -1,39 +1,14 @@
 [general]
 metadata = ~/.local/share/offlineimap
-accounts = desy, googlemail
-pythonfile = ~/bcn_scripts/offlineimap.py
+accounts = googlemail
+pythonfile = ~/repos/bcn_scripts/offlineimap.py
 socktimeout = 120
 maxsize = 10000000
 fsync = False
 
-[Account desy]
-localrepository = desy-local
-remoterepository = desy-remote
-status_backend = sqlite
-postsynchook = notmuch new
-
-[Repository desy-local]
-type = Maildir
-localfolders = ~/.mail/desy
-
-[Repository desy-remote]
-type = IMAP
-remoteuser = bcho
-remotehost = mail.desy.de
-remoteport = 993
-cert_fingerprint = ffc2905d13a23848fc8a3816d86d47a789e3e26d
-ssl = yes
-remotepasseval = get_pass('desy')
-folderfilter = lambda foldername: 'Contacts' not in foldername and 'Chats' not in foldername
-# these are known to be broken:
-# http://www.offlineimap.org/configuration/2016/01/29/why-i-m-not-using-maxconnctions.html
-# maxconnections = 1
-# maxsyncaccounts = 1
-
 [Account googlemail]
 localrepository = googlemail-local
 remoterepository = googlemail-remote
-status_backend = sqlite
 postsynchook = notmuch new
 
 [Repository googlemail-local]
@@ -45,7 +20,6 @@ type = Gmail
 remoteuser = bijan.chokoufe@gmail.com
 realdelete = no
 folderfilter = lambda foldername: foldername not in ['[Google Mail]/Spam', '[Google Mail]/Wichtig', '[Google Mail]/Markiert']
-sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 auth_mechanisms = LOGIN
 ssl = yes
 createfolders = False
