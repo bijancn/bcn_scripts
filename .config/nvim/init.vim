@@ -120,7 +120,7 @@ call plug#begin('~/.config/nvim/plugged')
         \ 'branch': 'next',
         \ 'do': 'bash install.sh',
         \ }
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " Autocompletions
+    " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " Autocompletions
     Plug 'junegunn/fzf.vim' " Fuzzy finder / ctrl-p
     Plug 'tpope/vim-surround' " Surround selection with string
     Plug 'tpope/vim-repeat' " Repeat select commands (vim-surround) with .
