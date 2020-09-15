@@ -1,5 +1,5 @@
-hyper = {"ctrl", "cmd"}
-hyperExtra = {"ctrl", "cmd", "shift"}
+hyper = {"ctrl", "alt", "shift"}
+hyperExtra = {"ctrl", "alt", "shift", "cmd"}
 
 -- hyper +
 -- "a" is autofill
@@ -7,37 +7,24 @@ hyperExtra = {"ctrl", "cmd", "shift"}
 -- "o" is open project
 -- "q' is lock screen
 
--- git H ub
-hs.hotkey.bind(hyper, "h", function() hs.application.launchOrFocus("Github") end)
--- G oogle chrome
+hs.hotkey.bind(hyper, "c", function() hs.application.launchOrFocus("Calendar") end)
+hs.hotkey.bind(hyper, "d", function() hs.application.launchOrFocus("Discord") end)
+-- hs.hotkey.bind(hyper, "e", function() hs.application.launchOrFocus("Telegram") end)
 hs.hotkey.bind(hyper, "g", function() hs.application.launchOrFocus("Firefox") end)
--- I ntellij
+-- hs.hotkey.bind(hyper, "h", function() hs.application.launchOrFocus("Github") end)
 hs.hotkey.bind(hyper, "i", function() hs.application.launchOrFocus("IntelliJ IDEA CE") end)
--- enter the terminal
-hs.hotkey.bind(hyper, "return", function() hs.application.launchOrFocus("iTerm") end)
--- je N kins
-hs.hotkey.bind(hyper, "n", function() hs.application.launchOrFocus("Jenkins") end)
--- J ira
-hs.hotkey.bind(hyper, "j", function() hs.application.launchOrFocus("JIRA") end)
--- K eepassx
+-- hs.hotkey.bind(hyper, "j", function() hs.application.launchOrFocus("JIRA") end)
 hs.hotkey.bind(hyper, "k", function() hs.application.launchOrFocus("KeepassXC") end)
--- P ostico
-hs.hotkey.bind(hyper, "p", function() hs.application.launchOrFocus("Postico") end)
--- safa R i
--- hs.hotkey.bind(hyper, "r", function() hs.application.launchOrFocus("Safari") end)
--- S lack
-hs.hotkey.bind(hyper, "s", function() hs.application.launchOrFocus("All-in-One Messenger") end)
--- M ail
-hs.hotkey.bind(hyper, "m", function() hs.application.launchOrFocus("Spark") end)
--- spotif Y
-hs.hotkey.bind(hyper, "y", function() hs.application.launchOrFocus("Spotify") end)
--- t E legram
-hs.hotkey.bind(hyper, "e", function() hs.application.launchOrFocus("Telegram") end)
--- V isual studio code
-hs.hotkey.bind(hyper, "v", function() hs.application.launchOrFocus("Visual Studio Code") end)
--- wha T sapp
+hs.hotkey.bind(hyper, "m", function() hs.application.launchOrFocus("Mail") end)
+hs.hotkey.bind(hyper, "n", function() hs.application.launchOrFocus("Notion") end)
+-- hs.hotkey.bind(hyper, "p", function() hs.application.launchOrFocus("Postico") end)
+hs.hotkey.bind(hyper, "s", function() hs.application.launchOrFocus("Slack") end)
 hs.hotkey.bind(hyper, "t", function() hs.application.launchOrFocus("WhatsApp") end)
--- directions
+hs.hotkey.bind(hyper, "v", function() hs.application.launchOrFocus("Visual Studio Code") end)
+hs.hotkey.bind(hyper, "y", function() hs.application.launchOrFocus("Spotify") end)
+hs.hotkey.bind(hyper, "z", function() hs.application.launchOrFocus("zoom.us") end)
+hs.hotkey.bind(hyper, "return", function() hs.application.launchOrFocus("iTerm") end)
+
 hs.hotkey.bind(hyperExtra, "up", function()
   hs.window.focusedWindow():moveOneScreenNorth()
 end)

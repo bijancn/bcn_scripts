@@ -18,3 +18,5 @@ if [ "$PS1" ]; then
     fi
   fi
 fi
+
+export PATH="$HOME/.cargo/bin:$PATH"

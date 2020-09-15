@@ -202,6 +202,7 @@ load-paths () {
   export CPPFLAGS="-I/usr/local/opt/zlib/include "
   export LDFLAGS="$LDFLAGS -L$(brew --prefix openssl)/lib "
   export CFLAGS="$CFLAGS -I$(brew --prefix openssl)/include "
+  alias bcu='brew cask upgrade && brew update && brew cleanup'
 
   # python
   add-pythonpath $HOME/bcn_scripts/include
@@ -1257,6 +1258,8 @@ alias giti='git interactive'
 
 # See the current status
 alias gits='git status'
+
+alias gitca='git commit --amend'
 
 alias gitfa='git fetch --all'
 

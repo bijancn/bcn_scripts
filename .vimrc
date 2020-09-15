@@ -93,9 +93,9 @@ Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'scrooloose/syntastic'
 
 " The ultimate snippet solution
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 " Community driven Ultisnips snippets repo
-Plug 'honza/vim-snippets'
+" Plug 'honza/vim-snippets'
 
 " Allow to run stuff asynchronously with normal vim
 Plug 'tpope/vim-dispatch'
@@ -250,6 +250,8 @@ Plug '~/.vim/plugged/vim-sbt'
 
 Plug 'reasonml-editor/vim-reason-plus'
 
+Plug 'sk1418/HowMuch'
+
 " Work together - apart. Only works with neovim
 "Plug 'floobits/floobits-neovim'
 
@@ -284,7 +286,7 @@ set cursorline            " Highlight current line
 set linespace=5           " Value larger than 1 avoids invisible underscores
 set thesaurus=/usr/share/dict/words
 set printoptions=paper:A4,syntax:y,wrap:y,number:y
-set diffopt+=vertical     " I like em vertical
+"set diffopt+=vertical     " I like em vertical
 
 " If this many milliseconds nothing is typed the swap file will be written
 " Also used for CursorHold and gitgutter
@@ -1139,8 +1141,8 @@ let g:indent_guides_enable_on_vim_startup = 1
 
 " UltiSnip
 " Ensure compatibility with YouCompleteMe
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsSnippetDirectories=["UltiSnips", "ultisnips_my"]
+" let g:UltiSnipsExpandTrigger="<c-j>"
+" let g:UltiSnipsSnippetDirectories=["UltiSnips", "ultisnips_my"]
 
 " Dispatch
 " Filetype specific make commands are in ~/.vim/after/ftplugin/<lang>.vim

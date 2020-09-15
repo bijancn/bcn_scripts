@@ -135,6 +135,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'tpope/vim-fugitive' " Git
     Plug 'vimwiki/vimwiki' " Personal wiki
     Plug 'HerringtonDarkholme/yats.vim' " Typescript syntax files
+    Plug 'evanleck/vim-svelte'
+    Plug 'sk1418/HowMuch'
+    Plug 'udalov/kotlin-vim'
 
 " Initialize plugin system
 call plug#end()
@@ -215,3 +218,12 @@ noremap <leader>be :e <c-r>=expand("%:p:h")<cr>/
 
 " Close the current buffer and move to the previous one
 nnoremap <leader>bq :bp <BAR> bd #<CR>
+
+noremap <leader>j mz:join<CR>`z
+
+" Go to the next buffer
+noremap K :bnext<CR>
+
+" Go to the last buffer
+noremap J :bprevious<CR>
+
