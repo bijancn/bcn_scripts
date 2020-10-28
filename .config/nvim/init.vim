@@ -138,6 +138,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'evanleck/vim-svelte'
     Plug 'sk1418/HowMuch'
     Plug 'udalov/kotlin-vim'
+    Plug 'cespare/vim-toml'
 
 " Initialize plugin system
 call plug#end()

@@ -25,18 +25,29 @@ hs.hotkey.bind(hyper, "y", function() hs.application.launchOrFocus("Spotify") en
 hs.hotkey.bind(hyper, "z", function() hs.application.launchOrFocus("zoom.us") end)
 hs.hotkey.bind(hyper, "return", function() hs.application.launchOrFocus("iTerm") end)
 
-hs.hotkey.bind(hyperExtra, "up", function()
-  hs.window.focusedWindow():moveOneScreenNorth()
-end)
-hs.hotkey.bind(hyperExtra, "down", function()
-  hs.window.focusedWindow():moveOneScreenSouth()
-end)
-hs.hotkey.bind(hyperExtra, "left", function()
-  hs.window.focusedWindow():moveOneScreenWest()
-end)
-hs.hotkey.bind(hyperExtra, "right", function()
-  hs.window.focusedWindow():moveOneScreenEast()
-end)
+function moveWindow(where)
+  if hs.window.focusedWindow() then
+    local w = hs.window.frontmostWindow()
+    local s = hs.screen.mainScreen()
+    if (where == "east") then s = s:toEast()
+    elseif (where == "west") then s = s:toWest()
+    elseif (where == "south") then s = s:toSouth()
+    elseif (where == "north") then s = s:toNorth()
+    end
+    w:moveToScreen(s)
+  end
+end
+
+function move(key, where)
+  hs.hotkey.bind(hyperExtra, key, function() moveWindow(where) end)
+end
+
+-- The following functions bind hyper+{yuio} to move active window
+-- to an adjacent screen
+move("h", "west")
+move("j", "south")
+move("k", "north")
+move("l", "east")
 
 hs.loadSpoon("MiroWindowsManager")
 
