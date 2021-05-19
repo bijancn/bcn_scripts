@@ -1,5 +1,5 @@
 [user]
-	email = bijan.nejad@numberfour.eu
+	email = 2117164+bijancn@users.noreply.github.com
 	name = Bijan Chokoufe Nejad
 [core]
   editor = vim
@@ -61,3 +61,5 @@
 	host = github.numberfour.eu
 [github]
   token = "foo"
+[pull]
+	rebase = true

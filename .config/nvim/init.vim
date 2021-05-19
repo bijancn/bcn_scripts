@@ -132,6 +132,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'christoomey/vim-tmux-navigator' " Unify keyboard navigation between vim and tmux
     Plug 'justinmk/vim-sneak' " Navigate with s{char}{char} and ;/,
     Plug 'tomtom/tcomment_vim' " Comment with gc
+    " in vim:     :Tmuxline airline         :TmuxlineSnapshot ~/.tmux.statusline
+    Plug 'edkolev/tmuxline.vim'
     Plug 'tpope/vim-fugitive' " Git
     Plug 'vimwiki/vimwiki' " Personal wiki
     Plug 'HerringtonDarkholme/yats.vim' " Typescript syntax files
