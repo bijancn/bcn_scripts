@@ -109,15 +109,6 @@ if [[ -s ${ZDOTDIR:-${HOME}}/.zim/init.zsh ]]; then
 fi
 
 ################################################################################
-#                               AUTOSUGGESTIONS                                #
-################################################################################
-# we get it by hand as long as it is not part of zim
-if [[ ! -d ~/zsh-autosuggestions ]]; then
-  git clone git://github.com/zsh-users/zsh-autosuggestions ~/zsh-autosuggestions
-fi
-source ~/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-################################################################################
 #                                   MY STUFF                                   #
 ################################################################################
 source ${HOME}/.commonrc
