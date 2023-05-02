@@ -51,6 +51,8 @@ Plug 'edkolev/promptline.vim'
 " in vim:     :Tmuxline airline         :TmuxlineSnapshot ~/.tmux.statusline
 Plug 'edkolev/tmuxline.vim'
 
+Plug 'wadackel/vim-dogrun'
+
 " Fix vims indentation to conform with PEP8
 Plug 'hynek/vim-python-pep8-indent'
 

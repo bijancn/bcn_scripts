@@ -232,6 +232,7 @@ alias bp="bitpocket"
 #===========#
 alias brc="vim ~/.bashrc"
 alias crc="vim ~/.commonrc"
+alias hrc="vim ~/.hammerspoon/init.lua"
 alias lrc="vim ~/.config/awesome/rc.lua"
 alias mrc="vim ~/.muttrc"
 alias src="vim ~/.ssh/config"
@@ -437,6 +438,19 @@ function show-my-PRs-of-this-month () {
 }
 
 alias vim=nvim
+
+alias grl='./gradlew clean'
+alias grb='./gradlew compileTestKotlin'
+alias grlb='./gradlew clean compileTestKotlin'
+alias grk='./gradlew ktlintFormat'
+alias grf='./gradlew ktlintFormat'
+alias grc='./gradlew check'
+
+function pull-it () {
+    cd $1 && git pull && cd ..
+}
+
+alias pull-all="ls -d */ | parallel -j64 'echo -n {}... && git -C {} pull'"
 
 export LOADED=true
 

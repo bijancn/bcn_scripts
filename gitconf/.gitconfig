@@ -2,10 +2,10 @@
 	email = 2117164+bijancn@users.noreply.github.com
 	name = Bijan Chokoufe Nejad
 [core]
-  editor = vim
+  editor = nvim
 	excludesfile = /Users/bijanchokoufe.nejad/.gitignore_global
 [merge]
-  tool = vimdiff
+  tool = nvimdiff
   conflictstyle = diff3
 [mergetool "mymeld"]
   cmd = meld --output "$MERGED" "$LOCAL" "$BASE" "$REMOTE"
@@ -13,7 +13,8 @@
   makedot = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
   mylog = !echo && git log --graph --format=format:'%h - %C(red)(%ar)%C(reset) %C(blue)%cn%C(reset)%n        %C(green)%s%C(reset)' --abbrev-commit --date=relative | head -n 20 && echo
   morelog = log --graph --decorate --pretty=medium --abbrev-commit --date=relative --all
-[alias]
+  lb = !git branch --sort='-committerdate' --format='%(color:green)%(committerdate:relative)%(color:reset) - %(refname:short)' | fzf --ansi --layout=reverse --border=rounded --info=hidden --height=10 | sed 's/.*ago[ ]*//g' | xargs git checkout
+  lb-remote = !git fetch --all --prune && git branch -a --sort='-committerdate' --format='%(color:green)%(committerdate:relative)%(color:reset) - %(refname:short)' | fzf --ansi --layout=reverse --border=rounded --info=hidden --height=10 | sed 's/.*ago[ ]*//g'     | xargs git checkout
   interactive = add -p
   pullhard = !git fetch --all && git reset --hard origin/master
   whatsnew = !sh -c 'git log $1@{1}..$1@{0} "$@"'
@@ -23,7 +24,7 @@
   amend = commit --amend
   unmerged = diff --name-only --diff-filter=U
   newbranch = checkout -b
-[alias]
+  fixup = "!f() { TARGET=$(git rev-parse "$1"); git commit --fixup=$TARGET ${@:2} && EDITOR=true git rebase -i --autostash --autosquash $TARGET^; }; f"
   contributions = !git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr
   show-files = diff-tree --no-commit-id --name-only -r
   branches = branch -a
@@ -63,3 +64,7 @@
   token = "foo"
 [pull]
 	rebase = true
+[init]
+	defaultBranch = main
+[url "https://Jimdo-Payment-Bot:FtWW8=KPzzwsn&uvXn2G7cPHeAVqAhKp@github.com"]
+	insteadOf = https://github.com

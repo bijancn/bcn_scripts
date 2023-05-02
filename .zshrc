@@ -59,20 +59,20 @@ source ${ZIM_HOME}/init.zsh
 #
 
 # Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+# bindkey '^[[A' history-substring-search-up
+# bindkey '^[[B' history-substring-search-down
 
 # Bind up and down keys
-zmodload -F zsh/terminfo +p:terminfo
-if [[ -n ${terminfo[kcuu1]} && -n ${terminfo[kcud1]} ]]; then
-  bindkey ${terminfo[kcuu1]} history-substring-search-up
-  bindkey ${terminfo[kcud1]} history-substring-search-down
-fi
+# zmodload -F zsh/terminfo +p:terminfo
+# if [[ -n ${terminfo[kcuu1]} && -n ${terminfo[kcud1]} ]]; then
+#   bindkey ${terminfo[kcuu1]} history-substring-search-up
+#   bindkey ${terminfo[kcud1]} history-substring-search-down
+# fi
 
-bindkey '^P' history-substring-search-up
-bindkey '^N' history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
+# bindkey '^P' history-substring-search-up
+# bindkey '^N' history-substring-search-down
+# bindkey -M vicmd 'k' history-substring-search-up
+# bindkey -M vicmd 'j' history-substring-search-down
 # }}} End configuration added by Zim install
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -192,7 +192,7 @@ bindkey -M vicmd v edit-command-line
 #==============================================================================#
 #                                    PROMPT                                    #
 #==============================================================================#
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"
 
 #==============================================================================#
 #                                 LAST COMMAND                                 #
@@ -205,22 +205,37 @@ alias cp="nocorrect cp"
 ################################################################################
 #                                   KUBECTL                                    #
 ################################################################################
-plugins=(git zsh-completions kubectl)
+# plugins=(git zsh-completions kubectl)
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
 
-source <(kubectl completion zsh)  # setup autocomplete in zsh into the current shell
-if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
+# source <(kubectl completion zsh)  # setup autocomplete in zsh into the current shell
+# if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
+# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
 # tabtab source for packages
 # uninstall by removing these lines
-[[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
-[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
+# [[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
+# [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/bijan/.sdkman"
+[[ -s "/Users/bijan/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/bijan/.sdkman/bin/sdkman-init.sh"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+source ~/.jimdo.sh
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

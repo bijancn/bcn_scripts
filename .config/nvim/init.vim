@@ -128,6 +128,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'vim-airline/vim-airline' " Bottom status line
     Plug 'aonemd/kuroi.vim' " Color Scheme
     Plug 'Erichain/vim-monokai-pro'
+    Plug 'sonph/onehalf', { 'rtp': 'vim' }
     Plug 'tmux-plugins/vim-tmux'
     Plug 'christoomey/vim-tmux-navigator' " Unify keyboard navigation between vim and tmux
     Plug 'justinmk/vim-sneak' " Navigate with s{char}{char} and ;/,
@@ -141,6 +142,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'sk1418/HowMuch'
     Plug 'udalov/kotlin-vim'
     Plug 'cespare/vim-toml'
+    Plug 'wadackel/vim-dogrun'
 
 " Initialize plugin system
 call plug#end()
@@ -200,7 +202,11 @@ nnoremap <leader>w :w<cr>
 " Colorscheme
 set termguicolors
 set background=dark
-colorscheme kuroi
+" colorscheme kuroi
+set t_Co=256
+set cursorline
+# colorscheme onehalflight
+# colorscheme dogrun
 colorscheme monokai_pro
 highlight EndOfBuffer cterm=NONE gui=NONE
 
