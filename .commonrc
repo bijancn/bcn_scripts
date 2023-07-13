@@ -11,9 +11,6 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-RUSTC_ROOT="$(rustc --print sysroot)"
-export RUST_SRC_PATH="${RUSTC_ROOT}/lib/rustlib/src/rust/src"
-
 function format_seconds() {
   read 1
   (($1 >= 3600)) && printf '%02dh ' $(($1 / 3600))
@@ -83,7 +80,8 @@ export difftool='vimdiff'
 # Max out machine limits
 ulimit -t unlimited              # cputime
 ulimit -d unlimited              # datasize
-ulimit -m unlimited              # memoryuse
+# Bad option on new Mac?
+# ulimit -m unlimited              # memoryuse
 
 # This is for processes spawned by CPUs within !OMP PARALLEL DO
 export KMP_STACKSIZE=500000000

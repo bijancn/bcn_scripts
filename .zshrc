@@ -230,3 +230,9 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Created by `pipx` on 2023-06-20 11:52:34
+export PATH="$PATH:/Users/bcn/Library/Python/3.9/bin"
+
+# Created by `pipx` on 2023-06-20 11:52:38
+export PATH="$PATH:/Users/bcn/.local/bin"

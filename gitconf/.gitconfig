@@ -66,5 +66,3 @@
 	rebase = true
 [init]
 	defaultBranch = main
-[url "https://Jimdo-Payment-Bot:FtWW8=KPzzwsn&uvXn2G7cPHeAVqAhKp@github.com"]
-	insteadOf = https://github.com
