@@ -53,13 +53,8 @@ files+="$l/bcn_@(color|commands|koma).sty "
 files+="$l/bcn_letter@(.lco|_example.pdf|_example.tex) "
 files+="theoc.yaml "
 files+=".tmux.conf "
-files+=".vim/@(bcn_color_demo|filetype).vim "
-files+=".vim/colors/@(bcn_dark|bcn_light|print_bw).vim "
-files+=".vim/after/ftplugin/@(c|markdown|noweb|ocaml|python|sindarin|tex|vimwiki).vim "
-files+=".vim/spell/en.utf-8.add "
-files+=".vim/syntax/noweb.vim "
-files+=".vim/UltiSnips/@(all|fortran|javascript|noweb|ocaml|markdown|python|sh|tex).snippets "
 files+=".Xmodmap .Xdefaults "
+files+=".wezterm.lua "
 
 for f in $files; do
   mkdir -p ~/$(dirname $f)

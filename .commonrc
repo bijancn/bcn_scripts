@@ -1,16 +1,3 @@
-# vim: set filetype=sh
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# .commonrc - configurations for bash/zsh. Migrated from .bashrc in 2016.
-#
-# Copyright ©          Bijan Chokoufe Nejad          <bijan@chokoufe.com>
-#
-# This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
-# can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
-# http://www.gnu.org/licenses/gpl-2.0-standalone.html
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-
 function format_seconds() {
   read 1
   (($1 >= 3600)) && printf '%02dh ' $(($1 / 3600))
@@ -53,7 +40,7 @@ function kallprod () {
   kubectx DEV
 }
 
-eval "$(fasd --init auto)"
+# eval "$(fasd --init auto)"
 
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
@@ -128,6 +115,9 @@ load-paths () {
   export CPPFLAGS="-I/usr/local/opt/zlib/include "
   export LDFLAGS="$LDFLAGS -L/usr/local/opt/openssl/lib "
   export CFLAGS="$CFLAGS -I/usr/local/opt/openssl/include "
+
+  export GOPATH=$HOME/go
+  prepend-path $GOPATH
 
   # python
   add-pythonpath $HOME/bcn_scripts/include
@@ -428,8 +418,8 @@ export SBT_OPTS='-Xms1G -Xmx8G -Xss8M -XX:MaxMetaspaceSize=1000m -XX:MetaspaceSi
 ################################################################################
 #                                    DOCKER                                    #
 ################################################################################
-alias docker-stop-all="docker stop $(docker ps -a -q)"
-alias docker-rm-all="docker rm $(docker ps -a -q)"
+# alias docker-stop-all="docker stop $(docker ps -a -q)"
+# alias docker-rm-all="docker rm $(docker ps -a -q)"
 
 function show-my-PRs-of-this-month () {
   curl -s -X GET "$GITHUB_API/search/issues?q=author:bijan-chokoufe+org:hpo+is:pr+created:>=2017-12-01" | jq ".items[] | .title"

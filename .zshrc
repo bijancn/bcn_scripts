@@ -1,31 +1,8 @@
-# Start configuration added by Zim install {{{
-#
-# User configuration sourced by interactive shells
-#
-
-# -----------------
-# Zsh configuration
-# -----------------
-#
-#
-# History
-#
-
 # Remove older command from the history if a duplicate is to be added.
 setopt HIST_IGNORE_ALL_DUPS
 
-#
-# Input/output
-#
-
 # Set editor default keymap to emacs (`-e`) or vi (`-v`)
-bindkey -e
-
-# Prompt for spelling correction of commands.
-#setopt CORRECT
-
-# Customize spelling correction prompt.
-#SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+bindkey -v
 
 # Remove path separator from WORDCHARS.
 WORDCHARS=${WORDCHARS//[\/]}
@@ -34,56 +11,20 @@ WORDCHARS=${WORDCHARS//[\/]}
 # See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
-# Customize the main highlighter styles.
-# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md#how-to-tweak-it
-#typeset -A ZSH_HIGHLIGHT_STYLES
-#ZSH_HIGHLIGHT_STYLES[comment]='fg=10'
-
-# ------------------
-# Initialize modules
-# ------------------
-
 export ZIM_HOME=${HOME}/.zim
-if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
-  # Update static initialization script if it's outdated, before sourcing it
+#
+# Download zimfw plugin manager if missing.
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+      https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+fi
+
+# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
   source ${ZIM_HOME}/zimfw.zsh init -q
 fi
+
 source ${ZIM_HOME}/init.zsh
-
-# ------------------------------
-# Post-init module configuration
-# ------------------------------
-
-#
-# zsh-history-substring-search
-#
-
-# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
-# bindkey '^[[A' history-substring-search-up
-# bindkey '^[[B' history-substring-search-down
-
-# Bind up and down keys
-# zmodload -F zsh/terminfo +p:terminfo
-# if [[ -n ${terminfo[kcuu1]} && -n ${terminfo[kcud1]} ]]; then
-#   bindkey ${terminfo[kcuu1]} history-substring-search-up
-#   bindkey ${terminfo[kcud1]} history-substring-search-down
-# fi
-
-# bindkey '^P' history-substring-search-up
-# bindkey '^N' history-substring-search-down
-# bindkey -M vicmd 'k' history-substring-search-up
-# bindkey -M vicmd 'j' history-substring-search-down
-# }}} End configuration added by Zim install
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# .zshrc - zsh configuration file. Maintained since 2016.
-#
-# Copyright ©          Bijan Chokoufe Nejad          <bijan@chokoufe.com>
-#
-# This source code is free software that comes with ABSOLUTELY NO WARRANTY; you
-# can redistribute it and/or modify it under the terms of the GNU GPL Version 2:
-# http://www.gnu.org/licenses/gpl-2.0-standalone.html
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
@@ -96,17 +37,6 @@ screen*)
   export TERM=xterm-256color
   ;;
 esac
-
-################################################################################
-#                                     ZIM                                      #
-################################################################################
-if [ ! -d ~/.zim ]; then
-  git clone --recursive https://github.com/Eriner/zim.git ${ZDOTDIR:-${HOME}}/.zim
-fi
-
-if [[ -s ${ZDOTDIR:-${HOME}}/.zim/init.zsh ]]; then
-  source ${ZDOTDIR:-${HOME}}/.zim/init.zsh
-fi
 
 ################################################################################
 #                                   MY STUFF                                   #
@@ -180,44 +110,19 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
-#==============================================================================#
-#                                    PROMPT                                    #
-#==============================================================================#
-# eval "$(starship init zsh)"
-
-#==============================================================================#
-#                                 LAST COMMAND                                 #
-#==============================================================================#
 bindkey '\e.' insert-last-word
 
 # Override the -i set by prezto/init
 alias cp="nocorrect cp"
 
-################################################################################
-#                                   KUBECTL                                    #
-################################################################################
-# plugins=(git zsh-completions kubectl)
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-
-# source <(kubectl completion zsh)  # setup autocomplete in zsh into the current shell
-# if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
-
-# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-# tabtab source for packages
-# uninstall by removing these lines
-# [[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
-# [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
-
 export PATH="$HOME/.cargo/bin:$PATH"
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/bijan/.sdkman"
 [[ -s "/Users/bijan/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/bijan/.sdkman/bin/sdkman-init.sh"
 
@@ -236,3 +141,15 @@ export PATH="$PATH:/Users/bcn/Library/Python/3.9/bin"
 
 # Created by `pipx` on 2023-06-20 11:52:38
 export PATH="$PATH:/Users/bcn/.local/bin"
+export PATH="/usr/local/opt/libpq/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+
+# bun completions
+[ -s "/Users/bcn/.bun/_bun" ] && source "/Users/bcn/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
+export PATH
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"

@@ -26,7 +26,7 @@ call plug#begin()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                STABLE PLUGINS                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Adds git status next to the line numbers and allows reverting of chunks
+""" Adds git status next to the line numbers and allows reverting of chunks
 Plug 'airblade/vim-gitgutter'
 
 " Diffing parts of one or two files

@@ -37,6 +37,8 @@ zmodule zsh-users/zsh-syntax-highlighting
 zmodule zsh-users/zsh-history-substring-search
 # }}} End configuration added by Zim install
 
+zmodule https://github.com/agkozak/zsh-z
+
 # Zim modules
 zmodules=( \
   archive \
