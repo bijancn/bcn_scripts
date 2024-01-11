@@ -18,8 +18,8 @@ end
 config.font = wezterm.font 'Fira Code'
 config.font_size = 14
 config.line_height = 1.3
-config.color_scheme = 'Aurora'
 config.color_scheme = 'Azu (Gogh)'
+config.color_scheme = 'Hacktober'
 config.use_fancy_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
 

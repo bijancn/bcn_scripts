@@ -153,3 +153,5 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
 export PATH
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+
+export SSH_AUTH_SOCK="$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"

@@ -1,14 +1,13 @@
 [user]
   email = github@bijan.cloud
   name = Bijan Chokoufe Nejad
+	signingkey = /Users/bijanchokoufenejad/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/PublicKeys/aef25cf567e54ee6560408aa07cebbb1.pub
 [core]
-  editor = vim
+  editor = nvim
   excludesfile = ~/.gitignore_global
 [merge]
   tool = vimdiff
   conflictstyle = diff3
-[mergetool "mymeld"]
-  cmd = meld --output "$MERGED" "$LOCAL" "$BASE" "$REMOTE"
 [alias]
   interactive = !git add -p
   pullhard = !git fetch --all && git reset --hard origin/master
@@ -24,10 +23,11 @@
   interactive = auto
   status = auto
   ui = true
-[dude]
-  icon = /afs/desy.de/user/b/bcho/.git-dude/github32.png
-  notify-command = notify-send -i \"$ICON_PATH\" \"$TITLE\" \"$DESCRIPTION\" -t 0
 [push]
   default = current
 [fetch]
 	recurseSubmodules = false
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
