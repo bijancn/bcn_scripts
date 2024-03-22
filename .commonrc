@@ -438,6 +438,7 @@ function pull-it () {
     cd $1 && git pull && cd ..
 }
 
+alias gs='./git-summary/git-summary'
 alias pull-all="ls -d */ | parallel -j64 'echo -n {}... && git -C {} pull'"
 
 export LOADED=true
