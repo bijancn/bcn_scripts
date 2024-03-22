@@ -34,7 +34,7 @@ case "$TERM" in
 screen*)
   ;;
 *)
-  export TERM=xterm-256color
+  # export TERM=xterm-256color
   ;;
 esac
 
@@ -155,3 +155,5 @@ export PATH
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 
 export SSH_AUTH_SOCK="$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"
+
+wezterm cli set-tab-title ' '

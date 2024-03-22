@@ -1,7 +1,7 @@
 [user]
   email = github@bijan.cloud
   name = Bijan Chokoufe Nejad
-	signingkey = /Users/bijanchokoufenejad/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/PublicKeys/aef25cf567e54ee6560408aa07cebbb1.pub
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIwxIT7mT/hxitIB8nfJ4qfxGUum4U7Ti8iLXy1LK0nJ
 [core]
   editor = nvim
   excludesfile = ~/.gitignore_global
@@ -31,3 +31,5 @@
 	format = ssh
 [commit]
 	gpgsign = true
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
