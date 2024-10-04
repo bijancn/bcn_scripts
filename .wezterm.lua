@@ -13,12 +13,14 @@ end
 -- This is where you actually apply your config choices
 
 -- For example, changing the color scheme:
--- config.font = wezterm.font 'JetBrainsMonoNL Nerd Font'
 -- config.font = wezterm.font 'Monaspace Neon'
+config.font = wezterm.font 'JetBrainsMonoNL Nerd Font'
+config.font = wezterm.font 'JetBrainsMono Nerd Font'
 config.font = wezterm.font 'Fira Code'
-config.font_size = 14
-config.line_height = 1.3
+config.font_size = 13
+config.line_height = 1.1
 config.color_scheme = 'cyberpunk'
+config.color_scheme = 'One Light (base16)'
 config.color_scheme = 'Hardcore'
 config.use_fancy_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
@@ -59,6 +61,8 @@ config.keys = {
         action = wezterm.action.DisableDefaultAssignment,
     },
 }
+
+config.native_macos_fullscreen_mode = true
 
 -- and finally, return the configuration to wezterm
 return config

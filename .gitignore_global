@@ -103,3 +103,6 @@ Makefile.in
 ###########
 .ensime
 .ensime_cache
+
+.aider.*
+.idea

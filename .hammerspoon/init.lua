@@ -11,7 +11,7 @@ hs.hotkey.bind(hyper, "c", function() hs.application.launchOrFocus("Calendar") e
 hs.hotkey.bind(hyper, "o", function() hs.application.launchOrFocus("Arc") end)
 hs.hotkey.bind(hyper, "g", function() hs.application.launchOrFocus("Google Chrome") end)
 hs.hotkey.bind(hyper, "e", function() hs.application.launchOrFocus("Messages") end)
-hs.hotkey.bind(hyper, "i", function() hs.application.launchOrFocus("WezTerm") end)
+hs.hotkey.bind(hyper, "i", function() hs.application.launchOrFocus("IntelliJ IDEA") end)
 hs.hotkey.bind(hyper, "k", function() hs.application.launchOrFocus("KeePassXC") end)
 hs.hotkey.bind(hyper, "m", function() hs.application.launchOrFocus("Mail") end)
 hs.hotkey.bind(hyper, "l", function() hs.application.launchOrFocus("Signal") end)
