@@ -347,7 +347,7 @@ function what-did-I-do-last-week() {
     gh api \
         -H "Accept: application/vnd.github+json" \
         -H "X-GitHub-Api-Version: 2022-11-28" \
-        '/users/bijancn/events?per_page=100' | jq '.[] | select(.type != "PushEvent") | select(.type != "CreateEvent")  | {type: .type, payload: .payload.action, title: .payload.pull_request.title,  repo: .repo.name, created_at: .created_at}' |jq -r '"\u001b[1;32m[\(.created_at)]\u001b[0m \u001b[1;34m\(.repo)\u001b[0m: \u001b[1;33m\(.type)\u001b[0m \u001b[1m\(.payload)\u001b[0m - \u001b[1;36m\(.title)\u001b[0m"' 
+        '/users/bijancn/events?per_page=200' | jq '.[] | select(.type != "PushEvent") | select(.type != "CreateEvent")  | {type: .type, payload: .payload.action, title: .payload.pull_request.title,  repo: .repo.name, created_at: .created_at}' |jq -r '"\u001b[1;32m[\(.created_at)]\u001b[0m \u001b[1;34m\(.repo)\u001b[0m: \u001b[1;33m\(.type)\u001b[0m \u001b[1m\(.payload)\u001b[0m - \u001b[1;36m\(.title)\u001b[0m"' 
 }
 
 #===============#
