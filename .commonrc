@@ -452,3 +452,5 @@ alias rg='rg --hidden'
 alias pt='pt --hidden'
 
 export LOADED=true
+export FLYCTL_INSTALL="/home/bcn/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"

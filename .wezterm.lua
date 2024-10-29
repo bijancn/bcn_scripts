@@ -63,6 +63,5 @@ config.keys = {
 }
 
 config.native_macos_fullscreen_mode = true
-
 -- and finally, return the configuration to wezterm
 return config
