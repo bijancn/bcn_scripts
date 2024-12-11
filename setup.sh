@@ -1,4 +1,9 @@
 set -e
+
+for b in `cat brew-list`; do
+    brew install $b
+done
+
 if ! ps aux | grep -v grep | grep Hammerspoon > /dev/null; then
     echo "Hammerspoon is not running. Starting it..."
     open -a Hammerspoon
