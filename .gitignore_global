@@ -106,3 +106,4 @@ Makefile.in
 
 .aider.*
 .idea
+.direnv/
