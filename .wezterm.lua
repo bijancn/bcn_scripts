@@ -16,7 +16,7 @@ end
 -- config.font = wezterm.font 'Monaspace Neon'
 config.font = wezterm.font 'JetBrainsMonoNL Nerd Font'
 config.font = wezterm.font 'JetBrainsMono Nerd Font'
-config.font = wezterm.font 'Fira Code'
+config.font = wezterm.font 'FiraCode Nerd Font'
 config.font_size = 13
 config.line_height = 1.1
 config.color_scheme = 'cyberpunk'

@@ -124,7 +124,7 @@ load-paths () {
   add-pythonpath $HOME/termstyle
   add-pythonpath $HOME/pydflatex
 
-  source $HOME/.jimdo.sh
+  source $HOME/drive/.jimdo.sh
 
   export TEXMFCNF=${HOME}/texmf:${TEXMFCNF}
   export HOMETEXMF=${HOME}/texmf:${HOMETEXMF}

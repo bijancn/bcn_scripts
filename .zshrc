@@ -115,9 +115,6 @@ bindkey '\e.' insert-last-word
 # Override the -i set by prezto/init
 alias cp="nocorrect cp"
 
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
@@ -128,7 +125,6 @@ export SDKMAN_DIR="/Users/bijan/.sdkman"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-source ~/.jimdo.sh
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
@@ -156,7 +152,4 @@ export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 
 export SSH_AUTH_SOCK=$HOME/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 
-wezterm cli set-tab-title ' '
-autoload -U compinit; compinit
-eval "$(~/.local/bin/mise activate zsh)"
 export PATH="$PATH:/opt/nvim/"
