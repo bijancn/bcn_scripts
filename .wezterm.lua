@@ -64,10 +64,5 @@ config.keys = {
 
 config.native_macos_fullscreen_mode = true
 
-wezterm.on("format-tab-title", function(tab, pane, tabs, panes, config)
-    -- Set the title to your desired value; here it’s set to the current working directory of the tab
-    return pane.current_working_dir:match("([^/]+)$") or "Terminal"
-end)
-
 -- and finally, return the configuration to wezterm
 return config
