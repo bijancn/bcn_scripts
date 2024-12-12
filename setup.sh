@@ -4,6 +4,10 @@ for b in `cat brew-list`; do
     brew install $b
 done
 
+for b in `cat brew-list-cask`; do
+    brew install --cask $b
+done
+
 if ! ps aux | grep -v grep | grep Hammerspoon > /dev/null; then
     echo "Hammerspoon is not running. Starting it..."
     open -a Hammerspoon
