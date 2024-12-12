@@ -9,13 +9,10 @@
   conflictstyle = diff3
 [alias]
   interactive = !git add -p
-  pullhard = !git fetch --all && git reset --hard origin/master
-  whatsnew = !sh -c 'git log $1@{1}..$1@{0} "$@"'
-  makedot = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
+  head = !sh -c 'git log $1@{1}..$1@{0} "$@"'
   mylog = !echo && git log --graph --format=format:'%h - %C(red)(%ar)%C(reset) %C(blue)%cn%C(reset)%n        %C(green)%s%C(reset)' --abbrev-commit --date=relative | head -n 35 && echo
   morelog = log --graph --decorate --pretty=medium --abbrev-commit --date=relative --all
-  contributions = !git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr
-  show-files = diff-tree --no-commit-id --name-only -r
+  contributions = !git ls-files | xargs -n1 git blame --line-porcelain | gsed -n 's/^author //p' | sort -f | uniq -ic | sort -nr
 [color]
   branch = auto
   diff = auto
@@ -25,14 +22,4 @@
 [push]
   default = current
 [fetch]
-	recurseSubmodules = false
-[gpg]
-	format = ssh
-[user]
-  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIwxIT7mT/hxitIB8nfJ4qfxGUum4U7Ti8iLXy1LK0nJ
-[gpg]
-    format = ssh
-[gpg "ssh"]
-  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
-[commit]
-	gpgsign = true
+  recurseSubmodules = false
