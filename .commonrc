@@ -110,6 +110,7 @@ alias bu='brew update && brew upgrade && brew cleanup'
 
 load-paths () {
   prepend-all-paths /usr/local
+  prepend-path $HOME/repos/bcn_scripts
 
   export LDFLAGS="-L/usr/local/opt/zlib/lib "
   export CPPFLAGS="-I/usr/local/opt/zlib/include "
@@ -124,7 +125,9 @@ load-paths () {
   add-pythonpath $HOME/termstyle
   add-pythonpath $HOME/pydflatex
 
-  source $HOME/drive/.jimdo.sh
+  if [[ -f $HOME/drive/.jimdo.sh ]] ; then
+    source $HOME/drive/.jimdo.sh
+  fi
 
   export TEXMFCNF=${HOME}/texmf:${TEXMFCNF}
   export HOMETEXMF=${HOME}/texmf:${HOMETEXMF}
