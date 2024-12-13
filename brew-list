@@ -1,6 +1,7 @@
 awscli
 black
 coreutils
+cpanminus
 direnv
 docker
 docker-compose

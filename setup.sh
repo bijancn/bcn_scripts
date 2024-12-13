@@ -26,3 +26,7 @@ open MiroWindowsManager.spoon
 rm -f MiroWindowsManager.spoon.zip
 
 rm -rf __MACOSX/
+
+npm install -g neovim
+cpanm -n Neovim::Ext
+sudo gem install neovim
