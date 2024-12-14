@@ -3,5 +3,5 @@
 if [[ -f $HOME/drive/.jimdo.sh ]] ; then
     op read op://Individual/OPENAI_API_KEY/credential --no-newline
 else 
-    gopass show -o websites/openai.com/openai.com@bijan.cloud
+    source $HOME/openai.sh
 fi
