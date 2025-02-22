@@ -23,3 +23,6 @@
   default = current
 [fetch]
   recurseSubmodules = false
+[include]
+  path = ~/drive/gitconfig
+

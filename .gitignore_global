@@ -107,3 +107,4 @@ Makefile.in
 .aider.*
 .idea
 .direnv/
+.cursor

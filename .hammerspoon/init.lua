@@ -14,10 +14,11 @@ hs.hotkey.bind(hyper, "e", function() hs.application.launchOrFocus("Messages") e
 hs.hotkey.bind(hyper, "i", function() hs.application.launchOrFocus("IntelliJ IDEA") end)
 hs.hotkey.bind(hyper, "k", function() hs.application.launchOrFocus("KeePassXC") end)
 hs.hotkey.bind(hyper, "m", function() hs.application.launchOrFocus("Mail") end)
-hs.hotkey.bind(hyper, "l", function() hs.application.launchOrFocus("Signal") end)
+hs.hotkey.bind(hyper, "l", function() hs.application.launchOrFocus("LogSeq") end)
 hs.hotkey.bind(hyper, "p", function() hs.application.launchOrFocus("NotePlan") end)
 hs.hotkey.bind(hyper, "s", function() hs.application.launchOrFocus("Slack") end)
 hs.hotkey.bind(hyper, "t", function() hs.application.launchOrFocus("TablePlus") end)
+hs.hotkey.bind(hyper, "u", function() hs.application.launchOrFocus("Cursor") end)
 hs.hotkey.bind(hyper, "y", function() hs.application.launchOrFocus("Spotify") end)
 hs.hotkey.bind(hyper, "return", function() hs.application.launchOrFocus("WezTerm") end)
 
@@ -68,7 +69,7 @@ spoon.MiroWindowsManager:bindHotkeys({
 
 hs.loadSpoon("WindowHalfsAndThirds")
 spoon.WindowHalfsAndThirds:bindHotkeys({
-    center = { hyperExtra, "c" },
+    -- center = { hyperExtra, "c" },
     -- up = {hyperExtra, "up"},
     -- right = {hyperExtra, "right"},
     -- down = {hyperExtra, "down"},
