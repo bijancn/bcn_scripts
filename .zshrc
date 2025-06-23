@@ -153,6 +153,27 @@ export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 export SSH_AUTH_SOCK=/Users/bcn/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
 
 export PATH="$PATH:/opt/nvim/"
-alias nr="npm run dev"
+
+# for feature service
+export JAVA_HOME=/opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home/
+# for messaging-service
+export JAVA_HOME=/opt/homebrew/opt/openjdk@23/libexec/openjdk.jdk/Contents/Home/
+PATH="$PATH:$JAVA_HOME/bin"
+use_cloudflare_certificate() {
+  if ! keytool -list -cacerts | grep cloudflarenew > /dev/null; then
+    openssl x509 -in $HOME/cloudflare.pem -out $HOME/cloudflare.der -outform DER
+    keytool -import -trustcacerts -file $HOME/cloudflare.der -alias cloudflarenew \
+    -keystore $JAVA_HOME/lib/security/cacerts
+  else
+    echo "We already have the certificate:" `keytool -list -cacerts | grep cloudflarenew`
+  fi
+}
+use_cloudflare_certificate
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/bcn/.lmstudio/bin"
+# End of LM Studio CLI section
+
 alias nb="npm run lint && npm run build && npx tsc --noEmit && npm run test"
+alias nr='npm run dev'
 alias claude='claude --dangerously-skip-permissions'

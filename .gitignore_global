@@ -107,3 +107,8 @@ Makefile.in
 .aider.*
 .idea
 .direnv/
+.cursor
+.envrc
+.env.*
+.kotlin
+.claude/
