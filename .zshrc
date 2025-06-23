@@ -150,6 +150,9 @@ PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
 export PATH
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 
-export SSH_AUTH_SOCK=$HOME/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+export SSH_AUTH_SOCK=/Users/bcn/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
 
 export PATH="$PATH:/opt/nvim/"
+alias nr="npm run dev"
+alias nb="npm run lint && npm run build && npx tsc --noEmit && npm run test"
+alias claude='claude --dangerously-skip-permissions'

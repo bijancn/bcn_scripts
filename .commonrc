@@ -311,6 +311,11 @@ alias gitrm='git rm'
 # Commit the staged changes to the HEAD
 alias gitc='git commit -m'
 
+# Commit and push
+function gitcp() {
+    git commit -m "$1" && git push
+}
+
 # Clean the current directory of all build products and other non-tracked files
 alias gitcl='git clean -x -i'
 
@@ -377,9 +382,6 @@ alias gite='git checkout'
 
 # Create new branch
 alias gitcb='git checkout -b'
-
-# Cherry pick a commit from another branch
-alias gitcp='git cherry-pick'
 
 # Create a new branch (followed by branchname)
 alias gitb='git branch'

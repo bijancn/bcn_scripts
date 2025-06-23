@@ -1,6 +1,3 @@
-[user]
-  email = github@bijan.cloud
-  name = Bijan Chokoufe Nejad
 [core]
   editor = nvim
   excludesfile = ~/.gitignore_global
@@ -26,3 +23,5 @@
 [include]
   path = ~/drive/gitconfig
 
+[safe]
+	directory = /Users/bcn/actions-runner/_work/chili-immo/chili-immo
