@@ -19,14 +19,14 @@ config.font = wezterm.font 'JetBrainsMono Nerd Font'
 config.font = wezterm.font 'FiraCode Nerd Font'
 config.font_size = 13
 config.line_height = 1.1
-config.color_scheme = 'cyberpunk'
-config.color_scheme = 'Hardcore'
 config.color_scheme = 'One Light (base16)'
-config.color_scheme = 'catppuccin-latte'
 config.color_scheme = 'tokyonight_day'
 config.color_scheme = 'Github Light'
-config.color_scheme = 'rose-pine-dawn'
 config.color_scheme = 'rose-pine'
+config.color_scheme = 'rose-pine-dawn'
+config.color_scheme = 'cyberpunk'
+config.color_scheme = 'catppuccin-latte'
+config.color_scheme = 'Hardcore'
 config.use_fancy_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
 config.window_decorations = 'RESIZE'
@@ -36,12 +36,12 @@ config.window_padding = {
     top = 0,
     bottom = 0,
 }
--- config.colors = {
---     -- The default text color
---     foreground = 'silver',
---     -- The default background color
---     background = '#282c34',
--- }
+config.colors = {
+    -- The default text color
+    foreground = 'silver',
+    -- The default background color
+    background = '#282c34',
+}
 
 config.keys = {
     -- This will create a new split and run your default program inside it
@@ -67,7 +67,7 @@ config.keys = {
     },
 }
 
-config.native_macos_fullscreen_mode = true
+config.native_macos_fullscreen_mode = false
 
 -- and finally, return the configuration to wezterm
 return config
