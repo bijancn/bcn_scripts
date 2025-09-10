@@ -47,17 +47,6 @@ man() {
       man "$@"
 }
 
-# Customize colors for ls
-if version-bigger dircolors 8; then
-  eval `dircolors $HOME/.dir_colorsrc`
-fi
-
-
-# Notify
-if [ -x /usr/bin/notify-send ]; then
-  alias alert='notify-send -t 0 -i gnome-terminal "[$?] $(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/;\s*alert$//'\'')"'
-fi
-
 # Enable some bash options
 shopt -s cdspell
 shopt -s cdable_vars
@@ -101,4 +90,3 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/bcn/.lmstudio/bin"
 # End of LM Studio CLI section
-

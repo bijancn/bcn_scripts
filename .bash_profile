@@ -16,16 +16,8 @@ if [ -d ~/bashrc-tmux ]; then
   source ~/bashrc-tmux/bashrc-tmux
 fi
 
-# old screen variant
-#if test "$TERM" != "screen" -a "$SSH_CONNECTION" != "" -a `getconf LONG_BIT` = 64; then
-  #$HOME/install/bin/screen -U -S sshscreen -d -R && exit
-#else
-  #. .bashrc
-#fi
-
 # added by Miniconda2 installer
 export PATH="$HOME/miniconda2/bin:$PATH"
-
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/bijan/.sdkman"
@@ -37,4 +29,3 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/bcn/.lmstudio/bin"
 # End of LM Studio CLI section
-

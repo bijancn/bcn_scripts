@@ -150,9 +150,6 @@ PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
 export PATH
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 
-# export SSH_AUTH_SOCK=/Users/bcn/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
-export SSH_AUTH_SOCK=$HOME/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
-
 export PATH="$PATH:/opt/nvim/"
 
 # for messaging-service
@@ -175,7 +172,9 @@ use_cloudflare_certificate() {
 export PATH="$PATH:/Users/bcn/.lmstudio/bin"
 # End of LM Studio CLI section
 
+source ~/.secrets.sh
+alias codex='codex --dangerously-bypass-approvals-and-sandbox --search'
 alias nb="npm run lint && npm run build && npx tsc --noEmit && npm run test"
 alias nr='npm run dev'
-PATH="$PATH:$HOME/.local/bin/claude"
+export PATH="$HOME/.local/bin:$PATH"
 export NODE_EXTRA_CA_CERTS="$HOME/cloudflare.pem"

@@ -25,6 +25,7 @@
 
 [safe]
 	directory = /Users/bcn/actions-runner/_work/chili-immo/chili-immo
+	directory = /Users/bcn/actions-runner/_work/chili-immo/chili-immo
 [user]
 	name = Bijan Chokoufe Nejad
 	email = bijan.chokoufe@jimdo.com
