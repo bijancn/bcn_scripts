@@ -10,23 +10,14 @@ if wezterm.config_builder then
     config = wezterm.config_builder()
 end
 
--- This is where you actually apply your config choices
-
--- For example, changing the color scheme:
--- config.font = wezterm.font 'Monaspace Neon'
+-- Preferred fonts
 config.font = wezterm.font 'JetBrainsMonoNL Nerd Font'
 config.font = wezterm.font 'JetBrainsMono Nerd Font'
 config.font = wezterm.font 'FiraCode Nerd Font'
 config.font_size = 13
 config.line_height = 1.1
-config.color_scheme = 'One Light (base16)'
-config.color_scheme = 'tokyonight_day'
-config.color_scheme = 'Github Light'
-config.color_scheme = 'rose-pine'
-config.color_scheme = 'rose-pine-dawn'
-config.color_scheme = 'cyberpunk'
-config.color_scheme = 'catppuccin-latte'
-config.color_scheme = 'Hardcore'
+
+-- UI tweaks
 config.use_fancy_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
 config.window_decorations = 'RESIZE'
@@ -36,15 +27,51 @@ config.window_padding = {
     top = 0,
     bottom = 0,
 }
-config.colors = {
-    -- The default text color
-    foreground = 'silver',
-    -- The default background color
-    background = '#282c34',
-}
 
+-- Map OS appearance -> color scheme names
+local function scheme_for_appearance(appearance)
+    if appearance:find('Dark') then
+        return 'One Dark (Gogh)'
+    else
+        return 'One Light (Gogh)'
+    end
+end
+
+-- Initial scheme at launch
+if wezterm.gui then
+    local ok, appearance = pcall(wezterm.gui.get_appearance)
+    if ok and appearance then
+        config.color_scheme = scheme_for_appearance(appearance)
+        -- Export appearance to shells started by WezTerm
+        config.set_environment_variables = config.set_environment_variables or {}
+        config.set_environment_variables.PROMPT_THEME_MODE = appearance:find('Dark') and 'dark' or 'light'
+    end
+end
+
+-- Keep windows in sync with OS theme
+wezterm.on('window-config-reloaded', function(window, _)
+    local overrides = window:get_config_overrides() or {}
+    local appearance = window:get_appearance()
+    overrides.color_scheme = scheme_for_appearance(appearance)
+
+    -- Increase contrast in dark mode by brightening foreground
+    if appearance:find('Dark') then
+        overrides.colors = overrides.colors or {}
+        overrides.colors.foreground = '#D7DAE0' -- brighter than default One Dark fg
+        overrides.set_environment_variables = overrides.set_environment_variables or {}
+        overrides.set_environment_variables.PROMPT_THEME_MODE = 'dark'
+    else
+        -- Use the light scheme's defaults as-is
+        overrides.colors = nil
+        overrides.set_environment_variables = overrides.set_environment_variables or {}
+        overrides.set_environment_variables.PROMPT_THEME_MODE = 'light'
+    end
+
+    window:set_config_overrides(overrides)
+end)
+
+-- Keybindings
 config.keys = {
-    -- This will create a new split and run your default program inside it
     {
         key = 's',
         mods = 'CTRL|SHIFT',

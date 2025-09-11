@@ -24,6 +24,32 @@ if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
   source ${ZIM_HOME}/zimfw.zsh init -q
 fi
 
+# Prompt colors for Zim "steeef" theme.
+# WezTerm exports PROMPT_THEME_MODE=dark|light; default to dark if unset.
+if [[ "${PROMPT_THEME_MODE:-dark}" == "light" ]]; then
+  # Light mode: darker/more saturated for readability on light bg
+  USER_COLOR="#8E44AD"        # purple
+  HOST_COLOR="#8C6D1F"        # gold/brown
+  PWD_COLOR="#2E7D32"         # green
+  BRANCH_COLOR="#1E66F5"      # blue
+  UNINDEXED_COLOR="#A15E2E"   # orange (modified)
+  INDEXED_COLOR="#2E7D32"     # green (staged)
+  UNTRACKED_COLOR="#C0392B"   # red (untracked)
+  STASHED_COLOR="#1B9AAA"     # cyan
+else
+  # Dark mode: One Dark palette
+  USER_COLOR="#C678DD"        # purple
+  HOST_COLOR="#E5C07B"        # yellow
+  PWD_COLOR="#98C379"         # green
+  BRANCH_COLOR="#61AFEF"      # blue
+  UNINDEXED_COLOR="#D19A66"   # orange (modified)
+  INDEXED_COLOR="#98C379"     # green (staged)
+  UNTRACKED_COLOR="#E06C75"   # red (untracked)
+  STASHED_COLOR="#56B6C2"     # cyan
+fi
+# Optional: show stashes indicator
+STASHED_IND="✚"
+
 source ${ZIM_HOME}/init.zsh
 
 # If not running interactively, don't do anything
