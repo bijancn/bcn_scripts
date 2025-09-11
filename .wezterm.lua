@@ -37,11 +37,62 @@ local function scheme_for_appearance(appearance)
     end
 end
 
+-- Derive tab bar colors from the active scheme so it adapts
+-- across light/dark themes, even if the scheme lacks tab_bar.
+local function _hex_to_rgb(hex)
+  hex = (hex or "#000000"):gsub('#','')
+  return tonumber('0x'..hex:sub(1,2)) or 0,
+         tonumber('0x'..hex:sub(3,4)) or 0,
+         tonumber('0x'..hex:sub(5,6)) or 0
+end
+
+local function _rgb_to_hex(r,g,b)
+  return string.format('#%02x%02x%02x', r, g, b)
+end
+
+local function _blend(a, b, t)
+  local ar,ag,ab = _hex_to_rgb(a)
+  local br,bg,bb = _hex_to_rgb(b)
+  local r = math.floor(ar + (br-ar)*t + 0.5)
+  local g = math.floor(ag + (bg-ag)*t + 0.5)
+  local bl = math.floor(ab + (bb-ab)*t + 0.5)
+  return _rgb_to_hex(r,g,bl)
+end
+
+local function tab_bar_from_scheme(s)
+  local bg = s.background or '#1e1e1e'
+  local fg = s.foreground or '#c0c0c0'
+  local tbg = _blend(bg, fg, 0.06)
+  local ibg = _blend(bg, fg, 0.10)
+  local hbg = _blend(bg, fg, 0.16)
+  local abg = _blend(bg, fg, 0.22)
+  return {
+    background = tbg,
+    active_tab = {
+      bg_color = abg,
+      fg_color = fg,
+      intensity = 'Normal',
+      underline = 'None',
+      italic = false,
+      strikethrough = false,
+    },
+    inactive_tab =   { bg_color = ibg, fg_color = _blend(fg, bg, 0.35) },
+    inactive_tab_hover = { bg_color = hbg, fg_color = fg, italic = true },
+    new_tab =        { bg_color = ibg, fg_color = _blend(fg, bg, 0.35) },
+    new_tab_hover =  { bg_color = hbg, fg_color = fg, italic = true },
+  }
+end
+
 -- Initial scheme at launch
 if wezterm.gui then
     local ok, appearance = pcall(wezterm.gui.get_appearance)
     if ok and appearance then
         config.color_scheme = scheme_for_appearance(appearance)
+        -- Derive tab bar colors to match the current scheme
+        local schemes = wezterm.color.get_builtin_schemes()
+        local s = schemes[config.color_scheme] or {}
+        config.colors = config.colors or {}
+        config.colors.tab_bar = s.tab_bar or tab_bar_from_scheme(s)
         -- Export appearance to shells started by WezTerm
         config.set_environment_variables = config.set_environment_variables or {}
         config.set_environment_variables.PROMPT_THEME_MODE = appearance:find('Dark') and 'dark' or 'light'
@@ -54,15 +105,20 @@ wezterm.on('window-config-reloaded', function(window, _)
     local appearance = window:get_appearance()
     overrides.color_scheme = scheme_for_appearance(appearance)
 
+    -- Compute tab bar colors from the active scheme
+    local schemes = wezterm.color.get_builtin_schemes()
+    local s = schemes[overrides.color_scheme] or {}
+    overrides.colors = overrides.colors or {}
+    overrides.colors.tab_bar = s.tab_bar or tab_bar_from_scheme(s)
+
     -- Increase contrast in dark mode by brightening foreground
     if appearance:find('Dark') then
-        overrides.colors = overrides.colors or {}
         overrides.colors.foreground = '#D7DAE0' -- brighter than default One Dark fg
         overrides.set_environment_variables = overrides.set_environment_variables or {}
         overrides.set_environment_variables.PROMPT_THEME_MODE = 'dark'
     else
-        -- Use the light scheme's defaults as-is
-        overrides.colors = nil
+        -- Light mode: use scheme defaults for foreground
+        overrides.colors.foreground = nil
         overrides.set_environment_variables = overrides.set_environment_variables or {}
         overrides.set_environment_variables.PROMPT_THEME_MODE = 'light'
     end
