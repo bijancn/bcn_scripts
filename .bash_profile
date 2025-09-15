@@ -24,7 +24,6 @@ export SDKMAN_DIR="/Users/bijan/.sdkman"
 [[ -s "/Users/bijan/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/bijan/.sdkman/bin/sdkman-init.sh"
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
-. "$HOME/.cargo/env"
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/bcn/.lmstudio/bin"

@@ -363,7 +363,7 @@ function what-did-I-do-last-week() {
 #===============#
 # Show the diff between unstaged changes (working dir) against the index
 # If followed by master..branch it shows complete diff between branches
-alias gitd='git diff'
+alias gitd='git diff --word-diff'
 
 # Show the diff between staged changes (index) against the current HEAD
 alias gitdc='git diff --cached'
@@ -478,4 +478,15 @@ prcomments() {
     
     echo -e "\n📝 Code Review Comments:"
     gh api repos/:owner/:repo/pulls/$pr_num/comments --jq '.[] | "  " + .user.login + " (" + .path + ":" + (.line//empty|tostring) + "): " + .body' 2>/dev/null || echo "  (none)"
+}
+
+diffmain() {
+    echo "Carefully review the current PR and check for any important issues before this is merged to main"
+    echo "----------------------------"
+    echo "Overall diff stats (git diff --stat origin/main...HEAD)"
+    git diff --stat origin/main...HEAD
+    echo "----------------------------"
+    echo "Actual git diff (git diff --word-diff --unified=3 origin/main...HEAD)"
+    git diff --word-diff --unified=3 origin/main...HEAD | cat
+    echo "----------------------------"
 }

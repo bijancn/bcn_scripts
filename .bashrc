@@ -85,7 +85,6 @@ export PATH="/home/bijancn/miniconda2/bin:$PATH"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
-. "$HOME/.cargo/env"
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/bcn/.lmstudio/bin"
