@@ -315,6 +315,9 @@ alias gitc='git commit -m'
 function gitcp() {
     git commit -m "$1" && git push
 }
+function gitcpnv() {
+    git commit --no-verify -m "$1" && git push
+}
 
 # Clean the current directory of all build products and other non-tracked files
 alias gitcl='git clean -x -i'
@@ -362,17 +365,24 @@ function what-did-I-do-last-week() {
 #  differences  #
 #===============#
 # Show the diff between unstaged changes (working dir) against the index
-# If followed by master..branch it shows complete diff between branches
-alias gitd='git diff --word-diff'
+function gitd() {
+  git diff ${1:-.} | delta
+}
 
 # Show the diff between staged changes (index) against the current HEAD
-alias gitdc='git diff --cached'
+function gitdc() {
+  git diff --cached ${1:-.} | delta
+}
 
 # Show all the changes since the last commit, staged or not
-alias gitdh='git diff HEAD'
+function gitdh() {
+  git diff HEAD ${1:-.}
+}
 
 # Show which files have changed between branches (followed by: master..branch)
-alias gitdb='git diff --stat --color'
+function gitdb() {
+  git diff --stat --color ${1:-.}
+}
 
 #============#
 #  branches  #

@@ -149,7 +149,16 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export SDKMAN_DIR="/Users/bijan/.sdkman"
 [[ -s "/Users/bijan/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/bijan/.sdkman/bin/sdkman-init.sh"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Use fzf key bindings and completion from Homebrew
+# Provides Ctrl+R history search via fzf-history-widget (emacs, viins, vicmd)
+{
+  # Prefer existing HOMEBREW_PREFIX, else resolve once via brew
+  local _hb_prefix="${HOMEBREW_PREFIX:-$(command -v brew >/dev/null 2>&1 && brew --prefix)}"
+  if [[ -n "$_hb_prefix" ]]; then
+    [[ -r "$_hb_prefix/opt/fzf/shell/key-bindings.zsh" ]] && source "$_hb_prefix/opt/fzf/shell/key-bindings.zsh"
+    [[ -r "$_hb_prefix/opt/fzf/shell/completion.zsh"   ]] && source "$_hb_prefix/opt/fzf/shell/completion.zsh"
+  fi
+}
 
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
@@ -200,7 +209,7 @@ export PATH="$PATH:/Users/bcn/.lmstudio/bin"
 
 source ~/.secrets.sh
 alias codex='codex --dangerously-bypass-approvals-and-sandbox --search'
-alias nb="npm run lint && npm run build && npx tsc --noEmit && npm run test"
+alias nb="npm run knip && npm run lint && npm run build && npx tsc --noEmit && npm run test"
 alias nr='npm run dev'
 export PATH="$HOME/.local/bin:$PATH"
 alias nt='npm run test'

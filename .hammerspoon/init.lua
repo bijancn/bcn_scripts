@@ -7,6 +7,7 @@ hyperExtra = { "ctrl", "alt", "shift", "cmd" }
 -- "o" is open project
 -- "q' is lock screen
 
+hs.hotkey.bind(hyper, "b", function() hs.application.launchOrFocus("Beekeeper Studio") end)
 hs.hotkey.bind(hyper, "c", function() hs.application.launchOrFocus("Calendar") end)
 hs.hotkey.bind(hyper, "o", function() hs.application.launchOrFocus("Safari") end)
 hs.hotkey.bind(hyper, "g", function() hs.application.launchOrFocus("Google Chrome") end)
