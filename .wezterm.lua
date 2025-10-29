@@ -28,6 +28,14 @@ config.window_padding = {
     bottom = 0,
 }
 
+-- macOS keyboard behavior
+-- By default, WezTerm treats the LEFT Option key as Alt (Meta),
+-- which prevents macOS dead-key composition like Option+u (¨).
+-- Explicitly enable sending composed keys for both Option keys
+-- so Option+u + letter yields umlauts (ä/ö/ü) instead of Alt-u.
+config.send_composed_key_when_left_alt_is_pressed = true
+config.send_composed_key_when_right_alt_is_pressed = true
+
 -- Map OS appearance -> color scheme names
 local function scheme_for_appearance(appearance)
     if appearance:find('Dark') then

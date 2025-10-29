@@ -209,6 +209,7 @@ export PATH="$PATH:/Users/bcn/.lmstudio/bin"
 
 source ~/.secrets.sh
 alias codex='codex --dangerously-bypass-approvals-and-sandbox --search'
+alias claude='claude --dangerously-skip-permissions'
 alias nb="npm run knip && npm run lint && npm run build && npx tsc --noEmit && npm run test"
 alias nr='npm run dev'
 export PATH="$HOME/.local/bin:$PATH"
