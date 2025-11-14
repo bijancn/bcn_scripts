@@ -491,12 +491,19 @@ prcomments() {
 }
 
 diffmain() {
+    # Determine the main branch (prefer main, fallback to master)
+    if git rev-parse --verify origin/main >/dev/null 2>&1; then
+        local main_branch="origin/main"
+    else
+        local main_branch="origin/master"
+    fi
+
     echo "Carefully review the current PR and check for any important issues before this is merged to main"
     echo "----------------------------"
-    echo "Overall diff stats (git diff --stat origin/main...HEAD)"
-    git diff --stat origin/main...HEAD
+    echo "Overall diff stats (git diff --stat $main_branch...HEAD)"
+    git diff --stat $main_branch...HEAD -- ':(exclude)package-lock.json'
     echo "----------------------------"
-    echo "Actual git diff (git diff --word-diff --unified=3 origin/main...HEAD)"
-    git diff --word-diff --unified=3 origin/main...HEAD | cat
+    echo "Actual git diff (git diff --word-diff --unified=3 $main_branch...HEAD)"
+    git diff --word-diff --unified=3 $main_branch...HEAD -- ':(exclude)package-lock.json' | cat
     echo "----------------------------"
 }

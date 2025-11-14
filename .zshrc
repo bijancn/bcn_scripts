@@ -214,4 +214,3 @@ alias nb="npm run knip && npm run lint && npm run build && npx tsc --noEmit && n
 alias nr='npm run dev'
 export PATH="$HOME/.local/bin:$PATH"
 alias nt='npm run test'
-# export NODE_EXTRA_CA_CERTS="$HOME/cloudflare.pem"
