@@ -208,9 +208,15 @@ export PATH="$PATH:/Users/bcn/.lmstudio/bin"
 # End of LM Studio CLI section
 
 source ~/.secrets.sh
-alias codex='codex --dangerously-bypass-approvals-and-sandbox --search'
+alias codex='codex --dangerously-bypass-approvals-and-sandbox --enable web_search_request'
 alias claude='claude --dangerously-skip-permissions'
-alias nb="npm run knip && npm run lint && npm run build && npx tsc --noEmit && npm run test"
+alias nb="npm run check"
 alias nr='npm run dev'
 export PATH="$HOME/.local/bin:$PATH"
 alias nt='npm run test'
+
+# Added by Windsurf
+export PATH="/Users/bcn/.codeium/windsurf/bin:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/bcn/.antigravity/antigravity/bin:$PATH"

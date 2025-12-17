@@ -470,24 +470,28 @@ export LOADED=true
 export FLYCTL_INSTALL="/home/bcn/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
-prcomments() {
-    # Get PR number - either from argument or current branch
+prcomments () {
     local pr_num=${1:-$(gh pr view --json number -q .number 2>/dev/null)}
-    
-    if [ -z "$pr_num" ]; then
-        echo "❌ No PR found for current branch and no PR number provided"
-        echo "Usage: prcomments [PR_NUMBER]"
-        return 1
+    if [ -z "$pr_num" ]
+        then
+            echo "❌ No PR found for current branch and no PR number provided"
+            echo "Usage: prcomments [PR_NUMBER]"
+            return 1
     fi
-    
     echo "📋 PR #$pr_num Comments:"
     echo "========================"
-    
+
     echo -e "\n💬 General Comments:"
-    gh api repos/:owner/:repo/issues/$pr_num/comments --jq '.[] | "  " + .user.login + ": " + .body' 2>/dev/null || echo "  (none)"
-    
-    echo -e "\n📝 Code Review Comments:"
-    gh api repos/:owner/:repo/pulls/$pr_num/comments --jq '.[] | "  " + .user.login + " (" + .path + ":" + (.line//empty|tostring) + "): " + .body' 2>/dev/null || echo "  (none)"
+    gh api repos/:owner/:repo/issues/$pr_num/comments --jq '.[] | "  " + .user.login + ": " +
+    .body' 2> /dev/null || echo "  (none)"
+
+    echo -e "\n🔍 Review Comments:"
+    gh api repos/:owner/:repo/pulls/$pr_num/reviews --jq '.[] | select(.body != null and .body !=
+            "") | "  " + .user.login + " (" + .state + "):\n" + .body' 2> /dev/null || echo "  (none)"
+
+    echo -e "\n📝 Code Review Comments (inline):"
+    gh api repos/:owner/:repo/pulls/$pr_num/comments --jq '.[] | "  " + .user.login + " (" +
+    .path + ":" + (.line//empty|tostring) + "): " + .body' 2> /dev/null || echo "  (none)"
 }
 
 diffmain() {
